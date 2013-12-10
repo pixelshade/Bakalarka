@@ -12,6 +12,8 @@
 	<link href="<?php echo site_url('assets/css/font-awesome.css'); ?>" rel="stylesheet">
 	<link href="<? echo site_url('assets/css/bootstrap.min.css'); ?>" rel="stylesheet">
 	<link href="<?php echo site_url('assets/css/custom.css'); ?>" rel="stylesheet">	
+	<link href="<?php echo site_url('assets/css/nested-sortable.css'); ?>" rel="stylesheet">	
+	
 </head>
 <body>
 
