@@ -14,7 +14,8 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li <?php echo $page=="user"? 'class="active"' : ''; ?>><a href="/admin/user">users</a></li>			
+					<li <?php echo $page=="user"? 'class="active"' : ''; ?>><a href="/admin/user">Users</a></li>			
+					<li <?php echo $page=="article"? 'class="active"' : ''; ?>><a href="/admin/article">Articles</a></li>			
 					  
 					
 					<!-- <li><a href="#">Link</a></li> -->

@@ -8,11 +8,11 @@
 	</tr>
 	<tr>
 		<td>Title</td>
-		<td><?php echo form_input('title', set_value('title', $page->title)); ?></td>
+		<td><?php echo form_input('title', set_value('title', $page->title),'class="form-control"'); ?></td>
 	</tr>
 	<tr>
 		<td>Slug</td>
-		<td><?php echo form_input('slug', set_value('slug', $page->slug)); ?></td>
+		<td><?php echo form_input('slug', set_value('slug', $page->slug),'class="form-control"'); ?></td>
 	</tr>
 	<tr>
 		<td>Body</td>
