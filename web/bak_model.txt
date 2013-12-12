@@ -1,0 +1,39 @@
+item_instances - id, item_def_id, lat,lon, amount, added_by, code
+item_definitions - id, name, info, image, item_acitivity_id, 
+item_activities - id, name, info, image, attribute_to_change, change
+
+enemy_deifnitions - id, name, info, image, activity_id, hp, xp_reward, 
+enemy_instances - id, enemy_id, lat, lon, amount, 
+
+item_drop - id, enemy_id, item_id, chance
+
+users - id, name, pass, email
+characters - id, user_id, name, lat, lon, xp, hp, inventory_id, gold
+
+skills - id, character_id, name, info, attribute_to_change, amount, image, requires_skill_id
+
+game_settings - id, name, info, image, max_characters, 
+game_info - id, players, 
+
+quests - id, name, info, region_id, recommended_level, reward_
+quest_objectives - id, quest_id, name, info, type, arg1, arg2, arg3, arg4
+visit, kill, use_item, choose
+
+completed_quests - id, char_id, quest_id
+
+regions - id, name, info, image, lat_start, lon_start, lat_end, lon_end,
+
+
+attributes - id, name, info
+
+
+
+config - vzorec_na_vypocet_dmg, vzorec_
+
+------------------------------ controlers ---------------
+
+regions 
+- create
+- edit
+- delete
+
