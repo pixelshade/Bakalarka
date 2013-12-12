@@ -1,4 +1,4 @@
-<?php $this->load->view('include/header.php'); ?>
+<?php $this->load->view('admin/include/header.php'); ?>
 
 <div class="modal show">
   <div class="modal-dialog">
@@ -20,4 +20,4 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<?php $this->load->view('include/footer.php'); ?>
+<?php $this->load->view('admin/include/footer.php'); ?>

@@ -38,11 +38,15 @@
 |
 */
 
-$route['default_controller'] = "pages/view";
+$route['default_controller'] = "page";
 $route['regions'] = "regions";
 $route['regions/create'] = "regions/create";
 $route['regions/(:any)'] = "regions/view/$1";
-// $route['(:any)'] = 'pages/view/$1'; 
+
+
+$route['page/(:any)'] = "page/index/$1";
+// $route['page'] = "page";
+// $route['(:any)'] = 'pages/index/$1'; 
 $route['404_override'] = '';
 
 // $route['news/create'] = 'news/create';
