@@ -16,8 +16,7 @@ class Migration_Create_enemy_instances extends CI_Migration {
 			'enemy_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,
-				'auto_increment' => TRUE
+				'unsigned' => TRUE,				
 			),		
 			'latitude' => array(
 				'type' => 'VARCHAR',
