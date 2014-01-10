@@ -15,9 +15,9 @@ rewards - id, item_def_id, xp, gold
 skills - id, character_id, name, info, attribute_to_change, amount, image, requires_skill_id - id, skill_id, prerequisity_id
 
 
-quests - id, name, info, region_id, recommended_level, reward_id
+quests - id, name, info, region_id, recommended_level, reward_id, code
 quest_objectives - id, quest_id, name, info, type, arg1, arg2, arg3, arg4
-visit, kill, use_item, choose
+visit, kill, use_item, choose, cas
 
 completed_quests - id, char_id, quest_id
 
@@ -27,12 +27,5 @@ attributes - id, name, info
 
 
 
-config - game_name, info, image, local_db,vzorec_na_vypocet_dmg, vzorec_na_vypocet_defense, vzorec_who_starts, level_xp, level_coef, max_level, max_characters, 
-
------------------------------- controlers ---------------
-
-region
-- create
-- edit
-- delete
+config - game_name, info, image, local_db,vzorec_na_vypocet_dmg, vzorec_na_vypocet_defense, vzorec_who_starts, level_xp, level_coef, max_level, max_characters, used_controllers
 

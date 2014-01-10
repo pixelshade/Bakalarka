@@ -1,0 +1,43 @@
+\documentclass[12pt,oneside,a4paper]{book}
+\usepackage[top=2.5cm,bottom=2.5cm,right=2cm,left=3.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\usepackage{Times New Roman} %Times New Roman
+\usepackage[T1]{fontenc}
+\usepackage[slovak,english]{babel}
+\linespread{1.5} %riadkovanie 1.5
+\begin{document}
+
+%informacie o praci, autorovi,...
+\def\school{Univerzita Komenského v Bratislave}
+\def\faculty{Fakulta matematiky, fyziky a informatiky} 
+\def\title{Nástroj pre tvorbu hier s využitím GPS}
+\def\thesis{Bakalárska práca} 
+\def\author{Peter Šulík}
+\def\year{2013}
+\def\placeandyear{Bratislava, \year}
+\def\supervisor{RNDr. Peter Borovanskému, PhD.\ }
+\def\studyprogramme{Aplikovaná informatika}
+\def\studyfield{9.2.9 Aplikovaná informatika}
+\def\department{Department of Computer Science}
+
+\pdfinfo{/Author (\author) /Title (\title)}
+
+
+\selectlanguage{slovak}
+\frontmatter
+\input{frontmatter}
+
+\mainmatter
+\input{mainmatter}
+
+\appendix
+\input{appendix}
+
+\bibliographystyle{plain} %cisla
+%\bibliographystyle{alpha} %autor+rok
+\bibliography{bibliography}
+\end{document}
