@@ -1,0 +1,104 @@
+\begin{thebibliography}{10}
+
+\bibitem{bootstrap-about}
+About bootstrap.
+\newblock \url{ http://getbootstrap.com/about/ }.
+\newblock [Online; navštívené 14-Január-2014].
+
+\bibitem{geocaching}
+Geocaching na slovensku - Čo je to geocaching.
+\newblock \url{ http://www.geocaching.sk/co-je-to-geocaching.php }.
+\newblock [Online; navštívené 30-Január-2014].
+
+\bibitem{qrgenerator-functions}
+Php qr code generator examples.
+\newblock \url{ http://phpqrcode.sourceforge.net/examples/index.php?example=006
+  }.
+\newblock [Online; navštívené 12-Január-2014].
+
+\bibitem{sfgame}
+Shakes\&fidget.
+\newblock \url{ http://www.sfgame.sk/ }.
+\newblock [Online; navštívené 30-Január-2014].
+
+\bibitem{qrreader}
+Zbar qr code reader.
+\newblock \url{ http://zbar.sourceforge.net/ }.
+\newblock [Online; navštívené 8-Január-2014].
+
+\bibitem{wow-blizard}
+Blizzard.
+\newblock World of warcraft.
+\newblock \url{ http://us.battle.net/wow/ }.
+\newblock [Online; navštívené 8-Január-2014].
+
+\bibitem{wow-blizard-guide}
+Blizzard.
+\newblock World of warcraft.
+\newblock \url{ http://us.battle.net/wow/en/game/ }.
+\newblock [Online; navštívené 30-Január-2014].
+
+\bibitem{codeigniter-guide}
+ellislab.
+\newblock Codeigniter user guide.
+\newblock \url{ http://ellislab.com/codeigniter/user-guide/ }.
+\newblock [Online; navštívené 8-Január-2014].
+
+\bibitem{gmaps-usage}
+Google.
+\newblock Usage limits and billing.
+\newblock \url{
+  https://developers.google.com/maps/documentation/javascript/usage }.
+\newblock [Online; navštívené 30-Január-2014].
+
+\bibitem{jquery-browsers}
+The jQuery Foundation.
+\newblock jquery browser support.
+\newblock \url{ http://jquery.com/browser-support/ }.
+\newblock [Online; navštívené 8-Január-2014].
+
+\bibitem{jquery-plugins}
+The jQuery Foundation.
+\newblock The jquery plugin registry.
+\newblock \url{ http://plugins.jquery.com/ }.
+\newblock [Online; navštívené 8-Január-2014].
+
+\bibitem{knuth:tex}
+Donald~E. Knuth.
+\newblock {\em The {\TeX} Book}.
+\newblock Addison-Wesley, Reading, Massachusetts, 1984.
+\newblock Reprinted as Vol. A of {\it Computers \& Typesetting\/}, 1986.
+
+\bibitem{lamport:latex}
+Leslie Lamport.
+\newblock {\em {\LaTeX}: A Document Preparation System. User's Guide and
+  Reference Manual}.
+\newblock Addison-Wesley, Reading, Massachusetts, 1986.
+
+\bibitem{rpg-maker-game}
+Q-Success.
+\newblock Rpg maker.
+\newblock \url{
+  http://www.indiegames.com/2008/04/freeware_game_pick_yume_nikki.html" }.
+\newblock [Online; navštívené 8-Január-2014].
+
+\bibitem{rpg-maker}
+Q-Success.
+\newblock Rpg maker.
+\newblock \url{ http://www.rpgmakerweb.com/" }.
+\newblock [Online; navštívené 8-Január-2014].
+
+\bibitem{jquery-usage}
+Q-Success.
+\newblock Usage of javascript libraries for websites.
+\newblock \url{ http://w3techs.com/technologies/overview/javascript_library/all
+  }.
+\newblock [Online; navštívené 8-Január-2014].
+
+\bibitem{qrcode-about}
+DENSO WAVE.
+\newblock What is qr code?
+\newblock \url{ http://www.qrcode.com/en/about/ }.
+\newblock [Online; navštívené 8-Január-2014].
+
+\end{thebibliography}

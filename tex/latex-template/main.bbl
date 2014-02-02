@@ -1,0 +1,122 @@
+% $ biblatex auxiliary file $
+% $ biblatex version 1.4 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\entry{taxonomia}{article}{}
+  \name{author}{5}{}{%
+    {{}%
+     {Aigner}{A.}%
+     {Wolfgang}{W.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Miksch}{M.}%
+     {Silvia}{S.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {M\"{u}ller}{M.}%
+     {Wolfgang}{W.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Schumann}{S.}%
+     {Heidrun}{H.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Tominski}{T.}%
+     {Christian}{C.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Pergamon Press, Inc.}%
+  }
+  \strng{namehash}{AWMSMWSHTC1}
+  \strng{fullhash}{AWMSMWSHTC1}
+  \field{sortinit}{A}
+  \field{issn}{0097-8493}
+  \field{number}{3}
+  \field{pages}{401\bibrangedash 409}
+  \field{title}{Visualizing Time-Oriented Data-A Systematic View}
+  \field{volume}{31}
+  \field{journaltitle}{Comput. Graph.}
+  \field{month}{06}
+  \field{year}{2007}
+\endentry
+
+\entry{vis}{book}{}
+  \name{author}{4}{}{%
+    {{}%
+     {Aigner}{A.}%
+     {Wolfgang}{W.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Miksch}{M.}%
+     {Silvia}{S.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Schumann}{S.}%
+     {Heidrun}{H.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Tominski}{T.}%
+     {Christian}{C.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{AWMSSHTC1}
+  \strng{fullhash}{AWMSSHTC1}
+  \field{sortinit}{A}
+  \field{isbn}{978-0-85729-078-6}
+  \field{pages}{286}
+  \field{title}{Visualization of Time-Oriented Data}
+  \field{year}{2011}
+\endentry
+
+\entry{anemone}{online}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Fry}{F.}%
+     {Ben}{B.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {media.org}%
+  }
+  \strng{namehash}{FB1}
+  \strng{fullhash}{FB1}
+  \field{sortinit}{F}
+  \field{title}{Mapping how people use a website, Mappa.Mundi Magazine}
+  \verb{url}
+  \verb http://mappa.mundi.net/maps/maps_022/
+  \endverb
+  \field{year}{2001}
+\endentry
+
+\lossort
+\endlossort
+
+\endinput
