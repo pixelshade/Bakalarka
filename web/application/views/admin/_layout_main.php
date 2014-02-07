@@ -34,6 +34,12 @@
 							<li><a href="#">One more separated link</a></li> -->
 						</ul>
 					</li>
+					<li class="<?php echo $page=="page"? 'active ' : ''; ?>dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Game content <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="/admin/region">Regions</a></li>
+						</ul>
+					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 				<li><a href="/admin/user/logout">Logout</a></li>

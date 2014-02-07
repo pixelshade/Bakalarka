@@ -24,19 +24,19 @@ class Migration_Create_regions extends CI_Migration {
 				'type' => 'VARCHAR',
 				'constraint' => '100',
 			),		
-			'latitude_start' => array(
+			'lat_start' => array(
 				'type' => 'VARCHAR',
 				'constraint' => '100',
 			),
-			'longitude_start' => array(
+			'lon_start' => array(
 				'type' => 'VARCHAR',
 				'constraint' => '100',
 			),
-			'latitude_end' => array(
+			'lat_end' => array(
 				'type' => 'VARCHAR',
 				'constraint' => '100',
 			),
-			'longitude_end' => array(
+			'lon_end' => array(
 				'type' => 'VARCHAR',
 				'constraint' => '100',
 			),			

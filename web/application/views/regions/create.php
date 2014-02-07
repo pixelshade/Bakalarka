@@ -1,5 +1,5 @@
 
-<h2>Create a news item</h2>
+<h2>Create a region</h2>
 
 <?php echo validation_errors(); ?>
 
