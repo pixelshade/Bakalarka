@@ -2,7 +2,7 @@
 <?php echo validation_errors(); ?>
 <?php echo form_open(); ?>
 <script
-src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAm7a4WerB5sAzBPDPV2bDybFZYFKFJDi4&sensor=false">
+src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAm7a4WerB5sAzBPDPV2bDybFZYFKFJDi4&sensor=true">
 </script>
 
 <script>
@@ -16,22 +16,39 @@ var map;
 var infoWindow;
 
 function initialize() {
+	<?php
+	if(empty($region->id))	{
+		$lat = 48.15393334543018;
+		$lon = 17.103288173675537;
+	
+	    echo "var bounds = new google.maps.LatLngBounds(";		
+		echo "new google.maps.LatLng(".$lat.",".$lon."),";
+		echo "new google.maps.LatLng(".($lat+0.002).",".($lon+0.002).")";
+		echo ");";
+
+	} else {
+		$lat = ($region->lat_start + $region->lat_end) / 2;
+		$lon = ($region->lon_start +$region->lon_end) / 2;
+
+		echo "var bounds = new google.maps.LatLngBounds(";		
+		echo "new google.maps.LatLng(".$region->lat_start.",".$region->lon_end."),";
+		echo "new google.maps.LatLng(".$region->lat_end.",".$region->lon_start.")";
+		echo ");";
+	}
+
+
+
+	echo "var centerMap = new google.maps.LatLng(".$lat.",".$lon.");";
+	?>
 	var mapOptions = {
-		<?php
-		echo "center: new google.maps.LatLng(".$region->lat_start.",".$region->lon_start."),";
-		?>
+		center: centerMap,
 		zoom: 9
 	};
-	map = new google.maps.Map(document.getElementById('googleMap'),
-		mapOptions);
+	map = new google.maps.Map(document.getElementById('googleMap'),	mapOptions);
 
-	var bounds = new google.maps.LatLngBounds(
-		<?php
-		echo "new google.maps.LatLng(".$region->lat_end.",".$region->lon_end."),";
-		echo "new google.maps.LatLng(".$region->lat_start.",".$region->lon_start.")";
-		?>
+	
 
-		);
+		
 
   // Define the rectangle and set its editable property to true.
   rectangle = new google.maps.Rectangle({
@@ -46,7 +63,7 @@ function initialize() {
   google.maps.event.addListener(rectangle, 'bounds_changed', showNewRect);
 
   // Define an info window on the map.
-  infoWindow = new google.maps.InfoWindow();
+ // infoWindow = new google.maps.InfoWindow();
 }
 // Show the new coordinates for the rectangle in an info window.
 
