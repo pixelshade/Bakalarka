@@ -42,7 +42,7 @@ function initialize() {
 	?>
 	var mapOptions = {
 		center: centerMap,
-		zoom: 9
+		zoom: 15
 	};
 	map = new google.maps.Map(document.getElementById('googleMap'),	mapOptions);
 
