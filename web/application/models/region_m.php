@@ -17,7 +17,7 @@ class Region_m extends MY_Model
 		'image' => array(
 			'field' => 'image', 
 			'label' => 'Image', 
-			'rules' => 'trim|required|max_length[100]|xss_clean'
+			'rules' => 'trim|max_length[255]|xss_clean'
 		), 
 		'lat_start' => array(
 			'field' => 'lat_start', 

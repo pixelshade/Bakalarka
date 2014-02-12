@@ -63,7 +63,7 @@ function initialize() {
   google.maps.event.addListener(rectangle, 'bounds_changed', showNewRect);
 
   // Define an info window on the map.
- // infoWindow = new google.maps.InfoWindow();
+  infoWindow = new google.maps.InfoWindow();
 }
 // Show the new coordinates for the rectangle in an info window.
 
@@ -72,7 +72,7 @@ function showNewRect(event) {
 	var ne = rectangle.getBounds().getNorthEast();
 	var sw = rectangle.getBounds().getSouthWest();
 
-	var contentString = '<b>Rectangle moved.</b><br>' +
+	var contentString = '<b>Region moved.</b><br>' +
 	'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
 	'New south-west corner: ' + sw.lat() + ', ' + sw.lng();
 
@@ -100,7 +100,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 <table class="table">
 	<tr>
 		<td>name</td>
-		<td><?php echo form_input('name', set_value('name', $region->name), 'class="form-control"'); ?></td>
+		<td><?php echo form_input('name', set_value('name', $region->name), 'class="form-control"'); ?></td>		
 	</tr>
 	<tr>
 		<td>info</td>
@@ -108,7 +108,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	</tr>
 	<tr>
 		<td>image</td>
-		<td><?php echo form_input('image', set_value('image', $region->image), 'class="form-control"'); ?></td>
+		<td><?php echo form_dropdown('image',$images, '', 'class="form-control"'); ?>	</td>
 	</tr>
 	<tr>
 		<td>map</td>

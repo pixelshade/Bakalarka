@@ -34,9 +34,17 @@ class Content_Files_Model extends CI_Model {
         ->row();
     }
 
-   public function getAll(){    
-        $query = $this->db->get('content_files');
-        return $query->result_array();
+    public function get_all($filenames_for_dropdown = FALSE){ 
+        $results = $this->db->get('content_files')->result_array();
+
+        if ($filenames_for_dropdown) {                                            
+            foreach ($results as $value) {
+                $filenames[$value['filename']] = $value['filename'];               
+            }              
+            $empty = array('' => "No image");
+            $results = array_merge($empty,$filenames);
+        }
+        return $results;
     }
 
 }

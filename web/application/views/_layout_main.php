@@ -1,4 +1,4 @@
-<?php $this->load->view('include/header.php'); ?>
+ <?php $this->load->view('include/header.php'); ?>
 
 <?php  $page = $this->uri->segment(1); ?>
 	<div class="container">

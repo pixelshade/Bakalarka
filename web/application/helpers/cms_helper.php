@@ -48,9 +48,6 @@ function get_menu ($array, $child = FALSE)
 }
 
 
-
-
-
 /**
  * Dump helper. Functions to dump variables to the screen, in a nicley formatted manner.
  * @author Joost van Veen

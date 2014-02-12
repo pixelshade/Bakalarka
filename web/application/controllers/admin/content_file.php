@@ -12,11 +12,17 @@ class Content_file extends Admin_Controller
     public function index($msg = NULL)
     {
         // Fetch all content files
-        $this->data['content_files'] = $this->content_files_model->getAll();
+        $this->data['content_files'] = $this->content_files_model->get_all();
         $this->data['error'] = $msg;
         // Load view
         $this->data['subview'] = 'admin/content_file/upload';
         $this->load->view('admin/_layout_main', $this->data);
+    }
+
+    public function ajax()
+    {
+       $this->data['content_files'] = $this->content_files_model->get_all();
+       echo json_encode($this->data['content_files']);
     }
 
     public function upload_file()

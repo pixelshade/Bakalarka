@@ -20,6 +20,11 @@ class Region extends Admin_Controller
 
 	public function edit ($id = NULL)
 	{
+		//Fetch images
+		$this->load->model('content_files_model');
+		$this->data['images'] = $this->content_files_model->get_all(TRUE);
+
+
 		// Fetch a region or set a new one
 		if ($id) {
 			$this->data['region'] = $this->region_m->get($id);
