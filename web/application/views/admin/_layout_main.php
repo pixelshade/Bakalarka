@@ -37,8 +37,9 @@
 					<li class="<?php echo $page=="page"? 'active ' : ''; ?>dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Game content <b class="caret"></b></a>
 						<ul class="dropdown-menu">
+								<li><a href="/admin/content_file">Content files</a></li>
 							<li><a href="/admin/region">Regions</a></li>
-						</ul>
+						</ul> 
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">

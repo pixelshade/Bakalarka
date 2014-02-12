@@ -25,20 +25,20 @@ class Migration_Create_regions extends CI_Migration {
 				'constraint' => '100',
 			),		
 			'lat_start' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
+				'type' => 'DECIMAL',
+				'constraint' => '15,13',
 			),
 			'lon_start' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
+				'type' => 'DECIMAL',
+				'constraint' => '15,13',
 			),
 			'lat_end' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
+				'type' => 'DECIMAL',
+				'constraint' => '15,13',
 			),
 			'lon_end' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
+				'type' => 'DECIMAL',
+				'constraint' => '15,13',
 			),			
 		));
 		$this->dbforge->add_key('id', TRUE);

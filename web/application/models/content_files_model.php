@@ -36,13 +36,14 @@ class Content_Files_Model extends CI_Model {
 
     public function get_all($filenames_for_dropdown = FALSE){ 
         $results = $this->db->get('content_files')->result_array();
-
-        if ($filenames_for_dropdown) {                                            
+        $empty = array('' => "No image");
+        if ($filenames_for_dropdown && count($results) > 0) {                                            
             foreach ($results as $value) {
                 $filenames[$value['filename']] = $value['filename'];               
-            }              
-            $empty = array('' => "No image");
+            }                          
             $results = array_merge($empty,$filenames);
+        } else {
+            $results = $empty;
         }
         return $results;
     }

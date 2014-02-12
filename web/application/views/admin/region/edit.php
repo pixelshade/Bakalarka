@@ -31,8 +31,8 @@ function initialize() {
 		$lon = ($region->lon_start +$region->lon_end) / 2;
 
 		echo "var bounds = new google.maps.LatLngBounds(";		
-		echo "new google.maps.LatLng(".$region->lat_start.",".$region->lon_end."),";
-		echo "new google.maps.LatLng(".$region->lat_end.",".$region->lon_start.")";
+		echo "new google.maps.LatLng(".$region->lat_start.",".$region->lon_start."),";
+		echo "new google.maps.LatLng(".$region->lat_end.",".$region->lon_end.")";
 		echo ");";
 	}
 
@@ -77,9 +77,9 @@ function showNewRect(event) {
 	'New south-west corner: ' + sw.lat() + ', ' + sw.lng();
 
 	document.getElementById('lat_end').value = ne.lat();
-	document.getElementById('lon_start').value = ne.lng();
+	document.getElementById('lon_end').value = ne.lng();
 	document.getElementById('lat_start').value = sw.lat();
-	document.getElementById('lon_end').value = sw.lng();
+	document.getElementById('lon_start').value = sw.lng();
 
 
 

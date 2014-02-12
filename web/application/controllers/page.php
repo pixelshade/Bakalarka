@@ -11,9 +11,8 @@ class Page extends Frontend_Controller
 		$this->load->model('page_m');
 	}
 
-	public function index($id = NULL){
-		dump($id);
-		$this->load->view('_main_layout.php', $this->data);
+	public function index($id = NULL){		
+		$this->load->view('_layout_main.php', $this->data);
 	
 	}
 }

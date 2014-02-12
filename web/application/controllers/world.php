@@ -6,6 +6,10 @@ class World extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('region_m');
+		$this->load->model('page_m');
+		
+		// Fetch navigation
+		$this->data['menu'] = $this->page_m->get_nested();
 	}
 
 	public function index ()
@@ -19,17 +23,20 @@ class World extends Admin_Controller
 	}
 
 
-	public function json ($position = NULL)
-	{
-		$position = json_decode($position);
-		// $position['longtitude']
-		// $position['latitude']   =
-		// Fetch all worlds
-		$this->data['regions'] = $this->region_m->get();
+	public function json ($player_lat = NULL, $player_lon = NULL)
+	{		
 		
-		echo $waza = json_encode($this->data['regions']);
-		// echo "<hr>";
-		// print_r(json_decode($waza));
+		if($player_lat != NULL && $player_lon != NULL){
+		// Fetch all 
+			$this->data['regions'] = $this->region_m->get_by("(`lat_start`<=$player_lat) AND (`lon_start`<=$player_lon) AND
+																(`lat_end`>=$player_lat) AND (`lon_end`>=$player_lon)");
+			
+			$waza = json_encode($this->data['regions']);
+			
+			print_r(json_decode($waza));
+		} else {			
+			echo "<hr>no position given";
+		}
 	}
 
 
