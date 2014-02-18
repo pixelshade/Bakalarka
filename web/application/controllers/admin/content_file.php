@@ -6,6 +6,7 @@ class Content_file extends Admin_Controller
     {
         parent::__construct();
         $this->load->model('content_files_model');
+        $this->data['content_dir'] = "". $this->content_files_model->content_dir;
         $this->data['error'] = "";       
     }
 
@@ -17,12 +18,6 @@ class Content_file extends Admin_Controller
         // Load view
         $this->data['subview'] = 'admin/content_file/upload';
         $this->load->view('admin/_layout_main', $this->data);
-    }
-
-    public function ajax()
-    {
-       $this->data['content_files'] = $this->content_files_model->get_all();
-       echo json_encode($this->data['content_files']);
     }
 
     public function upload_file()
@@ -41,7 +36,7 @@ class Content_file extends Admin_Controller
         }
         else
         {
-            $config['upload_path'] = APPPATH."app_content/";//$this->content_files_model->upload_path;
+            $config['upload_path'] = $this->data['content_dir'];//$this->content_files_model->upload_path;
             $config['allowed_types'] = 'gif|jpg|png';
             $config['max_size'] = 1024 * 8;
            // $config['encrypt_name'] = TRUE;

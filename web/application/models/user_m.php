@@ -62,6 +62,7 @@ class User_M extends MY_Model
 				);
 			$this->session->set_userdata($data);			
 		}
+		return $user;
 	}
 	public function logout(){
 		$this->session->sess_destroy();

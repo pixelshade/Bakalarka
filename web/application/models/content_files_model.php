@@ -4,6 +4,7 @@
 */
 
 class Content_Files_Model extends CI_Model {
+    public $content_dir = "app_content/";
 
     public function insert_file($filename)
     {
@@ -16,13 +17,19 @@ class Content_Files_Model extends CI_Model {
 
     public function delete_file($file_id)
     {
-        $file = $this->get_file($file_id);
-        if (!$this->db->where('id', $file_id)->delete('content_files'))
-        {
-            return FALSE;
+        $file = $this->get_file($file_id);  
+        if(count($file) != 0) {     
+            $file_url_to_del = $this->content_dir . $file->filename;
+            if (!$this->db->where('id', $file_id)->delete('content_files'))
+            {
+                return FALSE;
+            }
+            if(unlink($file_url_to_del)){            
+                return TRUE;           
+            }
         }
-        unlink(APPPATH."app_content/" . $file->filename);    
-        return TRUE;
+        return FALSE;
+        
     }
 
     public function get_file($file_id = NULL)
@@ -34,10 +41,10 @@ class Content_Files_Model extends CI_Model {
         ->row();
     }
 
-    public function get_all($filenames_for_dropdown = FALSE){ 
+    public function get_all_for_dropdown(){
         $results = $this->db->get('content_files')->result_array();
-        $empty = array('' => "No image");
-        if ($filenames_for_dropdown && count($results) > 0) {                                            
+        $empty = array("" => "No image");
+        if (count($results) > 0) {                                            
             foreach ($results as $value) {
                 $filenames[$value['filename']] = $value['filename'];               
             }                          
@@ -46,6 +53,18 @@ class Content_Files_Model extends CI_Model {
             $results = $empty;
         }
         return $results;
+    }
+
+    public function get_all(){ 
+        return $this->db->get('content_files')->result_array(); 
+    }
+
+     public function get_all_names(){         
+         $result = $this->db->select('filename')->get('content_files')->result_array(); 
+         foreach ($result as $name) {
+             $names[] = $name['filename'];
+         }
+         return $names;
     }
 
 }

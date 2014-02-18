@@ -19,7 +19,7 @@
     <tbody>   
         <?php foreach ($content_files as $content_files_item): ?>
             <tr>
-                <td><?php echo $content_files_item['filename'] ?></td>
+                <td><?php echo anchor($content_dir.$content_files_item['filename'], $content_files_item['filename']); ?></td>
                 <td>
                     <?php echo anchor("admin/content_file/delete_file/". $content_files_item['id'], "Delete", 'class="btn btn-primary"'); ?>
                 </td>

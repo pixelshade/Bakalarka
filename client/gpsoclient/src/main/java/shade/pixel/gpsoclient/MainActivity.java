@@ -1,4 +1,4 @@
-package shade.pixel.gpsoclient;
+  package shade.pixel.gpsoclient;
 
 import java.util.Locale;
 
@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -34,6 +35,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    Button mUpdateButton;
+
+    MyHtmlBrowser htmlBrowser;
+    ContentFilesManager contentFilesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +78,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+
+        contentFilesManager = new ContentFilesManager(this);
+        contentFilesManager.UpdateFiles();
+
+
+    }
+
+
+
+    public void UpdateLocalContentFiles(View view){
+        contentFilesManager.UpdateFiles();
     }
 
 
@@ -177,6 +193,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
+
+
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));

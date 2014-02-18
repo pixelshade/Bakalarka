@@ -11,38 +11,82 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pixelshade on 9.2.2014.
  */
 
 public class MyHtmlBrowser {
-    private DefaultHttpClient httpClient;
+    private static MyHtmlBrowser instance = null;
+    private static DefaultHttpClient httpClient;
+    private String user, pass;
+    private String serverURL = "http://bak.skeletopedia.sk";
     private ProgressDialog progressDialog;
     private Context mContext;
 
-    public MyHtmlBrowser(Context context) {
+    public static MyHtmlBrowser getInstance(Context context) {
+        if (instance == null) {
+            instance = new MyHtmlBrowser(context);
+            httpClient = new DefaultHttpClient();
+        }
+        return instance;
+    }
+
+    protected MyHtmlBrowser(Context context) {
         mContext = context;
     }
 
-    private void SetCredenatials(String login, String pass) {
-        CredentialsProvider credProvider = new BasicCredentialsProvider();
-        credProvider.setCredentials(
-                new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
-                new UsernamePasswordCredentials(login, pass));
-        httpClient.setCredentialsProvider(credProvider);
+    public boolean Login(String user, String pass) {
+        setUser(user);
+        setPass(pass);
+        if (serverURL == "") {
+            Toast.makeText(mContext, "NO SERVER TO CONNECT", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            HttpPost httppost = new HttpPost(serverURL + "/admin/user/login");
+
+            try {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("email", user));
+                nameValuePairs.add(new BasicNameValuePair("password", pass));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                // Execute HTTP Post Request
+                StringBuilder result = new StringBuilder();
+                HttpResponse httpresponse = httpClient.execute(httppost);
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
+                while (true) {
+                    String line = br.readLine();
+                    if (line == null)
+                        break;
+                    result.append(line + "\n");
+                }
+                Log.d("AHA", result.toString());
+                //     Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
+                return true;
+            } catch (ClientProtocolException e) {
+                Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+        return false;
     }
 
     private void SetMarkersFromJSON(final GoogleMap googleMap, String JSON) {
@@ -66,13 +110,47 @@ public class MyHtmlBrowser {
             Log.d("DEBUG", "" + friends.length());
             Toast.makeText(mContext, "JSON je ?" + friends.length(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
 
     }
 
-    public void HttpGetAsyncString(String uristr, final GoogleMap kam) {
+
+    /**
+     * GET METHODS *
+     */
+
+    public String HttpGetString(String uristr) {
+        Log.d("AHA","Getting contents of: " +uristr);
+
+        StringBuilder result = new StringBuilder();
+        try{
+            httpClient = new DefaultHttpClient();
+            URI uri = new URI(uristr);
+            HttpGet httpget = new HttpGet(uri);
+            HttpResponse httpresponse = httpClient.execute(httpget);
+            if(httpresponse == null){
+                Log.d("AHA","HAHA");
+            } else {
+                Log.d("AHA","NENI NULL JE "+ uri);
+            }
+            BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
+            while (true) {
+                String line = br.readLine();
+                if (line == null)
+                    break;
+                result.append(line + "\n");
+            }
+        } catch (Exception e) {
+            Log.d("AHA","NENI NULL JE"+ e.toString());
+            e.printStackTrace();
+        }
+        Log.d("AHA","and we have: " +result);
+        return result.toString();
+    }
+
+    public void HttpGetAsyncString(String uristr) {
         AsyncTask<String, Integer, String> ast = new AsyncTask<String, Integer, String>() {
             @Override
             protected String doInBackground(String... params) {
@@ -81,9 +159,6 @@ public class MyHtmlBrowser {
                 try {
                     httpClient = new DefaultHttpClient();
                     URI uri = new URI(params[0]);
-
-                    // Basic Authorization
-                    SetCredenatials("java", "vaja");
 
                     HttpGet httpget = new HttpGet(params[0]);
 //                    httpget.setURI(uri);
@@ -106,12 +181,7 @@ public class MyHtmlBrowser {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-
-                if (!result.contains("Insert successfull")) {
-                    SetMarkersFromJSON(kam, result);
-                }
-                Log.d("DEBUG", result);
-//                progressDialog.dismiss();progressDialog.dismiss();
+                progressDialog.dismiss();
             }
 
             @Override
@@ -120,7 +190,7 @@ public class MyHtmlBrowser {
                 progressDialog = new ProgressDialog(mContext);
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.setMax(100);
-//                progressDialog.show();
+                progressDialog.show();
             }
 
             @Override
@@ -133,4 +203,28 @@ public class MyHtmlBrowser {
     }
 
 
+    public String getServerURL() {
+        return serverURL;
+    }
+
+    public void setServerURL(String serverURL) {
+        this.serverURL = serverURL;
+    }
+
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
 }

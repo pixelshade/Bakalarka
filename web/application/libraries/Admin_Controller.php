@@ -14,7 +14,7 @@ class Admin_Controller extends MY_Controller
 		$this->load->model('user_m');
 
 			// login check
-		$exception_uris = array('admin/user/login','admin/user/logout');
+		$exception_uris = array('admin/user/login','admin/user/logout','api/login','api/logout','api/getContentFilesList');
 		if(in_array(uri_string(), $exception_uris) == FALSE){
 			if($this->user_m->loggedin() == FALSE){
 				redirect('admin/user/login');
