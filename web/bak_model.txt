@@ -10,13 +10,20 @@ item_activities - id, item_definition_id, name, info, image, attribute_to_change
 enemy_deifnitions - id, name, info, image, attack, hp, reward_id, 
 enemy_instances - id, enemy_id, lat, lon, amount, 
 
-rewards - id, item_def_id, xp, gold
+rewards - id, item_def_id?, attribute_id, attribute_value
 
 skills - id, character_id, name, info, attribute_to_change, amount, image, requires_skill_id - id, skill_id, prerequisity_id
 
 
-quests - id, name, info, region_id, recommended_level, reward_id, code
-quest_objectives - id, quest_id, name, info, type, arg1, arg2, arg3, arg4
+quests - id, code, name, info, reward_id?, image?
+// REQUIREMENTS TO ACCEPT
+		autostart, region_id?, required_completed_quest_id?
+// REQUIREMENTS TO COMPLETE
+		duration, quest_objectives
+//
+
+quest_objectives - id, quest_id, name, info, 
+		type, arg1, arg2, arg3, arg4
 visit, kill, use_item, choose, cas
 
 user_quests - id, char_id, quest_id, complete

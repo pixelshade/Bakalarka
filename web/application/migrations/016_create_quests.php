@@ -13,11 +13,10 @@ class Migration_Create_quests extends CI_Migration {
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
 			),	
-			'region_id' => array(
-				'type' => 'INT',
-				'constraint' => 11,
-				'unsigned' => TRUE
-			),				
+			'code' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '50' 
+			),	
 			'name' => array(
 				'type' => 'VARCHAR',
 				'constraint' => '100',
@@ -25,11 +24,34 @@ class Migration_Create_quests extends CI_Migration {
 			'info' => array(
 				'type' => 'TEXT',				
 			),
+			'image' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '100',
+			),
 			'reward_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
-			),	
+			),
+			'autostart'	=> array(
+				'type' => 'BOOLEAN',
+			),
+			'region_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => TRUE
+			),
+			'required_completed_quest_id' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => TRUE
+			),				
+			'duration' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => TRUE
+			),			
+			
 		));
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('quests');

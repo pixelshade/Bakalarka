@@ -39,6 +39,7 @@
 						<ul class="dropdown-menu">
 								<li><a href="/admin/content_file">Content files</a></li>
 							<li><a href="/admin/region">Regions</a></li>
+							<li><a href="/admin/quest">Quests</a></li>
 						</ul> 
 					</li>
 				</ul>

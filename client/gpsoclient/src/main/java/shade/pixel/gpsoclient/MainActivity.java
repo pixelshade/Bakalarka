@@ -118,8 +118,9 @@ import com.google.android.gms.maps.model.LatLng;
     }
 
       public void LogoutAnStartLoginActivity(View view){
+          //TODO fix logout
           final Intent intent = new Intent(this, LoginActivity.class);
-          String url = htmlBrowser.getServerURL()+"/api/logout/";
+          String url = htmlBrowser.getServerURL()+"/api/logout";
           Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
           htmlBrowser.HttpGetAsyncString(url, new AsyncResponse() {
               @Override
