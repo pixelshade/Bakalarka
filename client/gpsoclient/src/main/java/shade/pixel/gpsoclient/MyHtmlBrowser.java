@@ -2,6 +2,8 @@ package shade.pixel.gpsoclient;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -13,11 +15,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -34,32 +41,43 @@ import java.util.List;
 
 public class MyHtmlBrowser {
     private static MyHtmlBrowser instance = null;
-    private static DefaultHttpClient httpClient;
+    private DefaultHttpClient httpClient;
     private String user, pass;
     private String serverURL = "http://bak.skeletopedia.sk";
     private ProgressDialog progressDialog;
     private Context mContext;
+    private CookieStore cookieStore;
+    private HttpContext localContext;
+
 
     public static MyHtmlBrowser getInstance(Context context) {
         if (instance == null) {
             instance = new MyHtmlBrowser(context);
-            httpClient = new DefaultHttpClient();
+            
         }
+        instance.setmContext(context);
         return instance;
     }
 
     protected MyHtmlBrowser(Context context) {
         mContext = context;
+        httpClient = new DefaultHttpClient();
+        cookieStore = new BasicCookieStore();
+        localContext = new BasicHttpContext();
+        localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
     }
+
 
     public boolean Login(String user, String pass) {
         setUser(user);
         setPass(pass);
-        if (serverURL == "") {
+        if (serverURL.equals("")) {
             Toast.makeText(mContext, "NO SERVER TO CONNECT", Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            HttpPost httppost = new HttpPost(serverURL + "/admin/user/login");
+            String url = serverURL + "/api/login";
+            Log.d("AHA",url);
+            HttpPost httppost = new HttpPost(url);
 
             try {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -69,7 +87,7 @@ public class MyHtmlBrowser {
 
                 // Execute HTTP Post Request
                 StringBuilder result = new StringBuilder();
-                HttpResponse httpresponse = httpClient.execute(httppost);
+                HttpResponse httpresponse = httpClient.execute(httppost,localContext);
                 BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
                 while (true) {
                     String line = br.readLine();
@@ -78,42 +96,26 @@ public class MyHtmlBrowser {
                     result.append(line + "\n");
                 }
                 Log.d("AHA", result.toString());
-                //     Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
                 return true;
             } catch (ClientProtocolException e) {
-                Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                 e.printStackTrace();
             } catch (IOException e) {
-                Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
             }
         }
         return false;
     }
 
-    private void SetMarkersFromJSON(final GoogleMap googleMap, String JSON) {
-
-        try {
-            JSONArray friends = new JSONArray(JSON);
-            int poc = 0;
-            for (int i = friends.length() - 1; i > -1; i--) {
-                if (poc > 100) break;
-                JSONObject item = friends.getJSONObject(i);
-                String time = item.getString("time");
-                double lati = item.getDouble("lati");
-                double longi = item.getDouble("longi");
-                String name = item.getString("name");
-                LatLng latLng = new LatLng(lati, longi);
-                MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(name).snippet(time);
-                googleMap.addMarker(markerOptions);
-                poc++;
-            }
-            Log.d("DEBUG", JSON);
-            Log.d("DEBUG", "" + friends.length());
-            Toast.makeText(mContext, "JSON je ?" + friends.length(), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
+    /**
+     * Is online check method
+     */
+    public boolean isOnline() {
+        ConnectivityManager cm =  (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
         }
-
-
+        return false;
     }
 
 
@@ -129,11 +131,11 @@ public class MyHtmlBrowser {
             httpClient = new DefaultHttpClient();
             URI uri = new URI(uristr);
             HttpGet httpget = new HttpGet(uri);
-            HttpResponse httpresponse = httpClient.execute(httpget);
+            HttpResponse httpresponse = httpClient.execute(httpget,localContext);
             if(httpresponse == null){
                 Log.d("AHA","HAHA");
             } else {
-                Log.d("AHA","NENI NULL JE "+ uri);
+                Log.d("AHA","NENI NULL JE " + uri);
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
             while (true) {
@@ -150,8 +152,18 @@ public class MyHtmlBrowser {
         return result.toString();
     }
 
-    public void HttpGetAsyncString(String uristr) {
-        AsyncTask<String, Integer, String> ast = new AsyncTask<String, Integer, String>() {
+    public class getAsyncStringTask extends AsyncTask<String, Integer, String>{
+            public AsyncResponse delegate;
+            public boolean locked;
+
+        public getAsyncStringTask(AsyncResponse delegate){
+            this.delegate = delegate;
+        }
+
+            public boolean isLocked(){
+                return locked;
+            }
+
             @Override
             protected String doInBackground(String... params) {
                 Integer count = 0;
@@ -159,10 +171,10 @@ public class MyHtmlBrowser {
                 try {
                     httpClient = new DefaultHttpClient();
                     URI uri = new URI(params[0]);
-
+                    Log.d("AHA","trying to get async:"+uri);
                     HttpGet httpget = new HttpGet(params[0]);
-//                    httpget.setURI(uri);
-                    HttpResponse httpresponse = httpClient.execute(httpget);
+
+                    HttpResponse httpresponse = httpClient.execute(httpget,localContext);
                     BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
                     while (true) {
                         String line = br.readLine();
@@ -172,7 +184,6 @@ public class MyHtmlBrowser {
                         publishProgress(count++);
                     }
                 } catch (Exception e) {
-                    Log.e("HttpClient", e.getMessage());
                     e.printStackTrace();
                 }
                 return result.toString();
@@ -181,12 +192,16 @@ public class MyHtmlBrowser {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
+                Log.d("AHA", "Async get result: "+ result);
                 progressDialog.dismiss();
+                delegate.processFinish(result);
+                locked = false;
             }
 
             @Override
             protected void onPreExecute() {
-                super.onPreExecute();
+                locked = true;
+               // super.onPreExecute();
                 progressDialog = new ProgressDialog(mContext);
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.setMax(100);
@@ -198,8 +213,13 @@ public class MyHtmlBrowser {
                 super.onProgressUpdate(values);
                 progressDialog.incrementProgressBy(values[0]);
             }
-        };
-        ast.execute(uristr);
+
+
+    }
+
+    public void HttpGetAsyncString(String uristr, AsyncResponse delegate) {
+        getAsyncStringTask ast = new getAsyncStringTask(delegate);
+        if(!ast.isLocked())   ast.execute(uristr);
     }
 
 
@@ -226,5 +246,13 @@ public class MyHtmlBrowser {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public Context getmContext() {
+        return mContext;
+    }
+
+    public void setmContext(Context mContext) {
+        this.mContext = mContext;
     }
 }

@@ -47,7 +47,7 @@ public class ContentFilesManager {
     }
 
     private void GetServerContentFilenames() {
-        AsyncTask<String,Integer, ArrayList<String>> asyncTask = new AsyncTask<String, Integer, ArrayList<String>>() {
+        AsyncTask<String, Integer, ArrayList<String>> asyncTask = new AsyncTask<String, Integer, ArrayList<String>>() {
             ArrayList<String> serverFilenames = new ArrayList<String>();
 
             @Override
@@ -57,17 +57,10 @@ public class ContentFilesManager {
                 String json = htmlBrowser.HttpGetString(htmlBrowser.getServerURL() + "/api/getContentFilesList");
                 try {
                     jsonArray = new JSONArray(json);
+                    for (int i = 0; i < jsonArray.length(); i++)
+                            serverFilenames.add(jsonArray.get(i).toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
-
-                if (jsonArray != null) {
-                    for (int i = 0; i < jsonArray.length(); i++)
-                        try {
-                            serverFilenames.add(jsonArray.get(i).toString());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
                 }
 
                 //Toast.makeText(mContext, json, Toast.LENGTH_LONG).show();
@@ -78,10 +71,10 @@ public class ContentFilesManager {
             protected void onPostExecute(ArrayList<String> remoteFiles) {
                 super.onPostExecute(remoteFiles);
                 ArrayList<String> filesToDownload = GetListOfMissingLocalFiles(remoteFiles);
-                if(filesToDownload.isEmpty()){
-                    Toast.makeText(mContext,"nothing to update", Toast.LENGTH_LONG).show();
+                if (filesToDownload.isEmpty()) {
+                    Toast.makeText(mContext, "nothing to update", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(mContext,"Starting downlaoding files", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Starting downlaoding files", Toast.LENGTH_LONG).show();
                     DownloadFiles(filesToDownload);
                 }
             }
@@ -90,7 +83,7 @@ public class ContentFilesManager {
         };
 
 
-       asyncTask.execute();
+        asyncTask.execute();
     }
 
     private ArrayList<String> GetListOfMissingLocalFiles(ArrayList<String> remoteFiles) {
@@ -104,7 +97,7 @@ public class ContentFilesManager {
             CreateDirIfDoesntExist();
             File contentFileDir = new File(Environment.getExternalStorageDirectory() + "/" + ContentFileDir);
             localFiles = new ArrayList<String>(Arrays.asList(contentFileDir.list()));
-            Log.d("AHA",localFiles.toString());
+            Log.d("AHA", localFiles.toString());
         } else {
             Toast.makeText(mContext, "No sdcard", Toast.LENGTH_SHORT).show();
         }
@@ -154,7 +147,7 @@ public class ContentFilesManager {
 
                 for (String filename : filenames[0]) {
                     String fileURL = serverURL + "/  " + serverContentDir + filename;
-                    Log.d("AHA",fileURL);
+                    Log.d("AHA", fileURL);
                     try {
                         URL url = new URL(fileURL);
                         URLConnection conection = url.openConnection();

@@ -1,7 +1,9 @@
   package shade.pixel.gpsoclient;
 
+import java.util.HashMap;
 import java.util.Locale;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,7 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +20,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+import com.google.android.gms.maps.model.LatLng;
+
+  public class MainActivity extends ActionBarActivity implements ActionBar.TabListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -38,7 +43,26 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     Button mUpdateButton;
 
     MyHtmlBrowser htmlBrowser;
+    GPSTracker gpsTracker;
     ContentFilesManager contentFilesManager;
+
+
+
+      AsyncResponse afterLoginCheck = new AsyncResponse() {
+          @Override
+          public void processFinish(String output) {
+              HashMap<String,String> response = ResponseJSONParser.getResponse(output);
+              Log.d("AHA",response.toString());
+              if(response != null && response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")){
+                  contentFilesManager.UpdateFiles();
+
+              } else {
+                  LogoutAnStartLoginActivity(null);
+              }
+
+          }
+      };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,18 +103,49 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setTabListener(this));
         }
 
-        contentFilesManager = new ContentFilesManager(this);
-        contentFilesManager.UpdateFiles();
 
+        htmlBrowser = MyHtmlBrowser.getInstance(this);
+
+        if (htmlBrowser.isOnline()) {
+            contentFilesManager = new ContentFilesManager(this);
+            gpsTracker = new GPSTracker(this);
+            htmlBrowser.HttpGetAsyncString(htmlBrowser.getServerURL()+"/api/isLoggedIn",afterLoginCheck);
+
+        } else {
+            // TODO we are offline
+        }
 
     }
 
+      public void LogoutAnStartLoginActivity(View view){
+          final Intent intent = new Intent(this, LoginActivity.class);
+          String url = htmlBrowser.getServerURL()+"/api/logout/";
+          Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+          htmlBrowser.HttpGetAsyncString(url, new AsyncResponse() {
+              @Override
+              public void processFinish(String output) {
+                  startActivity(intent);
+                  finish();
 
+              }
+          });
+      }
+
+    public void UpdatePosition(View view){
+        LatLng latLng = gpsTracker.getLatLng();
+        String url = htmlBrowser.getServerURL()+"/api/json/"+latLng.latitude+"/"+latLng.longitude;
+        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+        htmlBrowser.HttpGetAsyncString(url, new AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+
+            }
+        });
+    }
 
     public void UpdateLocalContentFiles(View view){
         contentFilesManager.UpdateFiles();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,7 +182,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
-    /**
+      /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
@@ -164,6 +219,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return null;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * A placeholder fragment containing a simple view.

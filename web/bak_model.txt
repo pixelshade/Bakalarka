@@ -19,7 +19,7 @@ quests - id, name, info, region_id, recommended_level, reward_id, code
 quest_objectives - id, quest_id, name, info, type, arg1, arg2, arg3, arg4
 visit, kill, use_item, choose, cas
 
-completed_quests - id, char_id, quest_id
+user_quests - id, char_id, quest_id, complete
 
 
 

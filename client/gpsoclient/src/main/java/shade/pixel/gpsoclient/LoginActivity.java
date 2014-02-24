@@ -15,6 +15,11 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.JsonParser;
+
+import java.util.HashMap;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -23,16 +28,6 @@ import android.widget.TextView;
 public class LoginActivity extends Activity {
     MyHtmlBrowser htmlBrowser;
     Intent mIntent;
-
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello",
-            "bar@example.com:world"
-    };
 
     /**
      * The default email to populate the email field with.
@@ -55,41 +50,47 @@ public class LoginActivity extends Activity {
     private View mLoginStatusView;
     private TextView mLoginStatusMessageView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
 
+
         mIntent = new Intent(this, MainActivity.class);
         // Set up the login form.
         mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
         mEmailView = (EditText) findViewById(R.id.email);
         mEmailView.setText(mEmail);
-
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mLoginStatusView = findViewById(R.id.login_status);
-        mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
-
-        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
         htmlBrowser = MyHtmlBrowser.getInstance(this);
+        if (htmlBrowser.isOnline()) {
+
+            mPasswordView = (EditText) findViewById(R.id.password);
+            mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                    if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                        attemptLogin();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+            mLoginFormView = findViewById(R.id.login_form);
+            mLoginStatusView = findViewById(R.id.login_status);
+            mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+
+            findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    attemptLogin();
+                }
+            });
+        } else {
+            Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -209,7 +210,8 @@ public class LoginActivity extends Activity {
             showProgress(false);
 
             if (success) {
-
+                //  htmlBrowser.HttpGetAsyncString(htmlBrowser.getServerURL()+"/api/isLoggedIn");
+                //Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
                 startActivity(mIntent);
                 finish();
 

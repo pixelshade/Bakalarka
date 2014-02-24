@@ -12,7 +12,10 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by pixelshade on 9.2.2014.
  */
@@ -62,6 +65,7 @@ public class GPSTracker extends Service implements LocationListener {
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
+                Toast.makeText(mContext, "GPS is not enabled, trying to get position via network", Toast.LENGTH_SHORT).show();
             } else {
                 this.canGetLocation = true;
                 // First get location from Network Provider
@@ -104,7 +108,7 @@ public class GPSTracker extends Service implements LocationListener {
             e.printStackTrace();
         }
 
-        return new LatLng(location.getLatitude(),location.getLongitude());
+        return new LatLng(location.getLatitude(), location.getLongitude());
     }
 
     /**

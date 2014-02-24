@@ -35,8 +35,8 @@
         <activity
             android:name="shade.pixel.gpsoclient.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-            android:noHistory="true"
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:noHistory="true">
         </activity>
     </application>
 
