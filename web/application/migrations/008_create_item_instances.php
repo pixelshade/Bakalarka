@@ -19,12 +19,14 @@ class Migration_Create_item_instances extends CI_Migration {
 				'unsigned' => TRUE				
 			),	
 			'latitude' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
+				'type' => 'DECIMAL',
+				'constraint' => '15,13',
+				'null' => TRUE,
 			),
-			'longitude' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
+			'longtitude' => array(
+				'type' => 'DECIMAL',
+				'constraint' => '15,13',
+				'null' => TRUE,
 			),
 			'amount' => array(
 				'type' => 'INT',
@@ -37,7 +39,8 @@ class Migration_Create_item_instances extends CI_Migration {
 				'unsigned' => TRUE,			
 			),
 			'code' => array(
-				'type' => 'TEXT',				
+				'type' => 'TEXT',
+				'null' => TRUE,				
 			),		
 		));
 		$this->dbforge->add_key('id', TRUE);

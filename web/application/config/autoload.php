@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','html', 'cms');
+$autoload['helper'] = array('url','html', 'cms', 'array_column');
 //html mozno netreba
 
 

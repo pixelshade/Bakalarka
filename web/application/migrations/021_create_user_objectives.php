@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Create_completed_quests extends CI_Migration {
+class Migration_Create_user_objectives extends CI_Migration {
 
 	public function up()
 	{
@@ -18,18 +18,21 @@ class Migration_Create_completed_quests extends CI_Migration {
 				'constraint' => 11,
 				'unsigned' => TRUE				
 			),	
-			'quest_id' => array(
+			'objective_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE				
-			)	
+			),		
+			'completed' => array(
+				'type' => 'BOOLEAN',				
+			)		
 		));
 		$this->dbforge->add_key('id', TRUE);
-		$this->dbforge->create_table('completed_quests');
+		$this->dbforge->create_table('user_objectives');
 	}
 
 	public function down()
 	{
-		$this->dbforge->drop_table('completed_quests');
+		$this->dbforge->drop_table('user_objectives');
 	}
 }

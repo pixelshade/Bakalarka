@@ -25,26 +25,15 @@ class Migration_Create_quest_objectives extends CI_Migration {
 			'info' => array(
 				'type' => 'TEXT',				
 			),
+			// required_answer(text_input)/required_item(item_id)/required_quest(quest_id)/required_objective(objective_id)
 			'type' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE				
 			),	
 			'arg0' => array(
-				'type' => 'INT',
-				'constraint' => 11,
-				'unsigned' => TRUE				
-			),		
-			'arg1' => array(
-				'type' => 'INT',
-				'constraint' => 11,
-				'unsigned' => TRUE				
-			),		
-			'arg2' => array(
-				'type' => 'INT',
-				'constraint' => 11,
-				'unsigned' => TRUE				
-			),	
+				'type' => 'TEXT',				
+			)
 		));
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('quest_objectives');

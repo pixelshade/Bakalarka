@@ -46,6 +46,28 @@ class MY_Model extends CI_Model
 		return $this->db->get($this->_table_name)->$method();
 	}
 
+
+	public function get_array($id = NULL, $single = FALSE){
+		if($id != NULL){
+			$filter = $this->_primary_filter;
+			$id = $filter($id);
+			$this->db->where($this->_primary_key, $id);
+			$method = 'row_array';
+
+		} elseif($single == TRUE){
+			$method = 'row_array';
+
+		} else {
+			$method = 'result_array';
+		}
+
+		if(!count($this->db->ar_orderby)){
+			$this->db->order_by($this->_order_by);
+
+		}
+		return $this->db->get($this->_table_name)->$method();
+	}
+
 	public function get_by($where, $single = FALSE){
 		$this->db->where($where);
 		return $this->get(NULL, $single);

@@ -23,29 +23,20 @@ class Migration_Create_characters extends CI_Migration {
 				'constraint' => '100',
 			),
 			'latitude' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
+				'type' => 'DECIMAL',
+				'constraint' => '15,13',
 			),
-			'longitude' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
-			),
-			'experience' => array(
-				'type' => 'INT',
-				'constraint' => 11,
-				'unsigned' => TRUE				
+			'longtitude' => array(
+				'type' => 'DECIMAL',
+				'constraint' => '15,13',
 			),			
-			'hp' => array(
-				'type' => 'INT',
-				'constraint' => 11,							
-			),
-			'inventory' => array(
+			'inventory_json' => array(
 				'type' => 'TEXT',				
-			),			
-			'gold' => array(
-				'type' => 'INT',
-				'constraint' => '11',
-			),			
+			),	
+			'stats_json' => array(
+				'type' => 'TEXT',				
+			),		
+					
 		));
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('characters');

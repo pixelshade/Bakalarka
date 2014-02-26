@@ -56,13 +56,15 @@ class Quest_m extends MY_Model
 	{
 		$quest = new stdClass();
 
+		$quest->code = '';
 		$quest->name = '';
 		$quest->info = '';
 		$quest->image = '';
-		$quest->lat_start = '';
-		$quest->lon_start = '';
-		$quest->lat_end = '';
-		$quest->lon_end = '';
+		$quest->reward_id = '';
+		$quest->autostart = '';
+		$quest->region_id = '';
+		$quest->required_completed_quest_id = '';
+		$quest->duration = '';
 
 		return $quest;
 	}

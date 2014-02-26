@@ -19,19 +19,13 @@ class Migration_Create_enemy_instances extends CI_Migration {
 				'unsigned' => TRUE,				
 			),		
 			'latitude' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
+				'type' => 'DECIMAL',
+				'constraint' => '15,13',
 			),
-			'longitude' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
-			),	
-			'amount' => array(
-				'type' => 'INT',
-				'constraint' => 11,
-				'unsigned' => TRUE,				
-			),		
-
+			'longtitude' => array(
+				'type' => 'DECIMAL',
+				'constraint' => '15,13',
+			),			
 		));
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('enemy_instances');

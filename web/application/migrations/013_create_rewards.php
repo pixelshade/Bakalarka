@@ -12,20 +12,32 @@ class Migration_Create_rewards extends CI_Migration {
 				'constraint' => 11,
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
-			),		
+			),	
+			'name' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '100',
+			),	
 			'item_definition_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE
+				'unsigned' => TRUE,
+				'null' => TRUE,	
 			),		
-			'experience' => array(
+			'item_amount' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE
-			),	
-			'gold' => array(
+				'null' => TRUE,					
+			),		
+			'attribute_id' => array(
 				'type' => 'INT',
-				'constraint' => 11						
+				'constraint' => 11,
+				'unsigned' => TRUE,
+				'null' => TRUE,	
+			),	
+			'attribute_amount' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'null' => TRUE,							
 			),	
 		));
 		$this->dbforge->add_key('id', TRUE);

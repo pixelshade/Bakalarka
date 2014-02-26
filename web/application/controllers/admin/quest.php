@@ -24,14 +24,30 @@ class Quest extends Admin_Controller
 		$this->load->model('content_files_model');
 		$this->data['images'] = $this->content_files_model->get_all_for_dropdown();
 
+		//Fetch regions
+		$this->load->model('region_m');
+		$this->data['regions'] = $this->content_files_model->get_all_for_dropdown();
+
+				
+
+		// Fetch rewards
+		$this->load->model('reward_m');
+		$this->data['rewards'] = $this->content_files_model->get_all_for_dropdown();
+
 
 		// Fetch a quest or set a new one
 		if ($id) {
 			$this->data['quest'] = $this->quest_m->get($id);
 			count($this->data['quest']) || $this->data['errors'][] = 'quest could not be found';
+			// Fetch quests other without this
+			// $where = "id != '".$id."'";
+			// $this->data['quests'] = $this->quest_m->get_by($where);
 		}
 		else {
 			$this->data['quest'] = $this->quest_m->get_new();
+		
+			// Fetch quests
+			$this->data['quests'] = $this->quest_m->get();
 		}
 		
 		// Set up the form
@@ -41,13 +57,15 @@ class Quest extends Admin_Controller
 		// Process the form
 		if ($this->form_validation->run() == TRUE) {
 			$data = $this->quest_m->array_from_post(array(
+				'code',
 				'name',
 				'info',
 				'image',
-				'lat_start',
-				'lon_start',
-				'lat_end',
-				'lon_end'
+				'reward_id',
+				'autostart',
+				'region_id',
+				'required_completed_quest_id',
+				'duration'
 				));
 			$this->quest_m->save($data, $id);
 			redirect('admin/quest');
@@ -62,16 +80,6 @@ class Quest extends Admin_Controller
 	{
 		$this->quest_m->delete($id);
 		redirect('admin/quest');
-	}
-
-
-	public function _is_coordinate ($str)
-	{
-		if((bool)preg_match('/^[\-+]?[0-9]+\.[0-9]+$/', $str)){
-			$this->form_validation->set_message('_is_coordinate', '%s should be coordinate');
-			return FALSE;
-		}
-		return TRUE;		
 	}
 
 }

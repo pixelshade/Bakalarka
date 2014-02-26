@@ -29,12 +29,12 @@ class Migration_Create_skills extends CI_Migration {
 				'type' => 'VARCHAR',
 				'constraint' => '100',
 			),
-			'attribute_to_change' => array(
+			'attribute_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE
 			),
-			'amount' => array(
+			'attribute_amount' => array(
 				'type' => 'INT',
 				'constraint' => 11				
 			),		

@@ -1,5 +1,5 @@
 <section>
-	<h2>News regions</h2>
+	<h2>Regions</h2>
 	<?php echo anchor('admin/region/edit', '<i class="icon-plus"></i> Add an region'); ?>
 	<table class="table table-striped">
 		<thead>
@@ -31,7 +31,7 @@
 <?php endforeach; ?>
 <?php else: ?>
 		<tr>
-			<td colspan="3">We could not find any regions.</td>
+			<td colspan="9">We could not find any regions.</td>
 		</tr>
 <?php endif; ?>	
 		</tbody>

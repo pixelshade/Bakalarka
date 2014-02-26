@@ -29,18 +29,17 @@ class Migration_Create_item_activities extends CI_Migration {
 				'type' => 'VARCHAR',
 				'constraint' => '100',
 			),		
-			'attribute_change_id' => array(
+			'attribute_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE,				
 			),		
-			'change_value' => array(
+			'attribute_amount' => array(
 				'type' => 'INT',
 				'constraint' => 11,								
 			),	
 			'active' => array(
-				'type' => 'INT',
-				'constraint' => 1,							
+				'type' => 'BOOLEAN',											
 			),	
 		));
 		$this->dbforge->add_key('id', TRUE);

@@ -19,7 +19,11 @@ class Migration_Create_attributes extends CI_Migration {
 			),		
 			'info' => array(
 				'type' => 'TEXT',				
-			),		
+			),	
+			'image' => array(
+				'type' => 'VARCHAR',				
+				'constraint' => '100',
+			),
 		));
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('attributes');

@@ -34,5 +34,5 @@ attributes - id, name, info
 
 
 
-config - game_name, info, image, local_db,vzorec_na_vypocet_dmg, vzorec_na_vypocet_defense, vzorec_who_starts, level_xp, level_coef, max_level, max_characters, used_controllers
+config - game_name, info, image, local_db,vzorec_na_vypocet_dmg, vzorec_na_vypocet_defense, vzorec_who_starts, vzorec_survival, level_xp, level_coef, max_level, max_characters, used_controllers
 

@@ -24,15 +24,9 @@ class Migration_Create_enemy_definitions extends CI_Migration {
 				'type' => 'VARCHAR',
 				'constraint' => '100',
 			),		
-			'attack' => array(
-				'type' => 'INT',
-				'constraint' => 11,					
-			),	
-			'hp' => array(
-				'type' => 'INT',
-				'constraint' => 11,
-				'unsigned' => TRUE,				
-			),	
+			'stats_json' => array(
+				'type' => 'TEXT',				
+			),			
 			'reward_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,

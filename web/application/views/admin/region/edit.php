@@ -108,7 +108,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	</tr>
 	<tr>
 		<td>image</td>
-		<td><?php echo form_dropdown('image',$images, '', 'class="form-control"'); ?>	</td>
+		<td><?php echo form_dropdown('image',$images,  $region->image, 'class="form-control"'); ?>	</td>
 	</tr>
 	<tr>
 		<td>map</td>

@@ -39,6 +39,7 @@ class Migration_Create_regions extends CI_Migration {
 			'lon_end' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '15,13',
+				'null' => TRUE,
 			),			
 		));
 		$this->dbforge->add_key('id', TRUE);

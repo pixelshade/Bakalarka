@@ -6,6 +6,10 @@
 
 <table class="table">
 	<tr>
+		<td>code</td>
+		<td><?php echo form_input('code', set_value('code', $quest->info), 'class="form-control"'); ?></td>
+	</tr>
+	<tr>
 		<td>name</td>
 		<td><?php echo form_input('name', set_value('name', $quest->name), 'class="form-control"'); ?></td>		
 	</tr>
@@ -15,28 +19,29 @@
 	</tr>
 	<tr>
 		<td>image</td>
-		<td><?php echo form_dropdown('image',$images, '', 'class="form-control"'); ?>	</td>
+		<td><?php echo form_dropdown('image',$images, $quest->image, 'class="form-control"'); ?>	</td>
 	</tr>
 	<tr>
-		<td>map</td>
-		<td><div id="googleMap" style="height:380px;"></div></td>
+		<td>reward_id</td>
+		<td><?php echo form_dropdown('reward_id',$rewards, '', 'class="form-control"'); ?>	</td>
+	</tr>
+	<tr>
+		<td>autostart</td>		
+		<td><?php 
+		echo form_boolean_select('autostart', $quest->autostart); ?>	</td>
+	</tr>
+	<tr>
+		<td>region_id</td>		
+		<td><?php echo form_dropdown('region_id',$regions, '', 'class="form-control"'); ?>	</td>
+	</tr>
+	<tr>
+		<td>required_completed quest</td>
+		<td><?php echo form_dropdown('required_completed_quest', $required_completed_quests, $quest->required_completed_quest, 'class="form-control"'); ?>	</td>
+	</tr>
+	<tr>
+		<td>duration</td>
+		<td><?php echo form_input('duration',set_value('duration', $quest->duration), 'class="form-control"'); ?>	</td>
 	</tr>
 </table>
-<table class="table">
-	<tr>
-		<td>lat_start</td>
-		<td><?php echo form_input('lat_start', set_value('lat_start', $quest->lat_start), 'class="form-control" id="lat_start"'); ?></td>
-		<td>lon_start</td>
-		<td><?php echo form_input('lon_start', set_value('lon_start', $quest->lon_start), 'class="form-control" id="lon_start"'); ?></td>
-	</tr>
-	<tr>
-		<td>lat_end</td>
-		<td><?php echo form_input('lat_end', set_value('lat_end', $quest->lat_end), 'class="form-control" id="lat_end"'); ?></td>
-		<td>lon_end</td>
-		<td><?php echo form_input('lon_end', set_value('lon_end', $quest->lon_end), 'class="form-control" id="lon_end"'); ?></td>
-	</tr>
-	<tr>		
-		<td colspan="4"><?php echo form_submit('submit', 'Save', 'class="btn btn-primary"'); ?></td>
-	</tr>
-</table>
+<?php echo form_submit('submit', 'Save', 'class="btn btn-primary"'); ?>
 <?php echo form_close();?>
