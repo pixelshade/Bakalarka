@@ -6,6 +6,10 @@ class Quest extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('quest_m');
+		$this->load->model('content_files_model');
+		$this->load->model('region_m');
+		$this->load->model('reward_m');
+
 	}
 
 	public function index ()
@@ -21,33 +25,28 @@ class Quest extends Admin_Controller
 	public function edit ($id = NULL)
 	{
 		//Fetch images
-		$this->load->model('content_files_model');
-		$this->data['images'] = $this->content_files_model->get_all_for_dropdown();
+		$this->data['images'] = $this->content_files_model->get_for_dropdown();
 
 		//Fetch regions
-		$this->load->model('region_m');
-		$this->data['regions'] = $this->content_files_model->get_all_for_dropdown();
-
-				
+		$this->data['regions'] = $this->region_m->get_for_dropdown();				
 
 		// Fetch rewards
-		$this->load->model('reward_m');
-		$this->data['rewards'] = $this->content_files_model->get_all_for_dropdown();
-
+		$this->data['rewards'] = $this->reward_m->get_for_dropdown();
 
 		// Fetch a quest or set a new one
 		if ($id) {
 			$this->data['quest'] = $this->quest_m->get($id);
 			count($this->data['quest']) || $this->data['errors'][] = 'quest could not be found';
 			// Fetch quests other without this
-			// $where = "id != '".$id."'";
-			// $this->data['quests'] = $this->quest_m->get_by($where);
+			$where = "id != '".$id."'";
+			$this->data['quests'] = $this->quest_m->get_by_for_dropdown($where);
+			// Fetch required quests
 		}
 		else {
 			$this->data['quest'] = $this->quest_m->get_new();
 		
 			// Fetch quests
-			$this->data['quests'] = $this->quest_m->get();
+			$this->data['quests'] = $this->quest_m->get_for_dropdown();
 		}
 		
 		// Set up the form
@@ -65,7 +64,8 @@ class Quest extends Admin_Controller
 				'autostart',
 				'region_id',
 				'required_completed_quest_id',
-				'duration'
+				'completion_requirement_type',
+				'completion_requirement',
 				));
 			$this->quest_m->save($data, $id);
 			redirect('admin/quest');

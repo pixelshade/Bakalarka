@@ -44,7 +44,7 @@
 							<li><a href="/admin/attribute">Attributes</a></li>
 							<li><a href="/admin/reward">Rewards</a></li>
 							<li><a href="/admin/user_quest">Characters active quests</a></li>
-							<li><a href="/admin/user_objective">Characters active objectives</a></li>
+						<!-- 	<li><a href="/admin/user_objective">Characters active objectives</a></li> -->
 						</ul> 
 					</li>
 				</ul>

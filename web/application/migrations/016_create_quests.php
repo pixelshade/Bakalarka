@@ -54,7 +54,15 @@ class Migration_Create_quests extends CI_Migration {
 				'constraint' => 11,
 				'unsigned' => TRUE,
 				'null' => TRUE,	
-			),						
+			),					
+			'completion_requirement_type' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => TRUE				
+			),	
+			'completion_requirement' => array(
+				'type' => 'TEXT',				
+			)					
 			
 		));
 		$this->dbforge->add_key('id', TRUE);

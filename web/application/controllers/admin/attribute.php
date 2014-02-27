@@ -22,7 +22,7 @@ class Attribute extends Admin_Controller
 	{
 		//Fetch images
 		$this->load->model('content_files_model');
-		$this->data['images'] = $this->content_files_model->get_all_for_dropdown();
+		$this->data['images'] = $this->content_files_model->get_for_dropdown();
 
 
 		// Fetch a attribute or set a new one

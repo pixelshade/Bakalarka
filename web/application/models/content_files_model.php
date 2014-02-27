@@ -41,7 +41,7 @@ class Content_Files_Model extends CI_Model {
         ->row();
     }
 
-    public function get_all_for_dropdown(){
+    public function get_for_dropdown(){
         $results = $this->db->get('content_files')->result_array();
         $empty = array("" => "No image");
         if (count($results) > 0) {                                            

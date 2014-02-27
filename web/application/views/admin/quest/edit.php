@@ -7,7 +7,11 @@
 <table class="table">
 	<tr>
 		<td>code</td>
-		<td><?php echo form_input('code', set_value('code', $quest->info), 'class="form-control"'); ?></td>
+		<td><?php echo form_input('code', set_value('code', $quest->code), 'class="form-control"'); ?></td>
+	</tr>
+	<tr>
+		<td>region_id</td>		
+		<td><?php echo form_dropdown('region_id',$regions, $quest->region_id, 'class="form-control"'); ?>	</td>
 	</tr>
 	<tr>
 		<td>name</td>
@@ -23,7 +27,7 @@
 	</tr>
 	<tr>
 		<td>reward_id</td>
-		<td><?php echo form_dropdown('reward_id',$rewards, '', 'class="form-control"'); ?>	</td>
+		<td><?php echo form_dropdown('reward_id',$rewards, $quest->reward_id, 'class="form-control"'); ?>	</td>
 	</tr>
 	<tr>
 		<td>autostart</td>		
@@ -31,16 +35,28 @@
 		echo form_boolean_select('autostart', $quest->autostart); ?>	</td>
 	</tr>
 	<tr>
-		<td>region_id</td>		
-		<td><?php echo form_dropdown('region_id',$regions, '', 'class="form-control"'); ?>	</td>
-	</tr>
-	<tr>
 		<td>required_completed quest</td>
-		<td><?php echo form_dropdown('required_completed_quest', $required_completed_quests, $quest->required_completed_quest, 'class="form-control"'); ?>	</td>
+		<td><?php echo form_dropdown('required_completed_quest_id', $quests, $quest->required_completed_quest_id, 'class="form-control"'); ?>	</td>
 	</tr>
 	<tr>
-		<td>duration</td>
+		<td>duration(seconds)</td>
 		<td><?php echo form_input('duration',set_value('duration', $quest->duration), 'class="form-control"'); ?>	</td>
+	</tr>
+	<tr>
+		<td>image</td>
+		<td><?php echo form_dropdown('image',$images, $quest->image, 'class="form-control"'); ?>	</td>
+	</tr>
+	<tr>
+		<td>reward_id</td>
+		<td><?php echo form_dropdown('reward_id',$rewards, $quest->reward_id, 'class="form-control"'); ?>	</td>
+	</tr>
+	<tr>
+		<td>completion_requirement_type</td>
+		<td><?php echo form_dropdown('completion_requirement_type',$completion_types, $quest->completion_requirement_type, 'class="form-control"'); ?>	</td>
+	</tr>
+	<tr>
+		<td>completion_requirement</td>
+		<td><?php echo form_input('completion_requirement', set_value('completion_requirement', $quest->completion_requirement), 'class="form-control"'); ?></td>
 	</tr>
 </table>
 <?php echo form_submit('submit', 'Save', 'class="btn btn-primary"'); ?>

@@ -73,6 +73,11 @@ class MY_Model extends CI_Model
 		return $this->get(NULL, $single);
 	}
 
+	public function get_array_by($where, $single = FALSE){
+		$this->db->where($where);
+		return $this->get_array(NULL, $single);
+	}
+
 	public function save($data, $id = NULL){
 		//Set timestamps
 		if($this->_timestamps == TRUE) {

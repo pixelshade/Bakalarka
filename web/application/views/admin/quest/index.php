@@ -10,7 +10,10 @@
 				<th>reward_id</th>
 				<th>autostart</th>
 				<th>region_id</th>
-				<th>duration</th>
+				<th>duration(seconds)</th>
+				<th>quest completion type</th>
+				<th>completion</th>
+
 				<th>edit</th>
 				<th>delete</th>
 			</tr>
@@ -25,6 +28,8 @@
 			<td><?php echo $quest->autostart; ?></td>
 			<td><?php echo $quest->region_id; ?></td>
 			<td><?php echo $quest->duration; ?></td>	
+			<td><?php echo $quest->completion_requirement_type; ?></td>
+			<td><?php echo $quest->completion_requirement; ?></td>	
 
 			<td><?php echo btn_edit('admin/quest/edit/' . $quest->id); ?></td>
 			<td><?php echo btn_delete('admin/quest/delete/' . $quest->id); ?></td>
@@ -32,7 +37,7 @@
 <?php endforeach; ?>
 <?php else: ?>
 		<tr>
-			<td colspan="9">We could not find any quests.</td>
+			<td colspan="11">We could not find any quests.</td>
 		</tr>
 <?php endif; ?>	
 		</tbody>
