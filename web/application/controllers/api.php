@@ -69,7 +69,7 @@ class Api extends Admin_Controller
 	}
 
 	public function isLoggedIn(){
-		if($this->user_m->login() == TRUE){
+		if($this->user_m->loggedin() == TRUE){
 			$response['success'] = 1;				
 			$response['msg'] = "Logged successfully";
 			$resposne['data'] = $this->session->all_userdata();
