@@ -10,6 +10,17 @@ class Quest extends Admin_Controller
 		$this->load->model('region_m');
 		$this->load->model('reward_m');
 
+		//Fetch images
+		$this->data['images'] = $this->content_files_model->get_for_dropdown();
+
+		//Fetch regions
+		$this->data['regions'] = $this->region_m->get_for_dropdown();				
+
+		// Fetch rewards
+		$this->data['rewards'] = $this->reward_m->get_for_dropdown();
+
+		$this->data['completion_types'] = $this->quest_m->completion_types;
+
 	}
 
 	public function index ()
@@ -24,14 +35,6 @@ class Quest extends Admin_Controller
 
 	public function edit ($id = NULL)
 	{
-		//Fetch images
-		$this->data['images'] = $this->content_files_model->get_for_dropdown();
-
-		//Fetch regions
-		$this->data['regions'] = $this->region_m->get_for_dropdown();				
-
-		// Fetch rewards
-		$this->data['rewards'] = $this->reward_m->get_for_dropdown();
 
 		// Fetch a quest or set a new one
 		if ($id) {
@@ -48,11 +51,11 @@ class Quest extends Admin_Controller
 			// Fetch quests
 			$this->data['quests'] = $this->quest_m->get_for_dropdown();
 		}
-		
+
 		// Set up the form
 		$rules = $this->quest_m->rules;
 		$this->form_validation->set_rules($rules);
-		
+
 		// Process the form
 		if ($this->form_validation->run() == TRUE) {
 			$data = $this->quest_m->array_from_post(array(

@@ -21,11 +21,17 @@ class Migration_Create_enemy_instances extends CI_Migration {
 			'latitude' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '15,13',
+				'null' => TRUE,
 			),
 			'longtitude' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '15,13',
-			),			
+				'null' => TRUE,
+			),
+			'code' => array(
+				'type' => 'TEXT',
+				'null' => TRUE,				
+			),				
 		));
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('enemy_instances');

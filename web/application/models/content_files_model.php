@@ -60,6 +60,7 @@ class Content_Files_Model extends CI_Model {
     }
 
      public function get_all_names(){         
+         $names = array();
          $result = $this->db->select('filename')->get('content_files')->result_array(); 
          foreach ($result as $name) {
              $names[] = $name['filename'];

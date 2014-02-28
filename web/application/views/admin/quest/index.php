@@ -5,6 +5,7 @@
 		<thead>
 			<tr>
 				<th>name</th>
+				<th>code</th>
 				<th>info</th>
 				<th>image</th>
 				<th>reward_id</th>
@@ -22,11 +23,12 @@
 <?php if(count($quests)): foreach($quests as $quest): ?>	
 		<tr>
 			<td><?php echo anchor('admin/quest/edit/' . $quest->id, $quest->name); ?></td>
+			<td><?php echo $quest->code; ?></td>
 			<td><?php echo $quest->info; ?></td>
 			<td><?php echo $quest->image; ?></td>
 			<td><?php echo $quest->reward_id; ?></td>
 			<td><?php echo $quest->autostart; ?></td>
-			<td><?php echo $quest->region_id; ?></td>
+			<td><?php echo empty($quest->region_id) ? '' : $regions[$quest->region_id]; ?></td>
 			<td><?php echo $quest->duration; ?></td>	
 			<td><?php echo $quest->completion_requirement_type; ?></td>
 			<td><?php echo $quest->completion_requirement; ?></td>	

@@ -6,6 +6,10 @@ class Api extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('region_m');
+		$this->load->model('quest_m');
+		$this->load->model('attribute_m');
+		$this->load->model('item_definition_m');
+		$this->load->model('reward_m');		
 		$this->load->model('page_m');
 		$this->load->model('content_files_model');
 
@@ -16,8 +20,8 @@ class Api extends Admin_Controller
 	public function index ()
 	{
 		// Fetch all worlds
-		$this->data['worlds'] = $this->region_m->get();
-		
+		$this->data['functions'] = get_class_methods($this);
+		//dump($this->data['functions']);
 		// Load view
 		$this->data['subview'] = 'api/index';
 		$this->load->view('_layout_main', $this->data);
@@ -27,13 +31,16 @@ class Api extends Admin_Controller
 	{		
 		
 		if($player_lat != NULL && $player_lon != NULL){
-		// Fetch all 
-			$this->data['regions'] = $this->region_m->get_by("(`lat_start`<=$player_lat) AND (`lon_start`<=$player_lon) AND
-				(`lat_end`>=$player_lat) AND (`lon_end`>=$player_lon)");
-			
-			$waza = json_encode($this->data['regions']);
-			
-			print_r(json_decode($waza));
+		// Fetch all 			
+			$regions = $this->region_m->get_by_latlon($player_lat,$player_lon);
+			$region_ids = array_column($regions, 'id');
+			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids);			
+			$result['regions'] = $regions;
+			$result['quests'] = $quests;
+		// Print all	
+			$result = json_encode($result);
+			echo $result;
+			// print_r(json_decode($result));
 		} else {			
 			echo "<hr>no position given";
 		}
@@ -80,6 +87,10 @@ class Api extends Admin_Controller
 
 	public function getContentFilesList(){
 		echo json_encode($this->content_files_model->get_all_names());		
+	}
+
+	public function serverSettings(){
+		echo json_encode(array('to' => 'do'));
 	}
 
 }

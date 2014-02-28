@@ -32,7 +32,8 @@ class Migration_Create_quests extends CI_Migration {
 			'reward_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE
+				'unsigned' => TRUE,
+				'null' => TRUE,	
 			),
 			'autostart'	=> array(
 				'type' => 'BOOLEAN',

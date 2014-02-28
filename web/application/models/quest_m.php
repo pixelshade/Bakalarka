@@ -49,7 +49,6 @@ class Quest_m extends MY_Model
 			'label' => 'duration', 
 			'rules' => 'intval'
 			), 
-		// required_answer(text_input)/required_item(item_id)/required_quest(quest_id)/required_objective(objective_id)/required_attribute_value(attribute value)
 		'completion_requirement_type' => array(
 			'field' => 'completion_requirement_type', 
 			'label' => 'completion_requirement_type', 
@@ -61,6 +60,14 @@ class Quest_m extends MY_Model
 			'rules' => 'trim|required|xss_clean'
 			), 
 		);
+
+// required_answer(text_input)/required_item(item_id)/required_quest(quest_id)/required_objective(objective_id)/required_attribute_value(attribute value)
+public $completion_types = array(
+    '0' => 'Input an Answer',    
+    '1' => 'Item in inventory',
+    '2' => 'Completed Quest',
+    '3' => 'Having value of Attribute',
+);
 
 public function get_new ()
 {
@@ -83,17 +90,17 @@ public function get_new ()
 
 public function get_for_dropdown(){
 	$empty = array('' => 'No item');
-	$result = (array)$this->get_array();		
+	$result = $this->get_array();		
 	$result = array_column($result, 'name', 'id');
-	$result = array_merge($empty,$result);		
+	$result = $empty + $result;		
 	return $result;
 }
 
 public function get_by_for_dropdown($where, $single = FALSE){
 	$empty = array('' => 'No item');
-	$result = (array)$this->get_array_by($where, $single = FALSE);		
+	$result = $this->get_array_by($where, $single = FALSE);		
 	$result = array_column($result, 'name', 'id');
-	$result = array_merge($empty,$result);		
+	$result = $empty + $result;		
 	return $result;
 }
 

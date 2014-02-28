@@ -30,7 +30,7 @@
 					</li>
 					 -->
 				<?php echo get_menu($menu); ?>
-				<li <?php echo $page=="world"? 'class="active"' : ''; ?>><a href="/world/json">World</a></li>			
+				<li <?php echo $page=="api"? 'class="active"' : ''; ?>><a href="/api">Client Api</a></li>			
 				<li <?php echo $page=="admin"? 'class="active"' : ''; ?>><a href="/admin/">Admin</a></li>			
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -42,7 +42,7 @@
 			</div><!--/.nav-collapse -->
 		</div>
 	
-	<?php //$this->load->view($subview); ?>
+	<?php $this->load->view($subview); ?>
 
 
 	</div> <!-- /.container -->

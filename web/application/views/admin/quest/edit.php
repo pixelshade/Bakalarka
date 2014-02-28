@@ -26,10 +26,6 @@
 		<td><?php echo form_dropdown('image',$images, $quest->image, 'class="form-control"'); ?>	</td>
 	</tr>
 	<tr>
-		<td>reward_id</td>
-		<td><?php echo form_dropdown('reward_id',$rewards, $quest->reward_id, 'class="form-control"'); ?>	</td>
-	</tr>
-	<tr>
 		<td>autostart</td>		
 		<td><?php 
 		echo form_boolean_select('autostart', $quest->autostart); ?>	</td>
@@ -46,10 +42,7 @@
 		<td>image</td>
 		<td><?php echo form_dropdown('image',$images, $quest->image, 'class="form-control"'); ?>	</td>
 	</tr>
-	<tr>
-		<td>reward_id</td>
-		<td><?php echo form_dropdown('reward_id',$rewards, $quest->reward_id, 'class="form-control"'); ?>	</td>
-	</tr>
+	
 	<tr>
 		<td>completion_requirement_type</td>
 		<td><?php echo form_dropdown('completion_requirement_type',$completion_types, $quest->completion_requirement_type, 'class="form-control"'); ?>	</td>
@@ -57,6 +50,10 @@
 	<tr>
 		<td>completion_requirement</td>
 		<td><?php echo form_input('completion_requirement', set_value('completion_requirement', $quest->completion_requirement), 'class="form-control"'); ?></td>
+	</tr>
+	<tr>
+		<td>reward</td>
+		<td><?php echo form_dropdown('reward_id',$rewards, $quest->reward_id, 'class="form-control"'); ?>	</td>
 	</tr>
 </table>
 <?php echo form_submit('submit', 'Save', 'class="btn btn-primary"'); ?>

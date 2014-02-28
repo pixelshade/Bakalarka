@@ -58,9 +58,9 @@ class Region_m extends MY_Model
 
 	public function get_for_dropdown(){
 		$empty = array('' => 'No item');
-		$result = (array)$this->get_array();		
-		$result = array_column($result, 'name', 'id');
-		$result = array_merge($empty,$result);		
+		$result = $this->get_array();		
+		$result = array_column($result, 'name', 'id');		
+		$result = $empty + $result;				
 		return $result;
 	}
 
