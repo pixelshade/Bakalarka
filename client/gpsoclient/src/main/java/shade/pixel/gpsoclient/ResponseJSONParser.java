@@ -2,9 +2,11 @@ package shade.pixel.gpsoclient;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,8 +19,40 @@ public class ResponseJSONParser {
     public static final String KEY_SUCCESS = "success";
     public static final String KEY_DATA = "data";
 
+    //
+    public static final String KEY_QUESTS = "quests";
+    public static final String KEY_REGIONS = "regions";
+    public static final String KEY_INVENTORY = "inventory";
+    public static final String KEY_ENEMIES = "enemies";
 
-    public static HashMap<String, String> getResponse(String json) {
+
+    // quest keys
+    public static final String KEY_QUEST_ID = "id";
+    public static final String KEY_QUEST_CODE = "code";
+    public static final String KEY_QUEST_NAME = "name";
+    public static final String KEY_QUEST_INFO = "info";
+    public static final String KEY_QUEST_IMAGE = "image";
+    public static final String KEY_QUEST_REWARD_ID = "reward_id";
+    public static final String KEY_QUEST_AUTOSTART = "autostart";
+    public static final String KEY_QUEST_REGION_ID = "region_id";
+    public static final String KEY_QUEST_REQUIRED_QUEST = "required_completed_quest_id";
+    public static final String KEY_QUEST_DURATION = "duration";
+    public static final String KEY_QUEST_REQUIREMENT_TYPE = "completion_requirement_type";
+    public static final String KEY_QUEST_REQUIREMENT = "completion_requirement";
+
+    // region keys
+    public static final String KEY_REGION_ID = "id";
+    public static final String KEY_REGION_NAME = "name";
+    public static final String KEY_REGION_INFO = "info";
+    public static final String KEY_REGION_IMAGE = "image";
+    public static final String KEY_REGION_LAT_START = "lat_start";
+    public static final String KEY_REGION_LON_START = "lon_start";
+    public static final String KEY_REGION_LAT_END = "lat_end";
+    public static final String KEY_REGION_LON_END = "lon_end";
+
+
+
+    public static HashMap<String, String> parseResponse(String json) {
         if (json != null) {
             try {
                 JSONObject jsonObj = new JSONObject(json);
@@ -28,12 +62,74 @@ public class ResponseJSONParser {
                 String msg = jsonObj.getString(KEY_MESSAGE);
                 String data = jsonObj.optString(KEY_DATA);
 
-                HashMap<String, String> contact = new HashMap<String, String>();
-
                 response.put(KEY_SUCCESS, success);
                 response.put(KEY_MESSAGE, msg);
                 response.put(KEY_DATA, data);
                 return response;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.e("JSON PARSER", "No json string to parse");
+
+        }
+        return null;
+    }
+
+
+    public static GameData parseGameData(String json){
+        if (json != null) {
+            try {
+                JSONObject jsonObj = new JSONObject(json);
+              //  HashMap<String, ArrayList<?>> response = new HashMap<String, ArrayList<?>>();
+
+                JSONArray jsonRegions = jsonObj.optJSONArray(KEY_REGIONS);
+                JSONArray jsonQuests = jsonObj.optJSONArray(KEY_QUESTS);
+
+                ArrayList<Quest> quests = new ArrayList<Quest>();
+                for(int i = 0; i < jsonQuests.length(); i++){
+                    JSONObject quest = jsonQuests.getJSONObject(i);
+
+                    int id = quest.getInt(Quest.KEY_QUEST_ID);
+                    String name = quest.getString(Quest.KEY_QUEST_NAME);
+                    boolean autostart = quest.getInt(Quest.KEY_QUEST_AUTOSTART) == 1;
+                    String code = quest.getString(Quest.KEY_QUEST_CODE);
+                    int duration = quest.optInt(Quest.KEY_QUEST_DURATION, 0);
+                    String image = quest.getString(Quest.KEY_QUEST_IMAGE);
+                    String info = quest.getString(Quest.KEY_QUEST_INFO);
+                    int regionId = quest.optInt(Quest.KEY_QUEST_REGION_ID, Quest.UNDEFINED_INT_VALUE);
+                    int requiredQuestId = quest.optInt(Quest.KEY_QUEST_REQUIRED_QUEST_ID, Quest.UNDEFINED_INT_VALUE);
+                    int requirementType = quest.getInt(Quest.KEY_QUEST_REQUIREMENT_TYPE);
+                    String requirement = quest.getString(Quest.KEY_QUEST_REQUIREMENT);
+                    int reward_id = quest.optInt(Quest.KEY_QUEST_REWARD_ID, Quest.UNDEFINED_INT_VALUE);
+
+                    Quest q = new Quest(id,code, name, info, image, reward_id, autostart, regionId, requiredQuestId, duration, requirementType, requirement);
+                    quests.add(q);
+                }
+
+                ArrayList<Region> regions = new ArrayList<Region>();
+                for(int i = 0; i < jsonRegions.length(); i++){
+                    JSONObject region = jsonRegions.getJSONObject(i);
+                    int id =  region.getInt(Region.KEY_REGION_ID);
+                    String name = region.getString(Region.KEY_REGION_NAME);
+                    String info = region.getString(Region.KEY_REGION_INFO);
+                    String image = region.getString(Region.KEY_REGION_IMAGE);
+                    int lat_start = region.getInt(Region.KEY_REGION_LAT_START);
+                    int lat_end = region.getInt(Region.KEY_REGION_LAT_END);
+                    int lon_start = region.getInt(Region.KEY_REGION_LON_START);
+                    int lon_end = region.getInt(Region.KEY_REGION_LON_END);
+
+
+                    Region r = new Region(id,name,info,image,lat_start,lon_start,lat_end,lon_end);
+                    regions.add(r);
+                }
+
+
+                GameData gameData = new GameData();
+                gameData.setQuests(quests);
+                gameData.setRegions(regions);
+
+                return gameData;
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -104,4 +104,8 @@ public function get_by_for_dropdown($where, $single = FALSE){
 	return $result;
 }
 
+public function check_completion_for_user($user_id){
+	
+}
+
 }

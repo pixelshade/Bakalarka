@@ -2,9 +2,10 @@
 <resources>
 
     <string name="app_name">GPSOClient</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="main_section">Main</string>
+    <string name="title_section1">Quests</string>
+    <string name="title_section2">Regions</string>
+    <string name="title_section3">Map</string>
     <string name="action_settings">Settings</string>
     <string name="UpdateFiles">UpdateFiles</string>
     <string name="UpdatePosition">UpdatePosition</string>

@@ -74,7 +74,7 @@ public class ContentFilesManager {
                 if (filesToDownload.isEmpty()) {
                     Toast.makeText(mContext, "nothing to update", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(mContext, "Starting downlaoding files", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Starting downlaoding files"+ remoteFiles, Toast.LENGTH_LONG).show();
                     DownloadFiles(filesToDownload);
                 }
             }
@@ -146,7 +146,7 @@ public class ContentFilesManager {
                 int count;
 
                 for (String filename : filenames[0]) {
-                    String fileURL = serverURL + "/  " + serverContentDir + filename;
+                    String fileURL = serverURL + "/" + serverContentDir + filename;
                     Log.d("AHA", fileURL);
                     try {
                         URL url = new URL(fileURL);

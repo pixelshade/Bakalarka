@@ -6,7 +6,7 @@ class User_quest_m extends MY_Model
 	public $rules = array(
 		'char_id' => array(
 			'field' => 'char_id', 
-			'label' => 'Name', 
+			'label' => 'char_id', 
 			'rules' => 'intval'
 			), 
 		'quest_id' => array(

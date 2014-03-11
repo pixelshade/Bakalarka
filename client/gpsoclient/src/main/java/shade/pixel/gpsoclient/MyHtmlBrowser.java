@@ -6,11 +6,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -25,14 +26,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -68,6 +68,8 @@ public class MyHtmlBrowser {
     }
 
 
+
+
     public boolean Login(String user, String pass) {
         setUser(user);
         setPass(pass);
@@ -95,8 +97,14 @@ public class MyHtmlBrowser {
                         break;
                     result.append(line + "\n");
                 }
+                HashMap<String,String> response = ResponseJSONParser.parseResponse(result.toString());
+                if(response != null && response.containsKey("success")){
+                    String success = response.get("success");
+                    return success.equals("1");
+                }
                 Log.d("AHA", result.toString());
-                return true;
+
+                return false;
             } catch (ClientProtocolException e) {
                  e.printStackTrace();
             } catch (IOException e) {
@@ -155,9 +163,11 @@ public class MyHtmlBrowser {
     public class getAsyncStringTask extends AsyncTask<String, Integer, String>{
             public AsyncResponse delegate;
             public boolean locked;
+            private Context context;
 
-        public getAsyncStringTask(AsyncResponse delegate){
+        public getAsyncStringTask(Context context ,AsyncResponse delegate){
             this.delegate = delegate;
+            this.context = context;
         }
 
             public boolean isLocked(){
@@ -194,7 +204,7 @@ public class MyHtmlBrowser {
                 super.onPostExecute(result);
                 Log.d("AHA", "Async get result: "+ result);
                 progressDialog.dismiss();
-                delegate.processFinish(result);
+                delegate.processFinish(context, result);
                 locked = false;
             }
 
@@ -217,8 +227,8 @@ public class MyHtmlBrowser {
 
     }
 
-    public void HttpGetAsyncString(String uristr, AsyncResponse delegate) {
-        getAsyncStringTask ast = new getAsyncStringTask(delegate);
+    public void HttpGetAsyncString(Context context,String uristr, AsyncResponse delegate) {
+        getAsyncStringTask ast = new getAsyncStringTask(context,delegate);
         if(!ast.isLocked())   ast.execute(uristr);
     }
 

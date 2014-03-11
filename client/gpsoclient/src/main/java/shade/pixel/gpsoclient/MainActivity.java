@@ -1,8 +1,10 @@
   package shade.pixel.gpsoclient;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -18,7 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,24 +43,31 @@ import com.google.android.gms.maps.model.LatLng;
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-    Button mUpdateButton;
 
     MyHtmlBrowser htmlBrowser;
     GPSTracker gpsTracker;
     ContentFilesManager contentFilesManager;
+    public GameData gameData;
+
+    int mActualViewId = 0;
+
+      /* controls */
+
+      public ListView mlistViewQuests(){
+          return  (ListView) findViewById(R.id.listViewQuests);
+      }
 
 
 
       AsyncResponse afterLoginCheck = new AsyncResponse() {
           @Override
-          public void processFinish(String output) {
-              HashMap<String,String> response = ResponseJSONParser.getResponse(output);
+          public void processFinish(Context context,String output) {
+              HashMap<String,String> response = ResponseJSONParser.parseResponse(output);
               Log.d("AHA",response.toString());
               if(response != null && response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")){
                   contentFilesManager.UpdateFiles();
-
               } else {
-                  LogoutAnStartLoginActivity(null);
+                  LogoutAndStartLoginActivity(null);
               }
 
           }
@@ -105,26 +115,27 @@ import com.google.android.gms.maps.model.LatLng;
 
 
         htmlBrowser = MyHtmlBrowser.getInstance(this);
+        gameData = new GameData();
+        contentFilesManager = new ContentFilesManager(this);
+        gpsTracker = new GPSTracker(this);
+
 
         if (htmlBrowser.isOnline()) {
-            contentFilesManager = new ContentFilesManager(this);
-            gpsTracker = new GPSTracker(this);
-            htmlBrowser.HttpGetAsyncString(htmlBrowser.getServerURL()+"/api/isLoggedIn",afterLoginCheck);
+            htmlBrowser.HttpGetAsyncString(this,htmlBrowser.getServerURL()+"/api/isLoggedIn",afterLoginCheck);
 
-        } else {
-            // TODO we are offline
+        }  else {
+            Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
         }
 
     }
 
-      public void LogoutAnStartLoginActivity(View view){
-          //TODO fix logout
+      public void LogoutAndStartLoginActivity(View view){
           final Intent intent = new Intent(this, LoginActivity.class);
           String url = htmlBrowser.getServerURL()+"/api/logout";
           Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
-          htmlBrowser.HttpGetAsyncString(url, new AsyncResponse() {
+          htmlBrowser.HttpGetAsyncString(this,url, new AsyncResponse() {
               @Override
-              public void processFinish(String output) {
+              public void processFinish(Context context, String output) {
                   startActivity(intent);
                   finish();
 
@@ -136,10 +147,33 @@ import com.google.android.gms.maps.model.LatLng;
         LatLng latLng = gpsTracker.getLatLng();
         String url = htmlBrowser.getServerURL()+"/api/json/"+latLng.latitude+"/"+latLng.longitude;
         Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
-        htmlBrowser.HttpGetAsyncString(url, new AsyncResponse() {
+        htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
             @Override
-            public void processFinish(String output) {
-
+            public void processFinish(Context context, String json) {
+                gameData = ResponseJSONParser.parseGameData(json);
+                if(gameData != null){
+                  //  PlaceholderFragment f = (PlaceholderFragment)mSectionsPagerAdapter.getItem(mActualViewId);
+                    StringBuilder sb = new StringBuilder();
+                    ArrayList<Region> regions = gameData.getRegions();
+                    sb.append("Regions:");
+                    for (Region region: regions){
+                        sb.append(region.getName() + ",");
+                    }
+                    ArrayList<Quest> quests = gameData.getQuests();
+                    sb.append("\nQuests:");
+                    for (Quest quest: quests){
+                        quest.getName();
+                        sb.append(quest.getName() + ",");
+                    }
+                    TextView tv = (TextView) findViewById(R.id.section_content);
+                    tv.setText(sb.toString());
+                  //  f.setContent(sb.toString());
+                    ArrayAdapter<Quest> arrayAdapter = new ArrayAdapter<Quest>(context, android.R.layout.simple_list_item_1, quests);
+                    ListView lv = (ListView) findViewById(R.id.listViewQuests);
+                    if(lv != null) lv.setAdapter(arrayAdapter);
+                } else {
+                    Log.d("AHA", "Problem with parsing gamedata");
+                }
             }
         });
     }
@@ -162,6 +196,7 @@ import com.google.android.gms.maps.model.LatLng;
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        mActualViewId = id;
         if (id == R.id.action_settings) {
             return true;
         }
@@ -197,13 +232,26 @@ import com.google.android.gms.maps.model.LatLng;
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch (position) {
+                case 0:
+                    // Main fragment activity
+                    return new MainFragment();
+                case 1:
+                    // Quests fragment activity
+                    return new QuestsFragment();
+                case 2:
+                    // Region fragment activity
+                    return new RegionsFragment();
+                case 3:
+                    // Map fragment activity
+                    return new MapFragment();
+            }
+            return null;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -211,10 +259,12 @@ import com.google.android.gms.maps.model.LatLng;
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
+                    return getString(R.string.main_section).toUpperCase(l);
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
+                    return getString(R.string.title_section1).toUpperCase(l);
                 case 2:
+                    return getString(R.string.title_section2).toUpperCase(l);
+                case 3:
                     return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
@@ -268,10 +318,23 @@ import com.google.android.gms.maps.model.LatLng;
 
 
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            int section = getArguments().getInt(ARG_SECTION_NUMBER);
+            String text;
+            if (section == 1) {
+                text = "all";
+            } else if (section == 2) {
+                text = "region";
+            } else if (section == 3) {
+                text = "quests";
+            } else {
+                text = "unset";
+            }
+
+
             return rootView;
         }
+
     }
 
 }
