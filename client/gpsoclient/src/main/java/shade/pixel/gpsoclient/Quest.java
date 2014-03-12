@@ -32,7 +32,7 @@ public class Quest {
     private int requirementType;
     private String requirement;
 
-    public Quest(int id, String code, String name, String info, String image, int rewardId, boolean autostart, int regionId, int requiredQuestId, int duration, int requirementType, String requirement){
+    public Quest(int id, String code, String name, String info, String image, int rewardId, boolean autostart, int regionId, int requiredQuestId, int duration, int requirementType, String requirement) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -46,24 +46,6 @@ public class Quest {
         this.requirementType = requirementType;
         this.requirement = requirement;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public int getId() {
@@ -150,6 +132,25 @@ public class Quest {
         return requirementType;
     }
 
+    public String getRequirementTypeText() {
+        switch (requirementType) {
+            case 0:
+                return "Input an Answer";
+
+            case 1:
+                return "Item in inventory";
+
+            case 2:
+                return  "Completed Quest";
+
+            case 3:
+                return  "Having value of Attribute";
+
+            default:
+                return "Uknown type";
+        }
+    }
+
     public void setRequirementType(int requirementType) {
         this.requirementType = requirementType;
     }
@@ -162,5 +163,9 @@ public class Quest {
         this.requirement = requirement;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
 
 }

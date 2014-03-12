@@ -67,6 +67,7 @@ public $completion_types = array(
     '1' => 'Item in inventory',
     '2' => 'Completed Quest',
     '3' => 'Having value of Attribute',
+    '4' => 'Being in region'
 );
 
 public function get_new ()
@@ -104,8 +105,9 @@ public function get_by_for_dropdown($where, $single = FALSE){
 	return $result;
 }
 
-public function check_completion_for_user($user_id){
-	
+public function check_completion($quest_id, $answer = NULL){
+	$quest = $this->get_by("`id` = '".$quest_id."'");
+	return $quest->completion_requirement == $answer;	
 }
 
 }

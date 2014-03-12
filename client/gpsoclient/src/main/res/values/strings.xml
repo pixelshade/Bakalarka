@@ -10,5 +10,6 @@
     <string name="UpdateFiles">UpdateFiles</string>
     <string name="UpdatePosition">UpdatePosition</string>
     <string name="Logout">Logout</string>
+    <string name="title_activity_quest_info_actitivity">QuestInfoActitivity</string>
 
 </resources>

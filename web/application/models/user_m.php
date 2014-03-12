@@ -82,5 +82,9 @@ class User_M extends MY_Model
 		return $user;
 	}
 
+	public function get_user_id(){
+		return $this->session->userdata('id');;
+	}
+
 }
 ?>

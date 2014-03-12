@@ -12,6 +12,9 @@ class Api extends Admin_Controller
 		$this->load->model('reward_m');		
 		$this->load->model('page_m');
 		$this->load->model('content_files_model');
+		$this->load->model('user_quest_m');
+		$this->load->model('user_item_m');
+		$this->load->model('user_attribute_m');
 
 		// Fetch navigation
 		$this->data['menu'] = $this->page_m->get_nested();
@@ -93,6 +96,65 @@ class Api extends Admin_Controller
 		echo json_encode(array('to' => 'do'));
 	}
 
+
+	public function check_quest_completion($quest_id, $player_lat = NULL, $player_lon = NULL,$answer = NULL){
+		$user_id = $this->user_m->get_user_id();		
+
+		$quest = $this->quest_m->get_by("`id` = '".$quest_id."'", TRUE);
+		if($quest){
+			switch ($quest->completion_requirement_type) {
+			// type answer
+				case 0:				
+				return ($quest->completion_requirement == $answer);
+				break;
+
+			// have an item
+				case 1:
+				$required_item_id = $quest->completion_requirement;
+				$user_item = $this->user_item_m->get_array_by('`char_id` = `'.$char_id.'` AND `item_id` = `'.$required_item_id.'`');
+				if(count($user_item)){
+					return TRUE;
+				} else {
+					return FALSE;
+				}				 
+				break;
+
+			// Completed other quest
+				case 2:
+				$required_completed_quest_id = $quest->completion_requirement;
+				$user_quest = $this->user_item_m->get_array_by('`char_id` = `'.$char_id.'` AND `quest_id` = `'.$required_completed_quest_id.'`', TRUE);
+				if(count($user_quest)){
+					return TRUE;
+				} else {
+					return FALSE;
+				}				
+				break;
+
+			// Having value of Attribute
+				case 3:
+				// TODO problem with need of attribute id and attribute value
+				// possible id#value 				
+				break;
+
+			// Being in region
+				case 4:
+				$required_region_id = $quest->completion_requirement;
+				$regions = $this->region_m->get_by_latlon($player_lat,$player_lon);
+				$region_ids = array_column($regions, 'id');				
+				return in_array($required_region_id, $region_ids);				
+				break;
+
+				default:
+				echo "uknown type";
+				return FALSE;
+				break;
+			}
+		} else {
+			echo "quest doesnt exist";
+			return FALSE;
+		}
+
+	}
 }
 
 

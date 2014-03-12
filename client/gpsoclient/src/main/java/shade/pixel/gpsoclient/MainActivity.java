@@ -47,7 +47,7 @@ import com.google.android.gms.maps.model.LatLng;
     MyHtmlBrowser htmlBrowser;
     GPSTracker gpsTracker;
     ContentFilesManager contentFilesManager;
-    public GameData gameData;
+    public static GameData gameData;
 
     int mActualViewId = 0;
 

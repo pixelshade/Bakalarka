@@ -8,7 +8,7 @@ class Quest extends Admin_Controller
 		$this->load->model('quest_m');
 		$this->load->model('content_files_model');
 		$this->load->model('region_m');
-		$this->load->model('reward_m');
+		$this->load->model('reward_m');		
 
 		//Fetch images
 		$this->data['images'] = $this->content_files_model->get_for_dropdown();
