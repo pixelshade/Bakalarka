@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class ItemFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_items, container, false);
 
-        ListView listViewItems = (ListView) rootView.findViewById(R.id.listViewItems);
+        GridView gridViewItems = (GridView) rootView.findViewById(R.id.gridViewItems);
 
         Log.d("AHA", "VYTVARAM FRAGMENT");
 
@@ -36,19 +36,21 @@ public class ItemFragment extends Fragment {
             ArrayList<Item> items = gameData.getItems();
 
             ArrayAdapter<Item> arrayAdapter = new ArrayAdapter<Item>(getActivity(), android.R.layout.simple_list_item_1, items);
-            ListView lv = (ListView) rootView.findViewById(R.id.listViewItems);
-            if (lv != null) lv.setAdapter(arrayAdapter);
+
+            if (gridViewItems != null) {
+                gridViewItems.setAdapter(arrayAdapter);
+                gridViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Toast.makeText(getActivity(), "" + i, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getActivity(), ItemInfoActitivity.class);
+                        intent.putExtra(ItemInfoActitivity.ITEM_ID, i);
+                        startActivity(intent);
+                    }
+                });
+            }
         }
 
-        listViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "" + i, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getActivity(), ItemInfoActitivity.class);
-                intent.putExtra(ItemInfoActitivity.ITEM_ID, i);
-                startActivity(intent);
-            }
-        });
 
         return rootView;
     }

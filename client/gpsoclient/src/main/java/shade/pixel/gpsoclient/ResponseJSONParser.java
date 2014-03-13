@@ -22,7 +22,7 @@ public class ResponseJSONParser {
     //
     public static final String KEY_QUESTS = "quests";
     public static final String KEY_REGIONS = "regions";
-    public static final String KEY_INVENTORY = "inventory";
+    public static final String KEY_INVENTORY = "items";
     public static final String KEY_ENEMIES = "enemies";
 
 
@@ -85,6 +85,9 @@ public class ResponseJSONParser {
 
                 JSONArray jsonRegions = jsonObj.optJSONArray(KEY_REGIONS);
                 JSONArray jsonQuests = jsonObj.optJSONArray(KEY_QUESTS);
+                JSONArray jsonItems = jsonObj.optJSONArray(KEY_INVENTORY);
+
+
 
                 ArrayList<Quest> quests = new ArrayList<Quest>();
                 for(int i = 0; i < jsonQuests.length(); i++){
@@ -124,10 +127,23 @@ public class ResponseJSONParser {
                     regions.add(r);
                 }
 
+                ArrayList<Item> items = new ArrayList<Item>();
+                for(int i = 0; i < jsonItems.length(); i++){
+                    JSONObject itemJson = jsonItems.getJSONObject(i);
+                    int id =  itemJson.getInt(Region.KEY_REGION_ID);
+                    String name = itemJson.getString(Region.KEY_REGION_NAME);
+                    String info = itemJson.getString(Region.KEY_REGION_INFO);
+                    String image = itemJson.getString(Region.KEY_REGION_IMAGE);
+
+                    Item item = new Item(id,name,info,image);
+                    items.add(item);
+                }
+
 
                 GameData gameData = new GameData();
                 gameData.setQuests(quests);
                 gameData.setRegions(regions);
+                gameData.setItems(items);
 
                 return gameData;
             } catch (JSONException e) {

@@ -11,11 +11,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -57,10 +55,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public void processFinish(Context context, String output) {
             HashMap<String, String> response = ResponseJSONParser.parseResponse(output);
-            Log.d("AHA", response.toString());
-            if (response != null && response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")) {
-                contentFilesManager.UpdateFiles();
+            if (response != null) {
+                Log.d("AHA", response.toString());
+                if (response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")) {
+                    contentFilesManager.UpdateFiles();
+                } else {
+                    LogoutAndStartLoginActivity(null);
+                }
             } else {
+                Log.d("AHA", "Unable to authenticate. Reposnse from server, is damaged");
                 LogoutAndStartLoginActivity(null);
             }
 
@@ -264,13 +267,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 case 0:
                     return getString(R.string.main_section).toUpperCase(l);
                 case 1:
-                    return getString(R.string.title_section1).toUpperCase(l);
+                    return getString(R.string.title_quests).toUpperCase(l);
                 case 2:
-                    return getString(R.string.title_section2).toUpperCase(l);
+                    return getString(R.string.title_region).toUpperCase(l);
                 case 3:
-                    return getString(R.string.title_section3).toUpperCase(l);
+                    return getString(R.string.title_inventory).toUpperCase(l);
                 case 4:
-                    return getString(R.string.title_section4).toUpperCase(l);
+                    return getString(R.string.title_map).toUpperCase(l);
             }
             return null;
         }

@@ -32,14 +32,18 @@ class Api extends Admin_Controller
 
 	public function json ($player_lat = NULL, $player_lon = NULL)
 	{		
+
+		$user_id = $this->user_m->get_user_id();	
 		
 		if($player_lat != NULL && $player_lon != NULL){
 		// Fetch all 			
 			$regions = $this->region_m->get_by_latlon($player_lat,$player_lon);
-			$region_ids = array_column($regions, 'id');
+			$region_ids = array_column($regions, 'id');					
 			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids);			
 			$result['regions'] = $regions;
 			$result['quests'] = $quests;
+			$items = $this->user_item_m->get_by("`char_id` = ".$user_id."");
+			$result['items'] = $items;			
 		// Print all	
 			$result = json_encode($result);
 			echo $result;

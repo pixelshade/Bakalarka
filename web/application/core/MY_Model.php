@@ -79,6 +79,8 @@ class MY_Model extends CI_Model
 	}
 
 	public function get_array_where_in($where, $in_array){
+		if(empty($in_array)) return $in_array;
+		
 		$this->db->where_in($where, $in_array);
 		return $this->get_array();
 	}
