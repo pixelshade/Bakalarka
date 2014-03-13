@@ -96,6 +96,14 @@ class Api extends Admin_Controller
 		echo json_encode(array('to' => 'do'));
 	}
 
+	public function hasUserActiveQuest($quest_id){
+		$user_id = $this->user_m->get_user_id();	
+		$user_quest = $this->user_quest_m->get_array_by("`char_id` =".$user_id." AND `quest_id` =".$quest_id);
+		if(!empty($user_quest)){
+			return TRUE;
+		}
+		return FALSE;
+	}
 
 	public function check_quest_completion($quest_id, $player_lat = NULL, $player_lon = NULL,$answer = NULL){
 		$user_id = $this->user_m->get_user_id();		

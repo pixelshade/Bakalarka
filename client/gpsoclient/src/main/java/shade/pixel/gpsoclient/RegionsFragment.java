@@ -1,9 +1,18 @@
 package shade.pixel.gpsoclient;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
 /**
  * Created by pixelshade on 11.3.2014.
  */
@@ -14,8 +23,26 @@ public class RegionsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_regions, container, false);
+        ListView lv = (ListView) rootView.findViewById(R.id.listViewRegions);
+        GameHandler gameHandler = GameHandler.getInstance(getActivity());
+        GameData gameData = gameHandler.getGameData();
+        if (gameData != null) {
+            ArrayList<Region> regions = gameData.getRegions();
+            ArrayAdapter<Region> arrayAdapter = new ArrayAdapter<Region>(getActivity(), android.R.layout.simple_list_item_1, regions);
 
-//        findView(R.id.listViewQuests);
+            if (lv != null) {
+                lv.setAdapter(arrayAdapter);
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Toast.makeText(getActivity(), "" + i, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getActivity(), RegionInfoActitivity.class);
+                        intent.putExtra(RegionInfoActitivity.REGION_ID, i);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }
 
         return rootView;
 

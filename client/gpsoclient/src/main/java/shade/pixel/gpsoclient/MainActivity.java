@@ -1,19 +1,15 @@
-  package shade.pixel.gpsoclient;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
+package shade.pixel.gpsoclient;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,7 +23,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
-  public class MainActivity extends ActionBarActivity implements ActionBar.TabListener{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -49,29 +49,23 @@ import com.google.android.gms.maps.model.LatLng;
     ContentFilesManager contentFilesManager;
     public static GameData gameData;
 
+    GameHandler gameHandler;
+
     int mActualViewId = 0;
 
-      /* controls */
+    AsyncResponse afterLoginCheck = new AsyncResponse() {
+        @Override
+        public void processFinish(Context context, String output) {
+            HashMap<String, String> response = ResponseJSONParser.parseResponse(output);
+            Log.d("AHA", response.toString());
+            if (response != null && response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")) {
+                contentFilesManager.UpdateFiles();
+            } else {
+                LogoutAndStartLoginActivity(null);
+            }
 
-      public ListView mlistViewQuests(){
-          return  (ListView) findViewById(R.id.listViewQuests);
-      }
-
-
-
-      AsyncResponse afterLoginCheck = new AsyncResponse() {
-          @Override
-          public void processFinish(Context context,String output) {
-              HashMap<String,String> response = ResponseJSONParser.parseResponse(output);
-              Log.d("AHA",response.toString());
-              if(response != null && response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")){
-                  contentFilesManager.UpdateFiles();
-              } else {
-                  LogoutAndStartLoginActivity(null);
-              }
-
-          }
-      };
+        }
+    };
 
 
     @Override
@@ -118,59 +112,63 @@ import com.google.android.gms.maps.model.LatLng;
         gameData = new GameData();
         contentFilesManager = new ContentFilesManager(this);
         gpsTracker = new GPSTracker(this);
+        gameHandler = GameHandler.getInstance(this);
 
 
         if (htmlBrowser.isOnline()) {
-            htmlBrowser.HttpGetAsyncString(this,htmlBrowser.getServerURL()+"/api/isLoggedIn",afterLoginCheck);
+            htmlBrowser.HttpGetAsyncString(this, htmlBrowser.getServerURL() + "/api/isLoggedIn", afterLoginCheck);
 
-        }  else {
+        } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
         }
 
     }
 
-      public void LogoutAndStartLoginActivity(View view){
-          final Intent intent = new Intent(this, LoginActivity.class);
-          String url = htmlBrowser.getServerURL()+"/api/logout";
-          Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
-          htmlBrowser.HttpGetAsyncString(this,url, new AsyncResponse() {
-              @Override
-              public void processFinish(Context context, String output) {
-                  startActivity(intent);
-                  finish();
+    public void LogoutAndStartLoginActivity(View view) {
+        final Intent intent = new Intent(this, LoginActivity.class);
+        String url = htmlBrowser.getServerURL() + "/api/logout";
+        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+        htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
+            @Override
+            public void processFinish(Context context, String output) {
+                startActivity(intent);
+                finish();
 
-              }
-          });
-      }
+            }
+        });
+    }
 
-    public void UpdatePosition(View view){
+    public void UpdatePosition(View view) {
         LatLng latLng = gpsTracker.getLatLng();
-        String url = htmlBrowser.getServerURL()+"/api/json/"+latLng.latitude+"/"+latLng.longitude;
+        String url = htmlBrowser.getServerURL() + "/api/json/" + latLng.latitude + "/" + latLng.longitude;
         Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
         htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
             @Override
             public void processFinish(Context context, String json) {
                 gameData = ResponseJSONParser.parseGameData(json);
-                if(gameData != null){
-                  //  PlaceholderFragment f = (PlaceholderFragment)mSectionsPagerAdapter.getItem(mActualViewId);
+                gameHandler.setGameData(gameData);
+                if (gameData != null) {
                     StringBuilder sb = new StringBuilder();
                     ArrayList<Region> regions = gameData.getRegions();
                     sb.append("Regions:");
-                    for (Region region: regions){
+                    for (Region region : regions) {
                         sb.append(region.getName() + ",");
                     }
                     ArrayList<Quest> quests = gameData.getQuests();
                     sb.append("\nQuests:");
-                    for (Quest quest: quests){
+                    for (Quest quest : quests) {
                         quest.getName();
                         sb.append(quest.getName() + ",");
                     }
                     TextView tv = (TextView) findViewById(R.id.section_content);
                     tv.setText(sb.toString());
-                  //  f.setContent(sb.toString());
+
+
                     ArrayAdapter<Quest> arrayAdapter = new ArrayAdapter<Quest>(context, android.R.layout.simple_list_item_1, quests);
                     ListView lv = (ListView) findViewById(R.id.listViewQuests);
-                    if(lv != null) lv.setAdapter(arrayAdapter);
+                    if (lv != null) lv.setAdapter(arrayAdapter);
+
+
                 } else {
                     Log.d("AHA", "Problem with parsing gamedata");
                 }
@@ -178,13 +176,13 @@ import com.google.android.gms.maps.model.LatLng;
         });
     }
 
-    public void UpdateLocalContentFiles(View view){
+    public void UpdateLocalContentFiles(View view) {
         contentFilesManager.UpdateFiles();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -218,7 +216,7 @@ import com.google.android.gms.maps.model.LatLng;
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
-      /**
+    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
@@ -272,21 +270,6 @@ import com.google.android.gms.maps.model.LatLng;
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -314,7 +297,7 @@ import com.google.android.gms.maps.model.LatLng;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
 
 
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);

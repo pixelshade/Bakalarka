@@ -22,7 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class GPSTracker extends Service implements LocationListener {
 
-    private final Context mContext;
+    private Context mContext;
 
     // flag for GPS status
     boolean isGPSEnabled = false;
@@ -184,6 +184,14 @@ public class GPSTracker extends Service implements LocationListener {
 
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    public Context getmContext() {
+        return mContext;
+    }
+
+    public void setmContext(Context mContext) {
+        this.mContext = mContext;
     }
 
     @Override

@@ -1,33 +1,25 @@
 package shade.pixel.gpsoclient;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class QuestInfoActitivity extends ActionBarActivity {
-    ArrayList<Quest> quests;
-    public static final String QUEST_ID = "QUEST_TO_SHOW_ARRAY_ID";
+public class RegionInfoActitivity extends ActionBarActivity {
+    ArrayList<Region> regions;
+    public static final String REGION_ID = "REGION_TO_SHOW_ARRAY_ID";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -46,9 +38,9 @@ public class QuestInfoActitivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quest_info_actitivity);
+        setContentView(R.layout.activity_region_info_actitivity);
 
-        quests = MainActivity.gameData.getQuests();
+        regions = MainActivity.gameData.getRegions();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -59,9 +51,8 @@ public class QuestInfoActitivity extends ActionBarActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         Intent intent = getIntent();
-        int quest_id = intent.getIntExtra(QUEST_ID, 0);
-        mSectionsPagerAdapter.getItem(quest_id);
-
+        int region_id = intent.getIntExtra(REGION_ID, 0);
+        mSectionsPagerAdapter.getItem(region_id);
     }
 
 
@@ -69,7 +60,7 @@ public class QuestInfoActitivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.quest_info_actitivity, menu);
+        getMenuInflater().inflate(R.menu.region_info_actitivity, menu);
         return true;
     }
 
@@ -83,11 +74,6 @@ public class QuestInfoActitivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void CompleteQuest(View view){
-        Toast.makeText(this, "completing!", Toast.LENGTH_LONG).show();
-
     }
 
     
@@ -106,26 +92,25 @@ public class QuestInfoActitivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(getQuest(position));
+            return PlaceholderFragment.newInstance(getRegion(position));
         }
 
         @Override
         public int getCount() {
-            return quests.size();
+            return regions.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if(position < quests.size()){
-              return quests.get(position).getName();
+            if(position < regions.size()){
+                return regions.get(position).getName();
             }
             return null;
         }
 
-
-        public Quest getQuest(int index){
-            if(index < quests.size()){
-            return quests.get(index);
+        public Region getRegion(int index){
+            if(index < regions.size()){
+                return regions.get(index);
             }
             return null;
         }
@@ -136,52 +121,27 @@ public class QuestInfoActitivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
-        private static Quest actualQuest;
+        private static Region actualRegion;
 
-        public static PlaceholderFragment newInstance(Quest quest) {
-            PlaceholderFragment fragment = new PlaceholderFragment(quest);
-            Bundle args = new Bundle();
-
-            fragment.setArguments(args);
+        public static PlaceholderFragment newInstance(Region region) {
+            PlaceholderFragment fragment = new PlaceholderFragment(region);
             return fragment;
         }
 
-        public PlaceholderFragment(Quest quest) {
-            actualQuest = quest;
+        public PlaceholderFragment(Region region) {
+            actualRegion = region;
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_quest_info_actitivity, container, false);
-
-            TextView questName = (TextView) rootView.findViewById(R.id.questNameLabel);
-            TextView questInfo = (TextView) rootView.findViewById(R.id.questInfoTextView);
-            TextView questCompletion = (TextView) rootView.findViewById(R.id.questCompletionTextView);
-            ImageView questImage = (ImageView) rootView.findViewById(R.id.questImageView);
-            EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
-            questName.setText(actualQuest.getName());
-            questInfo.setText(Html.fromHtml(actualQuest.getInfo()));
-            questCompletion.setText(actualQuest.getRequirementTypeText());
-
-            if(actualQuest.getRequirementType()==0){
-                questAnswer.setVisibility(View.GONE);
-            }
-
-            String imgFilename = actualQuest.getImage();
-            if(imgFilename.length()==0){
-                questImage.setVisibility(View.GONE);
-            } else {
-               // questImage.setImageBitmap(BitmapFactory.decodeFile(imgFilename);
-                // todo get here content files manager to set correct path to image
-                Toast.makeText(getActivity(), "Trying to show image", Toast.LENGTH_LONG).show();
-            }
-
+            View rootView = inflater.inflate(R.layout.fragment_region_info_actitivity, container, false);
+            TextView regionNameText = (TextView) rootView.findViewById(R.id.regionNameText);
+            regionNameText.setText(actualRegion.getName());
+            TextView regionInfoText = (TextView) rootView.findViewById(R.id.regionInfoText);
+            regionInfoText.setText(Html.fromHtml(actualRegion.getInfo()));
             return rootView;
         }
-
-
-
     }
 
 }

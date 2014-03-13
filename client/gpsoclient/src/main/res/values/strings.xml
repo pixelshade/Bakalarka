@@ -11,5 +11,6 @@
     <string name="UpdatePosition">UpdatePosition</string>
     <string name="Logout">Logout</string>
     <string name="title_activity_quest_info_actitivity">QuestInfoActitivity</string>
+    <string name="title_activity_region_info_actitivity">RegionInfoActitivity</string>
 
 </resources>

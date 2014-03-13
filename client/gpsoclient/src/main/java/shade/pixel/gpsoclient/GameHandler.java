@@ -15,50 +15,89 @@ import java.util.ArrayList;
  * Created by pixelshade on 11.3.2014.
  */
 public class GameHandler {
-//    GameData gameData;
-//   Context context;
-//    MyHtmlBrowser htmlBrowser;
-//    GPSTracker gpsTracker;
-//    ContentFilesManager contentFilesManager;
-//
-//
-//
-//    public GameHandler(Context context){
-//        this.context = context;
-//    }
-//
-//    public void UpdatePositionAndGameData(){
-//        LatLng latLng = gpsTracker.getLatLng();
-//        String url = htmlBrowser.getServerURL()+"/api/json/"+latLng.latitude+"/"+latLng.longitude;
-//        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
-//        htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
-//            @Override
-//            public void processFinish(Context context, String json) {
-//                GameData gameData = ResponseJSONParser.parseGameData(json);
-//                if(gameData != null){
-//                    //  PlaceholderFragment f = (PlaceholderFragment)mSectionsPagerAdapter.getItem(mActualViewId);
-//                    StringBuilder sb = new StringBuilder();
-//                    ArrayList<Region> regions = gameData.getRegions();
-//                    sb.append("Regions:");
-//                    for (Region region: regions){
-//                        sb.append(region.getName() + ",");
-//                    }
-//                    ArrayList<Quest> quests = gameData.getQuests();
-//                    sb.append("\nQuests:");
-//                    for (Quest quest: quests){
-//                        quest.getName();
-//                        sb.append(quest.getName() + ",");
-//                    }
-//                    TextView tv = (TextView) findViewById(R.id.section_content);
-//                    tv.setText(sb.toString());
-//                    //  f.setContent(sb.toString());
-//                    ArrayAdapter<Quest> arrayAdapter = new ArrayAdapter<Quest>(context, android.R.layout.simple_list_item_1, quests);
-//                    ListView lv = (ListView) findViewById(R.id.listViewQuests);
-//                    if(lv != null) lv.setAdapter(arrayAdapter);
-//                } else {
-//                    Log.d("AHA", "Problem with parsing gamedata");
-//                }
-//            }
-//        });
-//    }
+    static GameHandler gameHandler;
+    Context context;
+
+   GameData gameData;
+   MyHtmlBrowser htmlBrowser;
+   GPSTracker gpsTracker;
+   ContentFilesManager contentFilesManager;
+
+
+    public static GameHandler getInstance(Context context){
+        if(gameHandler == null){
+            gameHandler = new GameHandler(context);
+        }
+        gameHandler.setContext(context);
+        return gameHandler;
+    }
+
+    public GameHandler(Context context){
+        this.context = context;
+        htmlBrowser = MyHtmlBrowser.getInstance(context);
+        gameData = new GameData();
+        contentFilesManager = new ContentFilesManager(context);
+        gpsTracker = new GPSTracker(context);
+    }
+
+    public void UpdatePositionAndGameData(){
+        LatLng latLng = gpsTracker.getLatLng();
+        String url = htmlBrowser.getServerURL()+"/api/json/"+latLng.latitude+"/"+latLng.longitude;
+        Toast.makeText(context, url, Toast.LENGTH_SHORT).show();
+        htmlBrowser.HttpGetAsyncString(context, url, new AsyncResponse() {
+            @Override
+            public void processFinish(Context context, String json) {
+                GameData tempGameData = ResponseJSONParser.parseGameData(json);
+                if(gameData != null){
+                   gameData = tempGameData;
+                } else {
+                    Log.d("AHA", "Problem with parsing gamedata, using the old ones");
+                }
+            }
+        });
+    }
+
+
+    public GameData getGameData() {
+        return gameData;
+    }
+
+    public void setGameData(GameData gameData) {
+        this.gameData = gameData;
+    }
+
+    public MyHtmlBrowser getHtmlBrowser() {
+        return htmlBrowser;
+    }
+
+    public void setHtmlBrowser(MyHtmlBrowser htmlBrowser) {
+        this.htmlBrowser = htmlBrowser;
+    }
+
+    public GPSTracker getGpsTracker() {
+        return gpsTracker;
+    }
+
+    public void setGpsTracker(GPSTracker gpsTracker) {
+        this.gpsTracker = gpsTracker;
+    }
+
+    public ContentFilesManager getContentFilesManager() {
+        return contentFilesManager;
+    }
+
+    public void setContentFilesManager(ContentFilesManager contentFilesManager) {
+        this.contentFilesManager = contentFilesManager;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+        this.htmlBrowser.setmContext(context);
+        this.gpsTracker.setmContext(context);
+        this.contentFilesManager.setmContext(context);
+    }
 }

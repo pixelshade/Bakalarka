@@ -213,7 +213,15 @@ public class ContentFilesManager {
         return Environment.getExternalStorageDirectory() + "/" + ContentFileDir + "/";
     }
 
-//    private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
+    public Context getmContext() {
+        return mContext;
+    }
+
+    public void setmContext(Context mContext) {
+        this.mContext = mContext;
+    }
+
+    //    private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
 //        protected Long doInBackground(URL... urls) {
 //            int count = urls.length;
 //            long totalSize = 0;

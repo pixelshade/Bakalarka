@@ -105,4 +105,8 @@ public class Region {
         this.id = id;
     }
 
+    public String toString(){
+        return getName();
+    }
+
 }

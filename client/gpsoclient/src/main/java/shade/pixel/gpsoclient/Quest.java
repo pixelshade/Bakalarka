@@ -146,6 +146,9 @@ public class Quest {
             case 3:
                 return  "Having value of Attribute";
 
+            case 4:
+                return  "Be in specific region";
+
             default:
                 return "Uknown type";
         }
