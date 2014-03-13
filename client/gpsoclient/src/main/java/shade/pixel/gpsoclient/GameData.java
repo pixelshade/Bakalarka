@@ -1,16 +1,6 @@
 package shade.pixel.gpsoclient;
 
-import android.content.Context;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by pixelshade on 2.3.2014.
@@ -18,11 +8,13 @@ import java.util.HashMap;
 public class GameData {
     private ArrayList<Quest> quests;
     private ArrayList<Region> regions;
+    private ArrayList<Item> items;
 // TODO create game models
 
-    public GameData(){
+    public GameData() {
         quests = new ArrayList<Quest>();
         regions = new ArrayList<Region>();
+        items = new ArrayList<Item>();
     }
 
     public ArrayList<Quest> getQuests() {
@@ -39,5 +31,13 @@ public class GameData {
 
     public void setRegions(ArrayList<Region> regions) {
         this.regions = regions;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
     }
 }
