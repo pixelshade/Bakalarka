@@ -6,10 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+
 /**
  * Created by pixelshade on 11.3.2014.
  */
-public class MapFragment extends Fragment {
+public class MyMapFragment extends Fragment {
+    GoogleMap map;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -17,6 +21,8 @@ public class MapFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
 
+        map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        map.setMyLocationEnabled(true);
         return rootView;
     }
 }
