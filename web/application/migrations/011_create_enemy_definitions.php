@@ -30,7 +30,8 @@ class Migration_Create_enemy_definitions extends CI_Migration {
 			'reward_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,				
+				'unsigned' => FALSE,
+				'default' => NONE_ID,				
 			),				
 		));
 		$this->dbforge->add_key('id', TRUE);

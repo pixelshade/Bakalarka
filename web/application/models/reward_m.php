@@ -36,16 +36,16 @@ class Reward_m extends MY_Model
 		$reward = new stdClass();
 
 		$reward->name = '';
-		$reward->item_definition_id = '';
-		$reward->item_amount = '';
-		$reward->attribute_id = '';
-		$reward->attribute_amount = '';
+		$reward->item_definition_id = -1;
+		$reward->item_amount = 0;
+		$reward->attribute_id = -1;
+		$reward->attribute_amount = 0;
 
 		return $reward;
 	}
 
 	public function get_for_dropdown(){
-		$empty = array('' => 'No item');
+		$empty = array(NONE_ID => 'No reward');
 		$result = $this->get_array();		
 		$result = array_column($result, 'name', 'id');
 		$result = $empty + $result;		

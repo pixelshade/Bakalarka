@@ -74,23 +74,23 @@ public function get_new ()
 {
 	$quest = new stdClass();
 
-	$quest->code = null;
+	$quest->code = '';
 	$quest->name = '';
 	$quest->info = '';
 	$quest->image = '';
-	$quest->reward_id = '';
-	$quest->autostart = '';
-	$quest->region_id = null;
-	$quest->required_completed_quest_id = '';
-	$quest->duration = '';
-	$quest->completion_requirement_type = '';
+	$quest->reward_id = NONE_ID;
+	$quest->autostart = 0;
+	$quest->region_id = NONE_ID;
+	$quest->required_completed_quest_id = NONE_ID;
+	$quest->duration = NONE_ID;
+	$quest->completion_requirement_type = 0;
 	$quest->completion_requirement = '';
 
 	return $quest;
 }
 
 public function get_for_dropdown(){
-	$empty = array('' => 'No item');
+	$empty = array(NONE_ID => 'No quest');
 	$result = $this->get_array();		
 	$result = array_column($result, 'name', 'id');
 	$result = $empty + $result;		
@@ -98,7 +98,7 @@ public function get_for_dropdown(){
 }
 
 public function get_by_for_dropdown($where, $single = FALSE){
-	$empty = array('' => 'No item');
+	$empty = array(NONE_ID => 'No quest');
 	$result = $this->get_array_by($where, $single = FALSE);		
 	$result = array_column($result, 'name', 'id');
 	$result = $empty + $result;		

@@ -32,8 +32,8 @@ class Migration_Create_quests extends CI_Migration {
 			'reward_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,
-				'null' => TRUE,	
+				'unsigned' => FALSE,
+				'default' => NONE_ID,
 			),
 			'autostart'	=> array(
 				'type' => 'BOOLEAN',
@@ -41,20 +41,20 @@ class Migration_Create_quests extends CI_Migration {
 			'region_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,
-				'null' => TRUE,	
+				'unsigned' => FALSE,
+				'default' => NONE_ID,	
 			),
 			'required_completed_quest_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,
-				'null' => TRUE,	
+				'unsigned' => FALSE,
+				'null' => FALSE,	
 			),				
 			'duration' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,
-				'null' => TRUE,	
+				'unsigned' => FALSE,
+				'default' => NONE_ID,	
 			),					
 			'completion_requirement_type' => array(
 				'type' => 'INT',

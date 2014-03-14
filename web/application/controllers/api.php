@@ -43,7 +43,7 @@ class Api extends Admin_Controller
 			$result['regions'] = $regions;
 			$result['quests'] = $quests;
 			$items = $this->user_item_m->get_by("`char_id` = ".$user_id."");
-			$result['items'] = $items;			
+			$result['items'] = $items;				
 		// Print all	
 			$result = json_encode($result);
 			echo $result;
@@ -109,63 +109,100 @@ class Api extends Admin_Controller
 		return FALSE;
 	}
 
-	public function check_quest_completion($quest_id, $player_lat = NULL, $player_lon = NULL,$answer = NULL){
+
+	public function accept_quest($quest_id = NULL){
+		$user_id = $this->user_m->get_user_id();
+		if($quest_id == NULL){
+			$response['success'] = 0;
+			$response['msg'] = "Quest id unspecified";
+		} else {	
+			$quest = $this->quest_m->get_by_id($quest_id);
+			if(empty($quest)){
+				$response['success'] = 0;
+				$response['msg'] = "Quest doesnt exist";	
+			} else {
+				if($this->user_quest_m->is_quest_accepted_for_char_id($quest_id, $user_id)){
+					$response['success'] = 0;
+					$response['msg'] = "Quest is already accepted";
+				} else {
+					$required_quest_id = $quest->required_completed_quest_id;	
+					if($required_quest_id == NONE_ID){						
+						$accept = TRUE;
+					} else {
+						if($this->user_quest_m->is_quest_completed_for_char_id($required_quest_id,$user_id)){							
+							$accept = TRUE;	
+						} else {
+							$accept = FALSE;
+							$response['success'] = 0;
+							$response['msg'] = "Another quest must be completed before this can be accepted.";	
+						}
+					}
+					if($accept){
+						$data['char_id'] = $user_id;
+						$data['quest_id'] = $quest_id;
+						$data['time_accepted'] = date('Y-m-d H:i:s');
+						$data['completed'] = 0;
+						$this->user_quest_m->save($data);
+						$response['success'] = 1;
+						$response['msg'] = "Quest accepted";
+					}
+				}
+			}
+		}
+		echo json_encode($response);
+	}
+
+	public function complete_quest($quest_id, $player_lat = NULL, $player_lon = NULL,$answer = NULL){
 		$user_id = $this->user_m->get_user_id();		
 
 		$quest = $this->quest_m->get_by("`id` = '".$quest_id."'", TRUE);
 		if($quest){
-			switch ($quest->completion_requirement_type) {
-			// type answer
-				case 0:				
-				return ($quest->completion_requirement == $answer);
+			$response['success'] = FALSE;
+			switch ($quest->completion_requirement_type) {			
+				case 0:		// type answer		
+				$response['success'] = ($quest->completion_requirement == $answer);
 				break;
-
-			// have an item
-				case 1:
+				case 1:		// have an item
 				$required_item_id = $quest->completion_requirement;
 				$user_item = $this->user_item_m->get_array_by('`char_id` = `'.$char_id.'` AND `item_id` = `'.$required_item_id.'`');
 				if(count($user_item)){
-					return TRUE;
+					$response['success'] = TRUE;
 				} else {
-					return FALSE;
+					$response['success'] = FALSE;
 				}				 
 				break;
-
-			// Completed other quest
-				case 2:
+				case 2:		// Completed other quest
 				$required_completed_quest_id = $quest->completion_requirement;
 				$user_quest = $this->user_item_m->get_array_by('`char_id` = `'.$char_id.'` AND `quest_id` = `'.$required_completed_quest_id.'`', TRUE);
 				if(count($user_quest)){
-					return TRUE;
+					$response['success'] = TRUE;
 				} else {
-					return FALSE;
+					$response['success'] = FALSE;
 				}				
 				break;
-
-			// Having value of Attribute
-				case 3:
+				case 3:		// Having value of Attribute
 				// TODO problem with need of attribute id and attribute value
 				// possible id#value 				
 				break;
-
-			// Being in region
-				case 4:
+				case 4:		// Being in region
 				$required_region_id = $quest->completion_requirement;
 				$regions = $this->region_m->get_by_latlon($player_lat,$player_lon);
 				$region_ids = array_column($regions, 'id');				
-				return in_array($required_region_id, $region_ids);				
+				$response['success'] = in_array($required_region_id, $region_ids);				
 				break;
-
 				default:
-				echo "uknown type";
-				return FALSE;
+				$response['msg'] =  "Uknown quest type";
+				$response['success'] = FALSE;
 				break;
 			}
 		} else {
-			echo "quest doesnt exist";
-			return FALSE;
+			$response['msg'] =  "Quest doesnt exist";
+			$response['success'] = FALSE;
 		}
 
+
+
+		echo json_encode($response);
 	}
 }
 

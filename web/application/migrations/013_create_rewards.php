@@ -20,8 +20,8 @@ class Migration_Create_rewards extends CI_Migration {
 			'item_definition_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,
-				'null' => TRUE,	
+				'unsigned' => FALSE,
+				'default' => NONE_ID,
 			),		
 			'item_amount' => array(
 				'type' => 'INT',
@@ -31,8 +31,8 @@ class Migration_Create_rewards extends CI_Migration {
 			'attribute_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,
-				'null' => TRUE,	
+				'unsigned' => FALSE,
+				'default' => NONE_ID,	
 			),	
 			'attribute_amount' => array(
 				'type' => 'INT',

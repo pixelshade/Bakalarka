@@ -33,7 +33,7 @@ class Attribute_m extends MY_Model
 	}
 
 	public function get_for_dropdown(){
-		$empty = array('' => 'No item');
+		$empty = array(NONE_ID => 'No attribute');
 		$result = $this->get_array();		
 		$result = array_column($result, 'name', 'id');
 		$result = $empty + $result;		

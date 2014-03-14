@@ -11,6 +11,7 @@
 				<th>reward_id</th>
 				<th>autostart</th>
 				<th>region_id</th>
+				<th>required completed quest to start</th>
 				<th>duration(seconds)</th>
 				<th>quest completion type</th>
 				<th>completion</th>
@@ -25,10 +26,11 @@
 			<td><?php echo anchor('admin/quest/edit/' . $quest->id, $quest->name); ?></td>
 			<td><?php echo $quest->code; ?></td>
 			<td><?php echo $quest->info; ?></td>
-			<td><?php echo $quest->image; ?></td>
-			<td><?php echo $quest->reward_id; ?></td>
+			<td><?php echo $imageNames[$quest->image]; ?></td>
+			<td><?php echo $rewardNames[$quest->reward_id]; ?></td>
 			<td><?php echo $quest->autostart; ?></td>
-			<td><?php echo empty($quest->region_id) ? '' : $regions[$quest->region_id]; ?></td>
+			<td><?php echo $regionNames[$quest->region_id]; ?></td>
+			<td><?php echo $questNames[$quest->required_completed_quest_id]; ?></td>
 			<td><?php echo $quest->duration; ?></td>	
 			<td><?php echo $quest->completion_requirement_type; ?></td>
 			<td><?php echo $quest->completion_requirement; ?></td>	

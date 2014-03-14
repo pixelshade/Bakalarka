@@ -16,7 +16,7 @@ class Migration_Create_item_activities extends CI_Migration {
 			'item_definition_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,				
+				'unsigned' => FALSE,				
 			),		
 			'name' => array(
 				'type' => 'VARCHAR',
@@ -32,7 +32,8 @@ class Migration_Create_item_activities extends CI_Migration {
 			'attribute_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,				
+				'unsigned' => FALSE,
+				'default' => NONE_ID,				
 			),		
 			'attribute_amount' => array(
 				'type' => 'INT',

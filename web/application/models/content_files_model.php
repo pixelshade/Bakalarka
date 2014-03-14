@@ -43,7 +43,7 @@ class Content_Files_Model extends CI_Model {
 
     public function get_for_dropdown(){
         $results = $this->db->get('content_files')->result_array();
-        $empty = array("" => "No image");
+        $empty = array(NONE_STRING => "No image");
         if (count($results) > 0) {                                            
             foreach ($results as $value) {
                 $filenames[$value['filename']] = $value['filename'];               

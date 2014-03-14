@@ -39,7 +39,7 @@ class User_quest extends Admin_Controller
 			$data = $this->user_quest_m->array_from_post(array(
 				'char_id',
 				'quest_id',
-				'started',
+				'time_accepted',
 				'completed',				
 				));
 			$this->user_quest_m->save($data, $id);

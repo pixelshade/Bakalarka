@@ -36,7 +36,7 @@ class Migration_Create_item_instances extends CI_Migration {
 			'added_by_user' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,			
+				'unsigned' => TRUE,							
 			),
 			'code' => array(
 				'type' => 'TEXT',

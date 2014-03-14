@@ -23,7 +23,7 @@ class Migration_Create_user_quests extends CI_Migration {
 				'constraint' => 11,
 				'unsigned' => TRUE				
 			),
-			'start_time' => array(
+			'time_accepted' => array(
 				'type' => 'DATETIME',
 			),
 			'completed' => array(

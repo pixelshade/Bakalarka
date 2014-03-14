@@ -88,8 +88,8 @@ if (!function_exists('form_boolean_select')) {
     function form_boolean_select($name, $default_true = FALSE) {
         ?>
         <select name="<?php echo $name; ?>">
-            <option value="TRUE" <?php echo set_select($name, 'TRUE', $default_true); ?> >TRUE</option>
-            <option value="FALSE" <?php echo set_select($name, 'FALSE', !$default_true); ?> >FALSE</option>           
+            <option value="1" <?php echo set_select($name, '1', $default_true); ?> >TRUE</option>
+            <option value="0" <?php echo set_select($name, '0', !$default_true); ?> >FALSE</option>           
         </select>
         <?
     }

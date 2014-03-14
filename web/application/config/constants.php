@@ -41,3 +41,12 @@ define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVE
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
+
+
+/*
+|  Special constants used for defining ids and names, when none of proper ids, or names is selected 
+|  (none object should have id -1)
+|  (none file should have empty name)
+*/
+define("NONE_ID", -1);
+define("NONE_STRING", '');

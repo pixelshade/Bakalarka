@@ -1,7 +1,7 @@
 <?php
 /**
 * MY_Model
-*/
+*/	
 class MY_Model extends CI_Model
 {
 
@@ -11,6 +11,7 @@ class MY_Model extends CI_Model
 	protected $_order_by = '';
 	public $_rules = array();
 	protected $_timestamps = FALSE;
+
 
 	function __construct()
 	{
@@ -73,6 +74,11 @@ class MY_Model extends CI_Model
 		return $this->get(NULL, $single);
 	}
 
+	public function get_by_id($id){
+		$this->db->where($this->_primary_key,$id);
+		return $this->get(NULL, TRUE);
+	}
+
 	public function get_array_by($where, $single = FALSE){
 		$this->db->where($where);
 		return $this->get_array(NULL, $single);
@@ -133,8 +139,5 @@ class MY_Model extends CI_Model
 		$this->db->delete($this->_table_name);
 		return TRUE;
 	}
-
-
-
 
 }

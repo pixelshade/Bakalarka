@@ -11,13 +11,16 @@ class Quest extends Admin_Controller
 		$this->load->model('reward_m');		
 
 		//Fetch images
-		$this->data['images'] = $this->content_files_model->get_for_dropdown();
+		$this->data['imageNames'] = $this->content_files_model->get_for_dropdown();
 
 		//Fetch regions
-		$this->data['regions'] = $this->region_m->get_for_dropdown();				
+		$this->data['regionNames'] = $this->region_m->get_for_dropdown();				
 
 		// Fetch rewards
-		$this->data['rewards'] = $this->reward_m->get_for_dropdown();
+		$this->data['rewardNames'] = $this->reward_m->get_for_dropdown();
+
+		// Fetch questNames
+		$this->data['questNames'] = $this->quest_m->get_for_dropdown();
 
 		$this->data['completion_types'] = $this->quest_m->completion_types;
 

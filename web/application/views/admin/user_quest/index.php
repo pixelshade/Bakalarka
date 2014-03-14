@@ -6,7 +6,7 @@
 			<tr>
 				<th>char_id</th>
 				<th>quest_id</th>
-				<th>started</th>
+				<th>time_accepted</th>
 				<th>completed</th>
 
 				<th>edit</th>
@@ -16,9 +16,9 @@
 		<tbody>
 <?php if(count($user_quests)): foreach($user_quests as $user_quest): ?>	
 		<tr>
-			<td><?php echo anchor('admin/user_quest/edit/' . $user_quest->id, $user_quest->char_id); ?></td>
+			<td><?php echo $user_quest->char_id; ?></td>
 			<td><?php echo $user_quest->quest_id; ?></td>
-			<td><?php echo $user_quest->started; ?></td>
+			<td><?php echo $user_quest->time_accepted; ?></td>
 			<td><?php echo $user_quest->completed; ?></td>
 			
 			<td><?php echo btn_edit('admin/user_quest/edit/' . $user_quest->id); ?></td>
