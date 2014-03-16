@@ -2,6 +2,8 @@ package shade.pixel.gpsoclient;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class QuestInfoActitivity extends ActionBarActivity {
@@ -212,14 +215,13 @@ public class QuestInfoActitivity extends ActionBarActivity {
                 questAnswer.setVisibility(View.GONE);
             }
 
-            String imgFilename = actualQuest.getImage();
-            if (imgFilename.length() == 0) {
-                questImage.setVisibility(View.GONE);
-            } else {
-                // questImage.setImageBitmap(BitmapFactory.decodeFile(imgFilename);
-                // todo get here content files manager to set correct path to image
-                Toast.makeText(getActivity(), "Trying to show image", Toast.LENGTH_LONG).show();
+            if(actualQuest.getImage().length() != 0) {
+                String filePath = Settings.getContentFileDir() + actualQuest.getImage();
+                File imageFile = new File(filePath);
+                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                questImage.setImageBitmap(bitmap);
             }
+
 
 
             return rootView;

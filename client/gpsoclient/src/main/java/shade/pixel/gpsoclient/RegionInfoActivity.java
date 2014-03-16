@@ -1,8 +1,11 @@
 package shade.pixel.gpsoclient;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,11 +18,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class RegionInfoActitivity extends ActionBarActivity {
+public class RegionInfoActivity extends ActionBarActivity {
     ArrayList<Region> regions;
-    public static final String REGION_ID = "REGION_TO_SHOW_ARRAY_ID";
+    public static final String REGION_INDEX = "REGION_INDEX_IN_ARRAY";
+    private static Region actualRegion;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -38,7 +43,7 @@ public class RegionInfoActitivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_region_info_actitivity);
+        setContentView(R.layout.activity_region_info);
 
         regions = MainActivity.gameData.getRegions();
 
@@ -51,7 +56,8 @@ public class RegionInfoActitivity extends ActionBarActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         Intent intent = getIntent();
-        int region_id = intent.getIntExtra(REGION_ID, 0);
+        int region_id = intent.getIntExtra(REGION_INDEX, 0);
+        actualRegion = regions.get(region_id);
         mSectionsPagerAdapter.getItem(region_id);
     }
 
@@ -60,7 +66,7 @@ public class RegionInfoActitivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.region_info_actitivity, menu);
+        getMenuInflater().inflate(R.menu.region_info_activity, menu);
         return true;
     }
 
@@ -75,6 +81,7 @@ public class RegionInfoActitivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     
 
@@ -92,7 +99,7 @@ public class RegionInfoActitivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(getRegion(position));
+            return PlaceholderFragment.newInstance();
         }
 
         @Override
@@ -121,25 +128,30 @@ public class RegionInfoActitivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
-        private static Region actualRegion;
-
-        public static PlaceholderFragment newInstance(Region region) {
-            PlaceholderFragment fragment = new PlaceholderFragment(region);
+        public static PlaceholderFragment newInstance() {
+            PlaceholderFragment fragment = new PlaceholderFragment();
             return fragment;
         }
 
-        public PlaceholderFragment(Region region) {
-            actualRegion = region;
-        }
+        public PlaceholderFragment() {}
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_region_info_actitivity, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_region_info, container, false);
             TextView regionNameText = (TextView) rootView.findViewById(R.id.regionNameText);
             regionNameText.setText(actualRegion.getName());
             TextView regionInfoText = (TextView) rootView.findViewById(R.id.regionInfoText);
             regionInfoText.setText(Html.fromHtml(actualRegion.getInfo()));
+            ImageView regionImage = (ImageView) rootView.findViewById(R.id.regionImageView);
+
+            if(actualRegion.getImage().length() != 0) {
+                String filePath = Settings.getContentFileDir() + actualRegion.getImage();
+                File imageFile = new File(filePath);
+                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                regionImage.setImageBitmap(bitmap);
+            }
+
             return rootView;
         }
     }

@@ -1,5 +1,7 @@
 package shade.pixel.gpsoclient;
 
+import android.os.Environment;
+
 /**
  * Created by pixelshade on 15.3.2014.
  */
@@ -26,7 +28,7 @@ public class Settings {
     /**
      * android local file dir
      */
-    private static String ContentFileDir = "GPSOData";
+    private static String ContentFileDir = Environment.getExternalStorageDirectory() + "/" + "GPSOData";
 
 
     private Settings() {

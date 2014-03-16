@@ -1,8 +1,11 @@
 package shade.pixel.gpsoclient;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ItemInfoActitivity extends ActionBarActivity {
@@ -140,6 +144,15 @@ public class ItemInfoActitivity extends ActionBarActivity {
             itemNameText.setText(actualItem.getName());
             TextView itemInfoText = (TextView) rootView.findViewById(R.id.itemInfoText);
             itemInfoText.setText(Html.fromHtml(actualItem.getInfo()));
+            ImageView itemImageView = (ImageView) rootView.findViewById(R.id.itemImageView);
+
+            if(actualItem.getImage().length() != 0) {
+                String filePath = Settings.getContentFileDir() + actualItem.getImage();
+                File imageFile = new File(filePath);
+                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                itemImageView.setImageBitmap(bitmap);
+            }
+
             return rootView;
         }
     }

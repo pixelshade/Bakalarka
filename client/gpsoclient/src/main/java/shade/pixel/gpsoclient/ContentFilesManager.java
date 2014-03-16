@@ -91,7 +91,7 @@ public class ContentFilesManager {
         final String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             CreateDirIfDoesntExist();
-            File contentFileDir = new File(Environment.getExternalStorageDirectory() + "/" + Settings.getContentFileDir());
+            File contentFileDir = new File(Settings.getContentFileDir());
             localFiles = new ArrayList<String>(Arrays.asList(contentFileDir.list()));
             Log.d("AHA", localFiles.toString());
         } else {
@@ -100,7 +100,7 @@ public class ContentFilesManager {
     }
 
     private void CreateDirIfDoesntExist() {
-        File contentFileDir = new File(Environment.getExternalStorageDirectory() + "/" + Settings.getContentFileDir());
+        File contentFileDir = new File(Settings.getContentFileDir());
         if (!contentFileDir.isDirectory()) {
             contentFileDir.mkdir();
         }
@@ -155,7 +155,7 @@ public class ContentFilesManager {
                         InputStream input = new BufferedInputStream(url.openStream(), 8192);
 
                         // Output stream to write file
-                        OutputStream output = new FileOutputStream(getLocalContentFolder() + filename);
+                        OutputStream output = new FileOutputStream(Settings.getContentFileDir() + filename);
 
                         byte data[] = new byte[1024];
 
@@ -203,10 +203,6 @@ public class ContentFilesManager {
 
         };
         ast.execute(filenames);
-    }
-
-    private String getLocalContentFolder() {
-        return Environment.getExternalStorageDirectory() + "/" + Settings.getContentFileDir() + "/";
     }
 
     public Context getmContext() {

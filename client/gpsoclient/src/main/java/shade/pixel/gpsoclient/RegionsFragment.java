@@ -36,8 +36,8 @@ public class RegionsFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Toast.makeText(getActivity(), "" + i, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getActivity(), RegionInfoActitivity.class);
-                        intent.putExtra(RegionInfoActitivity.REGION_ID, i);
+                        Intent intent = new Intent(getActivity(), RegionInfoActivity.class);
+                        intent.putExtra(RegionInfoActivity.REGION_INDEX, i);
                         startActivity(intent);
                     }
                 });

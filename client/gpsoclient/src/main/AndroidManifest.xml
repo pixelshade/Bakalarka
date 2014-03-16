@@ -57,7 +57,7 @@
             android:label="@string/title_activity_quest_info_actitivity" >
         </activity>
         <activity
-            android:name="shade.pixel.gpsoclient.RegionInfoActitivity"
+            android:name=".RegionInfoActivity"
             android:label="@string/title_activity_region_info_actitivity" >
         </activity>
         <activity
