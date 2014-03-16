@@ -42,8 +42,6 @@ import java.util.List;
 public class MyHtmlBrowser {
     private static MyHtmlBrowser instance = null;
     private DefaultHttpClient httpClient;
-    private String user, pass;
-    private String serverURL = "http://bak.skeletopedia.sk";
     private ProgressDialog progressDialog;
     private Context mContext;
     private CookieStore cookieStore;
@@ -71,8 +69,9 @@ public class MyHtmlBrowser {
 
 
     public boolean Login(String user, String pass) {
-        setUser(user);
-        setPass(pass);
+        Settings.setUser(user);
+        Settings.setPass(pass);
+        String serverURL = Settings.getServerURL();
         if (serverURL.equals("")) {
             Toast.makeText(mContext, "NO SERVER TO CONNECT", Toast.LENGTH_SHORT).show();
             return false;
@@ -230,32 +229,6 @@ public class MyHtmlBrowser {
     public void HttpGetAsyncString(Context context,String uristr, AsyncResponse delegate) {
         getAsyncStringTask ast = new getAsyncStringTask(context,delegate);
         if(!ast.isLocked())   ast.execute(uristr);
-    }
-
-
-    public String getServerURL() {
-        return serverURL;
-    }
-
-    public void setServerURL(String serverURL) {
-        this.serverURL = serverURL;
-    }
-
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
     }
 
     public Context getmContext() {

@@ -119,7 +119,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 
         if (htmlBrowser.isOnline()) {
-            htmlBrowser.HttpGetAsyncString(this, htmlBrowser.getServerURL() + "/api/isLoggedIn", afterLoginCheck);
+            htmlBrowser.HttpGetAsyncString(this, Settings.getIsLoggedInURL(), afterLoginCheck);
 
         } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
@@ -129,7 +129,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void LogoutAndStartLoginActivity(View view) {
         final Intent intent = new Intent(this, LoginActivity.class);
-        String url = htmlBrowser.getServerURL() + "/api/logout";
+        String url = Settings.getLogoutURL();
         Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
         htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
             @Override
@@ -143,7 +143,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void UpdatePosition(View view) {
         LatLng latLng = gpsTracker.getLatLng();
-        String url = htmlBrowser.getServerURL() + "/api/json/" + latLng.latitude + "/" + latLng.longitude;
+        String url = Settings.getServerURL() + "/api/json/" + latLng.latitude + "/" + latLng.longitude;
         Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
         htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
             @Override

@@ -11,7 +11,7 @@
 	</tr>
 	<tr>
 		<td>region_id</td>		
-		<td><?php echo form_dropdown('region_id',$regions, $quest->region_id, 'class="form-control"'); ?>	</td>
+		<td><?php echo form_dropdown('region_id',$regionNames, $quest->region_id, 'class="form-control"'); ?>	</td>
 	</tr>
 	<tr>
 		<td>name</td>
@@ -23,7 +23,7 @@
 	</tr>
 	<tr>
 		<td>image</td>
-		<td><?php echo form_dropdown('image',$images, $quest->image, 'class="form-control"'); ?>	</td>
+		<td><?php echo form_dropdown('image',$imageNames, $quest->image, 'class="form-control"'); ?>	</td>
 	</tr>
 	<tr>
 		<td>autostart</td>		
@@ -32,17 +32,12 @@
 	</tr>
 	<tr>
 		<td>required_completed quest</td>
-		<td><?php echo form_dropdown('required_completed_quest_id', $quests, $quest->required_completed_quest_id, 'class="form-control"'); ?>	</td>
+		<td><?php echo form_dropdown('required_completed_quest_id', $questNames, $quest->required_completed_quest_id, 'class="form-control"'); ?>	</td>
 	</tr>
 	<tr>
 		<td>duration(seconds)</td>
 		<td><?php echo form_input('duration',set_value('duration', $quest->duration), 'class="form-control"'); ?>	</td>
-	</tr>
-	<tr>
-		<td>image</td>
-		<td><?php echo form_dropdown('image',$images, $quest->image, 'class="form-control"'); ?>	</td>
-	</tr>
-	
+	</tr>	
 	<tr>
 		<td>completion_requirement_type</td>
 		<td><?php echo form_dropdown('completion_requirement_type',$completion_types, $quest->completion_requirement_type, 'class="form-control"'); ?>	</td>
@@ -53,7 +48,7 @@
 	</tr>
 	<tr>
 		<td>reward</td>
-		<td><?php echo form_dropdown('reward_id',$rewards, $quest->reward_id, 'class="form-control"'); ?>	</td>
+		<td><?php echo form_dropdown('reward_id',$rewardNames, $quest->reward_id, 'class="form-control"'); ?>	</td>
 	</tr>
 </table>
 <?php echo form_submit('submit', 'Save', 'class="btn btn-primary"'); ?>

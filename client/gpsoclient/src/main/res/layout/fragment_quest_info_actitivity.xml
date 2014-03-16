@@ -55,14 +55,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Accept quest"
-                android:id="@+id/button" />
+                android:onClick="AcceptQuest"
+                android:id="@+id/acceptButton" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Complete quest"
                 android:onClick="CompleteQuest"
-                android:id="@+id/button2" />
+                android:id="@+id/completeButton" />
         </LinearLayout>
 
 

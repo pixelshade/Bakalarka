@@ -44,7 +44,7 @@ public class QuestsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getActivity(), "" + i, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(), QuestInfoActitivity.class);
-                intent.putExtra(QuestInfoActitivity.QUEST_ID, i);
+                intent.putExtra(QuestInfoActitivity.QUEST_INDEX_LABEL, i);
                 startActivity(intent);
             }
         });

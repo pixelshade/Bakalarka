@@ -28,15 +28,11 @@ public class ContentFilesManager {
     Context mContext;
     ProgressDialog pDialog;
     ArrayList<String> localFiles;
-    String ContentFileDir = "GPSOData";
-    String serverURL;
-    String serverContentDir = "app_content/";
     MyHtmlBrowser htmlBrowser;
 
     public ContentFilesManager(Context mContext) {
         this.mContext = mContext;
         htmlBrowser = MyHtmlBrowser.getInstance(mContext);
-        serverURL = htmlBrowser.getServerURL();
 
     }
 
@@ -54,7 +50,7 @@ public class ContentFilesManager {
             protected ArrayList<String> doInBackground(String... strings) {
                 JSONArray jsonArray = null;
 
-                String json = htmlBrowser.HttpGetString(htmlBrowser.getServerURL() + "/api/getContentFilesList");
+                String json = htmlBrowser.HttpGetString(Settings.getContentFilesListURL());
                 try {
                     jsonArray = new JSONArray(json);
                     for (int i = 0; i < jsonArray.length(); i++)
@@ -95,7 +91,7 @@ public class ContentFilesManager {
         final String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             CreateDirIfDoesntExist();
-            File contentFileDir = new File(Environment.getExternalStorageDirectory() + "/" + ContentFileDir);
+            File contentFileDir = new File(Environment.getExternalStorageDirectory() + "/" + Settings.getContentFileDir());
             localFiles = new ArrayList<String>(Arrays.asList(contentFileDir.list()));
             Log.d("AHA", localFiles.toString());
         } else {
@@ -104,7 +100,7 @@ public class ContentFilesManager {
     }
 
     private void CreateDirIfDoesntExist() {
-        File contentFileDir = new File(Environment.getExternalStorageDirectory() + "/" + ContentFileDir);
+        File contentFileDir = new File(Environment.getExternalStorageDirectory() + "/" + Settings.getContentFileDir());
         if (!contentFileDir.isDirectory()) {
             contentFileDir.mkdir();
         }
@@ -146,7 +142,7 @@ public class ContentFilesManager {
                 int count;
 
                 for (String filename : filenames[0]) {
-                    String fileURL = serverURL + "/" + serverContentDir + filename;
+                    String fileURL = Settings.getServerContentDirURL() + filename;
                     Log.d("AHA", fileURL);
                     try {
                         URL url = new URL(fileURL);
@@ -210,7 +206,7 @@ public class ContentFilesManager {
     }
 
     private String getLocalContentFolder() {
-        return Environment.getExternalStorageDirectory() + "/" + ContentFileDir + "/";
+        return Environment.getExternalStorageDirectory() + "/" + Settings.getContentFileDir() + "/";
     }
 
     public Context getmContext() {

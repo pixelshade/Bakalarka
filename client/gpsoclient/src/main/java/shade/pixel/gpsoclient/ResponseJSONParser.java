@@ -130,10 +130,10 @@ public class ResponseJSONParser {
                 ArrayList<Item> items = new ArrayList<Item>();
                 for(int i = 0; i < jsonItems.length(); i++){
                     JSONObject itemJson = jsonItems.getJSONObject(i);
-                    int id =  itemJson.getInt(Region.KEY_REGION_ID);
-                    String name = itemJson.getString(Region.KEY_REGION_NAME);
-                    String info = itemJson.getString(Region.KEY_REGION_INFO);
-                    String image = itemJson.getString(Region.KEY_REGION_IMAGE);
+                    int id =  itemJson.getInt(Item.KEY_ITEM_ID);
+                    String name = itemJson.getString(Item.KEY_ITEM_NAME);
+                    String info = itemJson.getString(Item.KEY_ITEM_INFO);
+                    String image = itemJson.getString(Item.KEY_ITEM_IMAGE);
 
                     Item item = new Item(id,name,info,image);
                     items.add(item);

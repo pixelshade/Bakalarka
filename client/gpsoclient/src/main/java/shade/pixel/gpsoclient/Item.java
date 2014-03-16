@@ -4,10 +4,10 @@ package shade.pixel.gpsoclient;
  * Created by pixelshade on 13.3.2014.
  */
 public class Item {
-    public static final String KEY_REGION_ID = "id";
-    public static final String KEY_REGION_NAME = "name";
-    public static final String KEY_REGION_INFO = "info";
-    public static final String KEY_REGION_IMAGE = "image";
+    public static final String KEY_ITEM_ID = "id";
+    public static final String KEY_ITEM_NAME = "name";
+    public static final String KEY_ITEM_INFO = "info";
+    public static final String KEY_ITEM_IMAGE = "image";
 
 
     private int id;

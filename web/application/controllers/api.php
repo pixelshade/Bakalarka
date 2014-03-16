@@ -42,7 +42,10 @@ class Api extends Admin_Controller
 			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids);			
 			$result['regions'] = $regions;
 			$result['quests'] = $quests;
-			$items = $this->user_item_m->get_by("`char_id` = ".$user_id."");
+			$user_items = $this->user_item_m->get_array_by("`char_id` = '".$user_id."'");
+			$item_ids = array_column($user_items,"item_id");
+			$items = $this->item_definition_m->get_array_where_in('id',$item_ids);
+
 			$result['items'] = $items;				
 		// Print all	
 			$result = json_encode($result);
@@ -152,62 +155,136 @@ class Api extends Admin_Controller
 		echo json_encode($response);
 	}
 
-	public function complete_quest($quest_id, $player_lat = NULL, $player_lon = NULL,$answer = NULL){
-		$user_id = $this->user_m->get_user_id();		
+	public function complete_quest($quest_id = NULL, $player_lat = NULL, $player_lon = NULL,$answer = NULL){
+		$user_id = $this->user_m->get_user_id();	
+		$success = false;	
+		if($quest_id == NULL){
+			$response['success'] = 0;
+			$response['msg'] = "Quest id unspecified";
+		} else {			
+			$is_completed = $this->user_quest_m->is_quest_completed_for_char_id($quest_id, $user_id);
+			if($is_completed){
+				$response['success'] = 0;
+				$response['msg'] = "Quest is already completed";	
+			} else {			
+				$quest = $this->quest_m->get_by("`id` = '".$quest_id."'", TRUE);
+				if($quest){
+					$response['success'] = 0;
+					switch ($quest->completion_requirement_type) {	
+						case 0:		// type answer	
+						$success = ($quest->completion_requirement == $answer);
+						if($success) {
+							$response['success'] = 1;					
+						} else {
+							$resoibse['success'] = 0;
+							$response['msg'] =  "Answer is wrong";
+						}
+						break;
 
-		$quest = $this->quest_m->get_by("`id` = '".$quest_id."'", TRUE);
-		if($quest){
-			$response['success'] = FALSE;
-			switch ($quest->completion_requirement_type) {			
-				case 0:		// type answer		
-				$response['success'] = ($quest->completion_requirement == $answer);
-				break;
-				case 1:		// have an item
-				$required_item_id = $quest->completion_requirement;
-				$user_item = $this->user_item_m->get_array_by('`char_id` = `'.$char_id.'` AND `item_id` = `'.$required_item_id.'`');
-				if(count($user_item)){
-					$response['success'] = TRUE;
+						case 1:		// have an item
+						$required_item_id = $quest->completion_requirement;
+						$user_item = $this->user_item_m->get_array_by('`char_id` = `'.$char_id.'` AND `item_id` = `'.$required_item_id.'`');
+						if(count($user_item)){
+							$response['success'] = 1;					
+						} else {
+							$response['success'] = 0;
+							$response['msg'] =  "You don't have required item.";
+						}				 
+						break;
+
+						case 2:		// Completed other quest
+						$required_completed_quest_id = $quest->completion_requirement;
+						$user_quest = $this->user_quest_m->get_array_by('`char_id` = `'.$char_id.'` AND `quest_id` = `'.$required_completed_quest_id.'` AND `completed` = 1', TRUE);
+						if(count($user_quest)){
+							$response['success'] = 1;					
+						} else {
+							$response['success'] = 0;
+							$response['msg'] =  "You must complete other quest.";
+						}				
+						break;
+
+						case 3:		// Having value of Attribute
+						// TODO problem with need of attribute id and attribute value
+						// possible id#value 				
+						break;
+
+						case 4:		// Being in region
+						if($player_lon == NULL || $player_lat == NULL){
+							$response['success'] = 0;
+							$response['msg'] = "Players latitude and longtitude must be specified.";
+						} else {
+							$required_region_id = $quest->completion_requirement;
+							$regions = $this->region_m->get_by_latlon($player_lat,$player_lon);
+							$region_ids = array_column($regions, 'id');				
+							$success = in_array($required_region_id, $region_ids);				
+							if($success){
+								$response['success'] = 1;
+							} else {
+								$response['success'] = 0;
+								$response['msg'] = "You are not in required region.";
+							}
+						}
+						break;
+						default:
+						$response['msg'] =  "Uknown quest type";
+						$response['success'] = 0;
+						break;
+					}
 				} else {
-					$response['success'] = FALSE;
-				}				 
-				break;
-				case 2:		// Completed other quest
-				$required_completed_quest_id = $quest->completion_requirement;
-				$user_quest = $this->user_item_m->get_array_by('`char_id` = `'.$char_id.'` AND `quest_id` = `'.$required_completed_quest_id.'`', TRUE);
-				if(count($user_quest)){
-					$response['success'] = TRUE;
-				} else {
-					$response['success'] = FALSE;
-				}				
-				break;
-				case 3:		// Having value of Attribute
-				// TODO problem with need of attribute id and attribute value
-				// possible id#value 				
-				break;
-				case 4:		// Being in region
-				$required_region_id = $quest->completion_requirement;
-				$regions = $this->region_m->get_by_latlon($player_lat,$player_lon);
-				$region_ids = array_column($regions, 'id');				
-				$response['success'] = in_array($required_region_id, $region_ids);				
-				break;
-				default:
-				$response['msg'] =  "Uknown quest type";
-				$response['success'] = FALSE;
-				break;
+					$response['msg'] =  "Quest doesnt exist";
+					$response['success'] = 0;
+				}
 			}
-		} else {
-			$response['msg'] =  "Quest doesnt exist";
-			$response['success'] = FALSE;
+
+			if($success){
+				$user_quest = $this->user_quest_m->get_by("`char_id` = '".$user_id."' AND `quest_id` = '".$quest_id."'", TRUE);		
+				$user_quest_id = $user_quest->id;
+				$response['msg'] = "Quest was successfuly completed";
+				$data['char_id'] = $user_id;
+				$data['quest_id'] = $quest_id;
+				$data['time_accepted'] = date('Y-m-d H:i:s');
+				$data['completed'] = 1;
+				$this->user_quest_m->save($data, $user_quest_id);
+				$this->_giveReward($quest_id,$user_id);
+			}
 		}
-
-
-
 		echo json_encode($response);
+
 	}
+
+
+
+	private function _giveReward($quest_id, $char_id){
+		$quest = $this->quest_m->get_by_id($quest_id);
+		if($quest!=null){
+			if($quest->reward_id != NONE_ID){
+				$reward = $this->reward_m->get_by_id($quest->reward_id);
+				$item_id = $reward->item_definition_id;
+				$item_amount = $reward->item_amount;				
+				if($item_id != NONE_ID && $item_amount != 0){
+					$user_item['char_id'] = $char_id;
+					$user_item['item_id'] = $item_id;
+					for ($i=0; $i < $item_amount; $i++) { 	
+						$this->user_item_m->save($user_item);
+					}			
+				}
+				$attribute_id = $reward->attribute_id;
+				$attribute_amount = $reward->attribute_amount;
+				if($attribute_id != NONE_ID && $attribute_amount != 0){
+					$user_attribute['char_id'] = $char_id;
+					$user_attribute['attribute_id'] = $attribute_id;
+					for ($i=0; $i < $attribute_amount; $i++) { 				
+						$this->user_attribute_m->save($user_attribute);
+					}
+				}	
+
+			}
+		} 
+
+	}
+
+
 }
-
-
-
 
 
 
