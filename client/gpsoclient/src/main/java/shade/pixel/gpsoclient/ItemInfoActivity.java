@@ -21,9 +21,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ItemInfoActitivity extends ActionBarActivity {
+public class ItemInfoActivity extends ActionBarActivity {
     ArrayList<Item> items;
-    public static final String ITEM_ID = "ITEM_TO_SHOW_ARRAY_ID";
+    private static Item actualItem;
+    public static final String ITEM_INDEX = "ITEM_INDEX_IN_ARRAY";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -42,7 +43,7 @@ public class ItemInfoActitivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_info_actitivity);
+        setContentView(R.layout.activity_item_info);
 
         items = MainActivity.gameData.getItems();
 
@@ -55,7 +56,8 @@ public class ItemInfoActitivity extends ActionBarActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         Intent intent = getIntent();
-        int item_id = intent.getIntExtra(ITEM_ID, 0);
+        int item_id = intent.getIntExtra(ITEM_INDEX, 0);
+        actualItem = items.get(item_id);
         mSectionsPagerAdapter.getItem(item_id);
     }
 
@@ -64,7 +66,7 @@ public class ItemInfoActitivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.item_info_actitivity, menu);
+        getMenuInflater().inflate(R.menu.item_info_activity, menu);
         return true;
     }
 
@@ -125,21 +127,20 @@ public class ItemInfoActitivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
-        private static Item actualItem;
 
         public static PlaceholderFragment newInstance(Item item) {
-            PlaceholderFragment fragment = new PlaceholderFragment(item);
+            actualItem = item;
+            PlaceholderFragment fragment = new PlaceholderFragment();
             return fragment;
         }
 
-        public PlaceholderFragment(Item item) {
-            actualItem = item;
+        public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_item_info_actitivity, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_item_info, container, false);
             TextView itemNameText = (TextView) rootView.findViewById(R.id.itemNameText);
             itemNameText.setText(actualItem.getName());
             TextView itemInfoText = (TextView) rootView.findViewById(R.id.itemInfoText);

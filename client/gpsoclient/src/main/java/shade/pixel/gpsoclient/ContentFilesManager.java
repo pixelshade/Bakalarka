@@ -68,9 +68,9 @@ public class ContentFilesManager {
                 super.onPostExecute(remoteFiles);
                 ArrayList<String> filesToDownload = GetListOfMissingLocalFiles(remoteFiles);
                 if (filesToDownload.isEmpty()) {
-                    Toast.makeText(mContext, "nothing to update", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "No images to update", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(mContext, "Starting downlaoding files"+ remoteFiles, Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(mContext, "Starting downloading files"+ remoteFiles, Toast.LENGTH_LONG).show();
                     DownloadFiles(filesToDownload);
                 }
             }
@@ -93,7 +93,8 @@ public class ContentFilesManager {
             CreateDirIfDoesntExist();
             File contentFileDir = new File(Settings.getContentFileDir());
             localFiles = new ArrayList<String>(Arrays.asList(contentFileDir.list()));
-            Log.d("AHA", localFiles.toString());
+
+            Log.d("AHA", "local files are:"+localFiles.toString());
         } else {
             Toast.makeText(mContext, "No sdcard", Toast.LENGTH_SHORT).show();
         }
@@ -143,7 +144,7 @@ public class ContentFilesManager {
 
                 for (String filename : filenames[0]) {
                     String fileURL = Settings.getServerContentDirURL() + filename;
-                    Log.d("AHA", fileURL);
+                    Log.d("AHA", "downloading "+fileURL);
                     try {
                         URL url = new URL(fileURL);
                         URLConnection conection = url.openConnection();

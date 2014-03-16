@@ -28,7 +28,7 @@ public class Settings {
     /**
      * android local file dir
      */
-    private static String ContentFileDir = Environment.getExternalStorageDirectory() + "/" + "GPSOData";
+    private static String ContentFileDir = Environment.getExternalStorageDirectory() + "/GPSOData/";
 
 
     private Settings() {

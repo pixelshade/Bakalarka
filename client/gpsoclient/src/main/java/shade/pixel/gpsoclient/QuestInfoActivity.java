@@ -27,8 +27,9 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.File;
 import java.util.ArrayList;
 
-public class QuestInfoActitivity extends ActionBarActivity {
+public class QuestInfoActivity extends ActionBarActivity {
     ArrayList<Quest> quests;
+    public static Quest actualQuest;
     public static final String QUEST_INDEX_LABEL = "INDEX_OF_ACTUAL_QUEST";
     public static int QUEST_INDEX = 0;
     /**
@@ -49,7 +50,7 @@ public class QuestInfoActitivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quest_info_actitivity);
+        setContentView(R.layout.activity_quest_info);
 
         quests = MainActivity.gameData.getQuests();
 
@@ -72,7 +73,7 @@ public class QuestInfoActitivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.quest_info_actitivity, menu);
+        getMenuInflater().inflate(R.menu.quest_info_activity, menu);
         return true;
     }
 
@@ -183,24 +184,22 @@ public class QuestInfoActitivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
-        private static Quest actualQuest;
-
         public static PlaceholderFragment newInstance(Quest quest) {
-            PlaceholderFragment fragment = new PlaceholderFragment(quest);
+            actualQuest = quest;
+            PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
 
             fragment.setArguments(args);
             return fragment;
         }
 
-        public PlaceholderFragment(Quest quest) {
-            actualQuest = quest;
+        public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_quest_info_actitivity, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_quest_info, container, false);
 
             TextView questName = (TextView) rootView.findViewById(R.id.questNameLabel);
             TextView questInfo = (TextView) rootView.findViewById(R.id.questInfoTextView);
