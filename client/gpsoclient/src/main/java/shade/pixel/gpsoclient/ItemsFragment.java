@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by pixelshade on 13.3.2014.
  */
-public class ItemFragment extends Fragment {
+public class ItemsFragment extends Fragment {
 
 
     @Override

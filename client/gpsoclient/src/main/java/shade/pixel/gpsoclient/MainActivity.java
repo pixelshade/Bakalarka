@@ -247,7 +247,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return new RegionsFragment();
                 case 3:
                     // Item fragment activity
-                    return new ItemFragment();
+                    return new ItemsFragment();
                 case 4:
                     // Map fragment activity
                     return new MyMapFragment();

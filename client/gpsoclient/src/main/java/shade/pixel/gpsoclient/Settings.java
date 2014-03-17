@@ -6,15 +6,19 @@ import android.os.Environment;
  * Created by pixelshade on 15.3.2014.
  */
 public class Settings {
-    private static Settings ourInstance = new Settings();
-
-    public static Settings getInstance() {
-        return ourInstance;
-    }
-
+    /** User changable variables */
     private static String user, pass;
     private static String serverURL = "http://bak.skeletopedia.sk";
 
+
+
+
+
+
+
+
+
+    /** Server URL constants */
     private static String questCompletionURL = serverURL + "/api/complete_quest";
     private static String questAcceptURL = serverURL + "/api/accept_quest";
     private static String contentFilesListURL = serverURL + "/api/getContentFilesList";
@@ -32,6 +36,14 @@ public class Settings {
 
 
     private Settings() {
+    }
+
+    public static void saveUserSettings(){
+
+    }
+
+    public static void loadUserSettings(){
+
     }
 
     public static String getUser() {
