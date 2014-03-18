@@ -24,7 +24,7 @@
 <?php if(count($quests)): foreach($quests as $quest): ?>	
 		<tr>
 			<td><?php echo anchor('admin/quest/edit/' . $quest->id, $quest->name); ?></td>
-			<td><?php echo $quest->code; ?></td>
+			<td><?php if(!empty($quest->code)) echo '<a href="/admin/qrcode_generator/get/'.$quest->code.'">'.$quest->code.'</a>';?> </td>
 			<td><?php echo $quest->info; ?></td>
 			<td><?php echo $imageNames[$quest->image]; ?></td>
 			<td><?php echo $rewardNames[$quest->reward_id]; ?></td>

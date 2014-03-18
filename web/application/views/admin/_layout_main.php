@@ -41,9 +41,13 @@
 							<li><a href="/admin/region">Regions</a></li>
 							<li><a href="/admin/quest">Quests</a></li>
 							<li><a href="/admin/item_definition">Item definitions</a></li>
+							<li><a href="/admin/item_instance">Item instance</a></li>
 							<li><a href="/admin/attribute">Attributes</a></li>
 							<li><a href="/admin/reward">Rewards</a></li>
+								<li class="divider"></li>
 							<li><a href="/admin/user_quest">Characters active quests</a></li>
+							<li><a href="/admin/user_item">Inventories</a></li>
+							<li><a href="/admin/user_attribute">User Attributes</a></li>
 							<!-- 	<li><a href="/admin/user_objective">Characters active objectives</a></li> -->
 						</ul> 
 					</li>

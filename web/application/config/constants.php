@@ -50,3 +50,8 @@ define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVE
 */
 define("NONE_ID", -1);
 define("NONE_STRING", '');
+
+
+define("QR_QUEST", "Q");
+define("QR_ITEM", "I");
+define("QR_ENEMY", "E");

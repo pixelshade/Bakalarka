@@ -12,9 +12,11 @@ class Api extends Admin_Controller
 		$this->load->model('reward_m');		
 		$this->load->model('page_m');
 		$this->load->model('content_files_model');
+		$this->load->model('item_instance_m');
 		$this->load->model('user_quest_m');
 		$this->load->model('user_item_m');
 		$this->load->model('user_attribute_m');
+		$this->load->model('user_qrscanned_m');
 
 		// Fetch navigation
 		$this->data['menu'] = $this->page_m->get_nested();
@@ -91,16 +93,11 @@ class Api extends Admin_Controller
 	}
 
 	public function logout(){
-		$this->user_m->logout();
-		//redirect('api/isLoggedIn');
+		$this->user_m->logout();		
 	}
 
 	public function getContentFilesList(){
 		echo json_encode($this->content_files_model->get_all_names());		
-	}
-
-	public function serverSettings(){
-		echo json_encode(array('to' => 'do'));
 	}
 
 	public function hasUserActiveQuest($quest_id){
@@ -110,6 +107,36 @@ class Api extends Admin_Controller
 			return TRUE;
 		}
 		return FALSE;
+	}
+
+
+	public function check_qrcode($code){
+		$user_id = $this->user_m->get_user_id();
+		$scanned = $this->user_qrscanned_m->get_by('`qrscanned` = '.$code.' AND `char_id` = '.$user_id);
+		if(empty($scanned)){
+			switch ($code[0]) {
+				case QR_QUEST:
+				$quest = $this->quest_m->get_by('`code` = '.$code);
+				if(!empty($quest)){
+					accept_quest($quest_id);
+				}
+				break;
+
+				case QR_ITEM:
+				$item = $this->item_instance_m->get_by('`code` = '.$code);
+				if(!empty($quest)){
+					accept_quest($quest_id);
+				}
+				break;
+				default:				
+				break;
+			}
+		}		
+	}
+
+
+	private function _found_item_info($item_id){
+
 	}
 
 
@@ -254,6 +281,29 @@ class Api extends Admin_Controller
 
 
 
+	private function _giveItem($item_id, $item_amount, $char_id){						
+		if($item_id != NONE_ID && $item_amount != 0){
+			$user_item['char_id'] = $char_id;
+			$user_item['item_id'] = $item_id;
+			for ($i=0; $i < $item_amount; $i++) { 	
+				$this->user_item_m->save($user_item);
+			}			
+		}
+	}
+
+	private function _giveAttribute($attribute_id, $attribute_amount, $char_id)
+	{
+		if($attribute_id != NONE_ID && $attribute_amount != 0){
+			$user_attribute['char_id'] = $char_id;
+			$user_attribute['attribute_id'] = $attribute_id;
+			for ($i=0; $i < $attribute_amount; $i++) { 				
+				$this->user_attribute_m->save($user_attribute);
+			}
+		}	
+	}
+
+
+
 	private function _giveReward($quest_id, $char_id){
 		$quest = $this->quest_m->get_by_id($quest_id);
 		if($quest!=null){
@@ -261,23 +311,11 @@ class Api extends Admin_Controller
 				$reward = $this->reward_m->get_by_id($quest->reward_id);
 				$item_id = $reward->item_definition_id;
 				$item_amount = $reward->item_amount;				
-				if($item_id != NONE_ID && $item_amount != 0){
-					$user_item['char_id'] = $char_id;
-					$user_item['item_id'] = $item_id;
-					for ($i=0; $i < $item_amount; $i++) { 	
-						$this->user_item_m->save($user_item);
-					}			
-				}
+				$this->_giveItem($item_id, $item_amount, $char_id);
+
 				$attribute_id = $reward->attribute_id;
 				$attribute_amount = $reward->attribute_amount;
-				if($attribute_id != NONE_ID && $attribute_amount != 0){
-					$user_attribute['char_id'] = $char_id;
-					$user_attribute['attribute_id'] = $attribute_id;
-					for ($i=0; $i < $attribute_amount; $i++) { 				
-						$this->user_attribute_m->save($user_attribute);
-					}
-				}	
-
+				$this->_giveAttribute($attribute_id, $attribute_amount, $char_id);
 			}
 		} 
 

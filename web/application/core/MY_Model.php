@@ -89,16 +89,7 @@ class MY_Model extends CI_Model
 		
 		$this->db->where_in($where, $in_array);
 		return $this->get_array();
-	}
-
-	public function get_by_latlon($lat = NULL, $lon = NULL){
-		if($lat != NULL || $lon != NULL){
-			$where = "(`lat_start`<=$lat) AND (`lon_start`<=$lon) AND (`lat_end`>=$lat) AND (`lon_end`>=$lon)";
-			$this->db->where($where);
-			return $this->get_array(NULL, false);
-		} 
-		return NULL;		
-	}
+	}	
 
 	public function save($data, $id = NULL){
 		//Set timestamps
