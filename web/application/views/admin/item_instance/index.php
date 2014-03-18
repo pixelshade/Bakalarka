@@ -17,12 +17,12 @@
 		<tbody>
 <?php if(count($item_instances)): foreach($item_instances as $item_instance): ?>	
 		<tr>
-			<td><?php echo anchor('admin/item_instance/edit/' . $item_instance->id, $item_instance->item_definition_id); ?></td>
+			<td><?php echo anchor('admin/item_instance/edit/' . $item_instance->id, $item_names[$item_instance->item_definition_id]); ?></td>
 			<td><?php echo $item_instance->latitude; ?></td>
 			<td><?php echo $item_instance->longtitude; ?></td>
 			<td><?php echo $item_instance->amount; ?></td>
 			<td><?php echo $item_instance->added_by_user; ?></td>
-			<td><?php echo $item_instance->code; ?></td>					
+			<td><?php echo anchor('admin/qrcode_generator/get/'.$item_instance->code,$item_instance->code); ?></td>					
 			<td><?php echo btn_edit('admin/item_instance/edit/' . $item_instance->id); ?></td>
 			<td><?php echo btn_delete('admin/item_instance/delete/' . $item_instance->id); ?></td>
 		</tr>

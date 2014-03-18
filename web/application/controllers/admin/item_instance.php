@@ -6,12 +6,17 @@ class Item_instance extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('item_instance_m');
+		$this->load->model('item_definition_m');		
 	}
 
 	public function index ()
 	{
 		// Fetch all item_instances
 		$this->data['item_instances'] = $this->item_instance_m->get();
+		// Fetch all item definitions
+		$this->data['item_names'] = $this->item_definition_m->get_for_dropdown();
+
+
 		
 		// Load view
 		$this->data['subview'] = 'admin/item_instance/index';
@@ -20,9 +25,10 @@ class Item_instance extends Admin_Controller
 
 	public function edit ($id = NULL)
 	{
-		//Fetch images
-		$this->load->model('content_files_model');
-		$this->data['images'] = $this->content_files_model->get_for_dropdown();
+		// Fetch id of user editing/creating item instance
+		$user_id = $this->user_m->get_user_id();
+		// Fetch all item definitions
+		$this->data['item_names'] = $this->item_definition_m->get_for_dropdown();
 
 
 		// Fetch a item_instance or set a new one
@@ -44,14 +50,13 @@ class Item_instance extends Admin_Controller
 				'item_definition_id',
 				'latitude',
 				'longtitude',
-				'amount',
-				'added_by_user',
-				'code',
+				'amount',				
 				));
 			if($data['latitude']=="" || $data['longtitude']==""){
 				$data['latitude'] = null;
-				$data['longtitude']= null;
+				$data['longtitude'] = null;
 			}
+			$data['added_by_user'] = $user_id;
 			$this->item_instance_m->save($data, $id);
 			redirect('admin/item_instance');
 		}

@@ -6,7 +6,7 @@
 <table class="table">
 	<tr>
 		<td>item_definition_id</td>
-		<td><?php echo form_input('item_definition_id', set_value('item_definition_id', $item_instance->item_definition_id), 'class="form-control"'); ?></td>		
+		<td><?php echo form_dropdown('item_definition_id', $item_names ,$item_instance->item_definition_id, 'class="form-control"'); ?></td>		
 	</tr>
 	<tr>
 		<td>latitude</td>
@@ -19,15 +19,7 @@
 	<tr>
 		<td>amount</td>
 		<td><?php echo form_input('amount', set_value('amount', $item_instance->amount), 'class="form-control"'); ?></td>		
-	</tr>
-	<tr>
-		<td>added_by_user</td>
-		<td><?php echo form_input('added_by_user', set_value('added_by_user', $item_instance->added_by_user), 'class="form-control"'); ?></td>
-	</tr>
-	<tr>
-		<td>code</td>
-		<td><?php echo form_input('code',set_value('code', $item_instance->code), 'class="form-control"'); ?>	</td>
-	</tr>	
+	</tr>		
 	<tr>		
 		<td colspan="2"><?php echo form_submit('submit', 'Save', 'class="btn btn-primary"'); ?></td>
 	</tr>

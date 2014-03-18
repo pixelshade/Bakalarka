@@ -102,7 +102,7 @@ class Api extends Admin_Controller
 
 	public function hasUserActiveQuest($quest_id){
 		$user_id = $this->user_m->get_user_id();	
-		$user_quest = $this->user_quest_m->get_array_by("`char_id` =".$user_id." AND `quest_id` =".$quest_id);
+		$user_quest = $this->user_quest_m->get_array_by("`char_id` =".$user_id." AND `quest_id` = '".$quest_id."'");
 		if(!empty($user_quest)){
 			return TRUE;
 		}
@@ -110,28 +110,52 @@ class Api extends Admin_Controller
 	}
 
 
-	public function check_qrcode($code){
-		$user_id = $this->user_m->get_user_id();
-		$scanned = $this->user_qrscanned_m->get_by('`qrscanned` = '.$code.' AND `char_id` = '.$user_id);
-		if(empty($scanned)){
-			switch ($code[0]) {
-				case QR_QUEST:
-				$quest = $this->quest_m->get_by('`code` = '.$code);
-				if(!empty($quest)){
-					accept_quest($quest_id);
-				}
-				break;
+	public function check_qrcode($code = null, $viaClient = null){
+		// toto zmenit po skonceni testovania z webu
+		if($viaClient == null){
+			if($code != null){
+				$user_id = $this->user_m->get_user_id();
+				$scanned = $this->user_qrscanned_m->get_by('`qrscanned` = "'.$code.'" AND `char_id` = '.$user_id);
+				if(empty($scanned)){
+					switch ($code[0]) {
+						case QR_QUEST:
+						$quest = $this->quest_m->get_by('`code` = "'.$code.'"', TRUE);
+						if(!empty($quest)){
+						$quest_id = $quest->id;						
+						$this->accept_quest($quest_id);	
+						} else {
+							$response['success'] = 0;
+							$response['msg'] = "Quest doesnt exist";
+							echo json_encode($response);	
+						}					
+						break;
 
-				case QR_ITEM:
-				$item = $this->item_instance_m->get_by('`code` = '.$code);
-				if(!empty($quest)){
-					accept_quest($quest_id);
-				}
-				break;
-				default:				
-				break;
-			}
-		}		
+						case QR_ITEM:
+						$item = $this->item_instance_m->get_by('`code` = "'.$code.'"', TRUE);
+						if(!empty($item)){
+							$item_id = $item->id;
+							$this->accept_quest($quest_id);
+						} else {
+							$response['success'] = 0;
+							$response['msg'] = "Item doesnt exist";
+							echo json_encode($response);	
+						}
+						break;
+						default:
+						$response['success'] = 0;
+						$response['msg'] = "broken code";	
+						echo json_encode($response);					
+						break;
+					}
+				}	
+			} else {
+				$response['success'] = 0;
+				$response['msg'] = "No qrcode set";
+				echo json_encode($response);
+			}	
+		} else {
+			redirect(config_item('client_download_url'));
+		}
 	}
 
 
