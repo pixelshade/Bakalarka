@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Create_enemy_instances extends CI_Migration {
+class Migration_Create_user_position extends CI_Migration {
 
 	public function up()
 	{
@@ -13,32 +13,30 @@ class Migration_Create_enemy_instances extends CI_Migration {
 				'unsigned' => TRUE,
 				'auto_increment' => TRUE
 			),			
-			'enemy_id' => array(
+			'char_id' => array(
 				'type' => 'INT',
 				'constraint' => 11,
-				'unsigned' => TRUE,				
-			),		
+				'unsigned' => TRUE,
+			),				
 			'latitude' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '9,7',
-				'null' => TRUE,
 			),
 			'longtitude' => array(
 				'type' => 'DECIMAL',
 				'constraint' => '9,7',
-				'null' => TRUE,
 			),
-			'code' => array(
-				'type' => 'TEXT',
-				'null' => TRUE,				
-			),				
+			'time' => array(
+				'type' => 'DATETIME',
+			),
+		
 		));
 		$this->dbforge->add_key('id', TRUE);
-		$this->dbforge->create_table('enemy_instances');
+		$this->dbforge->create_table('user_position');
 	}
 
 	public function down()
 	{
-		$this->dbforge->drop_table('enemy_instances');
+		$this->dbforge->drop_table('user_position');
 	}
 }

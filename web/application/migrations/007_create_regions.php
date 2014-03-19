@@ -26,19 +26,19 @@ class Migration_Create_regions extends CI_Migration {
 			),		
 			'lat_start' => array(
 				'type' => 'DECIMAL',
-				'constraint' => '15,13',
+				'constraint' => '9,7',
 			),
 			'lon_start' => array(
 				'type' => 'DECIMAL',
-				'constraint' => '15,13',
+				'constraint' => '9,7',
 			),
 			'lat_end' => array(
 				'type' => 'DECIMAL',
-				'constraint' => '15,13',
+				'constraint' => '9,7',
 			),
 			'lon_end' => array(
 				'type' => 'DECIMAL',
-				'constraint' => '15,13',
+				'constraint' => '9,7',
 				'null' => TRUE,
 			),			
 		));

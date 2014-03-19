@@ -24,7 +24,8 @@ import android.widget.TextView;
 public class ItemInfoActivity extends ActionBarActivity {
     ArrayList<Item> items;
     private static Item actualItem;
-    public static final String ITEM_INDEX = "ITEM_INDEX_IN_ARRAY";
+    public static final String ITEM_INDEX_LABEL = "ITEM_INDEX_IN_ARRAY";
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -45,7 +46,7 @@ public class ItemInfoActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_info);
 
-        items = MainActivity.gameData.getItems();
+        items = GameHandler.getInstance(this).getGameData().getItems();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -56,7 +57,7 @@ public class ItemInfoActivity extends ActionBarActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         Intent intent = getIntent();
-        int item_id = intent.getIntExtra(ITEM_INDEX, 0);
+        int item_id = intent.getIntExtra(ITEM_INDEX_LABEL, 0);
         actualItem = items.get(item_id);
         mSectionsPagerAdapter.getItem(item_id);
     }

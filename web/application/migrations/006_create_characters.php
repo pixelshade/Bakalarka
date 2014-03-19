@@ -24,11 +24,11 @@ class Migration_Create_characters extends CI_Migration {
 			),
 			'latitude' => array(
 				'type' => 'DECIMAL',
-				'constraint' => '15,13',
+				'constraint' => '9,7',
 			),
 			'longtitude' => array(
 				'type' => 'DECIMAL',
-				'constraint' => '15,13',
+				'constraint' => '9,7',
 			),			
 			'inventory_json' => array(
 				'type' => 'TEXT',				

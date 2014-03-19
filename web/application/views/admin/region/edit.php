@@ -1,8 +1,7 @@
 <h3><?php echo empty($region->id) ? 'Add a new region' : 'Edit region ' . $region->name; ?></h3>
 <?php echo validation_errors(); ?>
 <?php echo form_open(); ?>
-<script
-src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAm7a4WerB5sAzBPDPV2bDybFZYFKFJDi4&sensor=true">
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAm7a4WerB5sAzBPDPV2bDybFZYFKFJDi4&sensor=true">
 </script>
 
 <script>
@@ -93,9 +92,7 @@ function showNewRect(event) {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-</head>
-
+</script>	
 
 <table class="table">
 	<tr>

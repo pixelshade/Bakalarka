@@ -29,6 +29,13 @@ public class Settings {
     private static String isLoggedInURL = serverURL + "/api/isLoggedIn";
     private static String logoutURL = serverURL + "/api/logout";
 
+
+
+    /*
+    CONSTANTS
+     */
+
+    public static final String INTENT_KEY_QRSCANNED = "QRSCANNED";
     /**
      * android local file dir
      */

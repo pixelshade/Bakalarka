@@ -47,11 +47,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     ContentFilesManager contentFilesManager;
     public static GameData gameData;
 
-    GameHandler gameHandler;
+    public GameHandler gameHandler;
 
     int mActualViewId = 0;
 
-    AsyncResponse afterLoginCheck = new AsyncResponse() {
+    AsyncResponse loginCheck = new AsyncResponse() {
         @Override
         public void processFinish(Context context, String output) {
             HashMap<String, String> response = ResponseJSONParser.parseResponse(output);
@@ -119,7 +119,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 
         if (htmlBrowser.isOnline()) {
-            htmlBrowser.HttpGetAsyncString(this, Settings.getIsLoggedInURL(), afterLoginCheck);
+            htmlBrowser.HttpGetAsyncString(this, Settings.getIsLoggedInURL(), loginCheck);
 
         } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
@@ -164,13 +164,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                         sb.append(quest.getName() + ",");
                     }
                     TextView tv = (TextView) findViewById(R.id.section_content);
+                    LatLng latLng = gpsTracker.getLatLng();
+                    tv.setText(json+"\n\n"+latLng.latitude+""+ latLng.longitude);
 
-                    tv.setText(json);
 
+                    ArrayAdapter<Quest> questsArrayAdapter = new ArrayAdapter<Quest>(context, android.R.layout.simple_list_item_1, quests);
+                    ListView lvQuests = (ListView) findViewById(R.id.listViewQuests);
+                    if (lvQuests != null) lvQuests.setAdapter(questsArrayAdapter);
 
-                    ArrayAdapter<Quest> arrayAdapter = new ArrayAdapter<Quest>(context, android.R.layout.simple_list_item_1, quests);
-                    ListView lv = (ListView) findViewById(R.id.listViewQuests);
-                    if (lv != null) lv.setAdapter(arrayAdapter);
+                    ArrayAdapter<Region> regionsArrayAdapter = new ArrayAdapter<Region>(context, android.R.layout.simple_list_item_1, regions);
+                    ListView lvRegions = (ListView) findViewById(R.id.listViewRegions);
+                    if (lvRegions != null) lvRegions.setAdapter(regionsArrayAdapter);
 
                     //todo treba pre kazdy fragment spravit to iste pre pripad, ze sa fragment znovu nevytvara len ho treba setnut
 
@@ -190,6 +194,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         Intent intent = new Intent(this,Scanner.class);
         startActivity(intent);
     }
+
+
 
 
 

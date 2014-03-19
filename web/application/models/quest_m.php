@@ -108,11 +108,11 @@ public function check_completion($quest_id, $answer = NULL){
 	private function generateUniqueCode(){
  		$this->load->helper('string'); 		
  		$code = random_string('alnum', (config_item('qrcode_length') - 1));
- 		$exists = $this->get_by('`code` = "'.$code.'"', TRUE);
+ 		$exists = $this->get_by('`code` = "'.$code.QR_ITEM.'"', TRUE);
  		if(!empty($exists)){
  			$code = $this->generateUniqueCode();
  		}  		
- 		return QR_ITEM.$code; 		
+ 		return $code.QR_ITEM; 		
  	}
 
  	public function save($data, $id){

@@ -44,7 +44,7 @@ public class ItemsFragment extends Fragment {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Toast.makeText(getActivity(), "" + i, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getActivity(), ItemInfoActivity.class);
-                        intent.putExtra(ItemInfoActivity.ITEM_INDEX, i);
+                        intent.putExtra(ItemInfoActivity.ITEM_INDEX_LABEL, i);
                         startActivity(intent);
                     }
                 });

@@ -20,12 +20,12 @@ class Migration_Create_item_instances extends CI_Migration {
 			),	
 			'latitude' => array(
 				'type' => 'DECIMAL',
-				'constraint' => '15,13',
+				'constraint' => '9,7',
 				'null' => TRUE,
 			),
 			'longtitude' => array(
 				'type' => 'DECIMAL',
-				'constraint' => '15,13',
+				'constraint' => '9,7',
 				'null' => TRUE,
 			),
 			'amount' => array(

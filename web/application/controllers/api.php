@@ -17,6 +17,7 @@ class Api extends Admin_Controller
 		$this->load->model('user_item_m');
 		$this->load->model('user_attribute_m');
 		$this->load->model('user_qrscanned_m');
+		$this->load->model('user_position_m');
 
 		// Fetch navigation
 		$this->data['menu'] = $this->page_m->get_nested();
@@ -36,18 +37,19 @@ class Api extends Admin_Controller
 	{		
 
 		$user_id = $this->user_m->get_user_id();	
-		
 		if($player_lat != NULL && $player_lon != NULL){
 		// Fetch all 			
+			$this->user_position_m->save($user_id, $player_lat, $player_lon);
 			$regions = $this->region_m->get_by_latlon($player_lat,$player_lon);
 			$region_ids = array_column($regions, 'id');					
 			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids);			
 			$result['regions'] = $regions;
 			$result['quests'] = $quests;
 				// TODO autostart - teraz sa budu pliest message
-			foreach ($quests as $quest) {
-				if($quest->autostart){
-					$this->accept_quest($quest->id);
+
+			foreach ($quests as $quest) {			
+				if($quest['autostart']){
+					$this->accept_quest($quest['id']);
 				}
 			}
 			$user_items = $this->user_item_m->get_array_by("`char_id` = '".$user_id."'");
@@ -121,7 +123,8 @@ class Api extends Admin_Controller
 			$user_id = $this->user_m->get_user_id();
 			$scanned = $this->user_qrscanned_m->get_by('`qrscanned` = "'.$code.'" AND `char_id` = '.$user_id);
 			if(empty($scanned)){
-				switch ($code[0]) {
+				$last_char = substr($code, -1);
+				switch ($last_char) {
 					case QR_QUEST:
 					$quest = $this->quest_m->get_by('`code` = "'.$code.'"', TRUE);
 					if(!empty($quest)){

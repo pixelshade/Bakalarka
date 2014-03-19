@@ -66,7 +66,7 @@ class Region_m extends MY_Model
 
 	public function get_by_latlon($lat = NULL, $lon = NULL){
 		if($lat != NULL || $lon != NULL){
-			$where = "(`lat_start`<=$lat) AND (`lon_start`<=$lon) AND (`lat_end`>=$lat) AND (`lon_end`>=$lon)";
+			$where = "(`lat_start`<='".$lat."') AND (`lon_start`<='".$lon."') AND (`lat_end`>='".$lat."') AND (`lon_end`>='".$lon."')";
 			$this->db->where($where);
 			return $this->get_array(NULL, false);
 		} 
