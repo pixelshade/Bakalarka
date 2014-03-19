@@ -26,7 +26,7 @@ class Api extends Admin_Controller
 	{
 		// Fetch all worlds
 		$this->data['functions'] = get_class_methods($this);
-		//dump($this->data['functions']);
+
 		// Load view
 		$this->data['subview'] = 'api/index';
 		$this->load->view('_layout_main', $this->data);
@@ -44,6 +44,12 @@ class Api extends Admin_Controller
 			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids);			
 			$result['regions'] = $regions;
 			$result['quests'] = $quests;
+				// TODO autostart - teraz sa budu pliest message
+			foreach ($quests as $quest) {
+				if($quest->autostart){
+					$this->accept_quest($quest->id);
+				}
+			}
 			$user_items = $this->user_item_m->get_array_by("`char_id` = '".$user_id."'");
 			$item_ids = array_column($user_items,"item_id");
 			$items = $this->item_definition_m->get_array_where_in('id',$item_ids);
@@ -110,52 +116,48 @@ class Api extends Admin_Controller
 	}
 
 
-	public function check_qrcode($code = null, $viaClient = null){
-		// toto zmenit po skonceni testovania z webu
-		if($viaClient == null){
-			if($code != null){
-				$user_id = $this->user_m->get_user_id();
-				$scanned = $this->user_qrscanned_m->get_by('`qrscanned` = "'.$code.'" AND `char_id` = '.$user_id);
-				if(empty($scanned)){
-					switch ($code[0]) {
-						case QR_QUEST:
-						$quest = $this->quest_m->get_by('`code` = "'.$code.'"', TRUE);
-						if(!empty($quest)){
+	public function check_qrcode($code = null){		
+		if($code != null){
+			$user_id = $this->user_m->get_user_id();
+			$scanned = $this->user_qrscanned_m->get_by('`qrscanned` = "'.$code.'" AND `char_id` = '.$user_id);
+			if(empty($scanned)){
+				switch ($code[0]) {
+					case QR_QUEST:
+					$quest = $this->quest_m->get_by('`code` = "'.$code.'"', TRUE);
+					if(!empty($quest)){
 						$quest_id = $quest->id;						
 						$this->accept_quest($quest_id);	
-						} else {
-							$response['success'] = 0;
-							$response['msg'] = "Quest doesnt exist";
-							echo json_encode($response);	
-						}					
-						break;
-
-						case QR_ITEM:
-						$item = $this->item_instance_m->get_by('`code` = "'.$code.'"', TRUE);
-						if(!empty($item)){
-							$item_id = $item->id;
-							$this->accept_quest($quest_id);
-						} else {
-							$response['success'] = 0;
-							$response['msg'] = "Item doesnt exist";
-							echo json_encode($response);	
-						}
-						break;
-						default:
+					} else {
 						$response['success'] = 0;
-						$response['msg'] = "broken code";	
-						echo json_encode($response);					
-						break;
+						$response['msg'] = "Quest doesnt exist";
+						echo json_encode($response);	
+					}					
+					break;
+
+					case QR_ITEM:
+					$item = $this->item_instance_m->get_by('`code` = "'.$code.'"', TRUE);
+					if(!empty($item)){
+						$item_id = $item->id;
+						$this->accept_quest($quest_id);
+					} else {
+						$response['success'] = 0;
+						$response['msg'] = "Item doesnt exist";
+						echo json_encode($response);	
 					}
-				}	
-			} else {
-				$response['success'] = 0;
-				$response['msg'] = "No qrcode set";
-				echo json_encode($response);
+					break;
+					default:
+					$response['success'] = 0;
+					$response['msg'] = "broken code";	
+					echo json_encode($response);					
+					break;
+				}
 			}	
 		} else {
-			redirect(config_item('client_download_url'));
+			$response['success'] = 0;
+			$response['msg'] = "No qrcode set";
+			echo json_encode($response);
 		}
+		
 	}
 
 
@@ -344,6 +346,8 @@ class Api extends Admin_Controller
 		} 
 
 	}
+
+
 
 
 }

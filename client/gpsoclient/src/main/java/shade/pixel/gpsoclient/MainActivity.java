@@ -164,7 +164,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                         sb.append(quest.getName() + ",");
                     }
                     TextView tv = (TextView) findViewById(R.id.section_content);
-                    tv.setText(sb.toString());
+
+                    tv.setText(json);
 
 
                     ArrayAdapter<Quest> arrayAdapter = new ArrayAdapter<Quest>(context, android.R.layout.simple_list_item_1, quests);
@@ -184,6 +185,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void UpdateLocalContentFiles(View view) {
         contentFilesManager.UpdateFiles();
     }
+
+    public void ScanQRCode(View view){
+        Intent intent = new Intent(this,Scanner.class);
+        startActivity(intent);
+    }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -19,6 +19,8 @@ class Qrcode_Generator extends Admin_Controller
 
 	public function get($string){
 		header("Content-Type: image/png");		
+		// TODO nalinkovat na web/clienta a spojit s kodom 
+		//config_item('client_download_url').
 		$params['data'] = $string;
 		$params['level'] = 'H';
 		$params['size'] = 10;

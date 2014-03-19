@@ -62,7 +62,6 @@ class Quest extends Admin_Controller
 		// Process the form
 		if ($this->form_validation->run() == TRUE) {
 			$data = $this->quest_m->array_from_post(array(
-				'code',
 				'name',
 				'info',
 				'image',

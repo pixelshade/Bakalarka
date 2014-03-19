@@ -15,5 +15,7 @@
     <string name="title_activity_region_info_actitivity">RegionInfoActitivity</string>
     <string name="title_activity_item_info">ItemInfoActivity</string>
     <string name="title_activity_item_info_actitivity">ItemInfoActitivity</string>
+    <string name="title_activity_scanner">Scanner</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

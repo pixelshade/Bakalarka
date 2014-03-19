@@ -3,12 +3,7 @@ class Quest_m extends MY_Model
 {
 	protected $_table_name = 'quests';
 	protected $_order_by = 'name, id desc';
-	public $rules = array(
-		'code' => array(
-			'field' => 'name', 
-			'label' => 'Name', 
-			'rules' => 'trim|required|max_length[50]|xss_clean|alpha_numeric|is_unique[quests.code]'
-			), 
+	public $rules = array(		
 		'name' => array(
 			'field' => 'name', 
 			'label' => 'Name', 
@@ -73,8 +68,7 @@ public $completion_types = array(
 public function get_new ()
 {
 	$quest = new stdClass();
-
-	$quest->code = '';
+	
 	$quest->name = '';
 	$quest->info = '';
 	$quest->image = '';
@@ -109,5 +103,21 @@ public function check_completion($quest_id, $answer = NULL){
 	$quest = $this->get_by("`id` = '".$quest_id."'");
 	return $quest->completion_requirement == $answer;	
 }
+
+
+	private function generateUniqueCode(){
+ 		$this->load->helper('string'); 		
+ 		$code = random_string('alnum', (config_item('qrcode_length') - 1));
+ 		$exists = $this->get_by('`code` = "'.$code.'"', TRUE);
+ 		if(!empty($exists)){
+ 			$code = $this->generateUniqueCode();
+ 		}  		
+ 		return QR_ITEM.$code; 		
+ 	}
+
+ 	public function save($data, $id){
+ 		$data['code'] = $this->generateUniqueCode();
+ 		parent::save($data, $id);
+ 	}
 
 }

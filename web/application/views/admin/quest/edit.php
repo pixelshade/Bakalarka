@@ -6,10 +6,6 @@
 
 <table class="table">
 	<tr>
-		<td>code</td>
-		<td><?php echo form_input('code', set_value('code', $quest->code), 'class="form-control"'); ?></td>
-	</tr>
-	<tr>
 		<td>region_id</td>		
 		<td><?php echo form_dropdown('region_id',$regionNames, $quest->region_id, 'class="form-control"'); ?>	</td>
 	</tr>

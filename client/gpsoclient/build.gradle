@@ -19,6 +19,7 @@ android {
 }
 
 dependencies {
+    compile 'me.dm7.barcodescanner:zbar:1.0'
     compile 'com.android.support:appcompat-v7:+'
     compile 'com.google.android.gms:play-services:4.+'
     compile 'com.google.code.gson:gson:2.2.4'
