@@ -46,7 +46,7 @@ class Api extends Admin_Controller
 			$result['regions'] = $regions;
 			$result['quests'] = $quests;
 				// TODO autostart - teraz sa budu pliest message
-
+			$response = array();
 			foreach ($quests as $quest) {			
 				if($quest['autostart']){
 					$response[] = $this->accept_quest($quest['id'], false);
