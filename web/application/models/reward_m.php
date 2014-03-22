@@ -52,4 +52,21 @@ class Reward_m extends MY_Model
 		return $result;
 	}
 
+	private function generateUniqueCode(){
+ 		$this->load->helper('string'); 		
+ 		$code = random_string('alnum', (config_item('qrcode_length') - 1));
+ 		$exists = $this->get_by('`code` = "'.$code.QR_REWARD.'"', TRUE);
+ 		if(!empty($exists)){
+ 			$code = $this->generateUniqueCode();
+ 		}  		
+ 		return $code.QR_REWARD; 		
+ 	}
+
+ 	public function save($data, $id = NULL){
+ 		if($id == NULL){
+ 			$data['code'] = $this->generateUniqueCode();
+ 		}	
+ 		parent::save($data, $id);
+ 	}
+
 }

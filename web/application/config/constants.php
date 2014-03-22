@@ -55,3 +55,4 @@ define("NONE_STRING", '');
 define("QR_QUEST", "Q");
 define("QR_ITEM", "I");
 define("QR_ENEMY", "E");
+define("QR_REWARD", "R");

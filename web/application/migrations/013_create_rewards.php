@@ -39,6 +39,10 @@ class Migration_Create_rewards extends CI_Migration {
 				'constraint' => 11,
 				'null' => TRUE,							
 			),	
+			'code' => array(
+				'type' => 'TEXT',
+				'null' => TRUE,				
+			),		
 		));
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('rewards');

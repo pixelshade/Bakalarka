@@ -115,8 +115,10 @@ public function check_completion($quest_id, $answer = NULL){
  		return $code.QR_ITEM; 		
  	}
 
- 	public function save($data, $id){
- 		$data['code'] = $this->generateUniqueCode();
+ 	public function save($data, $id = NULL){
+ 		if($id == NULL){
+ 			$data['code'] = $this->generateUniqueCode();
+ 		}	
  		parent::save($data, $id);
  	}
 

@@ -49,18 +49,18 @@ class Api extends Admin_Controller
 
 			foreach ($quests as $quest) {			
 				if($quest['autostart']){
-					$this->accept_quest($quest['id']);
+					$response[] = $this->accept_quest($quest['id'], false);
 				}
 			}
 			$user_items = $this->user_item_m->get_array_by("`char_id` = '".$user_id."'");
 			$item_ids = array_column($user_items,"item_id");
 			$items = $this->item_definition_m->get_array_where_in('id',$item_ids);
 
-			$result['items'] = $items;				
+			$result['items'] = $items;	
+			$result['responses'] = $response;
 		// Print all	
 			$result = json_encode($result);
 			echo $result;
-			// print_r(json_decode($result));
 		} else {			
 			echo "<hr>no position given";
 		}
@@ -113,7 +113,7 @@ class Api extends Admin_Controller
 		$user_quest = $this->user_quest_m->get_array_by("`char_id` =".$user_id." AND `quest_id` = '".$quest_id."'");
 		if(!empty($user_quest)){
 			return TRUE;
-		}
+		} 
 		return FALSE;
 	}
 
@@ -123,6 +123,9 @@ class Api extends Admin_Controller
 			$user_id = $this->user_m->get_user_id();
 			$scanned = $this->user_qrscanned_m->get_by('`qrscanned` = "'.$code.'" AND `char_id` = '.$user_id);
 			if(empty($scanned)){
+				$user_code['code'] = $code;
+				$user_code['char_id'] = $user_id;
+				$this->user_qrscanned_m->save($user_code);
 				$last_char = substr($code, -1);
 				switch ($last_char) {
 					case QR_QUEST:
@@ -137,14 +140,14 @@ class Api extends Admin_Controller
 					}					
 					break;
 
-					case QR_ITEM:
-					$item = $this->item_instance_m->get_by('`code` = "'.$code.'"', TRUE);
-					if(!empty($item)){
-						$item_id = $item->id;
-						$this->accept_quest($quest_id);
+					case QR_REWARD:
+					$reward = $this->reward_m->get_by('`code` = "'.$code.'"', TRUE);
+					if(!empty($reward)){						
+						$response = $this->_giveReward($reward->id, $user_id);
+						echo json_encode($response);
 					} else {
 						$response['success'] = 0;
-						$response['msg'] = "Item doesnt exist";
+						$response['msg'] = "Reward doesnt exist";
 						echo json_encode($response);	
 					}
 					break;
@@ -169,7 +172,8 @@ class Api extends Admin_Controller
 	}
 
 
-	public function accept_quest($quest_id = NULL){
+	public function accept_quest($quest_id = NULL, $echo_response = TRUE){
+		$response['type'] = "ACCEPT_QUEST";
 		$user_id = $this->user_m->get_user_id();
 		if($quest_id == NULL){
 			$response['success'] = 0;
@@ -208,10 +212,15 @@ class Api extends Admin_Controller
 				}
 			}
 		}
-		echo json_encode($response);
+		if($echo_response){
+			echo json_encode($response);
+		} else {
+			return $response;
+		}
 	}
 
 	public function complete_quest($quest_id = NULL, $player_lat = NULL, $player_lon = NULL,$answer = NULL){
+		$response['type'] = "COMPLETE_QUEST";
 		$user_id = $this->user_m->get_user_id();	
 		$success = false;	
 		if($quest_id == NULL){
@@ -301,7 +310,7 @@ class Api extends Admin_Controller
 				$data['time_accepted'] = date('Y-m-d H:i:s');
 				$data['completed'] = 1;
 				$this->user_quest_m->save($data, $user_quest_id);
-				$this->_giveReward($quest_id,$user_id);
+				$this->_giveRewardFromQuestId($quest_id,$user_id);
 			}
 		}
 		echo json_encode($response);
@@ -312,48 +321,86 @@ class Api extends Admin_Controller
 
 	private function _giveItem($item_id, $item_amount, $char_id){						
 		if($item_id != NONE_ID && $item_amount != 0){
-			$user_item['char_id'] = $char_id;
-			$user_item['item_id'] = $item_id;
-			for ($i=0; $i < $item_amount; $i++) { 	
-				$this->user_item_m->save($user_item);
-			}			
+			$item = $this->item_definition_m->get_by_id($item_id);
+			if(!empty($item)){
+				$user_item['char_id'] = $char_id;
+				$user_item['item_id'] = $item_id;
+				for ($i=0; $i < $item_amount; $i++) { 	
+					$this->user_item_m->save($user_item);
+				}				
+				return TRUE;			
+			} 
 		}
+		return FALSE;
 	}
 
 	private function _giveAttribute($attribute_id, $attribute_amount, $char_id)
 	{
 		if($attribute_id != NONE_ID && $attribute_amount != 0){
-			$user_attribute['char_id'] = $char_id;
-			$user_attribute['attribute_id'] = $attribute_id;
-			for ($i=0; $i < $attribute_amount; $i++) { 				
-				$this->user_attribute_m->save($user_attribute);
+			$attribute = $this->attribute_m->get_by_id($attribute_id);
+			if(!empty($attribute)){
+				$user_attribute['char_id'] = $char_id;
+				$user_attribute['attribute_id'] = $attribute_id;
+				for ($i=0; $i < $attribute_amount; $i++) { 				
+					$this->user_attribute_m->save($user_attribute);
+				}
+				return TRUE;
 			}
-		}	
+		}
+		return FALSE;	
 	}
 
-
-
-	private function _giveReward($quest_id, $char_id){
+	private function _giveRewardFromQuestId($quest_id, $char_id){
 		$quest = $this->quest_m->get_by_id($quest_id);
 		if($quest!=null){
 			if($quest->reward_id != NONE_ID){
-				$reward = $this->reward_m->get_by_id($quest->reward_id);
-				$item_id = $reward->item_definition_id;
-				$item_amount = $reward->item_amount;				
-				$this->_giveItem($item_id, $item_amount, $char_id);
-
-				$attribute_id = $reward->attribute_id;
-				$attribute_amount = $reward->attribute_amount;
-				$this->_giveAttribute($attribute_id, $attribute_amount, $char_id);
+				return $this->_giveReward($quest->reward_id, $char_id);
 			}
-		} 
-
+		}
+		$response['msg'] = 'Reward wasnt received.';			
+		$response['success'] = 0;	
+		return $response;
 	}
 
+	private function _giveReward($reward_id, $char_id){		
+		$reward = $this->reward_m->get_by_id($quest->reward_id);
+		if(!empty($reward)){
+			$item_id = $reward->item_definition_id;
+			$item_amount = $reward->item_amount;				
+			$is_item_given = $this->_giveItem($item_id, $item_amount, $char_id);
+
+			$attribute_id = $reward->attribute_id;
+			$attribute_amount = $reward->attribute_amount;
+			$is_attribute_given = $this->_giveAttribute($attribute_id, $attribute_amount, $char_id);
+
+			$response['type'] = 'GIVE_REWARD';						
+			if($is_attribute_given){
+				$attribute = $this->attribute_m->get_by_id($attribute_id);
+				$response['msg'] = 'You received attribute:'.$attribute->name.' '.$attribute->amount;				
+				$response['data']['attribute'] = $attribute;
+				$response['success'] = 1;
+			}
+			if($is_item_given){
+				$item = $this->item_definition_m->get_by_id($item_id);
+				$response['msg'] = 'Received reward.';			
+				$response['data']["item"] = $item;
+				$response['success'] = 1;
+			} 
+			if(!$is_attribute_given && !$is_item_given){
+				$response['msg'] = 'Reward wasnt received.';			
+				$response['success'] = 0;	
+			}
+			
+			return $response;
+		}
+
+	} 
 
 
 
 }
+
+
 
 
 
