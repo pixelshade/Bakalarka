@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -28,11 +29,7 @@ import java.util.HashMap;
 public class LoginActivity extends Activity {
     MyHtmlBrowser htmlBrowser;
     Intent mIntent;
-
-    /**
-     * The default email to populate the email field with.
-     */
-    public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
+    Context mContext;
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -42,10 +39,12 @@ public class LoginActivity extends Activity {
     // Values for email and password at the time of the login attempt.
     private String mEmail;
     private String mPassword;
+    private String mServerURL;
 
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
+    private EditText mServerUrlView;
     private View mLoginFormView;
     private View mLoginStatusView;
     private TextView mLoginStatusMessageView;
@@ -57,16 +56,26 @@ public class LoginActivity extends Activity {
 
         setContentView(R.layout.activity_login);
 
-
+        mContext = this;
         mIntent = new Intent(this, MainActivity.class);
+
         // Set up the login form.
-        mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
+        Settings.loadSavedLoginSettings(this);
+        mEmail = Settings.getUsername();
         mEmailView = (EditText) findViewById(R.id.email);
         mEmailView.setText(mEmail);
+
+        mPassword = Settings.getPass();
+        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView.setText(mPassword);
+
+        mServerURL = Settings.getServerURL();
+        mServerUrlView = (EditText) findViewById(R.id.serverURL);
+        mServerUrlView.setText(mServerURL);
+
         htmlBrowser = MyHtmlBrowser.getInstance(this);
         if (htmlBrowser.isOnline()) {
 
-            mPasswordView = (EditText) findViewById(R.id.password);
             mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -118,6 +127,7 @@ public class LoginActivity extends Activity {
         // Store values at the time of the login attempt.
         mEmail = mEmailView.getText().toString();
         mPassword = mPasswordView.getText().toString();
+        mServerURL = mServerUrlView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -137,6 +147,13 @@ public class LoginActivity extends Activity {
         } else if (!mEmail.contains("@")) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
+            cancel = true;
+        }
+
+        // Check for a valid password.
+        if (TextUtils.isEmpty(mServerURL)) {
+            mServerUrlView.setError(getString(R.string.error_field_required));
+            focusView = mServerUrlView;
             cancel = true;
         }
 
@@ -201,7 +218,7 @@ public class LoginActivity extends Activity {
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
-            return htmlBrowser.Login(mEmail, mPassword);
+            return htmlBrowser.Login(mEmail, mPassword, mServerURL);
         }
 
         @Override
@@ -212,6 +229,7 @@ public class LoginActivity extends Activity {
             if (success) {
                 //  htmlBrowser.HttpGetAsyncString(htmlBrowser.getServerURL()+"/api/isLoggedIn");
                 //Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
+                Settings.saveLoginSettings(mContext, mEmail, mPassword, mServerURL);
                 startActivity(mIntent);
                 finish();
 

@@ -6,12 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.maps.model.LatLng;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -68,10 +63,10 @@ public class MyHtmlBrowser {
 
 
 
-    public boolean Login(String user, String pass) {
-        Settings.setUser(user);
+    public boolean Login(String user, String pass, String serverURL) {
+        Settings.setUsername(user);
         Settings.setPass(pass);
-        String serverURL = Settings.getServerURL();
+        Settings.setServerURL(serverURL);
         if (serverURL.equals("")) {
             Toast.makeText(mContext, "NO SERVER TO CONNECT", Toast.LENGTH_SHORT).show();
             return false;

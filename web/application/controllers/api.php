@@ -67,6 +67,7 @@ class Api extends Admin_Controller
 	}
 
 	public function login(){
+		$response['type'] = "LOGIN";
 		$rules = $this->user_m->rules;
 		$this->form_validation->set_rules($rules);		
 		if($this->form_validation->run() == TRUE){
@@ -89,6 +90,7 @@ class Api extends Admin_Controller
 	}
 
 	public function isLoggedIn(){
+		$response['type'] = "IS_LOGGED";	
 		if($this->user_m->loggedin() == TRUE){
 			$response['success'] = 1;				
 			$response['msg'] = "Logged successfully";

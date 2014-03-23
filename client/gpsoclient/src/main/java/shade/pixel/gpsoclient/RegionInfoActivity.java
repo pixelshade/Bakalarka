@@ -45,7 +45,7 @@ public class RegionInfoActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region_info);
 
-        regions = MainActivity.gameData.getRegions();
+        regions = GameHandler.getInstance(this).gameData.getRegions();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.

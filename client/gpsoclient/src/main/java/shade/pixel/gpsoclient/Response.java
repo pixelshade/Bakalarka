@@ -12,15 +12,37 @@ public class Response {
         response = ResponseJSONParser.parseResponse(json);
     }
 
+    final static public String TYPE_IS_LOGGED = "IS_LOGGED";
+    final static public String TYPE_LOGIN = "LOGIN";
+    final static public String TYPE_ACCEPT_QUEST = "ACCEPT_QUEST";
+    final static public String TYPE_COMPLETE_QUEST = "COMPLETE_QUEST";
+    final static public String TYPE_CHECK_QRCODE = "CHECK_QRCODE";
+
+
 
     public boolean isParsedSuccessfuly() {
         return (response != null);
     }
 
+
+    /**
+     * this response check should be used before every other actions with response, because user could be already logged out.
+     * @return boolean
+     */
+    public boolean isLogged(){
+      if(response.containsKey(ResponseJSONParser.KEY_TYPE) && response.get(ResponseJSONParser.KEY_TYPE).equals(TYPE_IS_LOGGED)){
+          if(response.get(ResponseJSONParser.KEY_SUCCESS).equals("0")){
+              return false;
+          }
+      }
+      return true;
+    }
+
+
     /**
      * isSuccessful function returns boolean which is parsed from json, if there is damaged response json or missing success info returns an false
      *
-     * @return
+     * @return boolean
      */
     public boolean isSuccessful() {
         if (response != null)
@@ -33,7 +55,7 @@ public class Response {
     /**
      * getData function returns data string which is parsed from json, if there is damaged response or missing data returns an empty string
      *
-     * @return
+     * @return String
      */
     public String getData() {
         if (response != null)
@@ -46,7 +68,7 @@ public class Response {
     /**
      * getMessage function returns message string which is parsed from json, if there is damaged response or missing message returns an empty string
      *
-     * @return
+     * @return String
      */
     public String getMessage() {
         if (response != null)

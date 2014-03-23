@@ -63,6 +63,15 @@
                 android:paddingRight="32dp"
                 android:layout_gravity="right" />
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/serverURL"
+                android:layout_gravity="center_horizontal"
+                android:hint="http://serverurl.com"
+                android:paddingTop="40dp"
+                android:singleLine="true" />
+
         </LinearLayout>
 
     </ScrollView>

@@ -1,21 +1,17 @@
 package shade.pixel.gpsoclient;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 
 /**
  * Created by pixelshade on 15.3.2014.
  */
 public class Settings {
     /** User changable variables */
-    private static String user, pass;
+    private static String username, pass;
     private static String serverURL = "http://bak.skeletopedia.sk";
-
-
-
-
-
-
-
 
 
     /** Server URL constants */
@@ -32,33 +28,52 @@ public class Settings {
 
 
     /*
-    CONSTANTS
+        CONSTANTS
      */
 
     public static final String INTENT_KEY_QRSCANNED = "QRSCANNED";
-    /**
-     * android local file dir
-     */
+
     private static String ContentFileDir = Environment.getExternalStorageDirectory() + "/GPSOData/";
 
+    // SHARED PREFERENCES KEYS
+    private static final String SHAREDPREF_USERNAME_KEY = "USER_EMAIL";
+
+    private static final String SHAREDPREF_PASSWORD_KEY = "USER_PASS";
+
+    private static final String SHAREDPREF_SERVER_URL_KEY = "SERVER_URL";
 
     private Settings() {
     }
 
-    public static void saveUserSettings(){
+
+
+
+
+
+
+    public static void saveLoginSettings(Context context, String username0, String pass0, String serverURL0){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SHAREDPREF_USERNAME_KEY, username0);
+        editor.putString(SHAREDPREF_PASSWORD_KEY, pass0);
+        editor.putString(SHAREDPREF_SERVER_URL_KEY, serverURL0);
+        editor.commit();
+    }
+
+    public static void loadSavedLoginSettings(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        username = sharedPreferences.getString(SHAREDPREF_USERNAME_KEY, "");
+        pass = sharedPreferences.getString(SHAREDPREF_PASSWORD_KEY, "");
+        serverURL = sharedPreferences.getString(SHAREDPREF_SERVER_URL_KEY, "http://bak.skeletopedia.sk");
 
     }
 
-    public static void loadUserSettings(){
-
+    public static String getUsername() {
+        return username;
     }
 
-    public static String getUser() {
-        return user;
-    }
-
-    public static void setUser(String user) {
-        Settings.user = user;
+    public static void setUsername(String username) {
+        Settings.username = username;
     }
 
     public static String getPass() {
