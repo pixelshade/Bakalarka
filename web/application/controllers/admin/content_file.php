@@ -20,6 +20,20 @@ class Content_file extends Admin_Controller
         $this->load->view('admin/_layout_main', $this->data);
     }
 
+
+    public function empty_table_scan_folder_for_images(){
+        $this->content_files_model->empty_table();
+        $files = scandir($this->data['content_dir']);
+
+        foreach ($files as $filename) {
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            if($filename != "." && $filename != ".." && $ext != "php"){
+                $this->content_files_model->insert_file($filename);
+            }
+        }
+        redirect('admin/content_file/');
+    }
+
     public function upload_file()
     {
         $status = "";

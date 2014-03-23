@@ -27,4 +27,5 @@
         <?php endforeach ?>
     </tbody>
 </table>
+<?php echo anchor("admin/content_file/empty_table_scan_folder_for_images", "Rescan images", 'class="btn btn-danger"'); ?>
 </div>

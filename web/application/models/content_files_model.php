@@ -32,6 +32,11 @@ class Content_Files_Model extends CI_Model {
         
     }
 
+    public function empty_table()
+    {        
+           $this->db->empty_table('content_files'); 
+    }
+
     public function get_file($file_id = NULL)
     {
         return $this->db->select()

@@ -42,7 +42,10 @@ class Api extends Admin_Controller
 			$this->user_position_m->save($user_id, $player_lat, $player_lon);
 			$regions = $this->region_m->get_by_latlon($player_lat,$player_lon);
 			$region_ids = array_column($regions, 'id');					
-			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids);			
+			$active_completed_quests =	$this->user_quest_m->get_array_by('char_id', $user_id);		
+			$active_completed_quests_ids =	array_column($active_completed_quests, 'quest_id');
+			print_r($active_completed_quests_ids);
+			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids);	
 			$result['regions'] = $regions;
 			$result['quests'] = $quests;
 				// TODO autostart - teraz sa budu pliest message

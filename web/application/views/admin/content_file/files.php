@@ -1,4 +1,5 @@
 <?php
+
 if (isset($files) && count($files))
 {
     ?>
