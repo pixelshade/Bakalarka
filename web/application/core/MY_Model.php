@@ -84,10 +84,14 @@ class MY_Model extends CI_Model
 		return $this->get_array(NULL, $single);
 	}
 
-	public function get_array_where_in($where, $in_array){
+	public function get_array_where_in($where, $in_array, $or_where = NULL, $or_in = NULL){
 		if(empty($in_array)) return $in_array;
-		
+
 		$this->db->where_in($where, $in_array);
+
+		if($or_where != NULL && $or_in != NULL && !empty($or_in)){			
+			$this->db->or_where_in($or_where, $or_in);
+		}
 		return $this->get_array();
 	}	
 

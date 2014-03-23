@@ -44,8 +44,7 @@ class Api extends Admin_Controller
 			$region_ids = array_column($regions, 'id');					
 			$active_completed_quests =	$this->user_quest_m->get_array_by('char_id', $user_id);		
 			$active_completed_quests_ids =	array_column($active_completed_quests, 'quest_id');
-			print_r($active_completed_quests_ids);
-			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids);	
+			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids, 'quest_id', $active_completed_quests_ids);	
 			$result['regions'] = $regions;
 			$result['quests'] = $quests;
 				// TODO autostart - teraz sa budu pliest message
@@ -121,6 +120,20 @@ class Api extends Admin_Controller
 		} 
 		return FALSE;
 	}
+
+
+	public function get_my_quests(){
+		$user_id = $this->user_m->get_user_id();
+		$quests = $this->user_quest_m->get_array_by('char_id', $user_id);		
+		echo json_encode($quests);
+	}
+
+	public function get_my_items(){
+		$user_id = $this->user_m->get_user_id();
+		$items = $this->user_item_m->get_array_by('char_id', $user_id);		
+		echo json_encode($items);
+	}
+
 
 
 	public function check_qrcode($code = null){		

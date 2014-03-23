@@ -1,5 +1,6 @@
 package shade.pixel.gpsoclient;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -206,7 +207,10 @@ public class MyHtmlBrowser {
                 progressDialog = new ProgressDialog(mContext);
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.setMax(100);
-                progressDialog.show();
+                if(!((Activity) context).isFinishing())
+                {
+                    progressDialog.show();
+                }
             }
 
             @Override
