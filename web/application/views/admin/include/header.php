@@ -14,6 +14,7 @@
 	<link href="<?php echo site_url('assets/css/custom.css'); ?>" rel="stylesheet">	
 	<link href="<?php echo site_url('assets/css/nested-sortable.css'); ?>" rel="stylesheet">	
 	<link href="<?php echo site_url('assets/css/datepicker.css'); ?>" rel="stylesheet">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
 
