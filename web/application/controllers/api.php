@@ -125,6 +125,7 @@ class Api extends Admin_Controller
 	public function get_my_quests(){
 		$user_id = $this->user_m->get_user_id();
 		$quests = $this->user_quest_m->get_array_by('char_id', $user_id);		
+		print_r($this->user_quest_m);
 		echo json_encode($quests);
 	}
 

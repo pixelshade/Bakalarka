@@ -148,39 +148,44 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
             @Override
             public void processFinish(Context context, String json) {
-                gameData = ResponseJSONParser.parseGameData(json);
-                gameHandler.setGameData(gameData);
-                if (gameData != null) {
-                    StringBuilder sb = new StringBuilder();
-                    ArrayList<Region> regions = gameData.getRegions();
-                    sb.append("Regions:");
-                    for (Region region : regions) {
-                        sb.append(region.getName() + ",");
-                    }
-                    ArrayList<Quest> quests = gameData.getQuests();
-                    sb.append("\nQuests:");
-                    for (Quest quest : quests) {
-                        quest.getName();
-                        sb.append(quest.getName() + ",");
-                    }
-                    TextView tv = (TextView) findViewById(R.id.section_content);
-                    LatLng latLng = gpsTracker.getLatLng();
-                    tv.setText(json+"\n\n"+latLng.latitude+""+ latLng.longitude);
-
-
-                    ArrayAdapter<Quest> questsArrayAdapter = new ArrayAdapter<Quest>(context, android.R.layout.simple_list_item_1, quests);
-                    ListView lvQuests = (ListView) findViewById(R.id.listViewQuests);
-                    if (lvQuests != null) lvQuests.setAdapter(questsArrayAdapter);
-
-                    ArrayAdapter<Region> regionsArrayAdapter = new ArrayAdapter<Region>(context, android.R.layout.simple_list_item_1, regions);
-                    ListView lvRegions = (ListView) findViewById(R.id.listViewRegions);
-                    if (lvRegions != null) lvRegions.setAdapter(regionsArrayAdapter);
-
-                    //todo treba pre kazdy fragment spravit to iste pre pripad, ze sa fragment znovu nevytvara len ho treba setnut
-
-
+                Response response = new Response(json);
+                if(response.isLoggedOut()) {
+                    LogoutAndStartLoginActivity(null);
                 } else {
-                    Log.d("AHA", "Problem with parsing gamedata");
+                    gameData = ResponseJSONParser.parseGameData(json);
+                    gameHandler.setGameData(gameData);
+                    if (gameData != null) {
+                        StringBuilder sb = new StringBuilder();
+                        ArrayList<Region> regions = gameData.getRegions();
+                        sb.append("Regions:");
+                        for (Region region : regions) {
+                            sb.append(region.getName() + ",");
+                        }
+                        ArrayList<Quest> quests = gameData.getQuests();
+                        sb.append("\nQuests:");
+                        for (Quest quest : quests) {
+                            quest.getName();
+                            sb.append(quest.getName() + ",");
+                        }
+                        TextView tv = (TextView) findViewById(R.id.section_content);
+                        LatLng latLng = gpsTracker.getLatLng();
+                        tv.setText(json + "\n\n" + latLng.latitude + "" + latLng.longitude);
+
+
+                        ArrayAdapter<Quest> questsArrayAdapter = new ArrayAdapter<Quest>(context, android.R.layout.simple_list_item_1, quests);
+                        ListView lvQuests = (ListView) findViewById(R.id.listViewQuests);
+                        if (lvQuests != null) lvQuests.setAdapter(questsArrayAdapter);
+
+                        ArrayAdapter<Region> regionsArrayAdapter = new ArrayAdapter<Region>(context, android.R.layout.simple_list_item_1, regions);
+                        ListView lvRegions = (ListView) findViewById(R.id.listViewRegions);
+                        if (lvRegions != null) lvRegions.setAdapter(regionsArrayAdapter);
+
+                        //todo treba pre kazdy fragment spravit to iste pre pripad, ze sa fragment znovu nevytvara len ho treba setnut
+
+
+                    } else {
+                        Log.d("AHA", "Problem with parsing gamedata");
+                    }
                 }
             }
         });

@@ -70,6 +70,10 @@
             android:name="shade.pixel.gpsoclient.Scanner"
             android:label="@string/title_activity_scanner" >
         </activity>
+        <activity
+            android:name="shade.pixel.gpsoclient.RewardInfoActivity"
+            android:label="@string/title_activity_reward_info" >
+        </activity>
     </application>
 
 </manifest>

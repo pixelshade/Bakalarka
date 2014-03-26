@@ -27,15 +27,17 @@ public class Response {
 
     /**
      * this response check should be used before every other actions with response, because user could be already logged out.
-     * @return boolean
+     * @return true if we get response that user is logged out, otherwise we are logged in
      */
-    public boolean isLogged(){
-      if(response.containsKey(ResponseJSONParser.KEY_TYPE) && response.get(ResponseJSONParser.KEY_TYPE).equals(TYPE_IS_LOGGED)){
-          if(response.get(ResponseJSONParser.KEY_SUCCESS).equals("0")){
-              return false;
-          }
-      }
-      return true;
+    public boolean isLoggedOut(){
+        if(isParsedSuccessfuly()) {
+            if (response.containsKey(ResponseJSONParser.KEY_TYPE) && response.get(ResponseJSONParser.KEY_TYPE).equals(TYPE_IS_LOGGED)) {
+                if (response.get(ResponseJSONParser.KEY_SUCCESS).equals("0")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 
