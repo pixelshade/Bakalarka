@@ -24,7 +24,7 @@
         android:id="@+id/regionImageView"
         android:layout_below="@+id/regionNameText"
         android:src="@drawable/no_image_512x512"
-        android:contentDescription="region image"
+        android:contentDescription="region itemImage"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"

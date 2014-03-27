@@ -60,8 +60,8 @@ public class ResponseJSONParser {
                 HashMap<String, String> response = new HashMap<String, String>();
 
                 String type = jsonObj.optString(KEY_TYPE);
-                String success = jsonObj.getString(KEY_SUCCESS);
-                String msg = jsonObj.getString(KEY_MESSAGE);
+                String success = jsonObj.optString(KEY_SUCCESS);
+                String msg = jsonObj.optString(KEY_MESSAGE);
                 String data = jsonObj.optString(KEY_DATA);
 
                 response.put(KEY_TYPE, type);

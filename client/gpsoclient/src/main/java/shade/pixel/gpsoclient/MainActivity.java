@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     ViewPager mViewPager;
 
     MyHtmlBrowser htmlBrowser;
-    GPSTracker gpsTracker;
+
     ContentFilesManager contentFilesManager;
     public static GameData gameData;
 
@@ -114,12 +114,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         htmlBrowser = MyHtmlBrowser.getInstance(this);
         gameData = new GameData();
         contentFilesManager = new ContentFilesManager(this);
-        gpsTracker = new GPSTracker(this);
         gameHandler = GameHandler.getInstance(this);
 
 
         if (htmlBrowser.isOnline()) {
-            htmlBrowser.HttpGetAsyncString(this, Settings.getIsLoggedInURL(), loginCheck);
+//            htmlBrowser.HttpGetAsyncString(this, Settings.getIsLoggedInURL(), loginCheck);
 
         } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
@@ -142,7 +141,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void UpdatePosition(View view) {
-        LatLng latLng = gpsTracker.getLatLng();
+        LatLng latLng = gameHandler.gpsTracker.getLatLng();
         String url = Settings.getServerURL() + "/api/json/" + latLng.latitude + "/" + latLng.longitude;
         Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
         htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
@@ -168,7 +167,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             sb.append(quest.getName() + ",");
                         }
                         TextView tv = (TextView) findViewById(R.id.section_content);
-                        LatLng latLng = gpsTracker.getLatLng();
+                        LatLng latLng = gameHandler.gpsTracker.getLatLng();
                         tv.setText(json + "\n\n" + latLng.latitude + "" + latLng.longitude);
 
 

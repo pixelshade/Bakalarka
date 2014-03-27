@@ -1,9 +1,11 @@
 package shade.pixel.gpsoclient;
 
+import java.io.Serializable;
+
 /**
  * Created by pixelshade on 2.3.2014.
  */
-public class Region {
+public class Region implements Serializable{
     public static final String KEY_REGION_ID = "id";
     public static final String KEY_REGION_NAME = "name";
     public static final String KEY_REGION_INFO = "info";

@@ -1,9 +1,11 @@
 package shade.pixel.gpsoclient;
 
+import java.io.Serializable;
+
 /**
  * Created by pixelshade on 2.3.2014.
  */
-public class Quest {
+public class Quest implements Serializable{
     public static final String KEY_QUEST_ID = "id";
     public static final String KEY_QUEST_CODE = "code";
     public static final String KEY_QUEST_NAME = "name";
