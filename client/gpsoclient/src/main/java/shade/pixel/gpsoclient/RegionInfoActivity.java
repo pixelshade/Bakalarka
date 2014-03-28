@@ -1,17 +1,14 @@
 package shade.pixel.gpsoclient;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class RegionInfoActivity extends ActionBarActivity {
     ArrayList<Region> regions;
@@ -57,14 +57,14 @@ public class RegionInfoActivity extends ActionBarActivity {
 
         Intent intent = getIntent();
         int region_id = intent.getIntExtra(REGION_INDEX, 0);
-        actualRegion = regions.get(region_id);
+
         mSectionsPagerAdapter.getItem(region_id);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.region_info_activity, menu);
         return true;
@@ -82,8 +82,6 @@ public class RegionInfoActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -109,14 +107,14 @@ public class RegionInfoActivity extends ActionBarActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if(position < regions.size()){
+            if (position < regions.size()) {
                 return regions.get(position).getName();
             }
             return null;
         }
 
-        public Region getRegion(int index){
-            if(index < regions.size()){
+        public Region getRegion(int index) {
+            if (index < regions.size()) {
                 return regions.get(index);
             }
             return null;
@@ -133,11 +131,12 @@ public class RegionInfoActivity extends ActionBarActivity {
             return fragment;
         }
 
-        public PlaceholderFragment() {}
+        public PlaceholderFragment() {
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_region_info, container, false);
             TextView regionNameText = (TextView) rootView.findViewById(R.id.regionNameText);
             regionNameText.setText(actualRegion.getName());
@@ -145,7 +144,7 @@ public class RegionInfoActivity extends ActionBarActivity {
             regionInfoText.setText(Html.fromHtml(actualRegion.getInfo()));
             ImageView regionImage = (ImageView) rootView.findViewById(R.id.regionImageView);
 
-            if(actualRegion.getImage().length() != 0) {
+            if (actualRegion.getImage().length() != 0) {
                 String filePath = Settings.getContentFileDir() + actualRegion.getImage();
                 File imageFile = new File(filePath);
                 Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());

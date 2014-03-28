@@ -42,6 +42,7 @@ public class MyHtmlBrowser {
     private Context mContext;
     private CookieStore cookieStore;
     private HttpContext localContext;
+    private GetAsyncStringTask ast;
 
 
     public static MyHtmlBrowser getInstance(Context context) {
@@ -152,12 +153,12 @@ public class MyHtmlBrowser {
         return result.toString();
     }
 
-    public class getAsyncStringTask extends AsyncTask<String, Integer, String>{
+    public class GetAsyncStringTask extends AsyncTask<String, Integer, String>{
             public AsyncResponse delegate;
             public boolean locked;
             private Context context;
 
-        public getAsyncStringTask(Context context ,AsyncResponse delegate){
+        public GetAsyncStringTask(Context context ,AsyncResponse delegate){
             this.delegate = delegate;
             this.context = context;
         }
@@ -223,7 +224,7 @@ public class MyHtmlBrowser {
     }
 
     public void HttpGetAsyncString(Context context,String uristr, AsyncResponse delegate) {
-        getAsyncStringTask ast = new getAsyncStringTask(context,delegate);
+        ast = new GetAsyncStringTask(context,delegate);
         if(!ast.isLocked())   ast.execute(uristr);
     }
 

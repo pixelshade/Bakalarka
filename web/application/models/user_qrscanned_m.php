@@ -47,5 +47,11 @@ class User_qrscanned_m extends MY_Model
 		return FALSE;
 	}
 
+	public function insert($char_id, $code, $id = NULL){
+		$user_code['char_id'] = $char_id;
+		$user_code['qrscanned'] = $code;
+		parent::save($user_code, $id);
+	}	
+
 
 }

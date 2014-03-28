@@ -9,14 +9,19 @@ import android.preference.PreferenceManager;
  * Created by pixelshade on 15.3.2014.
  */
 public class Settings {
-    /** User changable variables */
+    /**
+     * User changable variables
+     */
     private static String username, pass;
     private static String serverURL = "http://bak.skeletopedia.sk";
 
 
-    /** Server URL constants */
+    /**
+     * Server URL constants
+     */
     private static String questCompletionURL = serverURL + "/api/complete_quest";
     private static String questAcceptURL = serverURL + "/api/accept_quest";
+    private static String checkQRcodeURL = serverURL + "/api/check_qrcode/";
     private static String contentFilesListURL = serverURL + "/api/getContentFilesList";
     private static String serverContentDirURL = serverURL + "/app_content/";
 
@@ -30,6 +35,10 @@ public class Settings {
     /*
         CONSTANTS
      */
+
+    public static final String QR_REWARD = "R";
+    public static final String QR_QUEST = "Q";
+
 
     public static final String INTENT_KEY_QRSCANNED = "QRSCANNED";
 
@@ -46,12 +55,7 @@ public class Settings {
     }
 
 
-
-
-
-
-
-    public static void saveLoginSettings(Context context, String username0, String pass0, String serverURL0){
+    public static void saveLoginSettings(Context context, String username0, String pass0, String serverURL0) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SHAREDPREF_USERNAME_KEY, username0);
@@ -154,5 +158,13 @@ public class Settings {
 
     public static void setLogoutURL(String logoutURL) {
         Settings.logoutURL = logoutURL;
+    }
+
+    public static String getCheckQRcodeURL() {
+        return checkQRcodeURL;
+    }
+
+    public static void setCheckQRcodeURL(String checkQRcodeURL) {
+        Settings.checkQRcodeURL = checkQRcodeURL;
     }
 }

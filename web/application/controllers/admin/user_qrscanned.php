@@ -40,6 +40,7 @@ class User_qrscanned extends Admin_Controller
 				'char_id',
 				'qrscanned',							
 				));
+			
 			$this->user_qrscanned_m->save($data, $id);
 			redirect('admin/user_qrscanned');
 		}

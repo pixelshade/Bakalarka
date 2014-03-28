@@ -79,7 +79,6 @@ public class RewardInfoActivity extends ActionBarActivity {
             TextView rewardNameTextView = (TextView) rootView.findViewById(R.id.rewardNameTextView);
             TextView attributeAmountTextView = (TextView) rootView.findViewById(R.id.attributeAmountTextView);
             TextView itemAmountTextView = (TextView) rootView.findViewById(R.id.itemAmountTextView);
-            ImageView rewardImageView = (ImageView) rootView.findViewById(R.id.rewardImageView);
             ImageView attributeImageView = (ImageView) rootView.findViewById(R.id.attributeImageView);
             ImageView itemImageView = (ImageView) rootView.findViewById(R.id.itemImageView);
             Button acceptRewardButton = (Button) rootView.findViewById(R.id.acceptRewardButton);
@@ -87,13 +86,6 @@ public class RewardInfoActivity extends ActionBarActivity {
                 rewardNameTextView.setText(reward.getName());
                 attributeAmountTextView.setText((reward.getAttributeAmount()));
                 itemAmountTextView.setText(reward.getItemAmount());
-
-                if(reward.getAttributeImage().length() != 0) {
-                    String filePath = Settings.getContentFileDir() + reward.getRewardImage();
-                    File imageFile = new File(filePath);
-                    Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                    rewardImageView.setImageBitmap(bitmap);
-                }
 
                 if(reward.getItemImage().length() != 0) {
                     String filePath = Settings.getContentFileDir() + reward.getItemImage();

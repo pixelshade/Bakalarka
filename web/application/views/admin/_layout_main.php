@@ -49,6 +49,7 @@
 							<li><a href="/admin/user_item">Inventories</a></li>
 							<li><a href="/admin/user_attribute">User Attributes</a></li>
 							<li><a href="/admin/user_position">User Positions</a></li>
+							<li><a href="/admin/user_qrscanned">User qr scanned</a></li>
 							<!-- 	<li><a href="/admin/user_objective">Characters active objectives</a></li> -->
 						</ul> 
 					</li>

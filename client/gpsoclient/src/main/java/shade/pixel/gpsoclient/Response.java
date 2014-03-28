@@ -12,11 +12,13 @@ public class Response {
         response = ResponseJSONParser.parseResponse(json);
     }
 
+
     final static public String TYPE_IS_LOGGED = "IS_LOGGED";
     final static public String TYPE_LOGIN = "LOGIN";
     final static public String TYPE_ACCEPT_QUEST = "ACCEPT_QUEST";
     final static public String TYPE_COMPLETE_QUEST = "COMPLETE_QUEST";
     final static public String TYPE_CHECK_QRCODE = "CHECK_QRCODE";
+    final static public String TYPE_GIVE_REWARD = "GIVE_REWARD";
 
 
 
@@ -24,7 +26,14 @@ public class Response {
         return (response != null);
     }
 
-
+    public String getType(){
+        if(isParsedSuccessfuly()) {
+            if(response.containsKey(ResponseJSONParser.KEY_TYPE)){
+                return response.get(ResponseJSONParser.KEY_TYPE);
+            }
+        }
+        return "";
+    }
     /**
      * this response check should be used before every other actions with response, because user could be already logged out.
      * @return true if we get response that user is logged out, otherwise we are logged in

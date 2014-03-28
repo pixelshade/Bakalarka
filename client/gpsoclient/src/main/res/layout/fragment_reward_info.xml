@@ -27,12 +27,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rewardImageView"
-                android:src="@drawable/no_image_512x512"
-                android:paddingBottom="20dp" />
+
 
 
             <TextView

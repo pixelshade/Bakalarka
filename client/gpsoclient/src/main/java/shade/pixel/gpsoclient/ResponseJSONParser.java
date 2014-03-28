@@ -79,7 +79,6 @@ public class ResponseJSONParser {
         return null;
     }
 
-
     public static GameData parseGameData(String json){
         if (json != null) {
             try {

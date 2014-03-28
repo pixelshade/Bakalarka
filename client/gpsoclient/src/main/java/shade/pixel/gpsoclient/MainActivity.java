@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,10 +37,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     ViewPager mViewPager;
 
     MyHtmlBrowser htmlBrowser;
@@ -50,6 +47,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public GameHandler gameHandler;
 
     int mActualViewId = 0;
+
+    String lastQRCode = "";
+
+
 
     AsyncResponse loginCheck = new AsyncResponse() {
         @Override
@@ -123,17 +124,64 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
         }
+        Intent intent = getIntent();
+        String QRScanned = intent.getStringExtra(Settings.INTENT_KEY_QRSCANNED);
+
+        if(savedInstanceState == null || savedInstanceState.getString("QR") == null){
+            lastQRCode = "";
+        } else {
+            lastQRCode = savedInstanceState.getString("QR");
+        }
+
+        //TODO vytvorit key pre QR
+        Log.i("AHA","toto je posledny" + lastQRCode);
+        if(QRScanned!=null && !QRScanned.equals(lastQRCode)) {
+
+            String url = Settings.getCheckQRcodeURL()+QRScanned;
+            Log.i("aha", url);
+            savedInstanceState.putString("QR",QRScanned);
+            GameHandler.getInstance(this).getHtmlBrowser().HttpGetAsyncString(this, url , new AsyncResponse() {
+                @Override
+                public void processFinish(Context context, String output) {
+
+                    Response response = new Response(output);
+                    if(response.isLoggedOut()){
+                        StartLoginActivity();
+                    } else {
+                        Log.i("msg",response.getMessage());
+                        Log.i("data",response.getData());
+                        String responseMsg = response.getMessage();
+                        String responseType = response.getType();
+                        if(responseType.equals(Response.TYPE_GIVE_REWARD)){
+                            String data = response.getData();
+                            Log.d("aha",data);
+                        }
+                        if (responseType.equals(Response.TYPE_ACCEPT_QUEST)){
+
+                        }
+                    }
+
+                }
+            } );
+        }
 
     }
 
+
+    private void StartLoginActivity(){
+        Intent mLoginIntent = new Intent(this, LoginActivity.class);
+        startActivity(mLoginIntent);
+        finish();
+    }
+
     public void LogoutAndStartLoginActivity(View view) {
-        final Intent intent = new Intent(this, LoginActivity.class);
         String url = Settings.getLogoutURL();
         Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+        final Intent mLoginIntent = new Intent(this, LoginActivity.class);
         htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
             @Override
             public void processFinish(Context context, String output) {
-                startActivity(intent);
+                startActivity(mLoginIntent);
                 finish();
 
             }

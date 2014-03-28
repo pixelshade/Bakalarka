@@ -43,13 +43,7 @@ public class Scanner extends Activity implements ZBarScannerView.ResultHandler {
         Log.v("AHA", rawResult.getBarcodeFormat().getName()); // Prints the scan format (qrcode, pdf417 etc.)
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Settings.INTENT_KEY_QRSCANNED, code);
-        if(code.endsWith("I")){
-            //TODO presmerovat na item received a pred tym zistit co je to
-        }
-        if(code.endsWith("Q")){
-           //TODO presmerovat na quest info a pred tym zistit co je to
-
-        }
+        startActivity(intent);
 
         finish();
     }

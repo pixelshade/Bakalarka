@@ -71,14 +71,14 @@
     <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="zbar-1.0" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-19.0.1" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="armeabi-v7a" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-4.3.23" level="project" />
     <orderEntry type="library" exported="" name="armeabi" level="project" />
     <orderEntry type="library" exported="" name="core-1.0" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-19.0.1" level="project" />
     <orderEntry type="library" exported="" name="zbar" level="project" />
-    <orderEntry type="library" exported="" name="play-services-4.1.32" level="project" />
     <orderEntry type="library" exported="" name="x86" level="project" />
   </component>
 </module>
