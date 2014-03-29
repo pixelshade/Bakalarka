@@ -96,10 +96,10 @@ public class QuestInfoActivity extends ActionBarActivity {
         EditText questAnswer = (EditText) findViewById(R.id.answerEditText);
         String answer = "";
         if (questAnswer != null) answer = questAnswer.getText().toString();
-        LatLng position = gameHandler.gpsTracker.getLatLng();
+        double latitude = gameHandler.gpsTracker.getLatitude();
+        double longitude = gameHandler.gpsTracker.getLongitude();
 
-
-        String completionURL = Settings.getQuestCompletionURL() + "/" + quests.get(QUEST_INDEX).getId()+"/"+position.latitude+"/"+position.longitude+"/"+answer;
+        String completionURL = Settings.getQuestCompletionURL() + "/" + quests.get(QUEST_INDEX).getId()+"/"+latitude+"/"+longitude+"/"+answer;
         gameHandler.htmlBrowser.HttpGetAsyncString(this, completionURL, new AsyncResponse() {
             @Override
             public void processFinish(Context context, String output) {

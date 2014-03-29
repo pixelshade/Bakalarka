@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,13 +42,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     ContentFilesManager contentFilesManager;
     public static GameData gameData;
-
+    public GPSTracker gpsTracker;
     public GameHandler gameHandler;
 
     int mActualViewId = 0;
 
     String lastQRCode = "";
-
 
 
     AsyncResponse loginCheck = new AsyncResponse() {
@@ -108,7 +106,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             actionBar.addTab(
                     actionBar.newTab()
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
+                            .setTabListener(this)
+            );
         }
 
 
@@ -127,48 +126,48 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         Intent intent = getIntent();
         String QRScanned = intent.getStringExtra(Settings.INTENT_KEY_QRSCANNED);
 
-        if(savedInstanceState == null || savedInstanceState.getString("QR") == null){
+        if (savedInstanceState == null || savedInstanceState.getString("QR") == null) {
             lastQRCode = "";
         } else {
             lastQRCode = savedInstanceState.getString("QR");
         }
 
         //TODO vytvorit key pre QR
-        Log.i("AHA","toto je posledny" + lastQRCode);
-        if(QRScanned!=null && !QRScanned.equals(lastQRCode)) {
+        Log.i("AHA", "toto je posledny" + lastQRCode);
+        if (QRScanned != null && !QRScanned.equals(lastQRCode)) {
 
-            String url = Settings.getCheckQRcodeURL()+QRScanned;
+            String url = Settings.getCheckQRcodeURL() + QRScanned;
             Log.i("aha", url);
-            savedInstanceState.putString("QR",QRScanned);
-            GameHandler.getInstance(this).getHtmlBrowser().HttpGetAsyncString(this, url , new AsyncResponse() {
+            savedInstanceState.putString("QR", QRScanned);
+            GameHandler.getInstance(this).getHtmlBrowser().HttpGetAsyncString(this, url, new AsyncResponse() {
                 @Override
                 public void processFinish(Context context, String output) {
 
                     Response response = new Response(output);
-                    if(response.isLoggedOut()){
+                    if (response.isLoggedOut()) {
                         StartLoginActivity();
                     } else {
-                        Log.i("msg",response.getMessage());
-                        Log.i("data",response.getData());
+                        Log.i("msg", response.getMessage());
+                        Log.i("data", response.getData());
                         String responseMsg = response.getMessage();
                         String responseType = response.getType();
-                        if(responseType.equals(Response.TYPE_GIVE_REWARD)){
+                        if (responseType.equals(Response.TYPE_GIVE_REWARD)) {
                             String data = response.getData();
-                            Log.d("aha",data);
+                            Log.d("aha", data);
                         }
-                        if (responseType.equals(Response.TYPE_ACCEPT_QUEST)){
+                        if (responseType.equals(Response.TYPE_ACCEPT_QUEST)) {
 
                         }
                     }
 
                 }
-            } );
+            });
         }
 
     }
 
 
-    private void StartLoginActivity(){
+    private void StartLoginActivity() {
         Intent mLoginIntent = new Intent(this, LoginActivity.class);
         startActivity(mLoginIntent);
         finish();
@@ -189,67 +188,73 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void UpdatePosition(View view) {
-        LatLng latLng = gameHandler.gpsTracker.getLatLng();
-        String url = Settings.getServerURL() + "/api/json/" + latLng.latitude + "/" + latLng.longitude;
-        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
-        htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
-            @Override
-            public void processFinish(Context context, String json) {
-                Response response = new Response(json);
-                if(response.isLoggedOut()) {
-                    LogoutAndStartLoginActivity(null);
-                } else {
-                    gameData = ResponseJSONParser.parseGameData(json);
-                    gameHandler.setGameData(gameData);
-                    if (gameData != null) {
-                        StringBuilder sb = new StringBuilder();
-                        ArrayList<Region> regions = gameData.getRegions();
-                        sb.append("Regions:");
-                        for (Region region : regions) {
-                            sb.append(region.getName() + ",");
-                        }
-                        ArrayList<Quest> quests = gameData.getQuests();
-                        sb.append("\nQuests:");
-                        for (Quest quest : quests) {
-                            quest.getName();
-                            sb.append(quest.getName() + ",");
-                        }
-                        TextView tv = (TextView) findViewById(R.id.section_content);
-                        LatLng latLng = gameHandler.gpsTracker.getLatLng();
-                        tv.setText(json + "\n\n" + latLng.latitude + "" + latLng.longitude);
+        //TODO fixnut stale rovnaky position wtf??
+        gpsTracker = new GPSTracker(this);
+        double latitude = gpsTracker.getLatitude();
+        double longitude = gpsTracker.getLongitude();
+        if (!gpsTracker.canGetLocation()) {
+            gpsTracker.showSettingsAlert();
+        } else {
 
-
-                        ArrayAdapter<Quest> questsArrayAdapter = new ArrayAdapter<Quest>(context, android.R.layout.simple_list_item_1, quests);
-                        ListView lvQuests = (ListView) findViewById(R.id.listViewQuests);
-                        if (lvQuests != null) lvQuests.setAdapter(questsArrayAdapter);
-
-                        ArrayAdapter<Region> regionsArrayAdapter = new ArrayAdapter<Region>(context, android.R.layout.simple_list_item_1, regions);
-                        ListView lvRegions = (ListView) findViewById(R.id.listViewRegions);
-                        if (lvRegions != null) lvRegions.setAdapter(regionsArrayAdapter);
-
-                        //todo treba pre kazdy fragment spravit to iste pre pripad, ze sa fragment znovu nevytvara len ho treba setnut
-
-
+            String url = Settings.getServerURL() + "/api/json/" + latitude + "/" + longitude;
+            Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+            htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
+                @Override
+                public void processFinish(Context context, String json) {
+                    Response response = new Response(json);
+                    if (response.isLoggedOut()) {
+                        LogoutAndStartLoginActivity(null);
                     } else {
-                        Log.d("AHA", "Problem with parsing gamedata");
+                        gameData = ResponseJSONParser.parseGameData(json);
+                        gameHandler.setGameData(gameData);
+                        if (gameData != null) {
+                            StringBuilder sb = new StringBuilder();
+                            ArrayList<Region> regions = gameData.getRegions();
+                            sb.append("Regions:");
+                            for (Region region : regions) {
+                                sb.append(region.getName() + ",");
+                            }
+                            ArrayList<Quest> quests = gameData.getQuests();
+                            sb.append("\nQuests:");
+                            for (Quest quest : quests) {
+                                quest.getName();
+                                sb.append(quest.getName() + ",");
+                            }
+                            TextView tv = (TextView) findViewById(R.id.section_content);
+                            double latitude = gameHandler.gpsTracker.getLatitude();
+                            double longitude = gameHandler.gpsTracker.getLongitude();
+                            tv.setText(json + "\n\n" + latitude + " " + longitude);
+
+
+                            ArrayAdapter<Quest> questsArrayAdapter = new ArrayAdapter<Quest>(context, android.R.layout.simple_list_item_1, quests);
+                            ListView lvQuests = (ListView) findViewById(R.id.listViewQuests);
+                            if (lvQuests != null) lvQuests.setAdapter(questsArrayAdapter);
+
+                            ArrayAdapter<Region> regionsArrayAdapter = new ArrayAdapter<Region>(context, android.R.layout.simple_list_item_1, regions);
+                            ListView lvRegions = (ListView) findViewById(R.id.listViewRegions);
+                            if (lvRegions != null) lvRegions.setAdapter(regionsArrayAdapter);
+
+                            //todo treba pre kazdy fragment spravit to iste pre pripad, ze sa fragment znovu nevytvara len ho treba setnut
+
+
+                        } else {
+                            Log.d("AHA", "Problem with parsing gamedata");
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+
     }
 
     public void UpdateLocalContentFiles(View view) {
         contentFilesManager.UpdateFiles();
     }
 
-    public void ScanQRCode(View view){
-        Intent intent = new Intent(this,Scanner.class);
+    public void ScanQRCode(View view) {
+        Intent intent = new Intent(this, ScannerActivity.class);
         startActivity(intent);
     }
-
-
-
-
 
 
     @Override

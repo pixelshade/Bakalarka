@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="vertical"
+    android:background="#e3e3e3"
+    android:textAlignment="center">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/listItemImageView"
+        android:src="@drawable/no_image_512x512"
+        android:contentDescription="item image" />
+
+    <TextView
+        android:id="@+id/listItemNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textIsSelectable="false"
+        android:width="100dp" />
+
+</LinearLayout>

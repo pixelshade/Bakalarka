@@ -35,7 +35,7 @@ public class ItemsFragment extends Fragment {
         if (gameData != null) {
             ArrayList<Item> items = gameData.getItems();
 
-            ArrayAdapter<Item> arrayAdapter = new ArrayAdapter<Item>(getActivity(), android.R.layout.simple_list_item_1, items);
+            ItemAdapter arrayAdapter = new ItemAdapter(getActivity(), R.layout.list_item, items);
 
             if (gridViewItems != null) {
                 gridViewItems.setAdapter(arrayAdapter);

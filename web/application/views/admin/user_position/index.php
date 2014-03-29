@@ -1,6 +1,6 @@
 <section>
 	<h2>Users and their positions</h2>
-	
+	<a href="/admin/user_position/delete_all" class="btn btn-danger">Delete all</a>
 	<table class="table table-striped">
 		<thead>
 			<tr>

@@ -41,8 +41,9 @@ public class GameHandler {
     }
 
     public void UpdatePositionAndGameData(){
-        LatLng latLng = gpsTracker.getLatLng();
-        String url = Settings.getServerURL()+"/api/json/"+latLng.latitude+"/"+latLng.longitude;
+        double latitude = gameHandler.gpsTracker.getLatitude();
+        double longitude = gameHandler.gpsTracker.getLongitude();
+        String url = Settings.getServerURL()+"/api/json/"+latitude+"/"+longitude;
         Toast.makeText(context, url, Toast.LENGTH_SHORT).show();
         htmlBrowser.HttpGetAsyncString(context, url, new AsyncResponse() {
             @Override

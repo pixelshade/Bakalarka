@@ -46,4 +46,8 @@ class User_position_m extends MY_Model
 		parent::save($data);
 	}
 
+	public function delete_all(){
+		$this->db->empty_table($this->_table_name);
+	}
+
 }

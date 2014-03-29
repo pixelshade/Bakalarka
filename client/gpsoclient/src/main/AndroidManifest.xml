@@ -63,7 +63,7 @@
             android:label="@string/title_activity_item_info_actitivity" >
         </activity>
         <activity
-            android:name="shade.pixel.gpsoclient.Scanner"
+            android:name=".ScannerActivity"
             android:label="@string/title_activity_scanner" >
         </activity>
         <activity

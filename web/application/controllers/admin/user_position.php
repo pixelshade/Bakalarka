@@ -35,4 +35,10 @@ class User_position extends Admin_Controller
 		$this->user_position_m->delete($id);
 		redirect('admin/user_position');
 	}
+
+	public function delete_all ()
+	{
+		$this->user_position_m->delete_all();
+		redirect('admin/user_position');
+	}
 }
