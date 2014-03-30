@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/UpdateFiles"
-        android:id="@+id/updateBtn"
+        android:id="@+id/updateFilesBtn"
         android:onClick="UpdateLocalContentFiles"
         android:singleLine="false"
         android:layout_above="@+id/button2"
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/UpdatePosition"
-        android:id="@+id/button"
+        android:id="@+id/updatePositionBtn"
         android:onClick="UpdatePosition"
         android:layout_centerVertical="true"
         android:layout_alignRight="@+id/button2"
@@ -53,7 +53,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/button">
+        android:layout_above="@+id/updatePositionBtn">
 
         <TextView
             android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
         android:text="Scan QR code"
         android:id="@+id/button3"
         android:onClick="ScanQRCode"
-        android:layout_below="@+id/updateBtn"
+        android:layout_below="@+id/updateFilesBtn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

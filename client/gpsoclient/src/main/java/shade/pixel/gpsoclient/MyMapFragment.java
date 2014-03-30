@@ -1,6 +1,8 @@
 package shade.pixel.gpsoclient;
 
+import android.location.Location;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by pixelshade on 11.3.2014.
@@ -42,8 +45,26 @@ public class MyMapFragment extends Fragment {
                 Toast.makeText(getActivity(), "Unable to create map", Toast.LENGTH_SHORT).show();
             } else {
                 map.setMyLocationEnabled(true);
-                map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                Location location = map.getMyLocation();
+
+               animateCameraToLocation(location);
+
             }
+        map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+                animateCameraToLocation(location);
+            }
+        });
+    }
+
+
+    private void animateCameraToLocation(Location location){
+        if (location != null) {
+            LatLng myLocation = new LatLng(location.getLatitude(),
+                    location.getLongitude());
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,  16));
+        }
     }
 
 }

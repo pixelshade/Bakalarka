@@ -54,7 +54,7 @@ public class ResponseJSONParser {
 
 
     public static HashMap<String, String> parseResponse(String json) {
-        if (json != null) {
+        if (json != null && !json.isEmpty()) {
             try {
                 JSONObject jsonObj = new JSONObject(json);
                 HashMap<String, String> response = new HashMap<String, String>();
