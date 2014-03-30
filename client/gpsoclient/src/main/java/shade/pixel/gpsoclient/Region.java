@@ -24,6 +24,9 @@ public class Region implements Serializable{
     private int lat_end;
     private int lon_end;
 
+    public Region(){
+    }
+
     public Region(int id,
                   String name,
                   String info,

@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by pixelshade on 11.3.2014.
  */
 public class QuestsFragment extends Fragment {
-
+    private static String TAG = "QuestFragment";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class QuestsFragment extends Fragment {
 
         ListView listViewQuests = (ListView) rootView.findViewById(R.id.listViewQuests);
 
-        Log.d("AHA", "VYTVARAM FRAGMENT");
+        Log.d(TAG, "VYTVARAM FRAGMENT");
 
         GameHandler gameHandler = GameHandler.getInstance(getActivity());
         GameData gameData = gameHandler.getGameData();

@@ -29,10 +29,9 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class QuestInfoActivity extends ActionBarActivity {
+    private static String TAG = "QuestInfoActivity";
     ArrayList<Quest> quests;
-    public static Quest actualQuest;
     public static final String QUEST_INDEX_LABEL = "INDEX_OF_ACTUAL_QUEST";
-    public static int QUEST_INDEX = 0;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -54,7 +53,7 @@ public class QuestInfoActivity extends ActionBarActivity {
         setContentView(R.layout.activity_quest_info);
 
         quests = MainActivity.gameData.getQuests();
-        Log.i("aha", quests.toString());
+        Log.i(TAG, quests.toString());
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -64,8 +63,8 @@ public class QuestInfoActivity extends ActionBarActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         Intent intent = getIntent();
-        QUEST_INDEX = intent.getIntExtra(QUEST_INDEX_LABEL, 0);
-        mSectionsPagerAdapter.getItem(QUEST_INDEX);
+        int quest_index = intent.getIntExtra(QUEST_INDEX_LABEL, 0);
+        mViewPager.setCurrentItem(quest_index);
 
     }
 
@@ -92,6 +91,8 @@ public class QuestInfoActivity extends ActionBarActivity {
 
     public void CompleteQuest(View view) {
         GameHandler gameHandler = GameHandler.getInstance(this);
+        int currentQuest = mViewPager.getCurrentItem();
+        int currentQuestId = quests.get(currentQuest).getId();
 
         EditText questAnswer = (EditText) findViewById(R.id.answerEditText);
         String answer = "";
@@ -99,7 +100,7 @@ public class QuestInfoActivity extends ActionBarActivity {
         double latitude = gameHandler.gpsTracker.getLatitude();
         double longitude = gameHandler.gpsTracker.getLongitude();
 
-        String completionURL = Settings.getQuestCompletionURL() + "/" + quests.get(QUEST_INDEX).getId()+"/"+latitude+"/"+longitude+"/"+answer;
+        String completionURL = Settings.getQuestCompletionURL() + "/" +currentQuestId+"/"+latitude+"/"+longitude+"/"+answer;
         gameHandler.htmlBrowser.HttpGetAsyncString(this, completionURL, new AsyncResponse() {
             @Override
             public void processFinish(Context context, String output) {
@@ -120,7 +121,9 @@ public class QuestInfoActivity extends ActionBarActivity {
 
     public void AcceptQuest(View view) {
         GameHandler gameHandler = GameHandler.getInstance(this);
-        String acceptURL = Settings.getQuestAcceptURL() + "/" + quests.get(QUEST_INDEX).getId();
+        int currentQuest = mViewPager.getCurrentItem();
+        int currentQuestId = quests.get(currentQuest).getId();
+        String acceptURL = Settings.getQuestAcceptURL() + "/" + currentQuestId;
         gameHandler.htmlBrowser.HttpGetAsyncString(this, acceptURL, new AsyncResponse() {
             @Override
             public void processFinish(Context context, String output) {
@@ -184,12 +187,13 @@ public class QuestInfoActivity extends ActionBarActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
-
+        private static final String ARG_KEY_QUEST = "ACT_QUEST";
         public static PlaceholderFragment newInstance(Quest quest) {
-            actualQuest = quest;
+
+            Log.d(TAG, "actual quest je "+quest);
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
-
+            args.putSerializable(ARG_KEY_QUEST,quest);
             fragment.setArguments(args);
             return fragment;
         }
@@ -201,12 +205,15 @@ public class QuestInfoActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_quest_info, container, false);
+            Quest actualQuest = (Quest)getArguments().getSerializable(ARG_KEY_QUEST);
 
             TextView questName = (TextView) rootView.findViewById(R.id.questNameLabel);
             TextView questInfo = (TextView) rootView.findViewById(R.id.questInfoTextView);
             TextView questCompletion = (TextView) rootView.findViewById(R.id.questCompletionTextView);
             ImageView questImage = (ImageView) rootView.findViewById(R.id.questImageView);
             EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
+            Button questAcceptBtn = (Button) rootView.findViewById(R.id.acceptButton);
+
             questName.setText(actualQuest.getName());
             questInfo.setText(Html.fromHtml(actualQuest.getInfo()));
             questCompletion.setText(actualQuest.getRequirementTypeText());
@@ -221,8 +228,6 @@ public class QuestInfoActivity extends ActionBarActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
                 questImage.setImageBitmap(bitmap);
             }
-
-
 
             return rootView;
         }

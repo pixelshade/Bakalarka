@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by pixelshade on 13.3.2014.
  */
 public class ItemsFragment extends Fragment {
-
+    private static String TAG = "ItemsFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,7 +28,7 @@ public class ItemsFragment extends Fragment {
 
         GridView gridViewItems = (GridView) rootView.findViewById(R.id.gridViewItems);
 
-        Log.d("AHA", "VYTVARAM FRAGMENT");
+        Log.d(TAG, "VYTVARAM FRAGMENT");
 
         GameHandler gameHandler = GameHandler.getInstance(getActivity());
         GameData gameData = gameHandler.getGameData();

@@ -19,14 +19,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
-
+    private static String TAG = "MainActivity";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -55,15 +53,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public void processFinish(Context context, String output) {
             HashMap<String, String> response = ResponseJSONParser.parseResponse(output);
             if (response != null) {
-                Log.d("AHA", response.toString());
+                Log.d(TAG, response.toString());
                 if (response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")) {
                     contentFilesManager.UpdateFiles();
                 } else {
-                    LogoutAndStartLoginActivity(null);
+                    StartLoginActivity();
                 }
             } else {
-                Log.d("AHA", "Unable to authenticate. Reposnse from server, is damaged");
-                LogoutAndStartLoginActivity(null);
+                Log.d(TAG, "Unable to authenticate. Reposnse from server, is damaged");
+                StartLoginActivity();
             }
 
         }
@@ -119,7 +117,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         if (htmlBrowser.isOnline()) {
 //            htmlBrowser.HttpGetAsyncString(this, Settings.getIsLoggedInURL(), loginCheck);
-
         } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
         }
@@ -133,26 +130,27 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         //TODO vytvorit key pre QR
-        Log.i("AHA", "toto je posledny" + lastQRCode);
+        Log.i(TAG, "toto je posledny QR code scnnuty" + lastQRCode);
         if (QRScanned != null && !QRScanned.equals(lastQRCode)) {
 
             String url = Settings.getCheckQRcodeURL() + QRScanned;
-            Log.i("aha", url);
+            Log.i(TAG, url);
             savedInstanceState.putString("QR", QRScanned);
             GameHandler.getInstance(this).getHtmlBrowser().HttpGetAsyncString(this, url, new AsyncResponse() {
                 @Override
                 public void processFinish(Context context, String output) {
 
                     Response response = new Response(output);
+                    Log.d(TAG, "response je " + response.isLoggedOut());
                     if (response.isLoggedOut()) {
                         StartLoginActivity();
                     } else {
-                        Log.i("msg", response.getMessage());
-                        Log.i("data", response.getData());
+                        Log.i(TAG,"message: " + response.getMessage());
+                        Log.i(TAG,"data string " + response.getDataString());
                         String responseMsg = response.getMessage();
                         String responseType = response.getType();
                         if (responseType.equals(Response.TYPE_GIVE_REWARD)) {
-                            String data = response.getData();
+                            String data = response.getDataString();
                             Log.d("aha", data);
                         }
                         if (responseType.equals(Response.TYPE_ACCEPT_QUEST)) {
@@ -203,7 +201,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 public void processFinish(Context context, String json) {
                     Response response = new Response(json);
                     if (response.isLoggedOut()) {
-                        LogoutAndStartLoginActivity(null);
+                        StartLoginActivity();
                     } else {
                         gameData = ResponseJSONParser.parseGameData(json);
                         gameHandler.setGameData(gameData);
@@ -238,7 +236,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 
                         } else {
-                            Log.d("AHA", "Problem with parsing gamedata");
+                            Log.d(TAG, "Problem with parsing gamedata");
                         }
                     }
                 }

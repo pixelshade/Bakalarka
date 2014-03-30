@@ -36,6 +36,7 @@ import java.util.List;
  */
 
 public class MyHtmlBrowser {
+    private static final String TAG = "MY_HTML_BROWSER";
     private static MyHtmlBrowser instance = null;
     private DefaultHttpClient httpClient;
     private ProgressDialog progressDialog;
@@ -74,7 +75,7 @@ public class MyHtmlBrowser {
             return false;
         } else {
             String url = serverURL + "/api/login";
-            Log.d("AHA",url);
+            Log.d(TAG,url);
             HttpPost httppost = new HttpPost(url);
 
             try {
@@ -98,7 +99,7 @@ public class MyHtmlBrowser {
                     String success = response.get("success");
                     return success.equals("1");
                 }
-                Log.d("AHA", result.toString());
+                Log.d(TAG, result.toString());
 
                 return false;
             } catch (ClientProtocolException e) {
@@ -125,7 +126,7 @@ public class MyHtmlBrowser {
      */
 
     public String HttpGetString(String uristr) {
-        Log.d("AHA","Getting contents of: " +uristr);
+        Log.d(TAG,"Getting contents of: " +uristr);
 
         StringBuilder result = new StringBuilder();
         try{
@@ -134,9 +135,9 @@ public class MyHtmlBrowser {
             HttpGet httpget = new HttpGet(uri);
             HttpResponse httpresponse = httpClient.execute(httpget,localContext);
             if(httpresponse == null){
-                Log.d("AHA","HAHA");
+                Log.d(TAG,"Httpresponse je NULL");
             } else {
-                Log.d("AHA","NENI NULL JE " + uri);
+                Log.d(TAG,"Httpresponse nie je NULL. Je " + uri);
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
             while (true) {
@@ -146,10 +147,10 @@ public class MyHtmlBrowser {
                 result.append(line + "\n");
             }
         } catch (Exception e) {
-            Log.d("AHA","NENI NULL JE"+ e.toString());
+            Log.d(TAG,"Exception> "+ e.toString());
             e.printStackTrace();
         }
-        Log.d("AHA","and we have: " +result);
+        Log.d(TAG,"Result of getAsyncString: " +result);
         return result.toString();
     }
 
@@ -174,7 +175,7 @@ public class MyHtmlBrowser {
                 try {
                     httpClient = new DefaultHttpClient();
                     URI uri = new URI(params[0]);
-                    Log.d("AHA","trying to get async:"+uri);
+                    Log.d(TAG,"trying to get async:"+uri);
                     HttpGet httpget = new HttpGet(params[0]);
 
                     HttpResponse httpresponse = httpClient.execute(httpget,localContext);
@@ -195,7 +196,7 @@ public class MyHtmlBrowser {
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
-                Log.d("AHA", "Async get result: "+ result);
+                Log.d(TAG, "Async get result: "+ result);
                 progressDialog.dismiss();
                 delegate.processFinish(context, result);
                 locked = false;
@@ -203,12 +204,13 @@ public class MyHtmlBrowser {
 
             @Override
             protected void onPreExecute() {
+                super.onPreExecute();
                 locked = true;
-               // super.onPreExecute();
                 progressDialog = new ProgressDialog(mContext);
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.setMax(100);
-                if(!((Activity) context).isFinishing())
+                Log.d(TAG,mContext.toString());
+                if(!((Activity) mContext).isFinishing())
                 {
                     progressDialog.show();
                 }

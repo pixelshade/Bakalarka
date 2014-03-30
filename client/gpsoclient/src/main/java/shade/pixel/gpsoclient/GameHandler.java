@@ -15,6 +15,7 @@ import java.util.ArrayList;
  * Created by pixelshade on 11.3.2014.
  */
 public class GameHandler {
+    private static final String TAG = "Game Handler";
     static GameHandler gameHandler;
     Context context;
 
@@ -52,7 +53,7 @@ public class GameHandler {
                 if(gameData != null){
                    gameData = tempGameData;
                 } else {
-                    Log.d("AHA", "Problem with parsing gamedata, using the old ones");
+                    Log.d(TAG, "Problem with parsing gamedata, using the old ones");
                 }
             }
         });

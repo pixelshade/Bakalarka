@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,9 +23,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class RegionInfoActivity extends ActionBarActivity {
+    private static String TAG = "RegionInfoActivity";
     ArrayList<Region> regions;
     public static final String REGION_INDEX = "REGION_INDEX_IN_ARRAY";
-    private static Region actualRegion;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -57,8 +59,8 @@ public class RegionInfoActivity extends ActionBarActivity {
 
         Intent intent = getIntent();
         int region_id = intent.getIntExtra(REGION_INDEX, 0);
-
-        mSectionsPagerAdapter.getItem(region_id);
+        Log.d(TAG, "zobraz region: "+ region_id + " z " + regions.toString() );
+        mViewPager.setCurrentItem(region_id);
     }
 
 
@@ -97,7 +99,7 @@ public class RegionInfoActivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance();
+            return PlaceholderFragment.newInstance(getRegion(position));
         }
 
         @Override
@@ -125,9 +127,12 @@ public class RegionInfoActivity extends ActionBarActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
-
-        public static PlaceholderFragment newInstance() {
+        private static final String ARG_KEY_ACT_REGION = "ACT_REGION";
+        public static PlaceholderFragment newInstance(Region region) {
             PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putSerializable(ARG_KEY_ACT_REGION, region);
+            fragment.setArguments(args);
             return fragment;
         }
 
@@ -137,6 +142,9 @@ public class RegionInfoActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            Region actualRegion  = (Region) getArguments().getSerializable(ARG_KEY_ACT_REGION);
+            Log.d(TAG, "Fragment vytvoreny serializable:"+ actualRegion);
+
             View rootView = inflater.inflate(R.layout.fragment_region_info, container, false);
             TextView regionNameText = (TextView) rootView.findViewById(R.id.regionNameText);
             regionNameText.setText(actualRegion.getName());
