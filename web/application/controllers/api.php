@@ -70,6 +70,15 @@ class Api extends Admin_Controller
 		}
 	}
 
+	public function register(){
+			$data['type'] = "REGISTER_USER";
+			$data['success'] = 1;
+			$data['success'] = 0;
+			$data = $this->user_m->array_from_post(array('name', 'email', 'password'));			
+			$data['password'] = $this->user_m->hash($data['password']);
+			$this->user_m->save($data);
+	}
+
 	public function login(){
 		$response['type'] = "LOGIN";
 		$rules = $this->user_m->rules;

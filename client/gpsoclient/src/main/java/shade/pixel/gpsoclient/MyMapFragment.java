@@ -2,7 +2,6 @@ package shade.pixel.gpsoclient;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,30 +39,28 @@ public class MyMapFragment extends Fragment {
      * set up the map
      */
     private void initilizeMap() {
-            map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.fragment_map)).getMap();
-            if (map == null) {
-                Toast.makeText(getActivity(), "Unable to create map", Toast.LENGTH_SHORT).show();
-            } else {
-                map.setMyLocationEnabled(true);
-                Location location = map.getMyLocation();
-
-               animateCameraToLocation(location);
-
-            }
-        map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-            @Override
-            public void onMyLocationChange(Location location) {
-                animateCameraToLocation(location);
-            }
-        });
+        map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.fragment_map)).getMap();
+        if (map == null) {
+            Toast.makeText(getActivity(), "Unable to create map", Toast.LENGTH_SHORT).show();
+        } else {
+            map.setMyLocationEnabled(true);
+            Location location = map.getMyLocation();
+            animateCameraToLocation(location);
+            map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+                @Override
+                public void onMyLocationChange(Location location) {
+                    animateCameraToLocation(location);
+                }
+            });
+        }
     }
 
 
-    private void animateCameraToLocation(Location location){
+    private void animateCameraToLocation(Location location) {
         if (location != null) {
             LatLng myLocation = new LatLng(location.getLatitude(),
                     location.getLongitude());
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation,  16));
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 16));
         }
     }
 

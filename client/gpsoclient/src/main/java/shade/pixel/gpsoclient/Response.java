@@ -19,6 +19,7 @@ public class Response {
     private Object data;
     private boolean loggedOut;
 
+    final static public String TYPE_REGISTER = "REGISTER_USER";
     final static public String TYPE_IS_LOGGED = "IS_LOGGED";
     final static public String TYPE_LOGIN = "LOGIN";
     final static public String TYPE_ACCEPT_QUEST = "ACCEPT_QUEST";
@@ -42,7 +43,6 @@ public class Response {
 
     public Response(String json) {
         parseJson(json);
-        loggedOut = isLoggetOutResponse();
         data = getDataFromResponse(dataString, type);
     }
 
@@ -55,7 +55,10 @@ public class Response {
                 success = jsonResponseObj.optString(KEY_SUCCESS, "0").equals("1");
                 message = jsonResponseObj.optString(KEY_MESSAGE, "");
                 dataString = jsonResponseObj.optString(KEY_DATA, "");
-                //TODO logged out
+                if(type.equals(TYPE_IS_LOGGED)) {
+                    loggedOut = !success;
+                }
+
                 Log.d(TAG, dataString);
                 successfullyParsed = true;
             } catch (JSONException e) {
@@ -119,31 +122,31 @@ treba<\/p>","image":""},"item":{"id":"1","name":"sword","info":"its sharp<\/p>",
      * private setters
      */
 
-    private String getDataStringFromResponse() {
-//        if (response != null)
-//            if (response.containsKey(ResponseJSONParser.KEY_DATA)) {
-//                return response.get(ResponseJSONParser.KEY_DATA);
-//            }
-//        return "";
-    }
+//    private String getDataStringFromResponse() {
+////        if (response != null)
+////            if (response.containsKey(ResponseJSONParser.KEY_DATA)) {
+////                return response.get(ResponseJSONParser.KEY_DATA);
+////            }
+////        return "";
+//    }
+//
+//    private String getMessageFromResponse() {
+////        if (response != null)
+////            if (response.containsKey(ResponseJSONParser.KEY_MESSAGE)) {
+////                return response.get(ResponseJSONParser.KEY_MESSAGE);
+////            }
+////        return "";
+//    }
+//
+//    private boolean isSuccessfulResponse() {
+////        if (response != null)
+////            if (response.containsKey(ResponseJSONParser.KEY_SUCCESS) && response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")) {
+////                return true;
+////            }
+////        return false;
+//    }
 
-    private String getMessageFromResponse() {
-//        if (response != null)
-//            if (response.containsKey(ResponseJSONParser.KEY_MESSAGE)) {
-//                return response.get(ResponseJSONParser.KEY_MESSAGE);
-//            }
-//        return "";
-    }
-
-    private boolean isSuccessfulResponse() {
-//        if (response != null)
-//            if (response.containsKey(ResponseJSONParser.KEY_SUCCESS) && response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")) {
-//                return true;
-//            }
-//        return false;
-    }
-
-    private boolean isLoggetOutResponse() {
+//    private boolean isLoggetOutResponse() {
 //        if(isParsedSuccessfuly()) {
 //            if (response.containsKey(ResponseJSONParser.KEY_TYPE) && response.get(ResponseJSONParser.KEY_TYPE).equals(TYPE_IS_LOGGED)) {
 //                if (response.get(ResponseJSONParser.KEY_SUCCESS).equals("0")) {
@@ -152,16 +155,16 @@ treba<\/p>","image":""},"item":{"id":"1","name":"sword","info":"its sharp<\/p>",
 //            }
 //        }
 //        return false;
-    }
+//    }
 
-    private String getTypeFromResponse() {
+//    private String getTypeFromResponse() {
 //        if(isParsedSuccessfuly()) {
 //            if(response.containsKey(ResponseJSONParser.KEY_TYPE)){
 //                return response.get(ResponseJSONParser.KEY_TYPE);
 //            }
 //        }
 //        return "";
-    }
+//    }
 
 
     /**
