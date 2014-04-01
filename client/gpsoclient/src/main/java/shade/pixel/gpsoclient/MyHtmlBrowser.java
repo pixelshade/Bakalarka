@@ -16,6 +16,7 @@ import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -177,6 +178,7 @@ public class MyHtmlBrowser {
                     URI uri = new URI(params[0]);
                     Log.d(TAG,"trying to get async:"+uri);
                     HttpGet httpget = new HttpGet(params[0]);
+                    httpClient.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
 
                     HttpResponse httpresponse = httpClient.execute(httpget,localContext);
                     BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
@@ -204,13 +206,13 @@ public class MyHtmlBrowser {
 
             @Override
             protected void onPreExecute() {
-                super.onPreExecute();
                 locked = true;
-                progressDialog = new ProgressDialog(mContext);
+                super.onPreExecute();
+                progressDialog = new ProgressDialog(context);
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.setMax(100);
-                Log.d(TAG,mContext.toString());
-                if(!((Activity) mContext).isFinishing())
+                Log.d(TAG,context.toString());
+                if(!((Activity) context).isFinishing())
                 {
                     progressDialog.show();
                 }

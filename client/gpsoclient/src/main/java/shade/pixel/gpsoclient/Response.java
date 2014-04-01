@@ -1,13 +1,17 @@
 package shade.pixel.gpsoclient;
 
-import java.util.HashMap;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by pixelshade on 15.3.2014.
  */
 public class Response {
     private static String TAG = "Response";
-    private HashMap<String, String> response;
+    //  private HashMap<String, String> response;
+    private boolean successfullyParsed;
     private String type;
     private boolean success;
     private String message;
@@ -22,85 +26,158 @@ public class Response {
     final static public String TYPE_CHECK_QRCODE = "CHECK_QRCODE";
     final static public String TYPE_GIVE_REWARD = "GIVE_REWARD";
 
+    // struct
+    public static final String KEY_TYPE = "type";
+    public static final String KEY_MESSAGE = "msg";
+    public static final String KEY_SUCCESS = "success";
+    public static final String KEY_DATA = "data";
+
+    //
+    public static final String KEY_QUESTS = "quests";
+    public static final String KEY_REGIONS = "regions";
+    public static final String KEY_INVENTORY = "items";
+    public static final String KEY_REWARDS = "rewards";
+    public static final String KEY_ENEMIES = "enemies";
+
 
     public Response(String json) {
-        response = ResponseJSONParser.parseResponse(json);
-        type = getTypeFromResponse();
+        parseJson(json);
         loggedOut = isLoggetOutResponse();
-        success = isSuccessfulResponse();
-        message = getMessageFromResponse();
-        dataString =  getDataStringFromResponse();
-        data = getDataFromResponse();
+        data = getDataFromResponse(dataString, type);
     }
 
-    private Object getDataFromResponse(){
+
+    private void parseJson(String json) {
+        if (json != null && !json.isEmpty()) {
+            try {
+                JSONObject jsonResponseObj = new JSONObject(json);
+                type = jsonResponseObj.optString(KEY_TYPE, "");
+                success = jsonResponseObj.optString(KEY_SUCCESS, "0").equals("1");
+                message = jsonResponseObj.optString(KEY_MESSAGE, "");
+                dataString = jsonResponseObj.optString(KEY_DATA, "");
+                //TODO logged out
+                Log.d(TAG, dataString);
+                successfullyParsed = true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                successfullyParsed = false;
+            }
+        } else {
+            Log.e(TAG, "No json string to parse");
+        }
+        successfullyParsed = false;
+    }
+
+    public Reward getReward(String giveRewardJson) {
+        if (type.equals(TYPE_GIVE_REWARD)) {
+            Reward reward = new Reward();
+            JSONObject data = null;
+            try {
+                data = new JSONObject(giveRewardJson);
+                if (!data.isNull("attribute")) {
+                    JSONObject attribute = data.getJSONObject("attribute");
+                    reward.setAttributeId(attribute.optInt("id", -1));
+                    reward.setAttributeName(attribute.optString("name", ""));
+                    reward.setAttributeAmount(attribute.optInt("amount", 0));
+                    reward.setAttributeImage(attribute.optString("image", ""));
+                }
+
+                if (!data.isNull("item")) {
+                    JSONObject item = data.getJSONObject("item");
+                    reward.setItemId(item.optInt("id", -1));
+                    reward.setItemName(item.optString("name", ""));
+                    reward.setItemAmount(item.optInt("amount", 0));
+                    reward.setItemImage(item.optString("image", ""));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return reward;
+        }
         return null;
     }
 
-    /** private setters */
-
-    private String getDataStringFromResponse(){
-        if (response != null)
-            if (response.containsKey(ResponseJSONParser.KEY_DATA)) {
-                return response.get(ResponseJSONParser.KEY_DATA);
-            }
-        return "";
-    }
-
-    private String getMessageFromResponse(){
-        if (response != null)
-            if (response.containsKey(ResponseJSONParser.KEY_MESSAGE)) {
-                return response.get(ResponseJSONParser.KEY_MESSAGE);
-            }
-        return "";
-    }
-
-    private boolean isSuccessfulResponse(){
-        if (response != null)
-            if (response.containsKey(ResponseJSONParser.KEY_SUCCESS) && response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")) {
-                return true;
-            }
-        return false;
-    }
-
-    private boolean isLoggetOutResponse(){
-        if(isParsedSuccessfuly()) {
-            if (response.containsKey(ResponseJSONParser.KEY_TYPE) && response.get(ResponseJSONParser.KEY_TYPE).equals(TYPE_IS_LOGGED)) {
-                if (response.get(ResponseJSONParser.KEY_SUCCESS).equals("0")) {
-                    return true;
-                }
-            }
+    private Object getDataFromResponse(String dataJSON, String type) {
+        if (type.equals(TYPE_GIVE_REWARD)) {
+            return getReward(dataJSON);
         }
-        return false;
-    }
-
-    private String getTypeFromResponse(){
-        if(isParsedSuccessfuly()) {
-            if(response.containsKey(ResponseJSONParser.KEY_TYPE)){
-                return response.get(ResponseJSONParser.KEY_TYPE);
-            }
+        if (type.equals(TYPE_COMPLETE_QUEST)) {
+            return new Response(dataJSON);
         }
-        return "";
+        return dataJSON;
     }
 
+            /*
+             *
+             * {"type":"COMPLETE_QUEST","success":1,"msg":"Quest was successfully completed","reward":{"type":"GIVE_REWARD","data":{"attribute":{"id":"1","name":"Skusenost","info":"
+treba<\/p>","image":""},"item":{"id":"1","name":"sword","info":"its sharp<\/p>","image":"sword_anduril.png"}},"msg":"You received reward.","success":1}}
+             *
+             */
 
-    /** Public getters  */
 
+    /**
+     * private setters
+     */
 
-    public boolean isParsedSuccessfuly() {
-        return (response != null);
+    private String getDataStringFromResponse() {
+//        if (response != null)
+//            if (response.containsKey(ResponseJSONParser.KEY_DATA)) {
+//                return response.get(ResponseJSONParser.KEY_DATA);
+//            }
+//        return "";
     }
 
-    public String getType(){
-       return type;
+    private String getMessageFromResponse() {
+//        if (response != null)
+//            if (response.containsKey(ResponseJSONParser.KEY_MESSAGE)) {
+//                return response.get(ResponseJSONParser.KEY_MESSAGE);
+//            }
+//        return "";
+    }
+
+    private boolean isSuccessfulResponse() {
+//        if (response != null)
+//            if (response.containsKey(ResponseJSONParser.KEY_SUCCESS) && response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")) {
+//                return true;
+//            }
+//        return false;
+    }
+
+    private boolean isLoggetOutResponse() {
+//        if(isParsedSuccessfuly()) {
+//            if (response.containsKey(ResponseJSONParser.KEY_TYPE) && response.get(ResponseJSONParser.KEY_TYPE).equals(TYPE_IS_LOGGED)) {
+//                if (response.get(ResponseJSONParser.KEY_SUCCESS).equals("0")) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+    }
+
+    private String getTypeFromResponse() {
+//        if(isParsedSuccessfuly()) {
+//            if(response.containsKey(ResponseJSONParser.KEY_TYPE)){
+//                return response.get(ResponseJSONParser.KEY_TYPE);
+//            }
+//        }
+//        return "";
     }
 
 
     /**
+     * Public getters
+     */
+
+    public String getType() {
+        return type;
+    }
+
+    /**
      * this response check should be used before every other actions with response, because user could be already logged out.
+     *
      * @return true if we get response that user is logged out, otherwise we are logged in
      */
-    public boolean isLoggedOut(){
+    public boolean isLoggedOut() {
         return loggedOut;
     }
 
@@ -119,7 +196,7 @@ public class Response {
      * @return String
      */
     public String getDataString() {
-    return (String) dataString;
+        return dataString;
     }
 
     /**
@@ -128,6 +205,12 @@ public class Response {
      * @return String
      */
     public String getMessage() {
-       return message;
+        return message;
     }
+
+    public boolean isSuccessfullyParsed() {
+        return successfullyParsed;
+    }
+
+
 }

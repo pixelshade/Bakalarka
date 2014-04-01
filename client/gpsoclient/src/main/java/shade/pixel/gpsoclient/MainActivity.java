@@ -2,7 +2,6 @@ package shade.pixel.gpsoclient;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,9 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +24,8 @@ import java.util.HashMap;
 import java.util.Locale;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
-    private static String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
+    private static final String SAVED_INSTANCE_QR_KEY = "QR";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -49,7 +46,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     int mActualViewId = 0;
 
-    String lastQRCode = "";
+    String mLastScannedQRCode = "";
 
 
     AsyncResponse loginCheck = new AsyncResponse() {
@@ -127,47 +124,49 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         Intent intent = getIntent();
         String QRScanned = intent.getStringExtra(Settings.INTENT_KEY_QRSCANNED);
 
-        if (savedInstanceState == null || savedInstanceState.getString("QR") == null) {
-            lastQRCode = "";
+        if (savedInstanceState == null || savedInstanceState.getString(SAVED_INSTANCE_QR_KEY) == null) {
+            mLastScannedQRCode = "";
         } else {
-            lastQRCode = savedInstanceState.getString("QR");
+            mLastScannedQRCode = savedInstanceState.getString(SAVED_INSTANCE_QR_KEY);
         }
 
-        //TODO vytvorit key pre QR
-        Log.i(TAG, "toto je posledny QR code scnnuty" + lastQRCode);
-        if (QRScanned != null && !QRScanned.equals(lastQRCode)) {
-
-            String url = Settings.getCheckQRcodeURL() + QRScanned;
-            Log.i(TAG, url);
-            savedInstanceState.putString("QR", QRScanned);
-            GameHandler.getInstance(this).getHtmlBrowser().HttpGetAsyncString(this, url, new AsyncResponse() {
-                @Override
-                public void processFinish(Context context, String output) {
-
-                    Response response = new Response(output);
-                    Log.d(TAG, "response je " + response.isLoggedOut());
-                    if (response.isLoggedOut()) {
-                        StartLoginActivity();
-                    } else {
-                        Log.i(TAG,"message: " + response.getMessage());
-                        Log.i(TAG,"data string " + response.getDataString());
-                        String responseMsg = response.getMessage();
-                        String responseType = response.getType();
-                        if (responseType.equals(Response.TYPE_GIVE_REWARD)) {
-                            String data = response.getDataString();
-                            Log.d("aha", data);
-                        }
-                        if (responseType.equals(Response.TYPE_ACCEPT_QUEST)) {
-
-                        }
-                    }
-
-                }
-            });
+        Log.i(TAG, "toto je posledny QR code scannuty" + mLastScannedQRCode);
+        if (QRScanned != null && !QRScanned.equals(mLastScannedQRCode) && savedInstanceState != null) {
+            savedInstanceState.putString(SAVED_INSTANCE_QR_KEY, QRScanned);
+            this.GetAsyncQRCodeResponse(QRScanned);
         }
 
     }
 
+
+    private void GetAsyncQRCodeResponse(String QRScanned){
+        String url = Settings.getCheckQRcodeURL() + QRScanned;
+        Log.i(TAG, url);
+        GameHandler.getInstance(this).getHtmlBrowser().HttpGetAsyncString(this, url, new AsyncResponse() {
+            @Override
+            public void processFinish(Context context, String output) {
+
+                Response response = new Response(output);
+                Log.d(TAG, "response je " + response.isLoggedOut());
+                if (response.isLoggedOut()) {
+                    StartLoginActivity();
+                } else {
+                    Log.i(TAG,"message: " + response.getMessage());
+                    Log.i(TAG,"data string " + response.getDataString());
+                    String responseMsg = response.getMessage();
+                    String responseType = response.getType();
+                    if (responseType.equals(Response.TYPE_GIVE_REWARD)) {
+                        String data = response.getDataString();
+                        Log.d("aha", data);
+                    }
+                    if (responseType.equals(Response.TYPE_ACCEPT_QUEST)) {
+
+                    }
+                }
+
+            }
+        });
+    }
 
     private void StartLoginActivity() {
         Intent mLoginIntent = new Intent(this, LoginActivity.class);
@@ -190,7 +189,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void UpdatePosition(View view) {
-        //TODO fixnut stale rovnaky position wtf??
+        //TODO fixnut stale rovnaky last known
         gpsTracker = new GPSTracker(this);
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
