@@ -65,6 +65,44 @@ public class MyHtmlBrowser {
     }
 
 
+    public Response Register(String user, String pass, String serverURL) {
+        if (serverURL.equals("")) {
+            Toast.makeText(mContext, "NO SERVER TO CONNECT", Toast.LENGTH_SHORT).show();
+            return null;
+        } else {
+            String url = serverURL + "/api/login";
+            Log.d(TAG, url);
+            HttpPost httppost = new HttpPost(url);
+
+            try {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                nameValuePairs.add(new BasicNameValuePair("email", user));
+                nameValuePairs.add(new BasicNameValuePair("password", pass));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                // Execute HTTP Post Request
+                StringBuilder result = new StringBuilder();
+                HttpResponse httpresponse = httpClient.execute(httppost, localContext);
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
+                while (true) {
+                    String line = br.readLine();
+                    if (line == null)
+                        break;
+                    result.append(line + "\n");
+                }
+                Response response = new Response(result.toString());
+                Log.d(TAG, result.toString());
+                return response;
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+
 
 
     public boolean Login(String user, String pass, String serverURL) {
@@ -199,7 +237,12 @@ public class MyHtmlBrowser {
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 Log.d(TAG, "Async get result: "+ result);
-                progressDialog.dismiss();
+                if(!((Activity) context).isFinishing())
+                {
+                    if (progressDialog!=null) {
+                        progressDialog.dismiss();
+                    }
+                }
                 delegate.processFinish(context, result);
                 locked = false;
             }
@@ -214,7 +257,10 @@ public class MyHtmlBrowser {
                 Log.d(TAG,context.toString());
                 if(!((Activity) context).isFinishing())
                 {
-                    progressDialog.show();
+                    if (progressDialog!=null) {
+                        progressDialog.dismiss();
+//                        progressDialog.show();
+                    }
                 }
             }
 

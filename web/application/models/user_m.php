@@ -6,6 +6,7 @@ class User_M extends MY_Model
 {
 	protected $_table_name = 'users';
 	protected $_order_by = 'name';
+	// login
 	public $rules = array(
 		'email' => array(
 			'field' => 'email',
@@ -18,6 +19,30 @@ class User_M extends MY_Model
 			'rules' => 'trim|required'
 			)
 		);
+	// normal register
+	public $rules_register = array(
+		'name' => array(
+			'field' => 'name',
+			'label' => 'Name',
+			'rules' => 'trim|required|xss_clean'
+			),		
+		'email' => array(
+			'field' => 'email',
+			'label' => 'Email',
+			'rules' => 'trim|required|valid_email|xss_clean|callback__unique_email'
+			),
+		'password' => array(
+			'field' => 'password',
+			'label' => 'Password',
+			'rules' => 'trim|matches[password_confirm]'
+			),
+		'password_confirm' => array(
+			'field' => 'password',
+			'label' => 'Password',
+			'rules' => 'trim|matches[password]'
+			),	
+		);
+
 	public $rules_admin = array(
 		'name' => array(
 			'field' => 'name',
@@ -38,6 +63,11 @@ class User_M extends MY_Model
 			'field' => 'password',
 			'label' => 'Password',
 			'rules' => 'trim|matches[password]'
+			),
+		'rights_level' => array(
+			'field' => 'rights_level',
+			'label' => 'rights_level',
+			'rules' => 'trim|intval'
 			)
 		);
 	
@@ -45,6 +75,10 @@ class User_M extends MY_Model
 	{
 		parent::__construct();
 	}
+
+
+	public $rights_levels = array(0 => 'admin', 1 => 'content_creator', 2 => 'normal_user');
+	public $default_rights_level = 2;
 
 	public function login(){
 		$user = $this->get_by(array(
@@ -79,6 +113,7 @@ class User_M extends MY_Model
 		$user->name = '';
 		$user->email = '';
 		$user->password = '';
+		$user->rights_level = $this->default_rights_level;
 		return $user;
 	}
 

@@ -121,20 +121,23 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
         }
-        Intent intent = getIntent();
-        String QRScanned = intent.getStringExtra(Settings.INTENT_KEY_QRSCANNED);
-
-        if (savedInstanceState == null || savedInstanceState.getString(SAVED_INSTANCE_QR_KEY) == null) {
-            mLastScannedQRCode = "";
-        } else {
-            mLastScannedQRCode = savedInstanceState.getString(SAVED_INSTANCE_QR_KEY);
-        }
-
-        Log.i(TAG, "toto je posledny QR code scannuty" + mLastScannedQRCode);
-        if (QRScanned != null && !QRScanned.equals(mLastScannedQRCode) && savedInstanceState != null) {
-            savedInstanceState.putString(SAVED_INSTANCE_QR_KEY, QRScanned);
-            this.GetAsyncQRCodeResponse(QRScanned);
-        }
+//        Intent intent = getIntent();
+//        String QRScanned = intent.getStringExtra(Settings.INTENT_KEY_QRSCANNED);
+//
+//        if (savedInstanceState == null || savedInstanceState.getString(SAVED_INSTANCE_QR_KEY) == null) {
+//            mLastScannedQRCode = "";
+//        } else {
+//            mLastScannedQRCode = savedInstanceState.getString(SAVED_INSTANCE_QR_KEY);
+//        }
+//
+//        Log.i(TAG, "toto je predposledny QR code scannuty" + mLastScannedQRCode);
+//        Log.i(TAG, "toto je posledny QR code scannuty" + QRScanned);
+//        if (QRScanned != null && !QRScanned.equals(mLastScannedQRCode) && savedInstanceState != null) {
+//            savedInstanceState.putString(SAVED_INSTANCE_QR_KEY, QRScanned);
+//            this.GetAsyncQRCodeResponse(QRScanned);
+//        } else {
+//            Toast.makeText(this, "niekto nespolupracuje", Toast.LENGTH_LONG).show();
+//        }
 
     }
 
@@ -147,17 +150,23 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             public void processFinish(Context context, String output) {
 
                 Response response = new Response(output);
-                Log.d(TAG, "response je " + response.isLoggedOut());
                 if (response.isLoggedOut()) {
                     StartLoginActivity();
                 } else {
-                    Log.i(TAG,"message: " + response.getMessage());
-                    Log.i(TAG,"data string " + response.getDataString());
-                    String responseMsg = response.getMessage();
+                    Log.i(TAG,"Response QR message: " + response.getMessage());
+                    Log.i(TAG,"Response QR data string " + response.getDataString());
                     String responseType = response.getType();
                     if (responseType.equals(Response.TYPE_GIVE_REWARD)) {
-                        String data = response.getDataString();
-                        Log.d("aha", data);
+                        if(response.isSuccessful()){
+                            Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+                            String data = response.getDataString();
+                            Intent intent = new Intent(context, RewardInfoActivity.class);
+                            Reward reward = (Reward) response.getData();
+                            intent.putExtra("reward", reward);
+                            Log.d(TAG, data);
+                            startActivity(intent);
+                        }
                     }
                     if (responseType.equals(Response.TYPE_ACCEPT_QUEST)) {
 

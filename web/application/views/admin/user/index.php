@@ -4,7 +4,7 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Email</th>
+				<th>Name</th>								
 				<th>Edit</th>
 				<th>Delete</th>
 			</tr>
@@ -12,7 +12,7 @@
 		<tbody>
 			<?php if(count($users)): foreach($users as $user): ?>	
 				<tr>
-					<td><?php echo anchor('admin/user/edit/' . $user->id, $user->email); ?></td>
+				<td><?php echo anchor('admin/user/edit/' . $user->id, $user->name); ?></td>					
 					<td><?php echo btn_edit('admin/user/edit/' . $user->id); ?></td>
 					<td><?php echo btn_delete('admin/user/delete/' . $user->id); ?></td>
 				</tr>

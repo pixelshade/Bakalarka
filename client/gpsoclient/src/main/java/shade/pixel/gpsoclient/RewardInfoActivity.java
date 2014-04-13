@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,21 +15,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 
 
 public class RewardInfoActivity extends ActionBarActivity {
-
+    private final String TAG = "RewardInfoActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward_info);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+        Intent intent = getIntent();
+        Reward reward = (Reward) intent.getSerializableExtra(Settings.INTENT_KEY_QR_REWARD);
+        if(reward==null) {
+            finish();
+        } else {
+            Log.d(TAG, "" + reward.getName());
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, PlaceholderFragment.newInstance(reward))
+                        .commit();
+            }
         }
+
     }
 
 
@@ -58,7 +68,6 @@ public class RewardInfoActivity extends ActionBarActivity {
     public static class PlaceholderFragment extends Fragment {
 
         public static PlaceholderFragment newInstance(Reward reward) {
-
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putSerializable("reward", reward);
@@ -72,9 +81,8 @@ public class RewardInfoActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            Reward reward = (Reward) getArguments().getSerializable("reward");
-
             View rootView = inflater.inflate(R.layout.fragment_reward_info, container, false);
+            Reward reward = (Reward) getArguments().getSerializable("reward");
 
             TextView rewardNameTextView = (TextView) rootView.findViewById(R.id.rewardNameTextView);
             TextView attributeAmountTextView = (TextView) rootView.findViewById(R.id.attributeAmountTextView);
@@ -83,19 +91,24 @@ public class RewardInfoActivity extends ActionBarActivity {
             ImageView itemImageView = (ImageView) rootView.findViewById(R.id.itemImageView);
             Button acceptRewardButton = (Button) rootView.findViewById(R.id.acceptRewardButton);
             if (reward != null) {
-                rewardNameTextView.setText(reward.getName());
-                attributeAmountTextView.setText((reward.getAttributeAmount()));
-                itemAmountTextView.setText(reward.getItemAmount());
+//                rewardNameTextView.setText(reward.getName());
+                attributeAmountTextView.setText((""+reward.getAttributeAmount()));
+                itemAmountTextView.setText(""+reward.getItemAmount()+" "+reward.getItem().getName()+" "+ reward.getItem().getImage()+"");
 
-                if(reward.getItemImage().length() != 0) {
-                    String filePath = Settings.getContentFileDir() + reward.getItemImage();
+                Item item = reward.getItem();
+                Attribute attribute = reward.getAttribute();
+
+
+
+                if(item.getImage().length() != 0) {
+                    String filePath = Settings.getContentFileDir() + item.getImage();
                     File imageFile = new File(filePath);
                     Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
                     itemImageView.setImageBitmap(bitmap);
                 }
 
-                if(reward.getAttributeImage().length() != 0) {
-                    String filePath = Settings.getContentFileDir() + reward.getAttributeImage();
+                if(attribute.getImage().length() != 0) {
+                    String filePath = Settings.getContentFileDir() + attribute.getImage();
                     File imageFile = new File(filePath);
                     Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
                     attributeImageView.setImageBitmap(bitmap);
@@ -108,6 +121,8 @@ public class RewardInfoActivity extends ActionBarActivity {
                         getActivity().finish();
                     }
                 });
+            } else {
+                Toast.makeText(getActivity(), "There was a problem with reward info", Toast.LENGTH_SHORT).show();
             }
 
             return rootView;

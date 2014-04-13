@@ -71,12 +71,21 @@ class Api extends Admin_Controller
 	}
 
 	public function register(){
-			$data['type'] = "REGISTER_USER";
-			$data['success'] = 1;
-			$data['success'] = 0;
+		$response['type'] = "REGISTER_USER";
+		$rules = $this->user_m->rules_register;		
+		$this->form_validation->set_rules($rules);		
+		if ($this->form_validation->run() == TRUE) {
 			$data = $this->user_m->array_from_post(array('name', 'email', 'password'));			
+			$data['rights_level'] = $this->user_m->default_user_level;
 			$data['password'] = $this->user_m->hash($data['password']);
 			$this->user_m->save($data);
+			$response['success'] = 1;
+			$response['msg'] = 'Registered succesfully';
+		} else {
+			$response['success'] = 0;
+			$response['msg'] = $this->form_validation->error('password');			
+		}
+		echo json_encode($response);
 	}
 
 	public function login(){
@@ -132,6 +141,21 @@ class Api extends Admin_Controller
 		return FALSE;
 	}
 
+	public function remove_my_active_quest($quest_id){
+		$user_id = $this->user_m->get_user_id();
+		$quest = $this->user_quest_m->get_by("`char_id` = '".$user_id."' AND `quest_id` = '".$quest_id."' AND `completed` = '0'");
+		if(empty($quest)){
+			$response['success'] = 0;
+			$response['msg'] = 'Active quest not found';
+		}
+			$this->user_quest_m->delete("char_id =".$user_id);		
+			$response['success'] = 1;
+			$response['msg'] = 'Active quest deleted';
+		}
+		
+		echo json_encode($response);	
+	}
+
 
 	public function get_my_quests(){
 		$user_id = $this->user_m->get_user_id();
@@ -160,7 +184,7 @@ class Api extends Admin_Controller
 					if(!empty($quest)){
 						$this->user_qrscanned_m->insert($user_id,$code);
 						$quest_id = $quest->id;						
-						$this->accept_quest($quest_id);	
+						$response = $this->accept_quest($quest_id);	
 					} else {
 						$response['success'] = 0;
 						$response['msg'] = "Quest doesnt exist";						
@@ -423,6 +447,9 @@ class Api extends Admin_Controller
 		}
 
 	} 
+
+
+
 
 
 

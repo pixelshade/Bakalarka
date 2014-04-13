@@ -12,6 +12,7 @@ class User extends Admin_Controller
 
 	public function index(){
 		$this->data['users'] = $this->user_m->get();
+		$this->data['rights_levels'] = $this->user_m->rights_levels;
 		$this->data['subview'] = 'admin/user/index';
 		$this->load->view('admin/_layout_main', $this->data);
 	}
@@ -30,7 +31,9 @@ class User extends Admin_Controller
 		$rules = $this->user_m->rules_admin;
 		$id || $rules['password']['rules'] .= '|required';
 		$this->form_validation->set_rules($rules);
-		
+		$this->data['rights_levels'] = $this->user_m->rights_levels;
+		$this->data['default_rights_level'] = $this->user_m->default_rights_level;
+
 		// Process the form
 		if ($this->form_validation->run() == TRUE) {
 			$data = $this->user_m->array_from_post(array('name', 'email', 'password'));

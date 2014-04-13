@@ -35,6 +35,7 @@ public class LoginActivity extends Activity {
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+    private UserRegisterTask mRegTask = null;
 
     // Values for email and password at the time of the login attempt.
     private String mEmail;
@@ -95,6 +96,12 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onClick(View view) {
                     attemptLogin();
+                }
+            });
+            findViewById(R.id.register_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    attemptRegister();
                 }
             });
         } else {
@@ -171,6 +178,62 @@ public class LoginActivity extends Activity {
         }
     }
 
+    public void attemptRegister() {
+        if (mRegTask != null) {
+            return;
+        }
+
+        // Reset errors.
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+
+        // Store values at the time of the login attempt.
+        mEmail = mEmailView.getText().toString();
+        mPassword = mPasswordView.getText().toString();
+        mServerURL = mServerUrlView.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password.
+        if (TextUtils.isEmpty(mPassword)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(mEmail)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        } else if (!mEmail.contains("@")) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
+            cancel = true;
+        }
+
+        // Check for a valid password.
+        if (TextUtils.isEmpty(mServerURL)) {
+            mServerUrlView.setError(getString(R.string.error_field_required));
+            focusView = mServerUrlView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+            mLoginStatusMessageView.setText(R.string.login_progress_registering_in);
+            showProgress(true);
+            mRegTask = new UserRegisterTask();
+            mRegTask.execute((Void) null);
+        }
+    }
+
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -233,6 +296,37 @@ public class LoginActivity extends Activity {
                 startActivity(mIntent);
                 finish();
 
+            } else {
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mAuthTask = null;
+            showProgress(false);
+        }
+    }
+
+    public class UserRegisterTask extends AsyncTask<Void, Void, Response> {
+        @Override
+        protected Response doInBackground(Void... params) {
+            return htmlBrowser.Register(mEmail, mPassword, mServerURL);
+        }
+
+        @Override
+        protected void onPostExecute(final Response response) {
+            mAuthTask = null;
+            showProgress(false);
+
+            if (response == null) {
+                mServerUrlView.setError(getString(R.string.error_incorrect_password));
+            } else
+            if(response.isSuccessful()) {
+                //  htmlBrowser.HttpGetAsyncString(htmlBrowser.getServerURL()+"/api/isLoggedIn");
+                //Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
+                attemptLogin();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

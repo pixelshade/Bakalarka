@@ -1,11 +1,14 @@
 package shade.pixel.gpsoclient;
 
+import android.util.Log;
+
 import java.io.Serializable;
 
 /**
  * Created by pixelshade on 28.3.2014.
  */
 public class Attribute implements Serializable {
+    private final String TAG = "Attribute";
     public static final String KEY_ATTRIBUTE_ID = "id";
     public static final String KEY_ATTRIBUTE_NAME = "name";
     public static final String KEY_ATTRIBUTE_INFO = "info";
@@ -26,6 +29,7 @@ public class Attribute implements Serializable {
         this.name = name;
         this.info = info;
         this.image = image;
+        Log.d(TAG,"was created:"+ this.name+","+this.info+","+this.image);
 
     }
 

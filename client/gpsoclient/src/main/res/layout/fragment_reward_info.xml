@@ -62,11 +62,11 @@
 
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Take reward"
-                android:onClick="AcceptQuest"
-                android:id="@+id/acceptRewardButton" />
+                android:id="@+id/acceptRewardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Take reward"
+            />
 
 
         </LinearLayout>

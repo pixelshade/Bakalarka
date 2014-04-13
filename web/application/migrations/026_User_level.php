@@ -4,7 +4,7 @@ class Migration_User_level extends CI_Migration {
 	public function up()
 	{
 		$fields = (array(
-			'level' => array(
+			'rights_level' => array(
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE,

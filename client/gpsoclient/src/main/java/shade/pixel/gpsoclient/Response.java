@@ -43,7 +43,6 @@ public class Response {
 
     public Response(String json) {
         parseJson(json);
-        data = getDataFromResponse(dataString, type);
     }
 
 
@@ -55,11 +54,11 @@ public class Response {
                 success = jsonResponseObj.optString(KEY_SUCCESS, "0").equals("1");
                 message = jsonResponseObj.optString(KEY_MESSAGE, "");
                 dataString = jsonResponseObj.optString(KEY_DATA, "");
-                if(type.equals(TYPE_IS_LOGGED)) {
+                Log.d(TAG, dataString);
+                if (type.equals(TYPE_IS_LOGGED)) {
                     loggedOut = !success;
                 }
-
-                Log.d(TAG, dataString);
+                if (!dataString.equals("")) data = getDataFromResponse(dataString, type);
                 successfullyParsed = true;
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -71,26 +70,36 @@ public class Response {
         successfullyParsed = false;
     }
 
-    public Reward getReward(String giveRewardJson) {
+    private Reward getReward(String giveRewardJson) {
         if (type.equals(TYPE_GIVE_REWARD)) {
             Reward reward = new Reward();
             JSONObject data = null;
             try {
                 data = new JSONObject(giveRewardJson);
                 if (!data.isNull("attribute")) {
-                    JSONObject attribute = data.getJSONObject("attribute");
-                    reward.setAttributeId(attribute.optInt("id", -1));
-                    reward.setAttributeName(attribute.optString("name", ""));
-                    reward.setAttributeAmount(attribute.optInt("amount", 0));
-                    reward.setAttributeImage(attribute.optString("image", ""));
+                    JSONObject attributeJSON = data.getJSONObject("attribute");
+
+                    Attribute attribute = new Attribute(
+                            attributeJSON.optInt("id", -1),
+                            attributeJSON.optString("name", ""),
+                            attributeJSON.optString("info", ""),
+                            attributeJSON.optString("image", "")
+                    );
+                    reward.setAttribute(attribute);
+                    reward.setAttributeAmount(attributeJSON.optInt("amount", 0));
+
                 }
 
                 if (!data.isNull("item")) {
-                    JSONObject item = data.getJSONObject("item");
-                    reward.setItemId(item.optInt("id", -1));
-                    reward.setItemName(item.optString("name", ""));
-                    reward.setItemAmount(item.optInt("amount", 0));
-                    reward.setItemImage(item.optString("image", ""));
+                    JSONObject itemJSON = data.getJSONObject("item");
+                    Item item = new Item(
+                            itemJSON.optInt("id", -1),
+                            itemJSON.optString("name", ""),
+                            itemJSON.optString("info", ""),
+                            itemJSON.optString("image", "")
+                    );
+                    reward.setItem(item);
+                    reward.setItemAmount(itemJSON.optInt("amount", 0));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -101,14 +110,21 @@ public class Response {
     }
 
     private Object getDataFromResponse(String dataJSON, String type) {
+
         if (type.equals(TYPE_GIVE_REWARD)) {
             return getReward(dataJSON);
         }
         if (type.equals(TYPE_COMPLETE_QUEST)) {
             return new Response(dataJSON);
         }
+        if (type.equals(TYPE_ACCEPT_QUEST)) {
+            return new Response(dataJSON);
+        }
         return dataJSON;
     }
+
+
+
 
             /*
              *
@@ -200,6 +216,11 @@ treba<\/p>","image":""},"item":{"id":"1","name":"sword","info":"its sharp<\/p>",
      */
     public String getDataString() {
         return dataString;
+    }
+
+
+    public Object getData() {
+        return data;
     }
 
     /**

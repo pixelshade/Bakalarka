@@ -1,3 +1,6 @@
+ <?php 
+  $default_rights_level = empty($user->id) ? $default_rights_level : $user->rights_level;
+  ?>
  <div class="modal-header">
  	<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
  	<h4 class="modal-title"><?php echo empty($user->id) ? 'Add a new user' : 'Edit user'; ?></h4> 	
@@ -21,6 +24,10 @@
  		<tr>
  			<td>Confirm password</td>
  			<td><?php echo form_password('confirm_password','', 'class="form-control"') ?></td>
+ 		</tr>
+ 		<tr>
+ 			<td>User level</td>
+ 			<td><?php echo form_dropdown('submit', $rights_levels, $default_rights_level, 'class="form-control"'); ?></td>
  		</tr>
  		<tr>
  			<td></td>

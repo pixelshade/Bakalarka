@@ -108,11 +108,11 @@ class Quest_m extends MY_Model
 		private function generateUniqueCode(){
 			$this->load->helper('string'); 		
 			$code = random_string('alnum', (config_item('qrcode_length') - 1));
-			$exists = $this->get_by('`code` = "'.$code.QR_ITEM.'"', TRUE);
+			$exists = $this->get_by('`code` = "'.$code.QR_QUEST.'"', TRUE);
 			if(!empty($exists)){
 				$code = $this->generateUniqueCode();
 			}  		
-			return $code.QR_ITEM; 		
+			return $code.QR_QUEST; 		
 		}
 
 		public function save($data, $id = NULL){

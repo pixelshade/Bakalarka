@@ -38,6 +38,7 @@ public class Settings {
 
     public static final String QR_REWARD = "R";
     public static final String QR_QUEST = "Q";
+    public static final String INTENT_KEY_QR_REWARD = "REWARD_SERIALIZABLE";
 
 
     public static final String INTENT_KEY_QRSCANNED = "QRSCANNED";
