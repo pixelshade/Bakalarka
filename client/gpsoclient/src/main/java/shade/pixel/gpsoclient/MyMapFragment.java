@@ -1,5 +1,6 @@
 package shade.pixel.gpsoclient;
 
+import android.app.FragmentManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,19 +40,26 @@ public class MyMapFragment extends Fragment {
      * set up the map
      */
     private void initilizeMap() {
-        map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.fragment_map)).getMap();
-        if (map == null) {
-            Toast.makeText(getActivity(), "Unable to create map", Toast.LENGTH_SHORT).show();
-        } else {
-            map.setMyLocationEnabled(true);
-            Location location = map.getMyLocation();
-            animateCameraToLocation(location);
-            map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-                @Override
-                public void onMyLocationChange(Location location) {
+        android.support.v4.app.FragmentManager fm = getFragmentManager();
+        if(fm!=null) {
+            SupportMapFragment supportMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.fragment_map);
+            if (supportMapFragment != null) {
+                map = supportMapFragment.getMap();
+                if (map == null) {
+                    Toast.makeText(getActivity(), "Unable to create map", Toast.LENGTH_SHORT).show();
+                } else {
+                    map.setMyLocationEnabled(true);
+                    Location location = map.getMyLocation();
                     animateCameraToLocation(location);
+                    map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+                        @Override
+                        public void onMyLocationChange(Location location) {
+                            animateCameraToLocation(location);
+                        }
+                    });
                 }
-            });
+            }
+
         }
     }
 

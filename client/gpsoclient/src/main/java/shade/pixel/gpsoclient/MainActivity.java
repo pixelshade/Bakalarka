@@ -2,7 +2,9 @@ package shade.pixel.gpsoclient;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -116,6 +118,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         gameHandler = GameHandler.getInstance(this);
 
 
+
         if (htmlBrowser.isOnline()) {
 //            htmlBrowser.HttpGetAsyncString(this, Settings.getIsLoggedInURL(), loginCheck);
         } else {
@@ -198,7 +201,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void UpdatePosition(View view) {
-        //TODO fixnut stale rovnaky last known
+        //TODO fixnut stale rovnaky last known position
         gpsTracker = new GPSTracker(this);
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
@@ -262,8 +265,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void ScanQRCode(View view) {
-        Intent intent = new Intent(this, ScannerActivity.class);
-        startActivity(intent);
+        DialogFragment newFragment = new MyAlertDialog();
+        newFragment.show(getSupportFragmentManager(), "hojky");
+//        Intent intent = new Intent(this, ScannerActivity.class);
+//        startActivity(intent);
     }
 
 

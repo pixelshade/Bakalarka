@@ -24,12 +24,12 @@ class User_M extends MY_Model
 		'name' => array(
 			'field' => 'name',
 			'label' => 'Name',
-			'rules' => 'trim|required|xss_clean'
+			'rules' => 'trim|xss_clean'
 			),		
 		'email' => array(
 			'field' => 'email',
 			'label' => 'Email',
-			'rules' => 'trim|required|valid_email|xss_clean|callback__unique_email'
+			'rules' => 'trim|required|valid_email|xss_clean|is_unique[users.email]|callback__unique_email'
 			),
 		'password' => array(
 			'field' => 'password',

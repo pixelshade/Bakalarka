@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -26,7 +27,7 @@ import java.util.HashMap;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends FragmentActivity {
     MyHtmlBrowser htmlBrowser;
     Intent mIntent;
     Context mContext;
@@ -102,6 +103,7 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onClick(View view) {
                     attemptRegister();
+                    Toast.makeText(mContext, "Trying to register new user", Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
@@ -322,14 +324,22 @@ public class LoginActivity extends Activity {
 
             if (response == null) {
                 mServerUrlView.setError(getString(R.string.error_incorrect_password));
-            } else
-            if(response.isSuccessful()) {
-                //  htmlBrowser.HttpGetAsyncString(htmlBrowser.getServerURL()+"/api/isLoggedIn");
-                //Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
-                attemptLogin();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+
+                if (response.isSuccessful()) {
+                    //  htmlBrowser.HttpGetAsyncString(htmlBrowser.getServerURL()+"/api/isLoggedIn");
+                    //Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
+                    attemptLogin();
+                } else {
+                    MyAlertDialog dialog = new MyAlertDialog();
+                    Bundle args = new Bundle();
+                    args.putString("title","Registration");
+                    args.putString("message",response.getMessage());
+
+                    dialog.setArguments(args);
+                    dialog.show(getSupportFragmentManager(), "registerDialog");
+                    mPasswordView.requestFocus();
+                }
             }
         }
 

@@ -70,7 +70,7 @@ public class MyHtmlBrowser {
             Toast.makeText(mContext, "NO SERVER TO CONNECT", Toast.LENGTH_SHORT).show();
             return null;
         } else {
-            String url = serverURL + "/api/login";
+            String url = serverURL + "/api/register";
             Log.d(TAG, url);
             HttpPost httppost = new HttpPost(url);
 
