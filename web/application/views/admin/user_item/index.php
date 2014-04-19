@@ -6,6 +6,8 @@
 			<tr>
 				<th>char_id</th>
 				<th>item_id</th>
+				<th>amount</th>
+
 
 				<th>edit</th>
 				<th>delete</th>
@@ -14,8 +16,9 @@
 		<tbody>
 <?php if(count($user_items)): foreach($user_items as $user_item): ?>	
 		<tr>
-			<td><?php echo anchor('admin/user_item/edit/' . $user_item->id, $user_item->char_id); ?></td>
-			<td><?php echo $user_item->item_id; ?></td>
+			<td><?php echo anchor('admin/user_item/edit/' . $user_item->id, $chars[$user_item->char_id]); ?></td>
+			<td><?php echo $itemNames[$user_item->item_id]; ?></td>
+			<td><?php echo $user_item->amount; ?></td>
 			
 			<td><?php echo btn_edit('admin/user_item/edit/' . $user_item->id); ?></td>
 			<td><?php echo btn_delete('admin/user_item/delete/' . $user_item->id); ?></td>

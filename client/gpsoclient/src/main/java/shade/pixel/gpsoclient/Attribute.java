@@ -13,12 +13,18 @@ public class Attribute implements Serializable {
     public static final String KEY_ATTRIBUTE_NAME = "name";
     public static final String KEY_ATTRIBUTE_INFO = "info";
     public static final String KEY_ATTRIBUTE_IMAGE = "image";
+    public static final String KEY_ATTRIBUTE_AMOUNT = "amount";
 
     private int id;
     private String name;
     private String info;
     private String image;
+    private int amount;
 
+    public Attribute(int id, String name, String info, String image, int amount) {
+        this(id, name, info, image);
+        this.amount = amount;
+    }
 
     public Attribute(int id,
                      String name,
@@ -29,7 +35,7 @@ public class Attribute implements Serializable {
         this.name = name;
         this.info = info;
         this.image = image;
-        Log.d(TAG,"was created:"+ this.name+","+this.info+","+this.image);
+        Log.d(TAG, "was created:" + this.name + "," + this.info + "," + this.image);
 
     }
 
@@ -69,5 +75,11 @@ public class Attribute implements Serializable {
         return getName();
     }
 
+    public int getAmount() {
+        return amount;
+    }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 }

@@ -24,7 +24,7 @@ public class Settings {
     private static String checkQRcodeURL = serverURL + "/api/check_qrcode/";
     private static String contentFilesListURL = serverURL + "/api/getContentFilesList";
     private static String serverContentDirURL = serverURL + "/app_content/";
-
+    public static String removeActiveQuestURL =  serverURL + "api/remove_my_active_quest/";
 
     private static String loginURL = serverURL + "/api/isLoggedIn";
     private static String isLoggedInURL = serverURL + "/api/isLoggedIn";
@@ -168,4 +168,5 @@ public class Settings {
     public static void setCheckQRcodeURL(String checkQRcodeURL) {
         Settings.checkQRcodeURL = checkQRcodeURL;
     }
+
 }

@@ -6,6 +6,7 @@
 			<tr>
 				<th>char_id</th>
 				<th>attribute_id</th>
+				<th>amount</th>
 
 				<th>edit</th>
 				<th>delete</th>
@@ -14,8 +15,9 @@
 		<tbody>
 <?php if(count($user_attributes)): foreach($user_attributes as $user_attribute): ?>	
 		<tr>
-			<td><?php echo anchor('admin/user_attribute/edit/' . $user_attribute->id, $user_attribute->char_id); ?></td>
-			<td><?php echo $user_attribute->attribute_id; ?></td>
+			<td><?php echo anchor('admin/user_attribute/edit/' . $user_attribute->id, $chars[$user_attribute->char_id]); ?></td>
+			<td><?php echo $attributeNames[$user_attribute->attribute_id]; ?></td>
+			<td><?php echo $user_attribute->amount; ?></td>
 			
 			<td><?php echo btn_edit('admin/user_attribute/edit/' . $user_attribute->id); ?></td>
 			<td><?php echo btn_delete('admin/user_attribute/delete/' . $user_attribute->id); ?></td>

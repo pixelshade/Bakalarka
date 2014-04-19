@@ -6,6 +6,11 @@ class User_attribute extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('user_attribute_m');
+		$this->load->model('attribute_m');
+
+		$this->data['chars'] = $this->user_m->get_for_dropdown();		
+		// Fetch attributes
+		$this->data['attributeNames'] = $this->attribute_m->get_for_dropdown();
 	}
 
 	public function index ()
@@ -38,7 +43,8 @@ class User_attribute extends Admin_Controller
 		if ($this->form_validation->run() == TRUE) {
 			$data = $this->user_attribute_m->array_from_post(array(
 				'char_id',
-				'attribute_id',							
+				'attribute_id',		
+				'amount'					
 				));
 			$this->user_attribute_m->save($data, $id);
 			redirect('admin/user_attribute');

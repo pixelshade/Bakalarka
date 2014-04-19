@@ -22,7 +22,12 @@ class Migration_Create_user_attributes extends CI_Migration {
 				'type' => 'INT',
 				'constraint' => 11,
 				'unsigned' => TRUE				
-			),		
+			),	
+			'amount' => array(
+				'type' => 'INT',
+				'constraint' => 11,
+				'unsigned' => FALSE
+			)	
 		));
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('user_attributes');

@@ -14,6 +14,11 @@ class User_attribute_m extends MY_Model
 			'label' => 'attribute_id', 
 			'rules' => 'intval'
 			),		
+		'amount' => array(
+			'field' => 'amount', 
+			'label' => 'amount', 
+			'rules' => 'intval'
+			),	
 		);
 
 	public function get_new ()
@@ -22,6 +27,7 @@ class User_attribute_m extends MY_Model
 
 		$user_attribute->char_id = '';
 		$user_attribute->attribute_id = '';
+		$user_attribute->amount = 0;
 
 		return $user_attribute;
 	}

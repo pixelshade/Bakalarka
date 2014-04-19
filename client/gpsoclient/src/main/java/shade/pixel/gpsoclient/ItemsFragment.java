@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -18,26 +17,33 @@ import java.util.ArrayList;
  * Created by pixelshade on 13.3.2014.
  */
 public class ItemsFragment extends Fragment {
+    private View rootView;
+
     private static String TAG = "ItemsFragment";
+    private ArrayList<Item> items;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_items, container, false);
+        rootView = inflater.inflate(R.layout.fragment_items, container, false);
 
-        GridView gridViewItems = (GridView) rootView.findViewById(R.id.gridViewItems);
+
 
         Log.d(TAG, "VYTVARAM FRAGMENT");
 
-        GameHandler gameHandler = GameHandler.getInstance(getActivity());
-        GameData gameData = gameHandler.getGameData();
-        if (gameData != null) {
-            ArrayList<Item> items = gameData.getItems();
 
-            ItemAdapter arrayAdapter = new ItemAdapter(getActivity(), R.layout.list_item, items);
+        this.updateFragment();
 
-            if (gridViewItems != null) {
+        return rootView;
+    }
+
+    public void updateFragment() {
+        GridView gridViewItems = (GridView) rootView.findViewById(R.id.gridViewItems);
+        if (gridViewItems != null) {
+            if (items != null) {
+                ItemAdapter arrayAdapter = new ItemAdapter(getActivity(), R.layout.list_item, items);
                 gridViewItems.setAdapter(arrayAdapter);
                 gridViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -50,8 +56,13 @@ public class ItemsFragment extends Fragment {
                 });
             }
         }
+    }
 
+    public ArrayList<Item> getItems() {
+        return items;
+    }
 
-        return rootView;
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
     }
 }

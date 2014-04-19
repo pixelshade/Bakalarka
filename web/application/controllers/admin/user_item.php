@@ -6,6 +6,11 @@ class User_item extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('user_item_m');
+		$this->load->model('user_m');
+		$this->load->model('item_definition_m');
+		$this->data['chars'] = $this->user_m->get_for_dropdown();		
+		// Fetch items
+		$this->data['itemNames'] = $this->item_definition_m->get_for_dropdown();
 	}
 
 	public function index ()
@@ -39,6 +44,7 @@ class User_item extends Admin_Controller
 			$data = $this->user_item_m->array_from_post(array(
 				'char_id',
 				'item_id',							
+				'amount',							
 				));
 			$this->user_item_m->save($data, $id);
 			redirect('admin/user_item');

@@ -121,5 +121,13 @@ class User_M extends MY_Model
 		return $this->session->userdata('id');;
 	}
 
+	public function get_for_dropdown(){
+		$empty = array(NONE_ID => 'No user');
+		$result = $this->get_array();		
+		$result = array_column($result, 'name', 'id');
+		$result = $empty + $result;		
+		return $result;
+	}
+
 }
 ?>

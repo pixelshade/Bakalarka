@@ -265,10 +265,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void ScanQRCode(View view) {
-        DialogFragment newFragment = new MyAlertDialog();
-        newFragment.show(getSupportFragmentManager(), "hojky");
-//        Intent intent = new Intent(this, ScannerActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, ScannerActivity.class);
+        startActivity(intent);
     }
 
 
@@ -322,20 +320,33 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            GameData gameData = gameHandler.getGameData();
             switch (position) {
                 case 0:
                     // Main fragment activity
                     return new MainFragment();
                 case 1:
                     // Quests fragment activity
-                    return new QuestsFragment();
+                    ArrayList<Quest> quests = gameData.getQuests();
+                    QuestsFragment questsFragment = new QuestsFragment();
+                    questsFragment.setQuests(quests);
+                    return questsFragment;
                 case 2:
                     // Region fragment activity
                     return new RegionsFragment();
                 case 3:
                     // Item fragment activity
-                    return new ItemsFragment();
+                    ArrayList<Item> items = gameData.getItems();
+                    ItemsFragment itemsFragment = new ItemsFragment();
+                    itemsFragment.setItems(items);
+                    return itemsFragment;
                 case 4:
+                    // Attributes fragment activity
+                    ArrayList<Attribute> attributes = gameData.getAttributes();
+                    AttributesFragment attributesFragment = new AttributesFragment();
+                    attributesFragment.setAttributes(attributes);
+                    return attributesFragment;
+                case 5:
                     // Map fragment activity
                     return new MyMapFragment();
             }
@@ -344,7 +355,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         @Override
         public int getCount() {
-            return 5;
+            return 6;
         }
 
         @Override
@@ -360,6 +371,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 case 3:
                     return getString(R.string.title_inventory).toUpperCase(l);
                 case 4:
+                    return getString(R.string.title_attributes).toUpperCase(l);
+                case 5:
                     return getString(R.string.title_map).toUpperCase(l);
             }
             return null;

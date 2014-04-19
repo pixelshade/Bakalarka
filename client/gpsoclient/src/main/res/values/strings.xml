@@ -6,6 +6,7 @@
     <string name="title_quests">Quests</string>
     <string name="title_region">Regions</string>
     <string name="title_inventory">Inventory</string>
+    <string name="title_attributes">Attributes</string>
     <string name="title_map">Map</string>
     <string name="action_settings">Settings</string>
     <string name="UpdateFiles">UpdateFiles</string>
@@ -19,5 +20,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_reward_info">RewardInfoActivity</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_character">CharacterActivity</string>
 
 </resources>

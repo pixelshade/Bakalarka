@@ -18,26 +18,23 @@ import java.util.ArrayList;
  * Created by pixelshade on 11.3.2014.
  */
 public class QuestsFragment extends Fragment {
+    private View rootView;
+
     private static String TAG = "QuestFragment";
+    private ArrayList<Quest> quests;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_quests, container, false);
+        rootView = inflater.inflate(R.layout.fragment_quests, container, false);
+
 
         ListView listViewQuests = (ListView) rootView.findViewById(R.id.listViewQuests);
-
         Log.d(TAG, "VYTVARAM FRAGMENT");
 
-        GameHandler gameHandler = GameHandler.getInstance(getActivity());
-        GameData gameData = gameHandler.getGameData();
-        if (gameData != null) {
-            ArrayList<Quest> quests = gameData.getQuests();
-
-            ArrayAdapter<Quest> arrayAdapter = new ArrayAdapter<Quest>(getActivity(), android.R.layout.simple_list_item_1, quests);
-            ListView lv = (ListView) rootView.findViewById(R.id.listViewQuests);
-            if (lv != null) lv.setAdapter(arrayAdapter);
-        }
+        this.updateFragment();
 
         listViewQuests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -50,5 +47,21 @@ public class QuestsFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    public void updateFragment() {
+        if (quests != null) {
+            ArrayAdapter<Quest> arrayAdapter = new ArrayAdapter<Quest>(getActivity(), android.R.layout.simple_list_item_1, quests);
+            ListView lv = (ListView) rootView.findViewById(R.id.listViewQuests);
+            if (lv != null) lv.setAdapter(arrayAdapter);
+        }
+    }
+
+    public ArrayList<Quest> getQuests() {
+        return quests;
+    }
+
+    public void setQuests(ArrayList<Quest> quests) {
+        this.quests = quests;
     }
 }

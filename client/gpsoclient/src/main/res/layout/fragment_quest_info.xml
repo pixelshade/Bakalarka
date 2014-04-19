@@ -60,16 +60,27 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Accept quest"
+                    android:text="Accept"
                     android:onClick="AcceptQuest"
+                    android:drawableTop="@+drawable/btn_check_buttonless_on"
                     android:id="@+id/acceptButton" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Complete quest"
+                    android:text="Complete"
                     android:onClick="CompleteQuest"
+                    android:drawableTop="@+drawable/btn_check_buttonless_on"
                     android:id="@+id/completeButton" />
+
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remove"
+                    android:onClick="RemoveActiveQuest"
+                    android:drawableTop="@+drawable/ic_delete"
+                    android:id="@+id/acceptButton" />
             </LinearLayout>
 
 

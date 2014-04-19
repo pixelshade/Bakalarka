@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- Required to show current location -->
-    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- Required to read and write to sdcard -->
@@ -63,12 +63,16 @@
             android:label="@string/title_activity_item_info_actitivity" >
         </activity>
         <activity
-            android:name=".ScannerActivity"
+            android:name="shade.pixel.gpsoclient.ScannerActivity"
             android:label="@string/title_activity_scanner" >
         </activity>
         <activity
             android:name="shade.pixel.gpsoclient.RewardInfoActivity"
             android:label="@string/title_activity_reward_info" >
+        </activity>
+        <activity
+            android:name="shade.pixel.gpsoclient.CharacterActivity"
+            android:label="@string/title_activity_character" >
         </activity>
     </application>
 

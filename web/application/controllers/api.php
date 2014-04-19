@@ -133,7 +133,7 @@ class Api extends Admin_Controller
 		echo json_encode($this->content_files_model->get_all_names());		
 	}
 
-	public function hasUserActiveQuest($quest_id){
+	public function hasUserActiveQuest($quest_id = null){
 		$user_id = $this->user_m->get_user_id();	
 		$user_quest = $this->user_quest_m->get_array_by("`char_id` =".$user_id." AND `quest_id` = '".$quest_id."'");
 		if(!empty($user_quest)){
@@ -142,31 +142,42 @@ class Api extends Admin_Controller
 		return FALSE;
 	}
 
-	public function remove_my_active_quest($quest_id){
-		$user_id = $this->user_m->get_user_id();
-		$quest = $this->user_quest_m->get_by("`char_id` = '".$user_id."' AND `quest_id` = '".$quest_id."' AND `completed` = '0'");
-		if(empty($quest)) {
+	public function remove_my_active_quest($quest_id = null){
+		if($quest_id==null){
 			$response['success'] = 0;
-			$response['msg'] = 'Active quest not found';
+			$response['msg'] = 'Quest not specified';
 		} else {
-			$this->user_quest_m->delete("char_id =".$user_id);		
-			$response['success'] = 1;
-			$response['msg'] = 'Active quest deleted';
-		}		
+			$user_id = $this->user_m->get_user_id();
+			$quest = $this->user_quest_m->get_by("`char_id` = '".$user_id."' AND `quest_id` = '".$quest_id."' AND `completed` = '0'");
+			if(empty($quest)) {
+				$response['success'] = 0;
+				$response['msg'] = 'Active quest not found';
+			} else {
+				$this->user_quest_m->delete("char_id =".$user_id);		
+				$response['success'] = 1;
+				$response['msg'] = 'Active quest deleted';
+			}		
+		} 
 		echo json_encode($response);	
+	}
+
+	public function get_my_attributes(){
+		$user_id = $this->user_m->get_user_id();
+		$attributes = $this->user_attribute_m->get_array_by("`char_id` = '".$user_id."'");				
+		echo json_encode($attributes);
 	}
 
 
 	public function get_my_quests(){
 		$user_id = $this->user_m->get_user_id();
-		$quests = $this->user_quest_m->get_array_by("char_id =".$user_id);		
+		$quests = $this->user_quest_m->get_array_by("`char_id` = '".$user_id."'");		
 		// print_r($this->user_quest_m);
 		echo json_encode($quests);
 	}
 
 	public function get_my_items(){
 		$user_id = $this->user_m->get_user_id();		
-		$items = $this->user_item_m->get_array_by("char_id =".$user_id);		
+		$items = $this->user_item_m->get_array_by("`char_id` = '".$user_id."'");		
 		echo json_encode($items);
 	}
 
@@ -373,12 +384,21 @@ class Api extends Admin_Controller
 	private function _giveItem($item_id, $item_amount, $char_id){						
 		if($item_id != NONE_ID && $item_amount != 0){
 			$item = $this->item_definition_m->get_by_id($item_id);
-			if(!empty($item)){
+			if(!empty($item) && $item_amount!=0){
+				$item->amount = $item_amount;
 				$user_item['char_id'] = $char_id;
 				$user_item['item_id'] = $item_id;
-				for ($i=0; $i < $item_amount; $i++) { 	
-					$this->user_item_m->save($user_item);
-				}				
+
+				$existing = $this->user_item_m->get_array_by('`char_id` = "'.$char_id.'" AND `item_id` = "'.$item_id.'"', TRUE);				
+				if(empty($existing)){
+					$existing_id = NULL;
+					$user_item['amount'] = $item_amount;
+				} else {
+					$existing_id = $existing['id'];               
+					$user_item['amount'] = $existing['amount'] + $item_amount;               
+				}
+				
+				$this->user_item_m->save($user_item, $existing_id);				
 				return $item;			
 			} 
 		}
@@ -390,11 +410,22 @@ class Api extends Admin_Controller
 		if($attribute_id != NONE_ID && $attribute_amount != 0){
 			$attribute = $this->attribute_m->get_by_id($attribute_id);
 			if(!empty($attribute)){
+				$attribute->amount = $attribute_amount;
 				$user_attribute['char_id'] = $char_id;
 				$user_attribute['attribute_id'] = $attribute_id;
-				for ($i=0; $i < $attribute_amount; $i++) { 				
-					$this->user_attribute_m->save($user_attribute);
+				$user_attribute['amount'] = $attribute_amount;
+
+				$existing = $this->user_attribute_m->get_array_by('`char_id` = "'.$char_id.'" AND `attribute_id` = "'.$attribute_id.'"', TRUE);				
+				if(empty($existing)){
+					$existing_id = NULL;
+					$user_attribute['amount'] = $attribute_amount;
+				} else {
+					$existing_id = $existing['id'];               
+					$user_attribute['amount'] = $existing['amount'] + $attribute_amount;               
 				}
+				
+				$this->user_attribute_m->save($user_attribute, $existing_id);
+
 				return $attribute;
 			}
 		}

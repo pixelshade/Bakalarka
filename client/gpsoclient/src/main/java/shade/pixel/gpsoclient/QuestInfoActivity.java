@@ -89,6 +89,25 @@ public class QuestInfoActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void RemoveActiveQuest(View view) {
+        GameHandler gameHandler = GameHandler.getInstance(this);
+        int currentQuest = mViewPager.getCurrentItem();
+        int currentQuestId = quests.get(currentQuest).getId();
+        String removeURL = Settings.removeActiveQuestURL + "/" + currentQuestId;
+        gameHandler.htmlBrowser.HttpGetAsyncString(this, removeURL, new AsyncResponse() {
+            @Override
+            public void processFinish(Context context, String output) {
+                Response response = new Response(output);
+                if (response.isSuccessful()) {
+                    finish();
+                } else {
+                    Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }
+
     public void CompleteQuest(View view) {
         GameHandler gameHandler = GameHandler.getInstance(this);
         int currentQuest = mViewPager.getCurrentItem();

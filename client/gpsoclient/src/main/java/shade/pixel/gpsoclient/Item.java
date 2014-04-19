@@ -13,13 +13,19 @@ public class Item implements Serializable{
     public static final String KEY_ITEM_NAME = "name";
     public static final String KEY_ITEM_INFO = "info";
     public static final String KEY_ITEM_IMAGE = "image";
+    public static final String KEY_ITEM_AMOUNT = "amount";
 
 
     private int id;
     private String name;
     private String info;
     private String image;
+    private int amount;
 
+    public Item(int id, String name, String info, String image, int amount) {
+        this(id, name, info, image);
+        this.amount = amount;
+    }
 
     public Item(int id,
                 String name,
@@ -69,5 +75,11 @@ public class Item implements Serializable{
         return getName();
     }
 
+    public int getAmount() {
+        return amount;
+    }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 }

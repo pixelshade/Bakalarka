@@ -16,6 +16,6 @@ class Migration_User_level extends CI_Migration {
 
 	public function down()
 	{
-		$this->dbforge->drop_column('users', 'level');
+		$this->dbforge->drop_column('users', 'rights_level');
 	}
 }
