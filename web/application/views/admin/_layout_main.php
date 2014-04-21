@@ -15,11 +15,10 @@
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li <?php echo $page=="user"? 'class="active"' : ''; ?>><a href="/admin/user">Users</a></li>			
-				<li <?php echo $page=="article"? 'class="active"' : ''; ?>><a href="/admin/article">Articles</a></li>			
-				
+				<li <?php echo $page=="article"? 'class="active"' : ''; ?>><a href="/admin/article">Articles</a></li>
 				
 				<!-- <li><a href="#">Link</a></li> -->
-				<!-- <li><a href="#">Link</a></li> -->
+		
 				<li class="<?php echo $page=="page"? 'active ' : ''; ?>dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -34,7 +33,10 @@
 							<li><a href="#">One more separated link</a></li> -->
 						</ul>
 					</li>
-					<li class="<?php echo $page=="page"? 'active ' : ''; ?>dropdown">
+					<?php 
+						$links = array("content_file","region","quest","item_definition","item_instance","attribute","reward","user_quest","user_item","user_attribute","user_position","user_qrscanned");
+					?>
+					<li class="<?php echo in_array($page, 	$links)? 'active ' : ''; ?>dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Game content <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="/admin/content_file">Content files</a></li>

@@ -16,10 +16,10 @@ import java.util.ArrayList;
  */
 public class GameHandler {
     private static final String TAG = "Game Handler";
+    public static GameData gameData;
     static GameHandler gameHandler;
-    Context context;
 
-   GameData gameData;
+    Context context;
    MyHtmlBrowser htmlBrowser;
    GPSTracker gpsTracker;
    ContentFilesManager contentFilesManager;

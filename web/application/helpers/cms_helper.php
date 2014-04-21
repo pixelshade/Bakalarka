@@ -17,6 +17,7 @@ function e($string){
 
 function get_menu ($array, $child = FALSE)
 {
+    $controler_url = "page/";
     $CI =& get_instance();
     $str = '';
     
@@ -28,7 +29,7 @@ function get_menu ($array, $child = FALSE)
             $active = $CI->uri->segment(1) == $item['slug'] ? TRUE : FALSE;
             if (isset($item['children']) && count($item['children'])) {                
                 $str .= $active ? '<li class="dropdown active">' : '<li class="dropdown">';
-                $str .= '<a  class="dropdown-toggle" data-toggle="dropdown" href="' . site_url(e($item['slug'])) . '">' . e($item['title']);
+                $str .= '<a  class="dropdown-toggle" data-toggle="dropdown" href="' . site_url($controler_url.e($item['slug'])) . '">' . e($item['title']);
                 $str .= '<b class="caret"></b></a>' . PHP_EOL;
                 $str .= '<ul class="dropdown-menu">';
                 $str .= get_menu($item['children'], TRUE);
@@ -36,7 +37,7 @@ function get_menu ($array, $child = FALSE)
             }
             else {
                 $str .= $active ? '<li class="active">' : '<li>';
-                $str .= '<a href="' . site_url($item['slug']) . '">' . e($item['title']) . '</a>';
+                $str .= '<a href="' . site_url($controler_url.$item['slug']) . '">' . e($item['title']) . '</a>';
             }
             $str .= '</li>' . PHP_EOL;
         }

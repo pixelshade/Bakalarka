@@ -10,25 +10,10 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="./"><?php echo $site_name . " - " . $this->uri->segment(2); ?></a>
+				<a class="navbar-brand" href="./"><?php echo $site_name;?></a> <?php // " " . $this->uri->segment(2);  ?>
 			</div>
 			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-
-					<!-- <li <?php echo $page=="user"? 'class="active"' : ''; ?>><a href="/admin/user">Users</a></li>			
-					<li <?php echo $page=="article"? 'class="active"' : ''; ?>><a href="/admin/article">Articles</a></li>			
-					  
-					
-					<li class="<?php echo $page=="page"? 'active ' : ''; ?>dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="/admin/page">List</a></li>
-							<li><a href="/admin/page/edit">Add</a></li>
-							<li><a href="/admin/page/order">Reorder pages</a></li>						
-						
-						</ul>
-					</li>
-					 -->
+				<ul class="nav navbar-nav">							
 				<?php echo get_menu($menu); ?>
 				<li <?php echo $page=="api"? 'class="active"' : ''; ?>><a href="/api">Client Api</a></li>			
 				<li <?php echo $page=="admin"? 'class="active"' : ''; ?>><a href="/admin/">Admin</a></li>			
