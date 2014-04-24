@@ -180,6 +180,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         });
     }
 
+    public void StartBluetoothActivity(View view){
+        Intent mBluetoothIntent = new Intent(this, BluetoothActivity.class);
+        startActivity(mBluetoothIntent);
+
+    }
+
     private void StartLoginActivity() {
         Intent mLoginIntent = new Intent(this, LoginActivity.class);
         startActivity(mLoginIntent);

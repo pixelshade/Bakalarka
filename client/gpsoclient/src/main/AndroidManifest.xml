@@ -8,7 +8,8 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <!-- <uses-feature android:name="android.hardware.camera" /> -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -73,6 +74,15 @@
         <activity
             android:name="shade.pixel.gpsoclient.CharacterActivity"
             android:label="@string/title_activity_character" >
+        </activity>
+        <activity
+            android:name="shade.pixel.gpsoclient.BluetoothActivity"
+            android:label="@string/title_activity_bluetooth" >
+        </activity>
+        <activity
+            android:name="shade.pixel.gpsoclient.DeviceListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_device_list" >
         </activity>
     </application>
 
