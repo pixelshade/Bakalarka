@@ -48,9 +48,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     int mActualViewId = 0;
 
-    String mLastScannedQRCode = "";
-
-
     AsyncResponse loginCheck = new AsyncResponse() {
         @Override
         public void processFinish(Context context, String output) {
@@ -116,6 +113,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         gameData = new GameData();
         contentFilesManager = new ContentFilesManager(this);
         gameHandler = GameHandler.getInstance(this);
+        gpsTracker = new GPSTracker(this, this);
 
 
 
@@ -124,23 +122,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
         }
-//        Intent intent = getIntent();
-//        String QRScanned = intent.getStringExtra(Settings.INTENT_KEY_QRSCANNED);
-//
-//        if (savedInstanceState == null || savedInstanceState.getString(SAVED_INSTANCE_QR_KEY) == null) {
-//            mLastScannedQRCode = "";
-//        } else {
-//            mLastScannedQRCode = savedInstanceState.getString(SAVED_INSTANCE_QR_KEY);
-//        }
-//
-//        Log.i(TAG, "toto je predposledny QR code scannuty" + mLastScannedQRCode);
-//        Log.i(TAG, "toto je posledny QR code scannuty" + QRScanned);
-//        if (QRScanned != null && !QRScanned.equals(mLastScannedQRCode) && savedInstanceState != null) {
-//            savedInstanceState.putString(SAVED_INSTANCE_QR_KEY, QRScanned);
-//            this.GetAsyncQRCodeResponse(QRScanned);
-//        } else {
-//            Toast.makeText(this, "niekto nespolupracuje", Toast.LENGTH_LONG).show();
-//        }
 
     }
 
@@ -186,7 +167,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     }
 
-    private void StartLoginActivity() {
+    public void StartLoginActivity() {
         Intent mLoginIntent = new Intent(this, LoginActivity.class);
         startActivity(mLoginIntent);
         finish();
@@ -208,7 +189,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void UpdatePosition(View view) {
         //TODO fixnut stale rovnaky last known position
-        gpsTracker = new GPSTracker(this);
+//        gpsTracker = new GPSTracker(this,this);
+        if(gpsTracker==null) return;
         double latitude = gpsTracker.getLatitude();
         double longitude = gpsTracker.getLongitude();
         if (!gpsTracker.canGetLocation()) {
@@ -239,19 +221,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                 quest.getName();
                                 sb.append(quest.getName() + ",");
                             }
-                            TextView tv = (TextView) findViewById(R.id.section_content);
-                            double latitude = gameHandler.gpsTracker.getLatitude();
-                            double longitude = gameHandler.gpsTracker.getLongitude();
-                            tv.setText(json + "\n\n" + latitude + " " + longitude);
-
-
-                            ArrayAdapter<Quest> questsArrayAdapter = new ArrayAdapter<Quest>(context, android.R.layout.simple_list_item_1, quests);
-                            ListView lvQuests = (ListView) findViewById(R.id.listViewQuests);
-                            if (lvQuests != null) lvQuests.setAdapter(questsArrayAdapter);
-
-                            ArrayAdapter<Region> regionsArrayAdapter = new ArrayAdapter<Region>(context, android.R.layout.simple_list_item_1, regions);
-                            ListView lvRegions = (ListView) findViewById(R.id.listViewRegions);
-                            if (lvRegions != null) lvRegions.setAdapter(regionsArrayAdapter);
+                            double latitude = gpsTracker.getLatitude();
+                            double longitude = gpsTracker.getLongitude();
+                            String infoString = json + "\n\n" + latitude + " " + longitude;
+                            SetTextView(infoString);
+                            SetQuestsView(quests);
+                            SetRegionsView(regions);
 
                             //todo treba pre kazdy fragment spravit to iste pre pripad, ze sa fragment znovu nevytvara len ho treba setnut
 
@@ -265,6 +240,26 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
     }
+
+
+    public void SetTextView(String text){
+        TextView tv = (TextView) findViewById(R.id.section_content);
+        if(tv!=null)
+        tv.setText(text);
+    }
+
+    public void SetQuestsView(ArrayList<Quest> quests){
+        ArrayAdapter<Quest> questsArrayAdapter = new ArrayAdapter<Quest>(this, android.R.layout.simple_list_item_1, quests);
+        ListView lvQuests = (ListView) findViewById(R.id.listViewQuests);
+        if (lvQuests != null) lvQuests.setAdapter(questsArrayAdapter);
+    }
+
+    public void SetRegionsView(ArrayList<Region> regions){
+        ArrayAdapter<Region> regionsArrayAdapter = new ArrayAdapter<Region>(this, android.R.layout.simple_list_item_1, regions);
+        ListView lvRegions = (ListView) findViewById(R.id.listViewRegions);
+        if (lvRegions != null) lvRegions.setAdapter(regionsArrayAdapter);
+    }
+
 
     public void UpdateLocalContentFiles(View view) {
         contentFilesManager.UpdateFiles();

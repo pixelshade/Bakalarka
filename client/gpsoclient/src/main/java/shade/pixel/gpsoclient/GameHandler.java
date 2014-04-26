@@ -38,7 +38,6 @@ public class GameHandler {
         htmlBrowser = MyHtmlBrowser.getInstance(context);
         gameData = new GameData();
         contentFilesManager = new ContentFilesManager(context);
-        gpsTracker = new GPSTracker(context);
     }
 
     public void UpdatePositionAndGameData(){
@@ -99,7 +98,6 @@ public class GameHandler {
     public void setContext(Context context) {
         this.context = context;
         this.htmlBrowser.setmContext(context);
-        this.gpsTracker.setmContext(context);
         this.contentFilesManager.setmContext(context);
     }
 }

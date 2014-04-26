@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="D:\Projects\Shared Projects\Skola\Bakalarka\client" />
-            <option value="D:\Projects\Shared Projects\Skola\Bakalarka\client\gpsoclient" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/gpsoclient" />
           </set>
         </option>
       </GradleProjectSettings>

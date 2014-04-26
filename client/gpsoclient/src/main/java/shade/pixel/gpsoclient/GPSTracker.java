@@ -11,10 +11,16 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
 
 /**
  * Created by pixelshade on 9.2.2014.
@@ -22,7 +28,10 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class GPSTracker extends Service implements LocationListener {
     private static final String TAG = "GPS_TRACKER";
+    private MainActivity mActivity;
     private Context mContext;
+
+    MyHtmlBrowser htmlBrowser;
 
     // flag for GPS status
     boolean isGPSEnabled = false;
@@ -38,15 +47,16 @@ public class GPSTracker extends Service implements LocationListener {
     double longitude; // longitude
 
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 2;
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 5;
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 1;
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
-    public GPSTracker(Context context) {
+    public GPSTracker(Context context, MainActivity activity) {
+        this.mActivity = activity;
         this.mContext = context;
         this.getLocation();
     }
@@ -194,7 +204,55 @@ public class GPSTracker extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        String url = shade.pixel.gpsoclient.Settings.getServerURL() + "/api/json/" + latitude + "/" + longitude;
+        Toast.makeText(mContext, url, Toast.LENGTH_SHORT).show();
+        htmlBrowser = MyHtmlBrowser.getInstance(mContext);
+        htmlBrowser.HttpGetAsyncString(mContext, url, new AsyncResponse() {
+            @Override
+            public void processFinish(Context context, String json) {
+                Response response = new Response(json);
+                if (response.isLoggedOut()) {
+                    StartLoginActivity();
+                } else {
+
+                    GameData gameData = ResponseJSONParser.parseGameData(json);
+                    GameHandler.gameHandler.setGameData(gameData);
+                    if (gameData != null) {
+                        StringBuilder sb = new StringBuilder();
+                        ArrayList<Region> regions = gameData.getRegions();
+                        sb.append("Regions:");
+                        for (Region region : regions) {
+                            sb.append(region.getName() + ",");
+                        }
+                        ArrayList<Quest> quests = gameData.getQuests();
+                        sb.append("\nQuests:");
+                        for (Quest quest : quests) {
+                            quest.getName();
+                            sb.append(quest.getName() + ",");
+                        }
+
+                        mActivity.SetQuestsView(quests);
+                        mActivity.SetRegionsView(regions);
+
+                        double latitude = getLatitude();
+                        double longitude = getLongitude();
+                        String infoString = json + "\n\n" + latitude + " " + longitude;
+
+                        mActivity.SetTextView(infoString);
+
+                    } else {
+                        Log.d(TAG, "Problem with parsing gamedata");
+                    }
+                }
+            }
+        });
         Toast.makeText(mContext,"Sme tu: " + location.getLatitude() + " " + location.getLongitude() + "presnost("+location.getAccuracy()+")", Toast.LENGTH_LONG).show();
+    }
+
+    public void StartLoginActivity() {
+        mActivity.StartLoginActivity();
     }
 
     @Override

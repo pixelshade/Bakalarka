@@ -65,11 +65,14 @@
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:id="@+id/scrollView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/updatePositionBtn"
+        android:layout_alignRight="@+id/updatePositionBtn"
+        android:layout_alignEnd="@+id/updatePositionBtn">
 
         <TextView
             android:layout_width="wrap_content"

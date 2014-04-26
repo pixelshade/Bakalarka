@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * Created by pixelshade on 21.4.2014.
  */
-public class BTHandler {
+public class BTCommunicator {
     private final UUID myUUID =
             // UUID.fromString("00001101-0000-1000-8000-00805F9B35FB");
             UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
@@ -29,7 +29,7 @@ public class BTHandler {
     public String state;
     String model;
 
-    public BTHandler(Context context, Handler handler) {
+    public BTCommunicator(Context context, Handler handler) {
         this.handler = handler;
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         model = android.os.Build.MODEL.split(" ")[0];
@@ -259,7 +259,7 @@ public class BTHandler {
                 } catch (IOException e) {
                     Log.i("myChat",
                             model + ":" + "connectedThreadIO " + e.getMessage());
-                    BTHandler.this.start();
+                    BTCommunicator.this.start();
                     break;
                 }
             }

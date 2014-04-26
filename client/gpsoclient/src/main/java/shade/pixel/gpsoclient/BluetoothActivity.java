@@ -7,16 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -39,7 +35,7 @@ public class BluetoothActivity extends ActionBarActivity {
     private ArrayAdapter<String> arrayAdapter;
     private StringBuffer messages;
     private BluetoothAdapter btAdapter = null;
-    private BTHandler chat = null;
+    private BTCommunicator chat = null;
 
 
 //    @Override
@@ -124,7 +120,7 @@ public class BluetoothActivity extends ActionBarActivity {
                 return true;
             }
         });
-        chat = new BTHandler(this, handler);
+        chat = new BTCommunicator(this, handler);
         messages = new StringBuffer("");
     }
 
