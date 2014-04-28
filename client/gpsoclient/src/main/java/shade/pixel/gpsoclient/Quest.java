@@ -34,8 +34,8 @@ public class Quest implements Serializable{
     private int requirementType;
     private String requirement;
     // optional
-    private boolean active = false;
-    private boolean completed = false;
+    private boolean active;
+    private boolean completed;
 
     public Quest(int id, String code, String name, String info, String image, int rewardId, boolean autostart, int regionId, int requiredQuestId, int duration, int requirementType, String requirement, boolean active, boolean completed) {
         this(id, code, name, info, image, rewardId, autostart, regionId, requiredQuestId, duration, requirementType, requirement);
@@ -56,6 +56,8 @@ public class Quest implements Serializable{
         this.duration = duration;
         this.requirementType = requirementType;
         this.requirement = requirement;
+        this.active = false;
+        this.completed = false;
     }
 
 
@@ -192,6 +194,8 @@ public class Quest implements Serializable{
     public void setRequirement(String requirement) {
         this.requirement = requirement;
     }
+
+
 
     @Override
     public String toString() {

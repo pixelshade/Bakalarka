@@ -52,7 +52,10 @@ public class QuestInfoActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest_info);
 
-        quests = MainActivity.gameData.getQuests();
+
+
+
+        quests = GameHandler.gameData.getQuests();
         Log.i(TAG, quests.toString());
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -93,12 +96,13 @@ public class QuestInfoActivity extends ActionBarActivity {
         GameHandler gameHandler = GameHandler.getInstance(this);
         int currentQuest = mViewPager.getCurrentItem();
         int currentQuestId = quests.get(currentQuest).getId();
-        String removeURL = Settings.removeActiveQuestURL + "/" + currentQuestId;
+        String removeURL = Settings.removeActiveQuestURL + currentQuestId;
         gameHandler.htmlBrowser.HttpGetAsyncString(this, removeURL, new AsyncResponse() {
             @Override
             public void processFinish(Context context, String output) {
                 Response response = new Response(output);
                 if (response.isSuccessful()) {
+                    Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
                     finish();
                 } else {
                     Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
@@ -116,8 +120,9 @@ public class QuestInfoActivity extends ActionBarActivity {
         EditText questAnswer = (EditText) findViewById(R.id.answerEditText);
         String answer = "";
         if (questAnswer != null) answer = questAnswer.getText().toString();
-        double latitude = gameHandler.gpsTracker.getLatitude();
-        double longitude = gameHandler.gpsTracker.getLongitude();
+        GPSTracker gpsTracker = GPSTracker.getInstance();
+        double latitude = gpsTracker.getLatitude();
+        double longitude = gpsTracker.getLongitude();
 
         String completionURL = Settings.getQuestCompletionURL() + "/" +currentQuestId+"/"+latitude+"/"+longitude+"/"+answer;
         gameHandler.htmlBrowser.HttpGetAsyncString(this, completionURL, new AsyncResponse() {
@@ -232,6 +237,18 @@ public class QuestInfoActivity extends ActionBarActivity {
             ImageView questImage = (ImageView) rootView.findViewById(R.id.questImageView);
             EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
             Button questAcceptBtn = (Button) rootView.findViewById(R.id.acceptButton);
+            Button questRemoveBtn = (Button) rootView.findViewById(R.id.removeButton);
+            Button questCompleteBtn = (Button) rootView.findViewById(R.id.completeButton);
+
+            if(actualQuest.isActive()){
+                questAcceptBtn.setVisibility(View.GONE);
+            } else {
+                questCompleteBtn.setVisibility(View.GONE);
+                if(actualQuest.isCompleted()){
+                    questCompleteBtn.setEnabled(false);
+                }
+            }
+
 
             questName.setText(actualQuest.getName());
             questInfo.setText(Html.fromHtml(actualQuest.getInfo()));

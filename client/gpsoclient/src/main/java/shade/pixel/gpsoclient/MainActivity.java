@@ -108,14 +108,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             );
         }
 
-
         htmlBrowser = MyHtmlBrowser.getInstance(this);
         gameData = new GameData();
         contentFilesManager = new ContentFilesManager(this);
         gameHandler = GameHandler.getInstance(this);
-        gpsTracker = new GPSTracker(this, this);
-
-
+        gpsTracker = GPSTracker.getInstance(this, this);
 
         if (htmlBrowser.isOnline()) {
 //            htmlBrowser.HttpGetAsyncString(this, Settings.getIsLoggedInURL(), loginCheck);
@@ -188,7 +185,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void UpdatePosition(View view) {
-        //TODO fixnut stale rovnaky last known position
 //        gpsTracker = new GPSTracker(this,this);
         if(gpsTracker==null) return;
         double latitude = gpsTracker.getLatitude();
@@ -225,6 +221,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             double longitude = gpsTracker.getLongitude();
                             String infoString = json + "\n\n" + latitude + " " + longitude;
                             SetTextView(infoString);
+
                             SetQuestsView(quests);
                             SetRegionsView(regions);
 

@@ -21,7 +21,6 @@ public class GameHandler {
 
     Context context;
    MyHtmlBrowser htmlBrowser;
-   GPSTracker gpsTracker;
    ContentFilesManager contentFilesManager;
 
 
@@ -40,25 +39,6 @@ public class GameHandler {
         contentFilesManager = new ContentFilesManager(context);
     }
 
-    public void UpdatePositionAndGameData(){
-        double latitude = gameHandler.gpsTracker.getLatitude();
-        double longitude = gameHandler.gpsTracker.getLongitude();
-        String url = Settings.getServerURL()+"/api/json/"+latitude+"/"+longitude;
-        Toast.makeText(context, url, Toast.LENGTH_SHORT).show();
-        htmlBrowser.HttpGetAsyncString(context, url, new AsyncResponse() {
-            @Override
-            public void processFinish(Context context, String json) {
-                GameData tempGameData = ResponseJSONParser.parseGameData(json);
-                if(gameData != null){
-                   gameData = tempGameData;
-                } else {
-                    Log.d(TAG, "Problem with parsing gamedata, using the old ones");
-                }
-            }
-        });
-    }
-
-
     public GameData getGameData() {
         return gameData;
     }
@@ -73,14 +53,6 @@ public class GameHandler {
 
     public void setHtmlBrowser(MyHtmlBrowser htmlBrowser) {
         this.htmlBrowser = htmlBrowser;
-    }
-
-    public GPSTracker getGpsTracker() {
-        return gpsTracker;
-    }
-
-    public void setGpsTracker(GPSTracker gpsTracker) {
-        this.gpsTracker = gpsTracker;
     }
 
     public ContentFilesManager getContentFilesManager() {

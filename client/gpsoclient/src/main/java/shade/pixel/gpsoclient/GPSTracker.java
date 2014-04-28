@@ -1,6 +1,9 @@
 package shade.pixel.gpsoclient;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +11,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
@@ -27,6 +31,7 @@ import java.util.ArrayList;
  */
 
 public class GPSTracker extends Service implements LocationListener {
+    private static GPSTracker instance;
     private static final String TAG = "GPS_TRACKER";
     private MainActivity mActivity;
     private Context mContext;
@@ -54,6 +59,19 @@ public class GPSTracker extends Service implements LocationListener {
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
+
+
+
+    public static GPSTracker getInstance(){
+        return getInstance(null,null);
+    }
+
+    public static GPSTracker getInstance(Context context, MainActivity activity){
+        if(instance==null){
+            instance = new GPSTracker(context, activity);
+        }
+        return instance;
+    }
 
     public GPSTracker(Context context, MainActivity activity) {
         this.mActivity = activity;
@@ -116,7 +134,7 @@ public class GPSTracker extends Service implements LocationListener {
             e.printStackTrace();
         }
 
-        return new LatLng(location.getLatitude(), location.getLongitude());
+        return new LatLng(latitude, longitude);
     }
 
     /**
@@ -203,7 +221,8 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(final Location location) {
+        this.location = location;
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         String url = shade.pixel.gpsoclient.Settings.getServerURL() + "/api/json/" + latitude + "/" + longitude;
@@ -216,7 +235,6 @@ public class GPSTracker extends Service implements LocationListener {
                 if (response.isLoggedOut()) {
                     StartLoginActivity();
                 } else {
-
                     GameData gameData = ResponseJSONParser.parseGameData(json);
                     GameHandler.gameHandler.setGameData(gameData);
                     if (gameData != null) {
@@ -233,14 +251,14 @@ public class GPSTracker extends Service implements LocationListener {
                             sb.append(quest.getName() + ",");
                         }
 
-                        mActivity.SetQuestsView(quests);
-                        mActivity.SetRegionsView(regions);
-
-                        double latitude = getLatitude();
-                        double longitude = getLongitude();
-                        String infoString = json + "\n\n" + latitude + " " + longitude;
-
-                        mActivity.SetTextView(infoString);
+                        if(mActivity!=null) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            String infoString = json + "\n\n" + latitude + " " + longitude;
+                            mActivity.SetTextView(infoString);
+                            mActivity.SetQuestsView(quests);
+                            mActivity.SetRegionsView(regions);
+                        }
 
                     } else {
                         Log.d(TAG, "Problem with parsing gamedata");
@@ -269,8 +287,13 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
     @Override
-    public IBinder onBind(Intent arg0) {
+    public IBinder onBind(Intent intent) {
         return null;
     }
 
+    @Override
+    public void onDestroy() {
+        // Tell the user we stopped.
+        Toast.makeText(this, "GPSTracker stopped", Toast.LENGTH_SHORT).show();
+    }
 }
