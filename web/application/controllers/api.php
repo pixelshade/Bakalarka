@@ -46,9 +46,11 @@ class Api extends Admin_Controller
 			// $active_completed_quests_ids =	array_column($active_completed_quests, 'quest_id');
 
 			// $quests = $this->quest_m->get_array_where_in('region_id', $region_ids, 'quest_id', $active_completed_quests_ids);	
+			$active_quests  =	$this->user_quest_m->get_quests_for_char($user_id);
 			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids);	
 			$result['regions'] = $regions;
 			$result['quests'] = $quests;
+			$result['active_quests'] = $active_quests;
 				// TODO autostart - teraz sa budu pliest message
 			$response = array();
 			foreach ($quests as $quest) {			
@@ -148,12 +150,12 @@ class Api extends Admin_Controller
 			$response['msg'] = 'Quest not specified';
 		} else {
 			$user_id = $this->user_m->get_user_id();
-			$quest = $this->user_quest_m->get_by("`char_id` = '".$user_id."' AND `quest_id` = '".$quest_id."' AND `completed` = '0'");
+			$quest = $this->user_quest_m->get_by("`char_id` = '".$user_id."' AND `quest_id` = '".$quest_id."' AND `completed` = '0'", TRUE);
 			if(empty($quest)) {
 				$response['success'] = 0;
-				$response['msg'] = 'Active quest not found';
+				$response['msg'] = 'Active quest not found (cannot remove completed quest)';
 			} else {
-				$this->user_quest_m->delete("char_id =".$user_id);		
+				$this->user_quest_m->delete($quest->id);		
 				$response['success'] = 1;
 				$response['msg'] = 'Active quest deleted';
 			}		
@@ -163,21 +165,22 @@ class Api extends Admin_Controller
 
 	public function get_my_attributes(){
 		$user_id = $this->user_m->get_user_id();
-		$attributes = $this->user_attribute_m->get_array_by("`char_id` = '".$user_id."'");				
+		$attirubtes =  $this->user_attirubte_m->get_attirubtes_for_char($user_id);								
 		echo json_encode($attributes);
 	}
 
 
 	public function get_my_quests(){
 		$user_id = $this->user_m->get_user_id();
-		$quests = $this->user_quest_m->get_array_by("`char_id` = '".$user_id."'");		
-		// print_r($this->user_quest_m);
+	
+		$quests  =	$this->user_quest_m->get_quests_for_char($user_id);
+		
 		echo json_encode($quests);
 	}
 
 	public function get_my_items(){
-		$user_id = $this->user_m->get_user_id();		
-		$items = $this->user_item_m->get_array_by("`char_id` = '".$user_id."'");		
+		$user_id = $this->user_m->get_user_id();			
+		$items =  $this->user_item_m->get_items_for_char($user_id);
 		echo json_encode($items);
 	}
 
@@ -371,7 +374,7 @@ class Api extends Admin_Controller
 				$data['quest_id'] = $quest_id;
 				$data['time_accepted'] = date('Y-m-d H:i:s');
 				$data['completed'] = 1;
-				// $this->user_quest_m->save($data, $user_quest_id);
+				$this->user_quest_m->save($data, $user_quest_id);
 				$response['data'] = $this->_giveRewardFromQuestId($quest_id,$user_id);				
 			}
 		}

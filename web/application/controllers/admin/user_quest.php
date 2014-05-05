@@ -6,6 +6,10 @@ class User_quest extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('user_quest_m');
+		$this->load->model('user_m');
+		$this->load->model('quest_m');
+		$this->data['chars'] = $this->user_m->get_for_dropdown();	
+		$this->data['quests'] = $this->quest_m->get_for_dropdown();	
 	}
 
 	public function index ()

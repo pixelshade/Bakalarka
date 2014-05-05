@@ -50,18 +50,15 @@ public class QuestsFragment extends Fragment {
     }
 
     public void updateFragment() {
-        if (quests != null) {
-            ArrayAdapter<Quest> arrayAdapter = new ArrayAdapter<Quest>(getActivity(), android.R.layout.simple_list_item_1, quests);
-            ListView lv = (ListView) rootView.findViewById(R.id.listViewQuests);
-            if (lv != null) lv.setAdapter(arrayAdapter);
+        GameHandler gameHandler = GameHandler.getInstance(getActivity());
+        GameData gameData = gameHandler.getGameData();
+        if(gameData!=null) {
+            ArrayList<Quest> quests = gameData.getQuests();
+            if (quests != null) {
+                ArrayAdapter<Quest> arrayAdapter = new ArrayAdapter<Quest>(getActivity(), android.R.layout.simple_list_item_1, quests);
+                ListView lv = (ListView) rootView.findViewById(R.id.listViewQuests);
+                if (lv != null) lv.setAdapter(arrayAdapter);
+            }
         }
-    }
-
-    public ArrayList<Quest> getQuests() {
-        return quests;
-    }
-
-    public void setQuests(ArrayList<Quest> quests) {
-        this.quests = quests;
     }
 }

@@ -25,8 +25,16 @@ class Migration_Create_cron_tasks extends CI_Migration {
 		
 			'json_params' => array(
 				'type' => 'TEXT',				
+			),	
+			'active' => array(
+				'type' => 'INT',
+				'constraint' => 2,
+				'unsigned' => TRUE,				
 			),		
-					
+			'time_to_run' => array(
+				'type' => 'VARCHAR',
+				'constraint' => '20',								
+			),	
 		));
 		$this->dbforge->add_key('id', TRUE);
 		$this->dbforge->create_table('cron_tasks');

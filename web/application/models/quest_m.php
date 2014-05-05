@@ -22,7 +22,7 @@ class Quest_m extends MY_Model
 		'reward_id' => array(
 			'field' => 'reward_id', 
 			'label' => 'Reward_id', 
-			'rules' => 'intval'
+			'rules' => 'trim|intval'
 			), 
 		'autostart' => array(
 			'field' => 'autostart', 
@@ -32,22 +32,22 @@ class Quest_m extends MY_Model
 		'region_id' => array(
 			'field' => 'region_id', 
 			'label' => 'region_id', 
-			'rules' => 'intval'
+			'rules' => 'trim|intval'
 			), 
 		'required_completed_quest_id' => array(
 			'field' => 'required_completed_quest_id', 
 			'label' => 'required_completed_quest_id', 
-			'rules' => 'intval'
+			'rules' => 'trim|intval'
 			), 
 		'duration' => array(
 			'field' => 'duration', 
 			'label' => 'duration', 
-			'rules' => 'intval'
+			'rules' => 'trim|intval'
 			), 
 		'completion_requirement_type' => array(
 			'field' => 'completion_requirement_type', 
 			'label' => 'completion_requirement_type', 
-			'rules' => 'intval'
+			'rules' => 'trim|intval'
 			), 
 		'completion_requirement' => array(
 			'field' => 'completion_requirement', 
@@ -81,7 +81,7 @@ class Quest_m extends MY_Model
 			$quest->completion_requirement = '';
 
 			return $quest;
-		}
+		}		
 
 		public function get_for_dropdown(){
 			$empty = array(NONE_ID => 'No quest');

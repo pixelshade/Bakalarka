@@ -6,7 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -22,6 +25,7 @@ public class ResponseJSONParser {
 
     //
     public static final String KEY_QUESTS = "quests";
+    public static final String KEY_ACTIVE_QUESTS = "active_quests";
     public static final String KEY_REGIONS = "regions";
     public static final String KEY_INVENTORY = "items";
     public static final String KEY_ENEMIES = "enemies";
@@ -40,6 +44,10 @@ public class ResponseJSONParser {
     public static final String KEY_QUEST_DURATION = "duration";
     public static final String KEY_QUEST_REQUIREMENT_TYPE = "completion_requirement_type";
     public static final String KEY_QUEST_REQUIREMENT = "completion_requirement";
+    public static final String KEY_QUEST_TIME_ACCEPTED = "time_accepted";
+    public static final String KEY_QUEST_COMPLETED = "completed";
+
+
 
     // region keys
     public static final String KEY_REGION_ID = "id";
@@ -87,6 +95,7 @@ public class ResponseJSONParser {
 
                 JSONArray jsonRegions = jsonObj.optJSONArray(KEY_REGIONS);
                 JSONArray jsonQuests = jsonObj.optJSONArray(KEY_QUESTS);
+                JSONArray jsonActiveQuests = jsonObj.optJSONArray(KEY_ACTIVE_QUESTS);
                 JSONArray jsonItems = jsonObj.optJSONArray(KEY_INVENTORY);
 
 
@@ -109,6 +118,31 @@ public class ResponseJSONParser {
                     int reward_id = quest.optInt(Quest.KEY_QUEST_REWARD_ID, Quest.UNDEFINED_INT_VALUE);
 
                     Quest q = new Quest(id,code, name, info, image, reward_id, autostart, regionId, requiredQuestId, duration, requirementType, requirement);
+                    quests.add(q);
+                }
+
+
+                for(int i = 0; i < jsonActiveQuests.length(); i++){
+                    JSONObject quest = jsonActiveQuests.getJSONObject(i);
+
+                    int id = quest.getInt(Quest.KEY_QUEST_ID);
+                    String name = quest.getString(Quest.KEY_QUEST_NAME);
+                    boolean autostart = quest.getInt(Quest.KEY_QUEST_AUTOSTART) == 1;
+                    String code = quest.getString(Quest.KEY_QUEST_CODE);
+                    long duration = quest.optInt(Quest.KEY_QUEST_DURATION, 0);
+                    String image = quest.getString(Quest.KEY_QUEST_IMAGE);
+                    String info = quest.getString(Quest.KEY_QUEST_INFO);
+                    int regionId = quest.optInt(Quest.KEY_QUEST_REGION_ID, Quest.UNDEFINED_INT_VALUE);
+                    int requiredQuestId = quest.optInt(Quest.KEY_QUEST_REQUIRED_QUEST_ID, Quest.UNDEFINED_INT_VALUE);
+                    int requirementType = quest.getInt(Quest.KEY_QUEST_REQUIREMENT_TYPE);
+                    String requirement = quest.getString(Quest.KEY_QUEST_REQUIREMENT);
+                    int reward_id = quest.optInt(Quest.KEY_QUEST_REWARD_ID, Quest.UNDEFINED_INT_VALUE);
+                    String timeAcceptedString = quest.getString(Quest.KEY_QUEST_TIME_ACCEPTED);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date timeAccepted = sdf.parse(timeAcceptedString);
+                    Boolean completed = quest.getInt(Quest.KEY_QUEST_COMPLETED) == 1;
+
+                    Quest q = new Quest(id,code, name, info, image, reward_id, autostart, regionId, requiredQuestId, duration, requirementType, requirement,true,completed,timeAccepted);
                     quests.add(q);
                 }
 
@@ -150,6 +184,8 @@ public class ResponseJSONParser {
                 return gameData;
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         } else {
             Log.e("JSON PARSER", "No json string to parse");
@@ -160,3 +196,4 @@ public class ResponseJSONParser {
 
 
 }
+

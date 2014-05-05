@@ -46,6 +46,7 @@
 							<li><a href="/admin/item_instance">Item instance</a></li>
 							<li><a href="/admin/attribute">Attributes</a></li>
 							<li><a href="/admin/reward">Rewards</a></li>
+							<li><a href="/admin/cron_task">Timed regions movement, </a></li>
 								<li class="divider"></li>
 							<li><a href="/admin/user_quest">Characters active quests</a></li>
 							<li><a href="/admin/user_item">Inventories</a></li>

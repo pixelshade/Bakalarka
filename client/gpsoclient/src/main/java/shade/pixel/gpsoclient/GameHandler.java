@@ -44,7 +44,7 @@ public class GameHandler {
     }
 
     public void setGameData(GameData gameData) {
-        this.gameData = gameData;
+        GameHandler.gameData = gameData;
     }
 
     public MyHtmlBrowser getHtmlBrowser() {

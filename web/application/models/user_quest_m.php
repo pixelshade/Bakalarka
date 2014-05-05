@@ -59,5 +59,19 @@ class User_quest_m extends MY_Model
 		return FALSE;
 	}
 
+	 
+
+	public function get_quests_for_char($char_id = NULL){
+		if($char_id != NULL){
+			$this->db->select('*');
+			$this->db->from($this->_table_name);			
+			$this->db->where('char_id', $char_id);	
+			$this->db->join('quests', 'quests.id = '.$this->_table_name.".quest_id", 'left');
+			$result = $this->db->get()->result();
+			return $result;
+		}
+		return NULL;
+	}
+
 
 }

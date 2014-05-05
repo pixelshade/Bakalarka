@@ -77,6 +77,7 @@ class Quest extends Admin_Controller
 				'reward_id',
 				'autostart',
 				'region_id',
+				'duration',
 				'required_completed_quest_id',
 				'completion_requirement_type',
 				'completion_requirement',

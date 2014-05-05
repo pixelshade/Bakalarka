@@ -21,7 +21,6 @@
                 android:text="Epic quest"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp" />
-
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,13 +28,30 @@
                 android:src="@drawable/no_image_512x512"
                 android:paddingBottom="20dp" />
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/questCompletedImage"
+                android:src="@drawable/approve_icon_128px"
+                android:visibility="gone"/>
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/questInfoTextView"
-                android:text="Some text about quest"
+                android:text="Some info about quest"
                 android:paddingBottom="20dp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/timeLeftTextView"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAlignment="center"
+                android:text="Time Left: 20s"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -51,6 +67,7 @@
                 android:id="@+id/answerEditText"
                 android:hint="Input answer to complete"
                 android:paddingBottom="20dp" />
+
 
             <LinearLayout
                 android:orientation="horizontal"

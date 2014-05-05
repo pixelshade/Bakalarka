@@ -16,8 +16,8 @@
 		<tbody>
 <?php if(count($user_quests)): foreach($user_quests as $user_quest): ?>	
 		<tr>
-			<td><?php echo $user_quest->char_id; ?></td>
-			<td><?php echo $user_quest->quest_id; ?></td>
+			<td><?php echo $chars[$user_quest->char_id]; ?></td>
+			<td><?php echo $quests[$user_quest->quest_id]; ?></td>
 			<td><?php echo $user_quest->time_accepted; ?></td>
 			<td><?php echo $user_quest->completed; ?></td>
 			

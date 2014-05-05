@@ -56,6 +56,14 @@ class Region_m extends MY_Model
 		return $region;
 	}
 
+	public function change_location($lat_start,$lon_start,$lat_end,$lon_end, $region_id){
+		$region['lat_start'] = $lat_start;
+		$region['lon_start'] = $lon_start;
+		$region['lat_end'] = $lat_end;
+		$region['lon_end'] = $lon_end;
+		save($region,$region_id);
+	}
+
 	public function get_for_dropdown(){
 		$empty = array(NONE_ID => 'No region');
 		$result = $this->get_array();		

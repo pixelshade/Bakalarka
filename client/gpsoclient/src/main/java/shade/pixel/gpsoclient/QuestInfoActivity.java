@@ -1,10 +1,13 @@
 package shade.pixel.gpsoclient;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -23,10 +26,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class QuestInfoActivity extends ActionBarActivity {
     private static String TAG = "QuestInfoActivity";
@@ -46,15 +48,14 @@ public class QuestInfoActivity extends ActionBarActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    public static Activity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest_info);
 
-
-
-
+        mActivity = this;
         quests = GameHandler.gameData.getQuests();
         Log.i(TAG, quests.toString());
         // Create the adapter that will return a fragment for each of the three
@@ -70,6 +71,7 @@ public class QuestInfoActivity extends ActionBarActivity {
         mViewPager.setCurrentItem(quest_index);
 
     }
+
 
 
     @Override
@@ -91,82 +93,6 @@ public class QuestInfoActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void RemoveActiveQuest(View view) {
-        GameHandler gameHandler = GameHandler.getInstance(this);
-        int currentQuest = mViewPager.getCurrentItem();
-        int currentQuestId = quests.get(currentQuest).getId();
-        String removeURL = Settings.removeActiveQuestURL + currentQuestId;
-        gameHandler.htmlBrowser.HttpGetAsyncString(this, removeURL, new AsyncResponse() {
-            @Override
-            public void processFinish(Context context, String output) {
-                Response response = new Response(output);
-                if (response.isSuccessful()) {
-                    Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
-                    finish();
-                } else {
-                    Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-    }
-
-    public void CompleteQuest(View view) {
-        GameHandler gameHandler = GameHandler.getInstance(this);
-        int currentQuest = mViewPager.getCurrentItem();
-        int currentQuestId = quests.get(currentQuest).getId();
-
-        EditText questAnswer = (EditText) findViewById(R.id.answerEditText);
-        String answer = "";
-        if (questAnswer != null) answer = questAnswer.getText().toString();
-        GPSTracker gpsTracker = GPSTracker.getInstance();
-        double latitude = gpsTracker.getLatitude();
-        double longitude = gpsTracker.getLongitude();
-
-        String completionURL = Settings.getQuestCompletionURL() + "/" +currentQuestId+"/"+latitude+"/"+longitude+"/"+answer;
-        gameHandler.htmlBrowser.HttpGetAsyncString(this, completionURL, new AsyncResponse() {
-            @Override
-            public void processFinish(Context context, String output) {
-                Response response = new Response(output);
-                if (response.isSuccessful()) {
-                    Button completeBtn = (Button) findViewById(R.id.completeButton);
-                    if (completeBtn != null) {
-                        completeBtn.setText("Quest was completed");
-                        completeBtn.setEnabled(false);
-                        Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-    public void AcceptQuest(View view) {
-        GameHandler gameHandler = GameHandler.getInstance(this);
-        int currentQuest = mViewPager.getCurrentItem();
-        int currentQuestId = quests.get(currentQuest).getId();
-        String acceptURL = Settings.getQuestAcceptURL() + "/" + currentQuestId;
-        gameHandler.htmlBrowser.HttpGetAsyncString(this, acceptURL, new AsyncResponse() {
-            @Override
-            public void processFinish(Context context, String output) {
-                Response response = new Response(output);
-                if (response.isSuccessful()) {
-                    Button acceptBtn = (Button) findViewById(R.id.acceptButton);
-                    if (acceptBtn != null) {
-                        acceptBtn.setText("Quest was accepted");
-                        acceptBtn.setEnabled(false);
-                        Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-    }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -212,12 +138,16 @@ public class QuestInfoActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
         private static final String ARG_KEY_QUEST = "ACT_QUEST";
+        private View rootView;
+        private Quest actualQuest;
+        private QuestTimeLeftTimer questTimeLeftTimer;
+
         public static PlaceholderFragment newInstance(Quest quest) {
 
-            Log.d(TAG, "actual quest je "+quest);
+            Log.d(TAG, "actual quest je " + quest);
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
-            args.putSerializable(ARG_KEY_QUEST,quest);
+            args.putSerializable(ARG_KEY_QUEST, quest);
             fragment.setArguments(args);
             return fragment;
         }
@@ -228,37 +158,53 @@ public class QuestInfoActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_quest_info, container, false);
-            Quest actualQuest = (Quest)getArguments().getSerializable(ARG_KEY_QUEST);
+            rootView = inflater.inflate(R.layout.fragment_quest_info, container, false);
+            actualQuest = (Quest) getArguments().getSerializable(ARG_KEY_QUEST);
 
             TextView questName = (TextView) rootView.findViewById(R.id.questNameLabel);
             TextView questInfo = (TextView) rootView.findViewById(R.id.questInfoTextView);
             TextView questCompletion = (TextView) rootView.findViewById(R.id.questCompletionTextView);
             ImageView questImage = (ImageView) rootView.findViewById(R.id.questImageView);
-            EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
-            Button questAcceptBtn = (Button) rootView.findViewById(R.id.acceptButton);
             Button questRemoveBtn = (Button) rootView.findViewById(R.id.removeButton);
-            Button questCompleteBtn = (Button) rootView.findViewById(R.id.completeButton);
+            Button questCompleteButton = (Button) rootView.findViewById(R.id.completeButton);
+            Button questAcceptButton = (Button) rootView.findViewById(R.id.acceptButton);
 
-            if(actualQuest.isActive()){
-                questAcceptBtn.setVisibility(View.GONE);
-            } else {
-                questCompleteBtn.setVisibility(View.GONE);
-                if(actualQuest.isCompleted()){
-                    questCompleteBtn.setEnabled(false);
+            questAcceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AcceptQuest();
                 }
-            }
+            });
 
+            questCompleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CompleteQuest();
+                }
+            });
+
+            questRemoveBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RemoveActiveQuest();
+                }
+            });
 
             questName.setText(actualQuest.getName());
-            questInfo.setText(Html.fromHtml(actualQuest.getInfo()));
-            questCompletion.setText(actualQuest.getRequirementTypeText());
+            questInfo.setText(Html.fromHtml(actualQuest.getInfo())+""+actualQuest.getTimeAccepted()+actualQuest.getDuration()+"Act:"+actualQuest.isActive()+"Compl:"+actualQuest.isCompleted());
+            questCompletion.setText(actualQuest.getRequirementType().toString());
 
-            if (actualQuest.getRequirementType() != 0) {
-                questAnswer.setVisibility(View.GONE);
+
+            if(actualQuest.isActive()) {
+                changeViewActiveQuest();
+                if (actualQuest.isCompleted()) {
+                    changeViewCompleteQuest();
+                }
+            } else {
+                changeViewNotActiveQuest();
             }
 
-            if(actualQuest.getImage().length() != 0) {
+            if (actualQuest.getImage().length() != 0) {
                 String filePath = Settings.getContentFileDir() + actualQuest.getImage();
                 File imageFile = new File(filePath);
                 Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
@@ -268,7 +214,195 @@ public class QuestInfoActivity extends ActionBarActivity {
             return rootView;
         }
 
+        public class QuestTimeLeftTimer extends CountDownTimer {
+            public QuestTimeLeftTimer(long millisInFuture, long countDownInterval) {
+                super(millisInFuture, countDownInterval);
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                    long secondsLeft = getQuestTimeLeft(actualQuest);
+                    setQuestTimeLeftTextView(secondsLeft);
+
+            }
+
+            @Override
+            public void onFinish() {
+                if (rootView != null) {
+                    TextView timeLeftTextView = (TextView) rootView.findViewById(R.id.timeLeftTextView);
+                    timeLeftTextView.setText("Time's up!");
+                    Button completeButton = (Button) rootView.findViewById(R.id.completeButton);
+                    if(completeButton !=null) completeButton.setEnabled(false);
+                }
+            }
+        }
+
+        public void changeViewCompleteQuest(){
+            if(rootView==null) return;
+            ImageView questCompletedImage = (ImageView) rootView.findViewById(R.id.questCompletedImage);
+            Button questCompleteBtn = (Button) rootView.findViewById(R.id.completeButton);
+            EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
+            Button questRemoveBtn = (Button) rootView.findViewById(R.id.removeButton);
+            TextView timeLeftTextView = (TextView) rootView.findViewById(R.id.timeLeftTextView);
+            if(actualQuest.getRequirementType() == Quest.QuestRequirement.input_answer){
+                questAnswer.setText(actualQuest.getRequirement());
+                questAnswer.setEnabled(false);
+            }
+            timeLeftTextView.setVisibility(View.GONE);
+            questRemoveBtn.setVisibility(View.GONE);
+            questCompleteBtn.setEnabled(false);
+            questCompleteBtn.setText("Quest was completed");
+            questCompletedImage.setVisibility(View.VISIBLE);
+            if(questTimeLeftTimer!=null) questTimeLeftTimer.cancel();
+        }
+
+        public void changeViewActiveQuest(){
+            if(rootView==null) return;
+            Button questRemoveBtn = (Button) rootView.findViewById(R.id.removeButton);
+            Button questCompleteBtn = (Button) rootView.findViewById(R.id.completeButton);
+            Button questAcceptBtn = (Button) rootView.findViewById(R.id.acceptButton);
+            questAcceptBtn.setVisibility(View.GONE);
+            questRemoveBtn.setVisibility(View.VISIBLE);
+            questCompleteBtn.setVisibility(View.VISIBLE);
+
+            EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
+            if (actualQuest.getRequirementType() == Quest.QuestRequirement.input_answer) {
+                questAnswer.setVisibility(View.VISIBLE);
+            } else {
+                questAnswer.setVisibility(View.GONE);
+            }
+
+            if(actualQuest.getDuration()>-1){   // its timed quest
+                long timeLeftSeconds = getQuestTimeLeft(actualQuest);
+                questTimeLeftTimer = new QuestTimeLeftTimer(timeLeftSeconds*1000,1000);
+                questTimeLeftTimer.start();
+            } else {
+                TextView timeLeftTextView = (TextView) rootView.findViewById(R.id.timeLeftTextView);
+                timeLeftTextView.setVisibility(View.GONE);
+            }
+        }
+
+        public void changeViewNotActiveQuest(){
+            if(rootView==null) return;
+            Button questRemoveBtn = (Button) rootView.findViewById(R.id.removeButton);
+            Button questCompleteBtn = (Button) rootView.findViewById(R.id.completeButton);
+            EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
+            TextView timeLeftTextView = (TextView) rootView.findViewById(R.id.timeLeftTextView);
+            questRemoveBtn.setVisibility(View.GONE);
+            questCompleteBtn.setVisibility(View.GONE);
+            questAnswer.setVisibility(View.GONE);
+
+            if(actualQuest.getDuration()>-1) {   // its timed quest
+                setQuestTimeLeftTextView(actualQuest.getDuration());
+            } else {
+                timeLeftTextView.setVisibility(View.GONE);
+            }
+        }
+
+        private long getQuestTimeLeft(Quest quest){
+            if(quest!=null) {
+                long timeAcceptedSeconds = quest.getTimeAccepted().getTime() / 1000;
+                long questDurationSeconds = quest.getDuration();
+                long currentTimeSeconds = (System.currentTimeMillis() / 1000);
+                return timeAcceptedSeconds + questDurationSeconds - currentTimeSeconds;
+            } else {
+                return -1;
+            }
+        }
+
+
+        private void setQuestTimeLeftTextView(long secondsLeft) {
+            if (rootView != null) {
+                TextView timeLeftTextView = (TextView) rootView.findViewById(R.id.timeLeftTextView);
+                if (actualQuest == null || timeLeftTextView == null) return;
+                if (actualQuest.getDuration() > -1) {
+                    timeLeftTextView.setText("Time Left: " + secondsLeft);
+                } else {
+                    timeLeftTextView.setVisibility(View.GONE);
+                }
+            }
+        }
+
+
+        /*        mostly Button events */
+
+        public void RemoveActiveQuest() {
+           int currentQuestId = actualQuest.getId();
+
+            String removeURL = Settings.removeActiveQuestURL + currentQuestId;
+
+            GameHandler.gameHandler.htmlBrowser.HttpGetAsyncString(mActivity, removeURL, new AsyncResponse() {
+                @Override
+                public void processFinish(Context context, String output) {
+                    Response response = new Response(output);
+                    if (response.isSuccessful()) {
+                        Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
+                        actualQuest.setActive(false);
+                        mActivity.finish();
+                    } else {
+                        Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+        }
+
+        public void CompleteQuest() {
+            GameHandler gameHandler = GameHandler.getInstance(mActivity);
+
+            int currentQuestId =  actualQuest.getId();
+
+            EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
+            String answer = "";
+            if (questAnswer != null) answer = questAnswer.getText().toString();
+            GPSTracker gpsTracker = GPSTracker.getInstance();
+            double latitude = gpsTracker.getLatitude();
+            double longitude = gpsTracker.getLongitude();
+
+            String completionURL = Settings.getQuestCompletionURL() + "/" + currentQuestId + "/" + latitude + "/" + longitude + "/" + answer;
+            gameHandler.htmlBrowser.HttpGetAsyncString(mActivity, completionURL, new AsyncResponse() {
+                @Override
+                public void processFinish(Context context, String output) {
+                    Response response = new Response(output);
+                    if (response.isSuccessful()) {
+                        actualQuest.setCompleted(true);
+
+                        changeViewCompleteQuest();
+                        Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+
+
+
+        public void AcceptQuest() {
+            GameHandler gameHandler = GameHandler.getInstance(mActivity);
+            int currentQuestId = actualQuest.getId();
+            String acceptURL = Settings.getQuestAcceptURL() + "/" + currentQuestId;
+            gameHandler.htmlBrowser.HttpGetAsyncString(mActivity, acceptURL, new AsyncResponse() {
+                @Override
+                public void processFinish(Context context, String output) {
+                    Response response = new Response(output);
+                    if (response.isSuccessful()) {
+                        actualQuest.setActive(true);
+                        actualQuest.setTimeAccepted(new Date());
+                        Button acceptBtn = (Button) rootView.findViewById(R.id.acceptButton);
+                        if (acceptBtn != null) {
+                            acceptBtn.setText("Quest was accepted");
+                            acceptBtn.setEnabled(false);
+                            Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                        changeViewActiveQuest();
+                    } else {
+                        Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+        }
 
     }
-
 }

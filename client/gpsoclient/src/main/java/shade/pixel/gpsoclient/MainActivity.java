@@ -21,6 +21,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -186,9 +188,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void UpdatePosition(View view) {
 //        gpsTracker = new GPSTracker(this,this);
-        if(gpsTracker==null) return;
-        double latitude = gpsTracker.getLatitude();
-        double longitude = gpsTracker.getLongitude();
+        if(gpsTracker==null) {
+            Log.d(TAG, "GPS tracker is null");
+            return;
+        }
+        LatLng location = gpsTracker.getLocation();
+        double latitude = location.latitude;
+        double longitude = location.longitude;
         if (!gpsTracker.canGetLocation()) {
             gpsTracker.showSettingsAlert();
         } else {
@@ -325,10 +331,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return new MainFragment();
                 case 1:
                     // Quests fragment activity
-                    ArrayList<Quest> quests = gameData.getQuests();
-                    QuestsFragment questsFragment = new QuestsFragment();
-                    questsFragment.setQuests(quests);
-                    return questsFragment;
+                    return new QuestsFragment();
                 case 2:
                     // Region fragment activity
                     return new RegionsFragment();

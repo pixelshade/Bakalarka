@@ -32,4 +32,16 @@ class User_attribute_m extends MY_Model
 		return $user_attribute;
 	}
 
+	public function get_attirubtes_for_char($char_id = NULL){
+		if($char_id != NULL){
+			$this->db->select('*');
+			$this->db->from('attributes');			
+			$this->db->where('char_id', $char_id);	
+			$this->db->join($this->_table_name, 'attributes.id = '.$this->_table_name.".attribute_id");
+			$result = $this->db->get()->result();
+			return $result;
+		}
+		return NULL;
+	}
+
 }

@@ -1,6 +1,7 @@
 package shade.pixel.gpsoclient;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by pixelshade on 2.3.2014.
@@ -18,6 +19,8 @@ public class Quest implements Serializable{
     public static final String KEY_QUEST_DURATION = "duration";
     public static final String KEY_QUEST_REQUIREMENT_TYPE = "completion_requirement_type";
     public static final String KEY_QUEST_REQUIREMENT = "completion_requirement";
+    public static final String KEY_QUEST_TIME_ACCEPTED = "time_accepted";
+    public static final String KEY_QUEST_COMPLETED = "completed";
 
     public static final int UNDEFINED_INT_VALUE = -1;
 
@@ -30,20 +33,22 @@ public class Quest implements Serializable{
     private boolean autostart;
     private int regionId;
     private int requiredQuestId;
-    private int duration;
-    private int requirementType;
+    private long duration;
+    private QuestRequirement requirementType;
     private String requirement;
-    // optional
+    // optional, used with active user quest
     private boolean active;
     private boolean completed;
+    private Date timeAccepted;
 
-    public Quest(int id, String code, String name, String info, String image, int rewardId, boolean autostart, int regionId, int requiredQuestId, int duration, int requirementType, String requirement, boolean active, boolean completed) {
+    public Quest(int id, String code, String name, String info, String image, int rewardId, boolean autostart, int regionId, int requiredQuestId, long duration, int requirementType, String requirement, boolean active, boolean completed, Date timeAccepted) {
         this(id, code, name, info, image, rewardId, autostart, regionId, requiredQuestId, duration, requirementType, requirement);
         this.active = active;
         this.completed = completed;
+        this.timeAccepted = timeAccepted;
     }
 
-    public Quest(int id, String code, String name, String info, String image, int rewardId, boolean autostart, int regionId, int requiredQuestId, int duration, int requirementType, String requirement) {
+    public Quest(int id, String code, String name, String info, String image, int rewardId, boolean autostart, int regionId, int requiredQuestId, long duration, int requirementType, String requirement) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -54,7 +59,18 @@ public class Quest implements Serializable{
         this.regionId = regionId;
         this.requiredQuestId = requiredQuestId;
         this.duration = duration;
-        this.requirementType = requirementType;
+        switch (requirementType){
+            case 0: this.requirementType = QuestRequirement.input_answer;
+            break;
+            case 1: this.requirementType = QuestRequirement.complete_quest;
+                break;
+            case 2: this.requirementType = QuestRequirement.have_item_value;
+                break;
+            case 3: this.requirementType = QuestRequirement.have_attribute_value;
+                break;
+            case 4: this.requirementType = QuestRequirement.be_in_region;
+                break;
+        }
         this.requirement = requirement;
         this.active = false;
         this.completed = false;
@@ -133,15 +149,15 @@ public class Quest implements Serializable{
         this.requiredQuestId = requiredQuestId;
     }
 
-    public int getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 
-    public int getRequirementType() {
+    public QuestRequirement getRequirementType() {
         return requirementType;
     }
 
@@ -161,29 +177,7 @@ public class Quest implements Serializable{
         this.completed = completed;
     }
 
-    public String getRequirementTypeText() {
-        switch (requirementType) {
-            case 0:
-                return "Input an Answer";
-
-            case 1:
-                return "Item in inventory";
-
-            case 2:
-                return  "Completed Quest";
-
-            case 3:
-                return  "Having value of Attribute";
-
-            case 4:
-                return  "Be in specific region";
-
-            default:
-                return "Uknown type";
-        }
-    }
-
-    public void setRequirementType(int requirementType) {
+    public void setRequirementType(QuestRequirement requirementType) {
         this.requirementType = requirementType;
     }
 
@@ -196,10 +190,56 @@ public class Quest implements Serializable{
     }
 
 
+    public Date getTimeAccepted() {
+        return timeAccepted;
+    }
+
+    public void setTimeAccepted(Date timeAccepted) {
+        this.timeAccepted = timeAccepted;
+    }
 
     @Override
     public String toString() {
         return getName();
     }
+
+    public enum QuestRequirement{
+        input_answer(0), complete_quest(1), have_attribute_value(2), have_item_value(3), be_in_region(4);
+        private int value;
+        private QuestRequirement(int value){
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public int toInt(){
+            return value;
+        }
+
+        public String toString(){
+            switch (value) {
+                case 0:
+                    return "Input an Answer";
+
+                case 1:
+                    return "Item in inventory";
+
+                case 2:
+                    return  "Completed Quest";
+
+                case 3:
+                    return  "Having value of Attribute";
+
+                case 4:
+                    return  "Be in specific region";
+
+                default:
+                    return "Uknown type";
+            }
+        }
+    };
+
 
 }
