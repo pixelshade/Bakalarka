@@ -19,10 +19,10 @@ public class Region implements Serializable{
     private String name;
     private String info;
     private String image;
-    private int lat_start;
-    private int lon_start;
-    private int lat_end;
-    private int lon_end;
+    private double lat_start;
+    private double lon_start;
+    private double lat_end;
+    private double lon_end;
 
     public Region(){
     }
@@ -31,10 +31,10 @@ public class Region implements Serializable{
                   String name,
                   String info,
                   String image,
-                  int lat_start,
-                  int lon_start,
-                  int lat_end,
-                  int lon_end) {
+                  double lat_start,
+                  double lon_start,
+                  double lat_end,
+                  double lon_end) {
         this.id = id;
         this.name = name;
         this.info = info;
@@ -46,7 +46,7 @@ public class Region implements Serializable{
     }
 
 
-    public int getLon_end() {
+    public double getLon_end() {
         return lon_end;
     }
 
@@ -54,7 +54,7 @@ public class Region implements Serializable{
         this.lon_end = lon_end;
     }
 
-    public int getLat_end() {
+    public double getLat_end() {
         return lat_end;
     }
 
@@ -62,7 +62,7 @@ public class Region implements Serializable{
         this.lat_end = lat_end;
     }
 
-    public int getLon_start() {
+    public double getLon_start() {
         return lon_start;
     }
 
@@ -70,7 +70,7 @@ public class Region implements Serializable{
         this.lon_start = lon_start;
     }
 
-    public int getLat_start() {
+    public double getLat_start() {
         return lat_start;
     }
 

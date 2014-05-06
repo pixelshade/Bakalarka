@@ -154,10 +154,10 @@ public class ResponseJSONParser {
                     String name = region.getString(Region.KEY_REGION_NAME);
                     String info = region.getString(Region.KEY_REGION_INFO);
                     String image = region.getString(Region.KEY_REGION_IMAGE);
-                    int lat_start = region.getInt(Region.KEY_REGION_LAT_START);
-                    int lat_end = region.getInt(Region.KEY_REGION_LAT_END);
-                    int lon_start = region.getInt(Region.KEY_REGION_LON_START);
-                    int lon_end = region.getInt(Region.KEY_REGION_LON_END);
+                    double lat_start = region.getDouble(Region.KEY_REGION_LAT_START);
+                    double lat_end = region.getDouble(Region.KEY_REGION_LAT_END);
+                    double lon_start = region.getDouble(Region.KEY_REGION_LON_START);
+                    double lon_end = region.getDouble(Region.KEY_REGION_LON_END);
 
 
                     Region r = new Region(id,name,info,image,lat_start,lon_start,lat_end,lon_end);
