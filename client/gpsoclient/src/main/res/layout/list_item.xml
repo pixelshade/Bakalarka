@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="150dp"
     android:orientation="vertical"
-    android:background="#e3e3e3"
-    android:textAlignment="center">
+    android:padding="2dp"
+    >
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="130dp"
+        android:background="#e3e3e3"
         android:id="@+id/listItemImageView"
         android:src="@drawable/no_image_512x512"
-        android:contentDescription="item image" />
+        android:contentDescription="item image"
+        android:cropToPadding="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/listItemNameTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textAlignment="center"
-        android:textIsSelectable="false"
-        android:width="100dp" />
+        android:width="100dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="No name"
+        android:background="#030303"
+        android:layout_alignWithParentIfMissing="false"
+        android:singleLine="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#e3e3e3"
+        android:gravity="center" />
 
-</LinearLayout>
+
+</RelativeLayout>

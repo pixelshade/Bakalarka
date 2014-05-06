@@ -15,16 +15,15 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by pixelshade on 29.3.2014.
+ * Created by pixelshade on 6.5.2014.
  */
 
-
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class RegionAdapter extends ArrayAdapter<Region> {
 
     Context context;
 
-    public ItemAdapter(Context context, int resourceId, List<Item> items) {
-        super(context, resourceId, items);
+    public RegionAdapter(Context context, int resourceId, List<Region> regions) {
+        super(context, resourceId, regions);
         this.context = context;
     }
 
@@ -36,26 +35,22 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        Item rowItem = getItem(position);
+        Region rowRegion = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.list_item, null);
+            convertView = mInflater.inflate(R.layout.list_region, null);
             holder = new ViewHolder();
-            holder.txtTitle = (TextView) convertView.findViewById(R.id.listItemNameTextView);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.listItemImageView);
+            holder.txtTitle = (TextView) convertView.findViewById(R.id.listRegionNameTextView);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.listRegionImageView);
             convertView.setTag(holder);
-        } else {
+        } else
             holder = (ViewHolder) convertView.getTag();
-        }
-        String amount = "";
-        if (rowItem.getAmount() != 1) {
-           amount = rowItem.getAmount() + "x ";
-        }
-        holder.txtTitle.setText(amount + rowItem.getName());
-        if (rowItem.getImage().length() != 0) {
-            String filePath = Settings.getContentFileDir() + rowItem.getImage();
+
+        holder.txtTitle.setText(rowRegion.getName());
+        if (rowRegion.getImage().length() != 0) {
+            String filePath = Settings.getContentFileDir() + rowRegion.getImage();
             File imageFile = new File(filePath);
             Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             holder.imageView.setImageBitmap(bitmap);

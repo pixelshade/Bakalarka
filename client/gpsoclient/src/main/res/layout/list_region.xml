@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/quest_row"
+    android:layout_width="fill_parent"
+    android:layout_height="200dp"
+    android:orientation="horizontal"
+
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:id="@+id/listRegionImageView"
+            android:src="@drawable/no_image_512x512"
+            android:contentDescription="region image"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_alignParentBottom="true" />
+
+        <TextView
+            android:id="@+id/listRegionNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:width="100dp"
+            android:text="Region name"
+            android:padding="5dp"
+            android:textColor="#e3e3e3"
+            android:background="#030303"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+
+</LinearLayout>

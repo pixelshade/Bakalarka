@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -52,12 +51,13 @@ public class QuestsFragment extends Fragment {
     public void updateFragment() {
         GameHandler gameHandler = GameHandler.getInstance(getActivity());
         GameData gameData = gameHandler.getGameData();
+
         if(gameData!=null) {
             ArrayList<Quest> quests = gameData.getQuests();
             if (quests != null) {
-                ArrayAdapter<Quest> arrayAdapter = new ArrayAdapter<Quest>(getActivity(), android.R.layout.simple_list_item_1, quests);
+                QuestAdapter questAdapter = new QuestAdapter(getActivity(), R.layout.list_quest, quests);
                 ListView lv = (ListView) rootView.findViewById(R.id.listViewQuests);
-                if (lv != null) lv.setAdapter(arrayAdapter);
+                if (lv != null) lv.setAdapter(questAdapter);
             }
         }
     }

@@ -15,16 +15,14 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Created by pixelshade on 29.3.2014.
+ * Created by pixelshade on 6.5.2014.
  */
-
-
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class AttributeAdapter extends ArrayAdapter<Attribute> {
 
     Context context;
 
-    public ItemAdapter(Context context, int resourceId, List<Item> items) {
-        super(context, resourceId, items);
+    public AttributeAdapter(Context context, int resourceId, List<Attribute> attributes) {
+        super(context, resourceId, attributes);
         this.context = context;
     }
 
@@ -32,33 +30,35 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     private class ViewHolder {
         ImageView imageView;
         TextView txtTitle;
+        TextView txtAmount;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        Item rowItem = getItem(position);
+        Attribute rowAttribute = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.list_item, null);
+            convertView = mInflater.inflate(R.layout.list_attribute, null);
             holder = new ViewHolder();
-            holder.txtTitle = (TextView) convertView.findViewById(R.id.listItemNameTextView);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.listItemImageView);
+            holder.txtTitle = (TextView) convertView.findViewById(R.id.listAttributeNameTextView);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.listAttributeImageView);
+            holder.txtAmount = (TextView) convertView.findViewById(R.id.attributeAmountTextView);
             convertView.setTag(holder);
-        } else {
+        } else
             holder = (ViewHolder) convertView.getTag();
-        }
-        String amount = "";
-        if (rowItem.getAmount() != 1) {
-           amount = rowItem.getAmount() + "x ";
-        }
-        holder.txtTitle.setText(amount + rowItem.getName());
-        if (rowItem.getImage().length() != 0) {
-            String filePath = Settings.getContentFileDir() + rowItem.getImage();
+
+        holder.txtTitle.setText(rowAttribute.getName());
+        holder.txtAmount.setText(""+rowAttribute.getAmount());
+
+        if (rowAttribute.getImage().length() != 0) {
+            String filePath = Settings.getContentFileDir() + rowAttribute.getImage();
             File imageFile = new File(filePath);
             Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             holder.imageView.setImageBitmap(bitmap);
+        } else {
+            holder.imageView.setVisibility(View.GONE);
         }
 
         return convertView;

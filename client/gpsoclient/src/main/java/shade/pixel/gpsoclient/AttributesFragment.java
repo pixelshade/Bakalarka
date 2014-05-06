@@ -20,47 +20,31 @@ import java.util.ArrayList;
 public class AttributesFragment extends Fragment {
     View rootView;
 
-    private ArrayList<Attribute> attributes;
-    private static String TAG = "QuestFragment";
+    private static String TAG = "AttributesFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.fragment_quests, container, false);
+        rootView = inflater.inflate(R.layout.fragment_attributes, container, false);
 
-        ListView listViewQuests = (ListView) rootView.findViewById(R.id.listViewQuests);
+        ListView listViewQuests = (ListView) rootView.findViewById(R.id.listViewAttributes);
         Log.d(TAG, "VYTVARAM FRAGMENT");
 
         this.updateFragment();
-
-        listViewQuests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "" + i, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getActivity(), QuestInfoActivity.class);
-                intent.putExtra(QuestInfoActivity.QUEST_INDEX_LABEL, i);
-                startActivity(intent);
-            }
-        });
 
         return rootView;
     }
 
 
     public void updateFragment(){
+        if(GameHandler.gameData==null) return;
+        ArrayList<Attribute> attributes = GameHandler.gameData.getAttributes();
         if(attributes!=null){
-            ArrayAdapter<Attribute> arrayAdapter = new ArrayAdapter<Attribute>(getActivity(), android.R.layout.simple_list_item_1, attributes);
-            ListView lv = (ListView) rootView.findViewById(R.id.listViewQuests);
-            if (lv != null) lv.setAdapter(arrayAdapter);
+            AttributeAdapter attributeAdapter = new AttributeAdapter(getActivity(), R.layout.list_attribute, attributes);
+            ListView lv = (ListView) rootView.findViewById(R.id.listViewAttributes);
+            if (lv != null) lv.setAdapter(attributeAdapter);
         }
     }
 
-    public ArrayList<Attribute> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(ArrayList<Attribute> attributes) {
-        this.attributes = attributes;
-    }
 }

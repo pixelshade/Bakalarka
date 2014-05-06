@@ -28,7 +28,7 @@ public class RegionsFragment extends Fragment {
         GameData gameData = gameHandler.getGameData();
         if (gameData != null) {
             ArrayList<Region> regions = gameData.getRegions();
-            ArrayAdapter<Region> arrayAdapter = new ArrayAdapter<Region>(getActivity(), android.R.layout.simple_list_item_1, regions);
+            RegionAdapter arrayAdapter = new RegionAdapter(getActivity(), R.layout.list_region, regions);
 
             if (lv != null) {
                 lv.setAdapter(arrayAdapter);

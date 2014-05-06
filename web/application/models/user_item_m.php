@@ -38,11 +38,12 @@ class User_item_m extends MY_Model
 			$this->db->select('*');
 			$this->db->from('item_definitions');			
 			$this->db->where('char_id', $char_id);	
-			$this->db->join($this->_table_name, 'item_definitions.id = '.$this->_table_name.".item_id");
+			$this->db->join($this->_table_name, 'item_definitions.id = '.$this->_table_name.".item_id", 'left');
 			$result = $this->db->get()->result();
 			return $result;
 		}
 		return NULL;
 	}
+
 
 }

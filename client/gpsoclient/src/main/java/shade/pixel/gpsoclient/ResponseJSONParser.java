@@ -29,6 +29,7 @@ public class ResponseJSONParser {
     public static final String KEY_REGIONS = "regions";
     public static final String KEY_INVENTORY = "items";
     public static final String KEY_ENEMIES = "enemies";
+    public static final String KEY_ATTRIBUTES = "attributes";
 
 
     // quest keys
@@ -97,7 +98,7 @@ public class ResponseJSONParser {
                 JSONArray jsonQuests = jsonObj.optJSONArray(KEY_QUESTS);
                 JSONArray jsonActiveQuests = jsonObj.optJSONArray(KEY_ACTIVE_QUESTS);
                 JSONArray jsonItems = jsonObj.optJSONArray(KEY_INVENTORY);
-
+                JSONArray jsonAttributes = jsonObj.optJSONArray(KEY_ATTRIBUTES);
 
 
                 ArrayList<Quest> quests = new ArrayList<Quest>();
@@ -140,7 +141,7 @@ public class ResponseJSONParser {
                     String timeAcceptedString = quest.getString(Quest.KEY_QUEST_TIME_ACCEPTED);
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date timeAccepted = sdf.parse(timeAcceptedString);
-                    Boolean completed = quest.getInt(Quest.KEY_QUEST_COMPLETED) == 1;
+                    boolean completed = quest.getInt(Quest.KEY_QUEST_COMPLETED) == 1;
 
                     Quest q = new Quest(id,code, name, info, image, reward_id, autostart, regionId, requiredQuestId, duration, requirementType, requirement,true,completed,timeAccepted);
                     quests.add(q);
@@ -170,9 +171,21 @@ public class ResponseJSONParser {
                     String name = itemJson.getString(Item.KEY_ITEM_NAME);
                     String info = itemJson.getString(Item.KEY_ITEM_INFO);
                     String image = itemJson.getString(Item.KEY_ITEM_IMAGE);
-
-                    Item item = new Item(id,name,info,image);
+                    int amount  = itemJson.optInt(Item.KEY_ITEM_AMOUNT,1);
+                    Item item = new Item(id,name,info,image,amount);
                     items.add(item);
+                }
+
+                ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+                for(int i = 0; i < jsonAttributes.length(); i++){
+                    JSONObject attributeJson = jsonAttributes.getJSONObject(i);
+                    int id =  attributeJson.getInt(Attribute.KEY_ATTRIBUTE_ID);
+                    String name = attributeJson.getString(Attribute.KEY_ATTRIBUTE_NAME);
+                    String info = attributeJson.getString(Attribute.KEY_ATTRIBUTE_INFO);
+                    String image = attributeJson.getString(Attribute.KEY_ATTRIBUTE_IMAGE);
+                    int amount  = attributeJson.optInt(Attribute.KEY_ATTRIBUTE_AMOUNT,1);
+                    Attribute attribute = new Attribute(id,name,info,image,amount);
+                    attributes.add(attribute);
                 }
 
 
@@ -180,6 +193,7 @@ public class ResponseJSONParser {
                 gameData.setQuests(quests);
                 gameData.setRegions(regions);
                 gameData.setItems(items);
+                gameData.setAttributes(attributes);
 
                 return gameData;
             } catch (JSONException e) {

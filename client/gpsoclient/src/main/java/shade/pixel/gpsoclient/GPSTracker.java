@@ -240,11 +240,13 @@ public class GPSTracker extends Service implements LocationListener {
                     if (gameData != null) {
                         StringBuilder sb = new StringBuilder();
                         ArrayList<Region> regions = gameData.getRegions();
+                        ArrayList<Quest> quests = gameData.getQuests();
+                        ArrayList<Item> items = gameData.getItems();
+                        ArrayList<Attribute> attributes = gameData.getAttributes();
                         sb.append("Regions:");
                         for (Region region : regions) {
                             sb.append(region.getName() + ",");
                         }
-                        ArrayList<Quest> quests = gameData.getQuests();
                         sb.append("\nQuests:");
                         for (Quest quest : quests) {
                             quest.getName();
@@ -258,6 +260,8 @@ public class GPSTracker extends Service implements LocationListener {
                             mActivity.SetTextView(infoString);
                             mActivity.SetQuestsView(quests);
                             mActivity.SetRegionsView(regions);
+                            mActivity.SetItemsView(items);
+                            mActivity.SetAttributesView(attributes);
                         }
 
                     } else {

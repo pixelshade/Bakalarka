@@ -2,9 +2,7 @@ package shade.pixel.gpsoclient;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -125,7 +124,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
 
-    private void GetAsyncQRCodeResponse(String QRScanned){
+    private void GetAsyncQRCodeResponse(String QRScanned) {
         String url = Settings.getCheckQRcodeURL() + QRScanned;
         Log.i(TAG, url);
         GameHandler.getInstance(this).getHtmlBrowser().HttpGetAsyncString(this, url, new AsyncResponse() {
@@ -136,11 +135,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 if (response.isLoggedOut()) {
                     StartLoginActivity();
                 } else {
-                    Log.i(TAG,"Response QR message: " + response.getMessage());
-                    Log.i(TAG,"Response QR data string " + response.getDataString());
+                    Log.i(TAG, "Response QR message: " + response.getMessage());
+                    Log.i(TAG, "Response QR data string " + response.getDataString());
                     String responseType = response.getType();
                     if (responseType.equals(Response.TYPE_GIVE_REWARD)) {
-                        if(response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
                         } else {
                             String data = response.getDataString();
@@ -160,7 +159,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         });
     }
 
-    public void StartBluetoothActivity(View view){
+    public void StartBluetoothActivity(View view) {
         Intent mBluetoothIntent = new Intent(this, BluetoothActivity.class);
         startActivity(mBluetoothIntent);
 
@@ -188,7 +187,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void UpdatePosition(View view) {
 //        gpsTracker = new GPSTracker(this,this);
-        if(gpsTracker==null) {
+        if (gpsTracker == null) {
             Log.d(TAG, "GPS tracker is null");
             return;
         }
@@ -213,11 +212,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                         if (gameData != null) {
                             StringBuilder sb = new StringBuilder();
                             ArrayList<Region> regions = gameData.getRegions();
+                            ArrayList<Quest> quests = gameData.getQuests();
+                            ArrayList<Item> items = gameData.getItems();
                             sb.append("Regions:");
                             for (Region region : regions) {
                                 sb.append(region.getName() + ",");
                             }
-                            ArrayList<Quest> quests = gameData.getQuests();
                             sb.append("\nQuests:");
                             for (Quest quest : quests) {
                                 quest.getName();
@@ -230,7 +230,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
                             SetQuestsView(quests);
                             SetRegionsView(regions);
-
+                            SetItemsView(items);
                             //todo treba pre kazdy fragment spravit to iste pre pripad, ze sa fragment znovu nevytvara len ho treba setnut
 
 
@@ -245,22 +245,38 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
 
-    public void SetTextView(String text){
+    public void SetTextView(String text) {
         TextView tv = (TextView) findViewById(R.id.section_content);
-        if(tv!=null)
-        tv.setText(text);
+        if (tv != null)
+            tv.setText(text);
     }
 
-    public void SetQuestsView(ArrayList<Quest> quests){
-        ArrayAdapter<Quest> questsArrayAdapter = new ArrayAdapter<Quest>(this, android.R.layout.simple_list_item_1, quests);
-        ListView lvQuests = (ListView) findViewById(R.id.listViewQuests);
-        if (lvQuests != null) lvQuests.setAdapter(questsArrayAdapter);
+    public void SetQuestsView(ArrayList<Quest> quests) {
+        QuestAdapter questAdapter = new QuestAdapter(this, R.layout.list_quest, quests);
+        ListView lv = (ListView) findViewById(R.id.listViewQuests);
+        if (lv != null) lv.setAdapter(questAdapter);
     }
 
-    public void SetRegionsView(ArrayList<Region> regions){
-        ArrayAdapter<Region> regionsArrayAdapter = new ArrayAdapter<Region>(this, android.R.layout.simple_list_item_1, regions);
+    public void SetRegionsView(ArrayList<Region> regions) {
+        RegionAdapter regionsAdapter = new RegionAdapter(this, R.layout.list_region, regions);
         ListView lvRegions = (ListView) findViewById(R.id.listViewRegions);
-        if (lvRegions != null) lvRegions.setAdapter(regionsArrayAdapter);
+        if (lvRegions != null) lvRegions.setAdapter(regionsAdapter);
+    }
+
+    public void SetItemsView(ArrayList<Item> items){
+        if (items != null) {
+            ItemAdapter itemAdapter = new ItemAdapter(this, R.layout.list_item, items);
+            GridView gridViewItems = (GridView) findViewById(R.id.gridViewItems);
+            if (gridViewItems != null) gridViewItems.setAdapter(itemAdapter);
+        }
+    }
+
+    public void SetAttributesView(ArrayList<Attribute> attributes){
+        if(attributes!=null){
+            AttributeAdapter attributeAdapter = new AttributeAdapter(this, R.layout.list_attribute, attributes);
+            ListView lv = (ListView) findViewById(R.id.listViewAttributes);
+            if (lv != null) lv.setAdapter(attributeAdapter);
+        }
     }
 
 
@@ -337,16 +353,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return new RegionsFragment();
                 case 3:
                     // Item fragment activity
-                    ArrayList<Item> items = gameData.getItems();
-                    ItemsFragment itemsFragment = new ItemsFragment();
-                    itemsFragment.setItems(items);
-                    return itemsFragment;
+                    return new ItemsFragment();
                 case 4:
                     // Attributes fragment activity
-                    ArrayList<Attribute> attributes = gameData.getAttributes();
-                    AttributesFragment attributesFragment = new AttributesFragment();
-                    attributesFragment.setAttributes(attributes);
-                    return attributesFragment;
+                    return new AttributesFragment();
                 case 5:
                     // Map fragment activity
                     return new MyMapFragment();

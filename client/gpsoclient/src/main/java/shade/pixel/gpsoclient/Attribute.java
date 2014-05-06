@@ -35,7 +35,7 @@ public class Attribute implements Serializable {
         this.name = name;
         this.info = info;
         this.image = image;
-        Log.d(TAG, "was created:" + this.name + "," + this.info + "," + this.image);
+        Log.d(TAG, "was created:" + this.name + "," + this.info + "," + this.image + "," + this.amount );
 
     }
 

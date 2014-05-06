@@ -48,21 +48,22 @@ class Api extends Admin_Controller
 			// $quests = $this->quest_m->get_array_where_in('region_id', $region_ids, 'quest_id', $active_completed_quests_ids);	
 			$active_quests  =	$this->user_quest_m->get_quests_for_char($user_id);
 			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids);	
-			$result['regions'] = $regions;
-			$result['quests'] = $quests;
-			$result['active_quests'] = $active_quests;
-				// TODO autostart - teraz sa budu pliest message
+			$items = $this->user_item_m->get_items_for_char($user_id);
+			$attributes = $this->user_attribute_m->get_attributes_for_char($user_id);
+
+			// TODO autostart - teraz sa budu pliest message
 			$response = array();
 			foreach ($quests as $quest) {			
 				if($quest['autostart']){
 					$response[] = $this->accept_quest($quest['id'], false);
 				}
-			}
-			$user_items = $this->user_item_m->get_array_by("`char_id` = '".$user_id."'");
-			$item_ids = array_column($user_items,"item_id");
-			$items = $this->item_definition_m->get_array_where_in('id',$item_ids);
+			}		
 
+			$result['regions'] = $regions;
+			$result['quests'] = $quests;
+			$result['active_quests'] = $active_quests;
 			$result['items'] = $items;	
+			$result['attributes'] = $attributes;
 			$result['responses'] = $response;
 		// Print all	
 			$result = json_encode($result);

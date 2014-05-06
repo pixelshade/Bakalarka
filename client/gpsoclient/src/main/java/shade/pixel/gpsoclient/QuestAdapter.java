@@ -19,12 +19,12 @@ import java.util.List;
  */
 
 
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class QuestAdapter extends ArrayAdapter<Quest> {
 
     Context context;
 
-    public ItemAdapter(Context context, int resourceId, List<Item> items) {
-        super(context, resourceId, items);
+    public QuestAdapter(Context context, int resourceId, List<Quest> quests) {
+        super(context, resourceId, quests);
         this.context = context;
     }
 
@@ -36,26 +36,29 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        Item rowItem = getItem(position);
+        Quest rowQuest = getItem(position);
 
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.list_item, null);
+            convertView = mInflater.inflate(R.layout.list_quest, null);
             holder = new ViewHolder();
             holder.txtTitle = (TextView) convertView.findViewById(R.id.listItemNameTextView);
             holder.imageView = (ImageView) convertView.findViewById(R.id.listItemImageView);
             convertView.setTag(holder);
-        } else {
+        } else
             holder = (ViewHolder) convertView.getTag();
+
+        ImageView questCompletedImage  = (ImageView) convertView.findViewById(R.id.questCompletedImage);
+        if(rowQuest.isCompleted()){
+            questCompletedImage.setVisibility(View.VISIBLE);
+        } else {
+            questCompletedImage.setVisibility(View.GONE);
         }
-        String amount = "";
-        if (rowItem.getAmount() != 1) {
-           amount = rowItem.getAmount() + "x ";
-        }
-        holder.txtTitle.setText(amount + rowItem.getName());
-        if (rowItem.getImage().length() != 0) {
-            String filePath = Settings.getContentFileDir() + rowItem.getImage();
+
+        holder.txtTitle.setText(rowQuest.getName());
+        if (rowQuest.getImage().length() != 0) {
+            String filePath = Settings.getContentFileDir() + rowQuest.getImage();
             File imageFile = new File(filePath);
             Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             holder.imageView.setImageBitmap(bitmap);
