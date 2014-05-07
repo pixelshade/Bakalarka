@@ -277,7 +277,6 @@ public class QuestInfoActivity extends ActionBarActivity {
             questCompletedImage.setVisibility(View.VISIBLE);
             questCompletedImage.setImageResource(R.drawable.icon_active);
             questStatusTextView.setText("Active");
-            questCompleteBtn.setEnabled(false);
 
 
             if (actualQuest.getRequirementType() == Quest.QuestRequirement.input_answer) {

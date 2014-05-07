@@ -340,7 +340,7 @@ class Api extends Admin_Controller
 						$required_attribute_amount = $requirement[1];
 						$is_having = $this->user_attribute_m->has_char_attribute_amount($user_id, $required_attribute_id, $required_attribute_amount);
 						if($is_having){
-							$response['success'] = 1;					
+							$response['success'] = 1;																			
 						} else {
 							$response['success'] = 0;
 							$response['msg'] =  "You don't have enough of required attribute.";
@@ -375,15 +375,15 @@ class Api extends Admin_Controller
 				}
 			}
 
-			if($success){
+			if($response['success']){
 				$user_quest = $this->user_quest_m->get_by("`char_id` = '".$user_id."' AND `quest_id` = '".$quest_id."'", TRUE);		
 				$user_quest_id = empty($user_quest) ? NULL : $user_quest->id;				
-				$response['msg'] = "Quest was successfuly completed";
 				$data['char_id'] = $user_id;
 				$data['quest_id'] = $quest_id;
 				$data['time_accepted'] = date('Y-m-d H:i:s');
 				$data['completed'] = 1;
 				$this->user_quest_m->save($data, $user_quest_id);
+				$response['msg'] = "Quest was successfuly completed";
 				$response['data'] = $this->_giveRewardFromQuestId($quest_id,$user_id);				
 			}
 		}

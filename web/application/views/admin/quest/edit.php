@@ -42,11 +42,15 @@
 			<td>completion_requirement</td>
 			<td id="requirement">			
 				<?php echo form_input('completion_requirement', set_value('completion_requirement', $quest->completion_requirement), ' class="form-control type0"'); ?>
-				<?php echo '<input type="hidden" id="mixed_source" name="completion_requirement" value="'.$quest->completion_requirement.'" class="form-control type1">'; ?>
-				<?php echo form_dropdown('item_id',$itemNames, '', 'id="item_id" class="form-control type1"'); ?>
-				<?php echo form_input('item_amount', '', 'id="item_amount"  placeholder="minimum amount needed" class="form-control type1"'); ?>				
+				<?php echo '<input type="hidden" id="item_mixed_source" name="completion_requirement" value="'.$quest->completion_requirement.'" class="form-control type1">'; ?>
+				<?php echo form_dropdown('item_id',$itemNames, '-1', 'id="item_id" class="form-control type1"'); ?>
+				<?php echo form_input('item_amount', '0', 'id="item_amount"  placeholder="minimum amount needed" class="form-control type1"'); ?>				
 				<?php echo form_dropdown('completion_requirement',$questNames, $quest->completion_requirement, ' class="form-control type2"'); ?>
-				<?php echo form_dropdown('completion_requirement',$attributeNames, $quest->completion_requirement, ' class="form-control type3"'); ?>
+
+				<?php echo '<input type="hidden" id="attribute_mixed_source" name="completion_requirement" value="'.$quest->completion_requirement.'" class="form-control type3">'; ?>
+				<?php echo form_dropdown('attribute_id',$attributeNames, '-1', 'id="attribute_id" class="form-control type3"'); ?>				
+				<?php echo form_input('attribute_amount', '0', 'id="attribute_amount"  placeholder="minimum amount needed" class="form-control type3"'); ?>				
+				
 				<?php echo form_dropdown('completion_requirement',$regionNames, $quest->completion_requirement, ' class="form-control type4"'); ?>
 			</td>
 		</tr>
@@ -65,13 +69,26 @@
 			$('#requirement > .form-control').hide();
 			$('.type'+selected).attr('disabled',false);
 			$('.type'+selected).show();			
-			$('.type1').on('change',function(){join_and_set_value('mixed_source','item_id', 'item_amount')});		
-			$(split_and_set_value('mixed_source','item_id', 'item_amount'));
+		
+			$(split_and_set_value('item_mixed_source','item_id', 'item_amount'));
+			$(split_and_set_value('attribute_mixed_source','attribute_id', 'attribute_amount'));
 		}
 
 		$(update());
 		$('#requirement_type').on('change',update);		
+		$('form').submit(merge_attr_item_requirement);
 
+
+		function merge_attr_item_requirement(){
+			var selected = $('#requirement_type').val();	
+			if(selected == 1){
+				join_and_set_value('item_mixed_source','item_id', 'item_amount');
+			} 
+			if(selected == 3){
+				join_and_set_value('attribute_mixed_source','attribute_id', 'attribute_amount');
+			}
+
+		}
 
 		function split_and_set_value(mixed_source,source_id, amount_id){
 			var mixedStr = $('#'+mixed_source).val();

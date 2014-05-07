@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by pixelshade on 2.3.2014.
  */
-public class Quest implements Serializable{
+public class Quest implements Serializable {
     public static final String KEY_QUEST_ID = "id";
     public static final String KEY_QUEST_CODE = "code";
     public static final String KEY_QUEST_NAME = "name";
@@ -59,16 +59,21 @@ public class Quest implements Serializable{
         this.regionId = regionId;
         this.requiredQuestId = requiredQuestId;
         this.duration = duration;
-        switch (requirementType){
-            case 0: this.requirementType = QuestRequirement.input_answer;
-            break;
-            case 1: this.requirementType = QuestRequirement.complete_quest;
+        switch (requirementType) {
+            case 0:
+                this.requirementType = QuestRequirement.input_answer;
                 break;
-            case 2: this.requirementType = QuestRequirement.have_item_value;
+            case 1:
+                this.requirementType = QuestRequirement.have_item_value;
                 break;
-            case 3: this.requirementType = QuestRequirement.have_attribute_value;
+            case 2:
+                this.requirementType = QuestRequirement.complete_quest;
                 break;
-            case 4: this.requirementType = QuestRequirement.be_in_region;
+            case 3:
+                this.requirementType = QuestRequirement.have_attribute_value;
+                break;
+            case 4:
+                this.requirementType = QuestRequirement.be_in_region;
                 break;
         }
         this.requirement = requirement;
@@ -203,10 +208,11 @@ public class Quest implements Serializable{
         return getName();
     }
 
-    public enum QuestRequirement{
-        input_answer(0), complete_quest(1), have_attribute_value(2), have_item_value(3), be_in_region(4);
+    public enum QuestRequirement {
+        input_answer(0), have_item_value(1), complete_quest(2), have_attribute_value(3), be_in_region(4);
         private int value;
-        private QuestRequirement(int value){
+
+        private QuestRequirement(int value) {
             this.value = value;
         }
 
@@ -214,11 +220,11 @@ public class Quest implements Serializable{
             return value;
         }
 
-        public int toInt(){
+        public int toInt() {
             return value;
         }
 
-        public String toString(){
+        public String toString() {
             switch (value) {
                 case 0:
                     return "Input an Answer";
@@ -227,19 +233,21 @@ public class Quest implements Serializable{
                     return "Item in inventory";
 
                 case 2:
-                    return  "Completed Quest";
+                    return "Completed Quest";
 
                 case 3:
-                    return  "Having value of Attribute";
+                    return "Having value of Attribute";
 
                 case 4:
-                    return  "Be in specific region";
+                    return "Be in specific region";
 
                 default:
                     return "Uknown type";
             }
         }
-    };
+    }
+
+    ;
 
 
 }
