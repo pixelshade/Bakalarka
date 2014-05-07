@@ -45,5 +45,18 @@ class User_item_m extends MY_Model
 		return NULL;
 	}
 
+	public function has_char_item_amount($char_id = NULL, $item_id = NULL, $amount = NULL){
+		if($char_id!=NULL && $item_id != NULL && $amount != NULL){
+			$this->db->select('*');
+			$this->db->from($this->_table_name);
+			$this->db->where('`char_id` = "'.$char_id.'" AND `item_id` = "'.$item_id.'" AND `amount` >= "'.$amount.'"');
+			$result = $this->db->get()->result();
+			if(!empty($result)){
+				return TRUE;				
+			}
+		}
+		return FALSE;
+	}
+
 
 }

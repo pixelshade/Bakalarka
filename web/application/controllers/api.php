@@ -42,10 +42,7 @@ class Api extends Admin_Controller
 			$this->user_position_m->save($user_id, $player_lat, $player_lon);
 			$regions = $this->region_m->get_by_latlon($player_lat,$player_lon);
 			$region_ids = array_column($regions, 'id');					
-			// $active_completed_quests =	$this->user_quest_m->get_array_by('char_id = "'.$user_id.'" AND ');		
-			// $active_completed_quests_ids =	array_column($active_completed_quests, 'quest_id');
 
-			// $quests = $this->quest_m->get_array_where_in('region_id', $region_ids, 'quest_id', $active_completed_quests_ids);	
 			$active_quests  =	$this->user_quest_m->get_quests_for_char($user_id);
 			$quests = $this->quest_m->get_array_where_in('region_id', $region_ids);	
 			$items = $this->user_item_m->get_items_for_char($user_id);
@@ -313,20 +310,23 @@ class Api extends Admin_Controller
 						break;
 
 						case 1:		// have an item
-						$required_item_id = $quest->completion_requirement;
-						$user_item = $this->user_item_m->get_array_by('`char_id` = `'.$char_id.'` AND `item_id` = `'.$required_item_id.'`');
-						if(count($user_item)){
+						$requirement = explode("|", $quest->completion_requirement);
+
+						$required_item_id = $requirement[0];
+						$required_item_amount = $requirement[1];
+						$is_having = $this->user_item_m->has_char_item_amount($user_id, $required_item_id, $required_item_amount);
+						if($is_having){
 							$response['success'] = 1;					
 						} else {
 							$response['success'] = 0;
-							$response['msg'] =  "You don't have required item.";
+							$response['msg'] =  "You don't have enough of required item.";
 						}				 
 						break;
 
 						case 2:		// Completed other quest
 						$required_completed_quest_id = $quest->completion_requirement;
-						$user_quest = $this->user_quest_m->get_array_by('`char_id` = `'.$char_id.'` AND `quest_id` = `'.$required_completed_quest_id.'` AND `completed` = 1', TRUE);
-						if(count($user_quest)){
+						$is_completed = $this->user_quest_m->is_quest_completed_for_char_id($required_completed_quest_id, $user_id);
+						if($is_completed){
 							$response['success'] = 1;					
 						} else {
 							$response['success'] = 0;
@@ -335,8 +335,16 @@ class Api extends Admin_Controller
 						break;
 
 						case 3:		// Having value of Attribute
-						// TODO problem with need of attribute id and attribute value
-						// possible id#value 				
+						$requirement = explode("|", $quest->completion_requirement);
+						$required_attribute_id = $requirement[0];
+						$required_attribute_amount = $requirement[1];
+						$is_having = $this->user_attribute_m->has_char_attribute_amount($user_id, $required_attribute_id, $required_attribute_amount);
+						if($is_having){
+							$response['success'] = 1;					
+						} else {
+							$response['success'] = 0;
+							$response['msg'] =  "You don't have enough of required attribute.";
+						}				 
 						break;
 
 						case 4:		// Being in region

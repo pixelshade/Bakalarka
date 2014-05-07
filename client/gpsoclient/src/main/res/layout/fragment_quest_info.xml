@@ -29,11 +29,21 @@
                 android:paddingBottom="20dp" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:id="@+id/questCompletedImage"
-                android:src="@drawable/approve_icon_128px"
-                android:visibility="gone"/>
+                android:src="@drawable/icon_completed"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/questStatusTextView"
+
+                android:text="completed"/>
 
             <TextView
                 android:layout_width="fill_parent"

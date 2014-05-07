@@ -49,11 +49,17 @@ public class QuestAdapter extends ArrayAdapter<Quest> {
         } else
             holder = (ViewHolder) convertView.getTag();
 
-        ImageView questCompletedImage  = (ImageView) convertView.findViewById(R.id.questCompletedImage);
+        ImageView questCompletedImage  = (ImageView) convertView.findViewById(R.id.questStatusImage);
         if(rowQuest.isCompleted()){
+            questCompletedImage.setImageResource(R.drawable.icon_completed);
             questCompletedImage.setVisibility(View.VISIBLE);
         } else {
-            questCompletedImage.setVisibility(View.GONE);
+            if (rowQuest.isActive()) {
+                questCompletedImage.setImageResource(R.drawable.icon_active);
+                questCompletedImage.setVisibility(View.VISIBLE);
+            } else {
+                questCompletedImage.setVisibility(View.GONE);
+            }
         }
 
         holder.txtTitle.setText(rowQuest.getName());

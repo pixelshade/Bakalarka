@@ -38,8 +38,8 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/questCompletedImage"
-            android:src="@drawable/approve_icon_128px"
+            android:id="@+id/questStatusImage"
+            android:src="@drawable/icon_completed"
             android:contentDescription="item image"
             android:layout_alignParentRight="true"
             android:layout_marginRight="0dp"

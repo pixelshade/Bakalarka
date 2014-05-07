@@ -1,10 +1,9 @@
 package shade.pixel.gpsoclient;
 
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +15,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by pixelshade on 11.3.2014.
@@ -56,7 +56,6 @@ public class MyMapFragment extends Fragment {
 //    }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -85,7 +84,6 @@ public class MyMapFragment extends Fragment {
         if (fm != null) {
 
 
-
             SupportMapFragment supportMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
             if (supportMapFragment != null) {
                 map = supportMapFragment.getMap();
@@ -105,7 +103,7 @@ public class MyMapFragment extends Fragment {
                     map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
                         @Override
                         public void onMyLocationChange(Location location) {
-//                            animateCameraToLocation(location);
+                          animateCameraToLocation(location);
                         }
                     });
                 }
@@ -113,8 +111,6 @@ public class MyMapFragment extends Fragment {
 
         }
     }
-
-
 
 
     private void animateCameraToLocation(Location location) {
@@ -138,9 +134,29 @@ public class MyMapFragment extends Fragment {
             LatLng c = new LatLng(region.getLat_end(), region.getLon_end());
             LatLng d = new LatLng(region.getLat_start(), region.getLon_end());
 
+
             LatLng regionCenter = new LatLng((region.getLat_start() + region.getLat_end()) / 2,
                     (region.getLon_start() + region.getLon_end()) / 2);
-            map.addPolyline(new PolylineOptions().add(a).add(b).add(c).add(d).add(a));
+            Random random = new Random();
+
+
+//            int red = random.nextInt(256);
+//            int green = random.nextInt(256);
+//            int blue = random.nextInt(256);
+
+            int red = (int)(10000000 * region.getLat_start() % 256);
+            int green = (int)(10000000 * region.getLon_end() % 256);
+            int blue = (int)(10000000 * region.getLat_start() % 256);
+
+            int regionColor = Color.argb(128,red,green,blue);
+            int strokeColor = Color.argb(190,red,green,blue);
+
+
+            map.addPolygon(new PolygonOptions().add(a).add(b).add(c).add(d).add(a)
+                    .fillColor(regionColor)
+            .strokeWidth(5).strokeColor(strokeColor));
+
+
             map.addMarker(new MarkerOptions().position(regionCenter).title(region.getName()));
         }
     }

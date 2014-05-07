@@ -244,28 +244,42 @@ public class QuestInfoActivity extends ActionBarActivity {
             EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
             Button questRemoveBtn = (Button) rootView.findViewById(R.id.removeButton);
             TextView timeLeftTextView = (TextView) rootView.findViewById(R.id.timeLeftTextView);
+            TextView questStatusTextView = (TextView) rootView.findViewById(R.id.questStatusTextView);
             if(actualQuest.getRequirementType() == Quest.QuestRequirement.input_answer){
                 questAnswer.setText(actualQuest.getRequirement());
                 questAnswer.setEnabled(false);
             }
             timeLeftTextView.setVisibility(View.GONE);
             questRemoveBtn.setVisibility(View.GONE);
+            questCompletedImage.setVisibility(View.VISIBLE);
+            questStatusTextView.setVisibility(View.VISIBLE);
+
+            questCompletedImage.setImageResource(R.drawable.icon_completed);
+            questStatusTextView.setText("Completed");
             questCompleteBtn.setEnabled(false);
             questCompleteBtn.setText("Quest was completed");
-            questCompletedImage.setVisibility(View.VISIBLE);
             if(questTimeLeftTimer!=null) questTimeLeftTimer.cancel();
         }
 
         public void changeViewActiveQuest(){
             if(rootView==null) return;
+            ImageView questCompletedImage = (ImageView) rootView.findViewById(R.id.questCompletedImage);
             Button questRemoveBtn = (Button) rootView.findViewById(R.id.removeButton);
             Button questCompleteBtn = (Button) rootView.findViewById(R.id.completeButton);
             Button questAcceptBtn = (Button) rootView.findViewById(R.id.acceptButton);
+            EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
+            TextView questStatusTextView = (TextView) rootView.findViewById(R.id.questStatusTextView);
+
             questAcceptBtn.setVisibility(View.GONE);
             questRemoveBtn.setVisibility(View.VISIBLE);
             questCompleteBtn.setVisibility(View.VISIBLE);
+            questStatusTextView.setVisibility(View.VISIBLE);
+            questCompletedImage.setVisibility(View.VISIBLE);
+            questCompletedImage.setImageResource(R.drawable.icon_active);
+            questStatusTextView.setText("Active");
+            questCompleteBtn.setEnabled(false);
 
-            EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
+
             if (actualQuest.getRequirementType() == Quest.QuestRequirement.input_answer) {
                 questAnswer.setVisibility(View.VISIBLE);
             } else {
@@ -284,10 +298,15 @@ public class QuestInfoActivity extends ActionBarActivity {
 
         public void changeViewNotActiveQuest(){
             if(rootView==null) return;
+            ImageView questCompletedImage = (ImageView) rootView.findViewById(R.id.questCompletedImage);
             Button questRemoveBtn = (Button) rootView.findViewById(R.id.removeButton);
             Button questCompleteBtn = (Button) rootView.findViewById(R.id.completeButton);
             EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
             TextView timeLeftTextView = (TextView) rootView.findViewById(R.id.timeLeftTextView);
+            TextView questStatusTextView = (TextView) rootView.findViewById(R.id.questStatusTextView);
+
+            questCompletedImage.setVisibility(View.GONE);
+            questStatusTextView.setVisibility(View.GONE);
             questRemoveBtn.setVisibility(View.GONE);
             questCompleteBtn.setVisibility(View.GONE);
             questAnswer.setVisibility(View.GONE);
