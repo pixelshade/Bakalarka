@@ -18,6 +18,7 @@ import java.util.ArrayList;
  */
 public class QuestsFragment extends Fragment {
     private View rootView;
+    private QuestAdapter questAdapter;
 
     private static String TAG = "QuestFragment";
     private ArrayList<Quest> quests;
@@ -55,10 +56,27 @@ public class QuestsFragment extends Fragment {
         if(gameData!=null) {
             ArrayList<Quest> quests = gameData.getQuests();
             if (quests != null) {
-                QuestAdapter questAdapter = new QuestAdapter(getActivity(), R.layout.list_quest, quests);
+                questAdapter = new QuestAdapter(getActivity(), R.layout.list_quest, quests);
                 ListView lv = (ListView) rootView.findViewById(R.id.listViewQuests);
                 if (lv != null) lv.setAdapter(questAdapter);
             }
         }
     }
+
+    public void updateFragment(ArrayList<Quest> quests) {
+            if (quests != null) {
+                questAdapter = new QuestAdapter(getActivity(), R.layout.list_quest, quests);
+                ListView lv = (ListView) rootView.findViewById(R.id.listViewQuests);
+                if (lv != null) lv.setAdapter(questAdapter);
+            }
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateFragment();
+    }
+
+
 }
