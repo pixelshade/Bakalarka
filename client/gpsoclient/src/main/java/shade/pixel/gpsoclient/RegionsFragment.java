@@ -17,12 +17,21 @@ import java.util.ArrayList;
  * Created by pixelshade on 11.3.2014.
  */
 public class RegionsFragment extends Fragment {
-
+    private View rootView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_regions, container, false);
+        rootView = inflater.inflate(R.layout.fragment_regions, container, false);
+
+        this.updateFragment();
+
+        return rootView;
+
+
+    }
+
+    public void updateFragment(){
         ListView lv = (ListView) rootView.findViewById(R.id.listViewRegions);
         GameHandler gameHandler = GameHandler.getInstance(getActivity());
         GameData gameData = gameHandler.getGameData();
@@ -43,9 +52,5 @@ public class RegionsFragment extends Fragment {
                 });
             }
         }
-
-        return rootView;
-
-
     }
 }

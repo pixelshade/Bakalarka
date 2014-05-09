@@ -258,10 +258,10 @@ public class GPSTracker extends Service implements LocationListener {
                             double longitude = location.getLongitude();
                             String infoString = json + "\n\n" + latitude + " " + longitude;
                             mActivity.SetTextView(infoString);
-                            mActivity.SetQuestsView(quests);
-                            mActivity.SetRegionsView(regions);
-                            mActivity.SetItemsView(items);
-                            mActivity.SetAttributesView(attributes);
+                            mActivity.SetQuestsView();
+                            mActivity.SetRegionsView();
+                            mActivity.SetItemsView();
+                            mActivity.SetAttributesView();
                         }
 
                     } else {

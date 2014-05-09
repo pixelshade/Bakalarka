@@ -11,12 +11,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ListView;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -115,8 +114,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         contentFilesManager = new ContentFilesManager(this);
         gameHandler = GameHandler.getInstance(this);
         gpsTracker = GPSTracker.getInstance(this, this);
-
-
 
 
         if (htmlBrowser.isOnline()) {
@@ -232,10 +229,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             String infoString = json + "\n\n" + latitude + " " + longitude;
                             SetTextView(infoString);
 
-                            SetQuestsView(quests);
-                            SetRegionsView(regions);
-                            SetItemsView(items);
-                            //todo treba pre kazdy fragment spravit to iste pre pripad, ze sa fragment znovu nevytvara len ho treba setnut
+                            SetQuestsView();
+                            SetRegionsView();
+                            SetItemsView();
+                            SetAttributesView();
 
 
                         } else {
@@ -255,31 +252,39 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             tv.setText(text);
     }
 
-    public void SetQuestsView(ArrayList<Quest> quests) {
-        QuestAdapter questAdapter = new QuestAdapter(this, R.layout.list_quest, quests);
-        ListView lv = (ListView) findViewById(R.id.listViewQuests);
-        if (lv != null) lv.setAdapter(questAdapter);
-    }
-
-    public void SetRegionsView(ArrayList<Region> regions) {
-        RegionAdapter regionsAdapter = new RegionAdapter(this, R.layout.list_region, regions);
-        ListView lvRegions = (ListView) findViewById(R.id.listViewRegions);
-        if (lvRegions != null) lvRegions.setAdapter(regionsAdapter);
-    }
-
-    public void SetItemsView(ArrayList<Item> items){
-        if (items != null) {
-            ItemAdapter itemAdapter = new ItemAdapter(this, R.layout.list_item, items);
-            GridView gridViewItems = (GridView) findViewById(R.id.gridViewItems);
-            if (gridViewItems != null) gridViewItems.setAdapter(itemAdapter);
+    public void SetQuestsView() {
+        QuestsFragment questsFragment = (QuestsFragment) mSectionsPagerAdapter.getRegisteredFragment(SectionsPagerAdapter.questsFragmentId);
+        if (questsFragment != null) {
+            questsFragment.updateFragment(this);
+        } else {
+            Log.d(TAG, "Quests view je null.");
         }
     }
 
-    public void SetAttributesView(ArrayList<Attribute> attributes){
-        if(attributes!=null){
-            AttributeAdapter attributeAdapter = new AttributeAdapter(this, R.layout.list_attribute, attributes);
-            ListView lv = (ListView) findViewById(R.id.listViewAttributes);
-            if (lv != null) lv.setAdapter(attributeAdapter);
+    public void SetRegionsView() {
+        RegionsFragment regionFragment = (RegionsFragment) mSectionsPagerAdapter.getRegisteredFragment(SectionsPagerAdapter.regionsFragmentId);
+        if (regionFragment != null) {
+            regionFragment.updateFragment();
+        } else {
+            Log.d(TAG, "Regions view je null.");
+        }
+    }
+
+    public void SetItemsView() {
+        ItemsFragment itemsFragment = (ItemsFragment) mSectionsPagerAdapter.getRegisteredFragment(SectionsPagerAdapter.itemsFragmentId);
+        if (itemsFragment != null) {
+            itemsFragment.updateFragment();
+        } else {
+            Log.d(TAG, "Regions view je null.");
+        }
+    }
+
+    public void SetAttributesView() {
+        AttributesFragment attributesFragment = (AttributesFragment) mSectionsPagerAdapter.getRegisteredFragment(SectionsPagerAdapter.attributesFragmentId);
+        if (attributesFragment != null) {
+            attributesFragment.updateFragment();
+        } else {
+            Log.d(TAG, "Attribute view je null.");
         }
     }
 
@@ -335,9 +340,35 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+        }
+
+        public static final int mainFragmentId = 0;
+        public static final int questsFragmentId = 1;
+        public static final int regionsFragmentId = 2;
+        public static final int itemsFragmentId = 3;
+        public static final int attributesFragmentId = 4;
+        public static final int mapFragmentId = 5;
+
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragments.put(position, fragment);
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+        public Fragment getRegisteredFragment(int position) {
+            return registeredFragments.get(position);
         }
 
         @Override
@@ -346,22 +377,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             // Return a PlaceholderFragment (defined as a static inner class below).
             GameData gameData = gameHandler.getGameData();
             switch (position) {
-                case 0:
+                case mainFragmentId:
                     // Main fragment activity
                     return new MainFragment();
-                case 1:
+                case questsFragmentId:
                     // Quests fragment activity
                     return new QuestsFragment();
-                case 2:
+                case regionsFragmentId:
                     // Region fragment activity
                     return new RegionsFragment();
-                case 3:
+                case itemsFragmentId:
                     // Item fragment activity
                     return new ItemsFragment();
-                case 4:
+                case attributesFragmentId:
                     // Attributes fragment activity
                     return new AttributesFragment();
-                case 5:
+                case mapFragmentId:
                     // Map fragment activity
                     return new MyMapFragment();
             }
