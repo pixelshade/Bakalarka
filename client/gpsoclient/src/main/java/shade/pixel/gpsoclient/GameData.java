@@ -23,6 +23,24 @@ public class GameData {
         return quests;
     }
 
+    public ArrayList<Quest> getQuests(boolean getAvailable, boolean getActive, boolean getComplete) {
+        ArrayList<Quest> questsToShow = new ArrayList<Quest>();
+        for (Quest q : quests){
+            if(q.isActive()){
+                if(q.isCompleted()){
+                    if(getComplete) questsToShow.add(q);
+                } else {
+                    if(getActive) questsToShow.add(q);
+                }
+            } else {
+                if(getAvailable){
+                    questsToShow.add(q);
+                }
+            }
+        }
+        return questsToShow;
+    }
+
     public void setQuests(ArrayList<Quest> quests) {
         this.quests = quests;
     }

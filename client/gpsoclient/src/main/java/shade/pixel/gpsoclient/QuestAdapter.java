@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,11 +25,19 @@ import java.util.List;
 
 public class QuestAdapter extends ArrayAdapter<Quest> {
 
-    Context context;
+    private Context context;
+    private List<Quest> quests;
+    private QuestFilter mFilter;
+
+    private boolean showAvailable = true;
+    private boolean showActive = true;
+    private boolean showComplete = true;
+
 
     public QuestAdapter(Context context, int resourceId, List<Quest> quests) {
         super(context, resourceId, quests);
         this.context = context;
+        this.quests = quests;
     }
 
     /*private view holder class*/
@@ -72,4 +84,45 @@ public class QuestAdapter extends ArrayAdapter<Quest> {
 
         return convertView;
     }
+
+    @Override
+    public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new QuestFilter(this);
+        }
+        mFilter.setShowActive(showActive);
+        mFilter.setShowAvailable(showAvailable);
+        mFilter.setShowComplete(showComplete);
+        return mFilter;
+    }
+
+    public List<Quest> getQuests() {
+        return quests;
+    }
+
+    public boolean isShowAvailable() {
+        return showAvailable;
+    }
+
+    public void setShowAvailable(boolean showAvailable) {
+        this.showAvailable = showAvailable;
+    }
+
+    public boolean isShowActive() {
+        return showActive;
+    }
+
+    public void setShowActive(boolean showActive) {
+        this.showActive = showActive;
+    }
+
+    public boolean isShowComplete() {
+        return showComplete;
+    }
+
+    public void setShowComplete(boolean showComplete) {
+        this.showComplete = showComplete;
+    }
 }
+
+

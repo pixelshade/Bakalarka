@@ -15,6 +15,10 @@ public class Settings {
     private static String username, pass;
     private static String serverURL = "http://bak.skeletopedia.sk";
 
+    private static boolean showAvailable = true;
+    private static boolean showActive = true;
+    private static boolean showCompleted = true;
+
 
     /**
      * Server URL constants
@@ -52,6 +56,13 @@ public class Settings {
 
     private static final String SHAREDPREF_SERVER_URL_KEY = "SERVER_URL";
 
+    private static final String SHAREDPREF_SHOW_ACTIVE = "SHOW_ACTIVE";
+
+    private static final String SHAREDPREF_SHOW_AVAILABLE = "SHOW_AVAILABLE";
+
+    private static final String SHAREDPREF_SHOW_COMPLETED = "SHOW_COMPLETED";
+
+
     private Settings() {
     }
 
@@ -72,6 +83,31 @@ public class Settings {
         serverURL = sharedPreferences.getString(SHAREDPREF_SERVER_URL_KEY, "http://bak.skeletopedia.sk");
 
     }
+
+    public static void saveQuestsListingSettings(Context context, boolean showActive, boolean showAvailable, boolean showCompleted){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(SHAREDPREF_SHOW_ACTIVE, showActive);
+        editor.putBoolean(SHAREDPREF_SHOW_AVAILABLE, showAvailable);
+        editor.putBoolean(SHAREDPREF_SHOW_COMPLETED, showCompleted);
+        editor.commit();
+    }
+
+    public static void loadQuestsListingSettings(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        showActive = sharedPreferences.getBoolean(SHAREDPREF_SHOW_ACTIVE, true);
+        showAvailable = sharedPreferences.getBoolean(SHAREDPREF_SHOW_AVAILABLE, true);
+        showCompleted = sharedPreferences.getBoolean(SHAREDPREF_SHOW_COMPLETED, true);
+
+    }
+
+
+    public static void loadAllSettings(Context context){
+        loadQuestsListingSettings(context);
+    }
+
+
+
 
     public static String getUsername() {
         return username;
@@ -169,4 +205,27 @@ public class Settings {
         Settings.checkQRcodeURL = checkQRcodeURL;
     }
 
+    public static boolean isShowAvailable() {
+        return showAvailable;
+    }
+
+    public static void setShowAvailable(boolean showAvailable) {
+        Settings.showAvailable = showAvailable;
+    }
+
+    public static boolean isShowActive() {
+        return showActive;
+    }
+
+    public static void setShowActive(boolean showActive) {
+        Settings.showActive = showActive;
+    }
+
+    public static boolean isShowCompleted() {
+        return showCompleted;
+    }
+
+    public static void setShowCompleted(boolean showCompleted) {
+        Settings.showCompleted = showCompleted;
+    }
 }

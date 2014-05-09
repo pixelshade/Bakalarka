@@ -2,13 +2,57 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Available"
+            android:id="@+id/toggleAvailable"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.33"
+            android:textOn="Available"
+            android:textOff="Available" />
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Active"
+            android:id="@+id/toggleActive"
+            android:layout_weight="0.33"
+            android:textOn="Active"
+            android:textOff="Active" />
+
+        <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Complete"
+            android:id="@+id/toggleComplete"
+            android:layout_weight="0.33"
+            android:textOn="Completed"
+            android:textOff="Completed" />
+    </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/listViewQuests"
         android:longClickable="false"
         android:focusable="true"
         android:drawSelectorOnTop="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Switch"
+        android:id="@+id/switch1"
+        android:layout_gravity="right" />
+
 </LinearLayout>

@@ -74,6 +74,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Settings.loadAllSettings(this);
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -114,6 +115,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         contentFilesManager = new ContentFilesManager(this);
         gameHandler = GameHandler.getInstance(this);
         gpsTracker = GPSTracker.getInstance(this, this);
+
+
+
 
         if (htmlBrowser.isOnline()) {
 //            htmlBrowser.HttpGetAsyncString(this, Settings.getIsLoggedInURL(), loginCheck);

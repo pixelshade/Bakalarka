@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
@@ -29,11 +31,16 @@ public class QuestsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_quests, container, false);
-
-
-        ListView listViewQuests = (ListView) rootView.findViewById(R.id.listViewQuests);
         Log.d(TAG, "VYTVARAM FRAGMENT");
 
+        ToggleButton toggleActive = (ToggleButton) rootView.findViewById(R.id.toggleActive);
+        ToggleButton toggleAvailable = (ToggleButton) rootView.findViewById(R.id.toggleAvailable);
+        ToggleButton toggleComplete = (ToggleButton) rootView.findViewById(R.id.toggleComplete);
+        ListView listViewQuests = (ListView) rootView.findViewById(R.id.listViewQuests);
+
+        toggleActive.setChecked(Settings.isShowActive());
+        toggleAvailable.setChecked(Settings.isShowAvailable());
+        toggleComplete.setChecked(Settings.isShowCompleted());
         this.updateFragment();
 
         listViewQuests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -46,6 +53,38 @@ public class QuestsFragment extends Fragment {
             }
         });
 
+        toggleActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Settings.setShowActive(isChecked);
+                updateFragment();
+//                questAdapter.setShowActive(isChecked);
+//                questAdapter.getFilter().filter("");
+            }
+        });
+
+        toggleAvailable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Settings.setShowAvailable(isChecked);
+                updateFragment();
+//                questAdapter.setShowAvailable(isChecked);
+//                questAdapter.getFilter().filter("");
+            }
+        });
+
+        toggleComplete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Settings.setShowCompleted(isChecked);
+                updateFragment();
+//                questAdapter.setShowComplete(isChecked);
+//                questAdapter.getFilter().filter("");
+            }
+        });
+
+
+
         return rootView;
     }
 
@@ -54,21 +93,16 @@ public class QuestsFragment extends Fragment {
         GameData gameData = gameHandler.getGameData();
 
         if(gameData!=null) {
-            ArrayList<Quest> quests = gameData.getQuests();
+            ArrayList<Quest> quests = gameData.getQuests(Settings.isShowAvailable(),Settings.isShowActive(),Settings.isShowCompleted());
             if (quests != null) {
+
                 questAdapter = new QuestAdapter(getActivity(), R.layout.list_quest, quests);
                 ListView lv = (ListView) rootView.findViewById(R.id.listViewQuests);
-                if (lv != null) lv.setAdapter(questAdapter);
+                if (lv != null) {
+                    lv.setAdapter(questAdapter);
+                }
             }
         }
-    }
-
-    public void updateFragment(ArrayList<Quest> quests) {
-            if (quests != null) {
-                questAdapter = new QuestAdapter(getActivity(), R.layout.list_quest, quests);
-                ListView lv = (ListView) rootView.findViewById(R.id.listViewQuests);
-                if (lv != null) lv.setAdapter(questAdapter);
-            }
     }
 
 
@@ -78,5 +112,9 @@ public class QuestsFragment extends Fragment {
         updateFragment();
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Settings.saveQuestsListingSettings(getActivity(),Settings.isShowActive(),Settings.isShowAvailable(),Settings.isShowCompleted());
+    }
 }
