@@ -47,7 +47,8 @@ class Region extends Admin_Controller
 				'lat_start',
 				'lon_start',
 				'lat_end',
-				'lon_end'
+				'lon_end',
+				'movement'
 				));
 			$this->region_m->save($data, $id);
 			redirect('admin/region');

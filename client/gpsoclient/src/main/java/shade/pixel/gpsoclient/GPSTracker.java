@@ -298,6 +298,6 @@ public class GPSTracker extends Service implements LocationListener {
     @Override
     public void onDestroy() {
         // Tell the user we stopped.
-        Toast.makeText(this, "GPSTracker stopped", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No longer tracking your position", Toast.LENGTH_SHORT).show();
     }
 }

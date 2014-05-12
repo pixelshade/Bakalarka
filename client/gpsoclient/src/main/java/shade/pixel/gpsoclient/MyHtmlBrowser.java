@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -44,13 +43,14 @@ public class MyHtmlBrowser {
     private Context mContext;
     private CookieStore cookieStore;
     private HttpContext localContext;
-    private GetAsyncStringTask ast;
+    private GetAsyncStringTask getAsyncStringTask;
+//    private PostAsyncStringTask postAsyncStringTask;
 
 
     public static MyHtmlBrowser getInstance(Context context) {
         if (instance == null) {
             instance = new MyHtmlBrowser(context);
-            
+
         }
         instance.setmContext(context);
         return instance;
@@ -103,18 +103,16 @@ public class MyHtmlBrowser {
     }
 
 
-
-
-    public boolean Login(String user, String pass, String serverURL) {
+    public Response Login(String user, String pass, String serverURL) {
         Settings.setUsername(user);
         Settings.setPass(pass);
         Settings.setServerURL(serverURL);
         if (serverURL.equals("")) {
             Toast.makeText(mContext, "NO SERVER TO CONNECT", Toast.LENGTH_SHORT).show();
-            return false;
+            return null;
         } else {
             String url = serverURL + "/api/login";
-            Log.d(TAG,url);
+            Log.d(TAG, url);
             HttpPost httppost = new HttpPost(url);
 
             try {
@@ -125,7 +123,7 @@ public class MyHtmlBrowser {
 
                 // Execute HTTP Post Request
                 StringBuilder result = new StringBuilder();
-                HttpResponse httpresponse = httpClient.execute(httppost,localContext);
+                HttpResponse httpresponse = httpClient.execute(httppost, localContext);
                 BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
                 while (true) {
                     String line = br.readLine();
@@ -133,28 +131,131 @@ public class MyHtmlBrowser {
                         break;
                     result.append(line + "\n");
                 }
-                HashMap<String,String> response = ResponseJSONParser.parseResponse(result.toString());
-                if(response != null && response.containsKey("success")){
-                    String success = response.get("success");
-                    return success.equals("1");
-                }
+                Response response = new Response(result.toString());  //.parseResponse(result.toString());
                 Log.d(TAG, result.toString());
+                return response;
 
-                return false;
+
             } catch (ClientProtocolException e) {
-                 e.printStackTrace();
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return false;
+        return null;
     }
+
+    public String HttpPostString(String url, List<NameValuePair> nameValuePairs) {
+        Log.d(TAG, "sending post request to this url:"+ url);
+        HttpPost httppost = new HttpPost(url);
+        try {
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            StringBuilder result = new StringBuilder();
+            HttpResponse httpresponse = httpClient.execute(httppost, localContext);
+            BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
+            while (true) {
+                String line = br.readLine();
+                if (line == null)
+                    break;
+                result.append(line + "\n");
+            }
+            Log.d(TAG, result.toString());
+            return result.toString();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+
+
+//
+//    public class PostAsyncStringTask extends AsyncTask<String, Integer, String> {
+//        public AsyncResponse delegate;
+//        public boolean locked;
+//        private Context context;
+//
+//        public PostAsyncStringTask(Context context, AsyncResponse delegate) {
+//            this.delegate = delegate;
+//            this.context = context;
+//        }
+//
+//        public boolean isLocked() {
+//            return locked;
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//            Integer count = 0;
+//            StringBuilder result = new StringBuilder();
+//            String url = params[0];
+//            return HttpPostString(url,);
+//
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            super.onPostExecute(result);
+//            Log.d(TAG, "Async get result: " + result);
+//            if (!((Activity) context).isFinishing()) {
+//                if (progressDialog != null) {
+//                    progressDialog.dismiss();
+//                }
+//            }
+//            delegate.processFinish(context, result);
+//            locked = false;
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//            locked = true;
+//            super.onPreExecute();
+//            progressDialog = new ProgressDialog(context);
+//            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progressDialog.setMax(100);
+//            Log.d(TAG, context.toString());
+//            if (!((Activity) context).isFinishing()) {
+//                if (progressDialog != null) {
+//                    progressDialog.dismiss();
+////                        progressDialog.show();
+//                }
+//            }
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Integer... values) {
+//            super.onProgressUpdate(values);
+//            progressDialog.incrementProgressBy(values[0]);
+//        }
+//
+//
+//    }
+//
+//    public void HttpPostAsyncString(Context context, String uristr, AsyncResponse delegate) {
+//        postAsyncStringTask = new PostAsyncStringTask(context, delegate);
+//        if (!postAsyncStringTask.isLocked()) postAsyncStringTask.execute(uristr);
+//    }
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Is online check method
      */
     public boolean isOnline() {
-        ConnectivityManager cm =  (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return (netInfo != null) && netInfo.isConnectedOrConnecting();
     }
@@ -165,18 +266,18 @@ public class MyHtmlBrowser {
      */
 
     public String HttpGetString(String uristr) {
-        Log.d(TAG,"Getting contents of: " +uristr);
+        Log.d(TAG, "Getting contents of: " + uristr);
 
         StringBuilder result = new StringBuilder();
-        try{
+        try {
             httpClient = new DefaultHttpClient();
             URI uri = new URI(uristr);
             HttpGet httpget = new HttpGet(uri);
-            HttpResponse httpresponse = httpClient.execute(httpget,localContext);
-            if(httpresponse == null){
-                Log.d(TAG,"Httpresponse je NULL");
+            HttpResponse httpresponse = httpClient.execute(httpget, localContext);
+            if (httpresponse == null) {
+                Log.d(TAG, "Httpresponse je NULL");
             } else {
-                Log.d(TAG,"Httpresponse nie je NULL. Je " + uri);
+                Log.d(TAG, "Httpresponse nie je NULL. Je " + uri);
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
             while (true) {
@@ -186,97 +287,96 @@ public class MyHtmlBrowser {
                 result.append(line + "\n");
             }
         } catch (Exception e) {
-            Log.d(TAG,"Exception> "+ e.toString());
+            Log.d(TAG, "Exception> " + e.toString());
             e.printStackTrace();
         }
-        Log.d(TAG,"Result of getAsyncString: " +result);
+        Log.d(TAG, "Result of getAsyncString: " + result);
         return result.toString();
     }
 
-    public class GetAsyncStringTask extends AsyncTask<String, Integer, String>{
-            public AsyncResponse delegate;
-            public boolean locked;
-            private Context context;
+    public class GetAsyncStringTask extends AsyncTask<String, Integer, String> {
+        public AsyncResponse delegate;
+        public boolean locked;
+        private Context context;
 
-        public GetAsyncStringTask(Context context ,AsyncResponse delegate){
+        public GetAsyncStringTask(Context context, AsyncResponse delegate) {
             this.delegate = delegate;
             this.context = context;
         }
 
-            public boolean isLocked(){
-                return locked;
-            }
+        public boolean isLocked() {
+            return locked;
+        }
 
-            @Override
-            protected String doInBackground(String... params) {
-                Integer count = 0;
-                StringBuilder result = new StringBuilder();
-                try {
-                    httpClient = new DefaultHttpClient();
-                    URI uri = new URI(params[0]);
-                    Log.d(TAG,"trying to get async:"+uri);
-                    HttpGet httpget = new HttpGet(params[0]);
-                    httpClient.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
+        @Override
+        protected String doInBackground(String... params) {
+            Integer count = 0;
+            StringBuilder result = new StringBuilder();
+            try {
+                httpClient = new DefaultHttpClient();
+                URI uri = new URI(params[0]);
+                Log.d(TAG, "trying to get async:" + uri);
+                HttpGet httpget = new HttpGet(params[0]);
+                httpClient.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
 
-                    HttpResponse httpresponse = httpClient.execute(httpget,localContext);
-                    BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
-                    while (true) {
-                        String line = br.readLine();
-                        if (line == null)
-                            break;
-                        result.append(line + "\n");
-                        publishProgress(count++);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                HttpResponse httpresponse = httpClient.execute(httpget, localContext);
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpresponse.getEntity().getContent()));
+                while (true) {
+                    String line = br.readLine();
+                    if (line == null)
+                        break;
+                    result.append(line + "\n");
+                    publishProgress(count++);
                 }
-                return result.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            return result.toString();
+        }
 
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-                Log.d(TAG, "Async get result: "+ result);
-                if(!((Activity) context).isFinishing())
-                {
-                    if (progressDialog!=null) {
-                        progressDialog.dismiss();
-                    }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Log.d(TAG, "Async get result: " + result);
+            if (!((Activity) context).isFinishing()) {
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
                 }
-                delegate.processFinish(context, result);
-                locked = false;
             }
+            delegate.processFinish(context, result);
+            locked = false;
+        }
 
-            @Override
-            protected void onPreExecute() {
-                locked = true;
-                super.onPreExecute();
-                progressDialog = new ProgressDialog(context);
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.setMax(100);
-                Log.d(TAG,context.toString());
-                if(!((Activity) context).isFinishing())
-                {
-                    if (progressDialog!=null) {
-                        progressDialog.dismiss();
+        @Override
+        protected void onPreExecute() {
+            locked = true;
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMax(100);
+            Log.d(TAG, context.toString());
+            if (!((Activity) context).isFinishing()) {
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
 //                        progressDialog.show();
-                    }
                 }
             }
+        }
 
-            @Override
-            protected void onProgressUpdate(Integer... values) {
-                super.onProgressUpdate(values);
-                progressDialog.incrementProgressBy(values[0]);
-            }
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            progressDialog.incrementProgressBy(values[0]);
+        }
 
 
     }
 
-    public void HttpGetAsyncString(Context context,String uristr, AsyncResponse delegate) {
-        ast = new GetAsyncStringTask(context,delegate);
-        if(!ast.isLocked())   ast.execute(uristr);
+    public void HttpGetAsyncString(Context context, String uristr, AsyncResponse delegate) {
+        getAsyncStringTask = new GetAsyncStringTask(context, delegate);
+        if (!getAsyncStringTask.isLocked()) getAsyncStringTask.execute(uristr);
     }
+
 
     public Context getmContext() {
         return mContext;

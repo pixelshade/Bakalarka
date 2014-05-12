@@ -118,6 +118,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         if (htmlBrowser.isOnline()) {
 //            htmlBrowser.HttpGetAsyncString(this, Settings.getIsLoggedInURL(), loginCheck);
+            contentFilesManager.UpdateFiles();
         } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
         }
@@ -167,12 +168,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void StartLoginActivity() {
+        if(gpsTracker!=null)        gpsTracker.stopUsingGPS();
         Intent mLoginIntent = new Intent(this, LoginActivity.class);
         startActivity(mLoginIntent);
         finish();
     }
 
     public void LogoutAndStartLoginActivity(View view) {
+        if(gpsTracker!=null)        gpsTracker.stopUsingGPS();
         String url = Settings.getLogoutURL();
         Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
         final Intent mLoginIntent = new Intent(this, LoginActivity.class);
@@ -257,7 +260,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (questsFragment != null) {
             questsFragment.updateFragment(this);
         } else {
-            Log.d(TAG, "Quests view je null.");
+            Log.d(TAG, "Quests view is null.");
         }
     }
 
@@ -266,7 +269,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (regionFragment != null) {
             regionFragment.updateFragment();
         } else {
-            Log.d(TAG, "Regions view je null.");
+            Log.d(TAG, "Regions view is null.");
         }
     }
 
@@ -275,7 +278,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (itemsFragment != null) {
             itemsFragment.updateFragment();
         } else {
-            Log.d(TAG, "Regions view je null.");
+            Log.d(TAG, "Regions view is null.");
         }
     }
 
@@ -284,7 +287,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (attributesFragment != null) {
             attributesFragment.updateFragment();
         } else {
-            Log.d(TAG, "Attribute view je null.");
+            Log.d(TAG, "Attribute view is null.");
         }
     }
 
@@ -408,17 +411,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();
             switch (position) {
-                case 0:
+                case mainFragmentId:
                     return getString(R.string.main_section).toUpperCase(l);
-                case 1:
+                case questsFragmentId:
                     return getString(R.string.title_quests).toUpperCase(l);
-                case 2:
+                case regionsFragmentId:
                     return getString(R.string.title_region).toUpperCase(l);
-                case 3:
+                case itemsFragmentId:
                     return getString(R.string.title_inventory).toUpperCase(l);
-                case 4:
+                case attributesFragmentId:
                     return getString(R.string.title_attributes).toUpperCase(l);
-                case 5:
+                case mapFragmentId:
                     return getString(R.string.title_map).toUpperCase(l);
             }
             return null;

@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class ItemInfoActivity extends ActionBarActivity {
     ArrayList<Item> items;
     private static Item actualItem;
@@ -142,11 +144,13 @@ public class ItemInfoActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_item_info, container, false);
-            TextView itemNameText = (TextView) rootView.findViewById(R.id.itemNameText);
-            itemNameText.setText(actualItem.getName());
+            TextView itemAmountText = (TextView) rootView.findViewById(R.id.itemInfoAmountTextView);
+            TextView itemNameText = (TextView) rootView.findViewById(R.id.itemInfoNameText);
             TextView itemInfoText = (TextView) rootView.findViewById(R.id.itemInfoText);
-            itemInfoText.setText(Html.fromHtml(actualItem.getInfo()));
             ImageView itemImageView = (ImageView) rootView.findViewById(R.id.itemImageView);
+            itemNameText.setText(actualItem.getName());
+            itemInfoText.setText(Html.fromHtml(actualItem.getInfo()));
+            itemAmountText.setText(actualItem.getAmount()+"x");
 
             if(actualItem.getImage().length() != 0) {
                 String filePath = Settings.getContentFileDir() + actualItem.getImage();

@@ -70,6 +70,22 @@ class Api extends Admin_Controller
 		}
 	}
 
+	public function set_my_name(){
+		$user_id = $this->user_m->get_user_id();	
+
+		$data = $this->user_m->array_from_post(array('name'));					
+		$name = $data['name'];
+		$result = $this->user_m->set_users_name($name, $user_id);
+		if($result){
+			$response['success'] = 1;
+			$response['msg'] = "Name successfuly changed to "+ $name;
+		} else {
+			$response['success'] = 0;
+			$response['msg'] = "Name wasnt changed";
+		}
+		echo json_encode($response);
+	}
+
 	public function register(){
 		$response['type'] = "REGISTER_USER";
 		$rules = $this->user_m->rules_register;		
@@ -94,13 +110,13 @@ class Api extends Admin_Controller
 		$rules = $this->user_m->rules;
 		$this->form_validation->set_rules($rules);		
 		if($this->form_validation->run() == TRUE){
-			// login and redirect
+			// login 
 			if($this->user_m->login() == TRUE){
 				$response['success'] = 1;				
 				$response['msg'] = "Logged successfully";
-				$resposne['data'] = $this->session->all_userdata();
+				$response['data'] = $this->session->all_userdata();
 			} else {
-				$this->session->set_flashdata('error', 'That email/password doest exist. too bad');
+				// $this->session->set_flashdata('error', 'That email/password doest exist. too bad');
 				$response['success'] = 0;
 				$response['msg'] = "Wrong user/password.";
 			}
@@ -295,7 +311,7 @@ class Api extends Admin_Controller
 				$response['success'] = 0;
 				$response['msg'] = "Quest is already completed";	
 			} else {			
-				$quest = $this->quest_m->get_by("`id` = '".$quest_id."'", TRUE);
+				$quest = $this->quest_m->get_by_id($quest_id);
 				if($quest){
 					$response['success'] = 0;
 					switch ($quest->completion_requirement_type) {	
@@ -392,6 +408,32 @@ class Api extends Admin_Controller
 	}
 
 
+	public function char_give_item_to_char($item_id = NULL, $item_amount = NULL, $receiver_id = NULL){
+		if($item_id != NULL && $item_amount != NULL && $receiver_id != NULL){
+			$user_id = $this->user_m->get_user_id();	
+			$receiver_exists = $this->user_m->id_exists($receiver_id);
+			$item_exists = $this->item_definition_m->id_exists($item_id);
+			if($receiver_exists){
+				$is_item_given = $this->user_item_m->give_item_amount_from_char_to_char($item_id, $item_amount, $user_id, $receiver_id);
+				if($is_item_given){
+					$response['success'] = 1;
+					$response['msg'] = 'You have successfuly given the item.';
+				} else {
+					$response['success'] = 0;
+					$response['msg'] = 'You cant give this amount of item.';
+				}
+			} else {
+				$response['success'] = 0;
+				$response['msg'] = 'Receiver doesnt exist';
+			}
+			
+		} else {
+			$response['success'] = 0;
+			$response['msg'] = 'Not enough parameters';
+		}
+		echo json_encode($response);
+
+	}
 
 	private function _giveItem($item_id, $item_amount, $char_id){						
 		if($item_id != NONE_ID && $item_amount != 0){

@@ -90,8 +90,16 @@ function showNewRect(event) {
 
   infoWindow.open(map);
 }
-
 google.maps.event.addDomListener(window, 'load', initialize);
+
+//  ADD movement
+
+
+
+
+
+
+
 </script>	
 
 <table class="table">
@@ -113,6 +121,13 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	</tr>
 </table>
 <table class="table">
+	<tr>		
+		<td colspan="2"><?php echo "<button type='button' class='btn btn-primary' id='add_movement_btn'>+ add movement</button>" ?></td>
+		<td colspan="2"><?php echo "<button type='button' class='btn btn-primary' id='play_movement_btn'>play movement</button>" ?></td>
+	</tr>	
+	<tr>		
+		<td colspan="4"><?php echo form_input('movement', set_value('movement', $region->movement), 'id="movement_json" class="form-control"'); ?></td>
+	</tr>
 	<tr>
 		<td>lat_start</td>
 		<td><?php echo form_input('lat_start', set_value('lat_start', $region->lat_start), 'class="form-control" id="lat_start"'); ?></td>
@@ -130,3 +145,93 @@ google.maps.event.addDomListener(window, 'load', initialize);
 	</tr>
 </table>
 <?php echo form_close();?>
+
+
+
+
+
+<script>
+
+function log(x){ console.log(x) }
+for(var i = 0; i < 10; i++){ setTimeout(log(i), 500*i) }
+
+
+	function animate(){
+		var prev = null;
+		var jsonArr = JSON.parse($('#movement_json').val());		
+		if(jsonArr!=null){
+			for (var i = 0; i <= jsonArr.length; i++) {
+				setTimeout(function(a){ 
+					if(prev!=null) prev.setMap(null);
+					prev = draw_rect(jsonArr[a]);
+				}, i*1000,i);
+			}
+		}
+
+	}
+
+	function draw_rect(position){
+
+		if(position!=null || position != undefined){					
+			console.log(position);
+
+			var rec = new google.maps.Rectangle({
+				strokeColor: '#FF0000',
+				strokeOpacity: 0.8,
+				strokeWeight: 2,
+				fillColor: '#FF0000',
+				fillOpacity: 0.35,
+				map: map,
+				bounds: new google.maps.LatLngBounds(
+					new google.maps.LatLng(position.lat_start, position.lon_start),
+					new google.maps.LatLng(position.lat_end, position.lon_end))
+			});
+			return rec;
+
+		} 
+
+	}
+
+	$('#play_movement_btn').click(function(){
+		animate();
+
+
+	})
+
+
+
+	$('#add_movement_btn').click(function(){
+		add_movement();
+		alert('Position added');
+	}	
+	)
+
+
+	function add_movement(){
+		var lats = $('#lat_start').val();
+		var lons = $('#lon_start').val();
+		var late = $('#lat_end').val();
+		var lone = $('#lon_end').val();
+		var jsonArr = $('#movement_json').val();
+
+		jsonArr = add_fields_to_json( lats, lons, late, lone, jsonArr);
+		$('#movement_json').val(JSON.stringify(jsonArr));	
+	}
+
+
+	function add_fields_to_json(lat_start0, lon_start0, lat_end0, lon_end0, json){
+		var position = {
+			lat_start : lat_start0,
+			lon_start : lon_start0,
+			lat_end : lat_end0,
+			lon_end : lon_end0
+		}
+		if(json==""){
+			json = [];
+		} else {
+			json = JSON.parse(json);
+		}
+		json.push(position);	
+		return json;
+	}
+</script>

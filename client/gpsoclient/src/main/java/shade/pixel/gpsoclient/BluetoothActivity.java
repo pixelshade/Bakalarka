@@ -21,9 +21,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+
 public class BluetoothActivity extends ActionBarActivity {
     private static final String TAG = "BLUETOOTH ACTIVITY";
 
+    private static final String MSG_TYPE_SEND_ITEM = "TYPE_SEND_ITEM";
 
     private static final int REQUEST_CONNECT_BT = 1;
     private static final int REQUEST_ENABLE_BT = 2;
@@ -36,6 +41,9 @@ public class BluetoothActivity extends ActionBarActivity {
     private StringBuffer messages;
     private BluetoothAdapter btAdapter = null;
     private BTCommunicator chat = null;
+
+
+
 
 
 //    @Override
@@ -115,7 +123,8 @@ public class BluetoothActivity extends ActionBarActivity {
                                           KeyEvent event) {
                 if (actionId == EditorInfo.IME_NULL
                         && event.getAction() == KeyEvent.ACTION_UP) {
-                    sendMessage(view.getText().toString());
+                    Item item = new Item(1,"seeker","je najlepsia","",1);
+                    sendItem(item);
                 }
                 return true;
             }
@@ -124,16 +133,18 @@ public class BluetoothActivity extends ActionBarActivity {
         messages = new StringBuffer("");
     }
 
-    private void sendMessage(String message) {
+    private void sendItem(Item item) {
         if (!chat.state.equals("CONNECTED")) {
             Toast.makeText(this, "not connected", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (message.length() > 0) {
-            byte[] send = message.getBytes();
-            chat.write(send);
-            messages.setLength(0);
-            edTxt.setText(messages);
+        if (item !=null && item.getAmount() > 0) {
+            try {
+                byte[] data = ByteConverter.toByteArray(item);
+                chat.write(data);
+            } catch (IOException e){ e.printStackTrace();};
+//            messages.setLength(0);
+//            edTxt.setText(messages);
         } else
             Toast.makeText(this, "empty message", Toast.LENGTH_SHORT).show();
 
@@ -144,6 +155,7 @@ public class BluetoothActivity extends ActionBarActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case WRITE:
+//                    ByteConverter.toObject((byte[]) msg.obj);
                     arrayAdapter.add("->" + new String((byte[]) msg.obj));
                     break;
                 case READ:
@@ -203,6 +215,7 @@ public class BluetoothActivity extends ActionBarActivity {
     }
 
 }
+
 
 
 

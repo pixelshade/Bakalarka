@@ -12,6 +12,7 @@ public class Settings {
     /**
      * User changable variables
      */
+    private static String playerName;
     private static String username, pass;
     private static String serverURL = "http://bak.skeletopedia.sk";
 
@@ -30,9 +31,10 @@ public class Settings {
     private static String serverContentDirURL = serverURL + "/app_content/";
     public static String removeActiveQuestURL =  serverURL + "/api/remove_my_active_quest/";
 
-    private static String loginURL = serverURL + "/api/isLoggedIn";
+    private static String loginURL = serverURL + "/api/loggin";
     private static String isLoggedInURL = serverURL + "/api/isLoggedIn";
     private static String logoutURL = serverURL + "/api/logout";
+    public static String setMyNameURL =  serverURL + "/api/set_my_name";
 
 
 
@@ -107,7 +109,13 @@ public class Settings {
     }
 
 
+    public static String getPlayerName() {
+        return playerName;
+    }
 
+    public static void setPlayerName(String name) {
+        Settings.playerName = name;
+    }
 
     public static String getUsername() {
         return username;

@@ -83,6 +83,20 @@ class Quest_m extends MY_Model
 			return $quest;
 		}		
 
+		public function create($name,$info,$image,$reward_id,$autostart,$region_id,$required_completed_quest_id,$duration,$completion_requirement_type,$completion_requirement){
+			$quest['name'] = $name;
+			$quest['info'] = $info;
+			$quest['image'] = $image;
+			$quest['reward_id'] = $reward_id;
+			$quest['autostart'] = $autostart;
+			$quest['region_id'] = $region_id;
+			$quest['required_completed_quest_id'] = $required_completed_quest_id;
+			$quest['duration'] = $duration;
+			$quest['completion_requirement_type'] = $completion_requirement_type;
+			$quest['completion_requirement'] = $completion_requirement;
+			$this->save($quest);
+		}
+
 		public function get_for_dropdown(){
 			$empty = array(NONE_ID => 'No quest');
 			$result = $this->get_array();		

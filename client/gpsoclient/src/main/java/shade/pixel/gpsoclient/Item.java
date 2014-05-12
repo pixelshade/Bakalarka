@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by pixelshade on 13.3.2014.
  */
 public class Item implements Serializable{
-    private final String TAG = "Attribute";
+    private final String TAG = "Item";
     public static final String KEY_ITEM_ID = "id";
     public static final String KEY_ITEM_NAME = "name";
     public static final String KEY_ITEM_INFO = "info";

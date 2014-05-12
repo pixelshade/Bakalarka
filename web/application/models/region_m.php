@@ -38,7 +38,12 @@ class Region_m extends MY_Model
 			'field' => 'lon_end', 
 			'label' => 'Longtitude end', 
 			'rules' => 'trim|required|decimal[10]|xss_clean'
-			), 		
+			), 
+		'movement' => array(
+			'field' => 'movement',
+			'label' => 'Movement',
+			'rules' => 'trim'
+			)
 		);
 
 	public function get_new ()
@@ -52,9 +57,24 @@ class Region_m extends MY_Model
 		$region->lon_start = '';
 		$region->lat_end = '';
 		$region->lon_end = '';
+		$region->movement = '';
 
 		return $region;
 	}
+
+	public function create($name, $info, $image, $lat_start, $lon_start, $lat_end, $lon_end, $movement){
+		$region['name'] = $name;
+		$region['info'] = $info;
+		$region['image'] = $image;
+		$region['lat_start'] = $lat_start;
+		$region['lon_start'] = $lon_start;
+		$region['lat_end'] = $lat_end;
+		$region['lon_end'] = $lon_end;
+		$region['movement'] = $movement;
+		$this->save($region);
+
+	}
+
 
 	public function change_location($lat_start,$lon_start,$lat_end,$lon_end, $region_id){
 		$region['lat_start'] = $lat_start;

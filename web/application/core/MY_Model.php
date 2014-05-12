@@ -79,6 +79,12 @@ class MY_Model extends CI_Model
 		return $this->get(NULL, TRUE);
 	}
 
+	public function id_exists($id){
+		$this->db->where($this->_primary_key,$id);
+   		$q = $this->db->get($this->_table_name, TRUE);
+		return (!empty($q));
+	}
+
 	public function get_array_by($where, $single = FALSE){
 		$this->db->where($where);
 		return $this->get_array(NULL, $single);

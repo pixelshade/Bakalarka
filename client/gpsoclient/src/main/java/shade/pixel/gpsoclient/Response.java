@@ -5,10 +5,12 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by pixelshade on 15.3.2014.
  */
-public class Response {
+public class Response implements Serializable{
     private static String TAG = "Response";
     //  private HashMap<String, String> response;
     private boolean successfullyParsed;
@@ -109,6 +111,23 @@ public class Response {
         return null;
     }
 
+    private GameSettings getGameSettings(String json) {
+        if (type.equals(TYPE_LOGIN)) {
+            GameSettings gameSettings = new GameSettings();
+            JSONObject data = null;
+            try {
+                data = new JSONObject(json);
+                gameSettings.setGameFilenameLogo(data.optString("gameFilenameLogo", ""));
+                gameSettings.setPlayerName(data.optString("name", ""));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return gameSettings;
+        }
+        return null;
+    }
+
     private Object getDataFromResponse(String dataJSON, String type) {
 
         if (type.equals(TYPE_GIVE_REWARD)) {
@@ -119,6 +138,9 @@ public class Response {
         }
         if (type.equals(TYPE_ACCEPT_QUEST)) {
             return new Response(dataJSON);
+        }
+        if (type.equals(TYPE_LOGIN)) {
+            return getGameSettings(dataJSON);
         }
         return dataJSON;
     }

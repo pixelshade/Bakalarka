@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -9,8 +9,8 @@
     tools:context="shade.pixel.gpsoclient.ItemInfoActivity$PlaceholderFragment">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/scrollView" >
 
         <RelativeLayout
@@ -18,11 +18,22 @@
             android:layout_height="fill_parent">
 
             <TextView
-                android:id="@+id/itemNameText"
+                android:id="@+id/itemInfoNameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Epic item"
-                android:textSize="32dp" />
+                android:textSize="32dp"
+                android:layout_toLeftOf="@+id/itemInfoAmountTextView" />
+
+            <TextView
+                android:id="@+id/itemInfoAmountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3x"
+                android:textSize="32dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
             <TextView
                 android:id="@+id/itemInfoText"
@@ -40,11 +51,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/itemImageView"
                 android:src="@drawable/no_image_512x512"
-                android:layout_below="@+id/itemNameText"
+                android:layout_below="@+id/itemInfoNameText"
                 android:paddingTop="20dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
         </RelativeLayout>
     </ScrollView>
+
+
 
 </RelativeLayout>

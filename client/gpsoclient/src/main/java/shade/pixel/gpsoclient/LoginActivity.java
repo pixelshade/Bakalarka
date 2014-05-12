@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -28,6 +29,7 @@ import java.util.HashMap;
  * well.
  */
 public class LoginActivity extends FragmentActivity {
+    private final String TAG = "LoginActivity";
     MyHtmlBrowser htmlBrowser;
     Intent mIntent;
     Context mContext;
@@ -228,7 +230,7 @@ public class LoginActivity extends FragmentActivity {
             focusView.requestFocus();
         } else {
             // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
+            // perform the user REGISTER attempt.
             mLoginStatusMessageView.setText(R.string.login_progress_registering_in);
             showProgress(true);
             mRegTask = new UserRegisterTask();
@@ -280,21 +282,26 @@ public class LoginActivity extends FragmentActivity {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, Response> {
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Response doInBackground(Void... params) {
             return htmlBrowser.Login(mEmail, mPassword, mServerURL);
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final Response response) {
             mAuthTask = null;
             showProgress(false);
-
-            if (success) {
+            if(response == null) {
+                Toast.makeText(mContext, "There was a problem in communication with server", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (response.isSuccessful()) {
                 //  htmlBrowser.HttpGetAsyncString(htmlBrowser.getServerURL()+"/api/isLoggedIn");
                 //Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
                 Settings.saveLoginSettings(mContext, mEmail, mPassword, mServerURL);
+                GameSettings gameSettings = (GameSettings) response.getData();
+                Settings.setPlayerName(gameSettings.getPlayerName());
                 startActivity(mIntent);
                 finish();
 
@@ -327,9 +334,7 @@ public class LoginActivity extends FragmentActivity {
             } else {
 
                 if (response.isSuccessful()) {
-                    //  htmlBrowser.HttpGetAsyncString(htmlBrowser.getServerURL()+"/api/isLoggedIn");
-                    //Toast.makeText(getApplicationContext(),result, Toast.LENGTH_SHORT).show();
-                    attemptLogin();
+                   Log.d(TAG,response.getDataString());
                 } else {
                     MyAlertDialog dialog = new MyAlertDialog();
                     Bundle args = new Bundle();
