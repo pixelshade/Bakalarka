@@ -135,7 +135,7 @@ class User_M extends MY_Model
 				$user['name'] = $name;
 				$this->save($user,$user_id);
 				return TRUE;
-			}
+			} 
 		}
 		return FALSE;
 	}

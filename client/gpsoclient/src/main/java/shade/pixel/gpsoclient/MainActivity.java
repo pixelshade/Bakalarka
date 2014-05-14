@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     MyHtmlBrowser htmlBrowser;
 
     ContentFilesManager contentFilesManager;
-    public static GameData gameData;
+//    public static GameData gameData;
     public GPSTracker gpsTracker;
     public GameHandler gameHandler;
 
@@ -110,7 +110,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         htmlBrowser = MyHtmlBrowser.getInstance(this);
-        gameData = new GameData();
+//        gameData = new GameData();
         contentFilesManager = new ContentFilesManager(this);
         gameHandler = GameHandler.getInstance(this);
         gpsTracker = GPSTracker.getInstance(this, this);
@@ -175,7 +175,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     if (response.isLoggedOut()) {
                         StartLoginActivity();
                     } else {
-                        gameData = ResponseJSONParser.parseGameData(json);
+                        GameData gameData = ResponseJSONParser.parseGameData(json);
                         gameHandler.setGameData(gameData);
                         if (gameData != null) {
                             StringBuilder sb = new StringBuilder();
@@ -200,7 +200,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             SetRegionsView();
                             SetItemsView();
                             SetAttributesView();
-
+                            showResponses();
 
                         } else {
                             Log.d(TAG, "Problem with parsing gamedata");
@@ -217,6 +217,24 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         TextView tv = (TextView) findViewById(R.id.section_content);
         if (tv != null)
             tv.setText(text);
+    }
+
+    public void showResponses(){
+        GameHandler gameHandler = GameHandler.getInstance(this);
+        GameData gameData = gameHandler.getGameData();
+        for(Response response :gameData.getSuccessfullResponses()){
+            if(response.getType().equals(Response.TYPE_ACCEPT_QUEST)){
+                    String data = response.getDataString();
+                    Log.d(TAG, data);
+                    Intent intent = new Intent(this, QuestInfoActivity.class);
+                    Quest quest = (Quest) response.getData();
+                    if(quest!=null){
+                        intent.putExtra(QuestInfoActivity.INTENT_KEY_QUEST, quest);
+                        startActivity(intent);
+                    }
+            }
+        }
+
     }
 
     public void SetQuestsView() {

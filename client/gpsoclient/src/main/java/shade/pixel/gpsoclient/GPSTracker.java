@@ -52,10 +52,10 @@ public class GPSTracker extends Service implements LocationListener {
     double longitude; // longitude
 
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 2;
+    private static long MIN_DISTANCE_CHANGE_FOR_UPDATES = shade.pixel.gpsoclient.Settings.getPositionUpdateMinDistanceInMetres();
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 1;
+    private static long MIN_TIME_BW_UPDATES = 1000 * shade.pixel.gpsoclient.Settings.getPositionUpdateMinTimeInSeconds();
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
@@ -261,6 +261,7 @@ public class GPSTracker extends Service implements LocationListener {
                             mActivity.SetRegionsView();
                             mActivity.SetItemsView();
                             mActivity.SetAttributesView();
+                            mActivity.showResponses();
                         }
 
                     } else {

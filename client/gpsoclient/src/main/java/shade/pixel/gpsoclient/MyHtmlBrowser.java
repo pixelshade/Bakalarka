@@ -183,7 +183,7 @@ public class MyHtmlBrowser {
 
     public class PostAsyncStringTask extends AsyncTask<Object, Integer, String> {
         public AsyncResponse delegate;
-        public boolean locked;
+        private volatile boolean locked;
         private Context context;
 
         public PostAsyncStringTask(Context context, AsyncResponse delegate) {
@@ -241,7 +241,7 @@ public class MyHtmlBrowser {
     }
 
     public void HttpPostAsyncString(Context context, String uristr, List<NameValuePair> postPairs, AsyncResponse delegate) {
-        if(postAsyncStringTask==null) postAsyncStringTask = new PostAsyncStringTask(context, delegate);
+        postAsyncStringTask = new PostAsyncStringTask(context, delegate);
         if (!postAsyncStringTask.isLocked()) postAsyncStringTask.execute(uristr, postPairs);
     }
 

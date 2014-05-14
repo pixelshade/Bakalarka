@@ -55,7 +55,8 @@ public class MainFragment extends Fragment {
 
 
     private void startSettingsActivity(){
-
+        Intent intent = new Intent(getActivity(), SettingsActivity.class);
+        startActivity(intent);
     }
 
 }

@@ -21,6 +21,10 @@ public class Settings {
     private static boolean showActive = true;
     private static boolean showCompleted = true;
 
+    private static long defeaultIpdateMinTime = 1;
+    private static long defeaultIpdateMinDistance = 2;
+    private static long positionUpdateMinTimeInSeconds = defeaultIpdateMinTime;
+    private static long positionUpdateMinDistanceInMetres = defeaultIpdateMinDistance;
 
     /**
      * Server URL constants
@@ -35,9 +39,7 @@ public class Settings {
     private static String loginURL = serverURL + "/api/loggin";
     private static String isLoggedInURL = serverURL + "/api/isLoggedIn";
     private static String logoutURL = serverURL + "/api/logout";
-    public static String UrlSetPlayerName =  serverURL + "/api/set_my_name";
-
-
+    public static final String UrlSetPlayerName =  serverURL + "/api/set_my_name";
 
     /*
         CONSTANTS
@@ -49,11 +51,17 @@ public class Settings {
 
 
 
+
+
     public static final String INTENT_KEY_QRSCANNED = "QRSCANNED";
 
     private static String ContentFileDir = Environment.getExternalStorageDirectory() + "/GPSOData/";
 
     // SHARED PREFERENCES KEYS
+    private static final String SHAREDPREF_TRACKING_MINTIME_KEY = "MIN_TIME";
+
+    private static final String SHAREDPREF_TRACKING_MINDISTANCE_KEY = "MIN_DISTANCE";
+
     private static final String SHAREDPREF_USERNAME_KEY = "USER_EMAIL";
 
     private static final String SHAREDPREF_PASSWORD_KEY = "USER_PASS";
@@ -85,8 +93,15 @@ public class Settings {
         username = sharedPreferences.getString(SHAREDPREF_USERNAME_KEY, "");
         pass = sharedPreferences.getString(SHAREDPREF_PASSWORD_KEY, "");
         serverURL = sharedPreferences.getString(SHAREDPREF_SERVER_URL_KEY, "http://bak.skeletopedia.sk");
-
     }
+
+    public static void loadSavedTrackingSettings(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        positionUpdateMinDistanceInMetres = sharedPreferences.getLong(SHAREDPREF_TRACKING_MINDISTANCE_KEY, defeaultIpdateMinDistance);
+        positionUpdateMinTimeInSeconds = sharedPreferences.getLong(SHAREDPREF_TRACKING_MINTIME_KEY, defeaultIpdateMinTime);
+        serverURL = sharedPreferences.getString(SHAREDPREF_SERVER_URL_KEY, "http://bak.skeletopedia.sk");
+    }
+
 
     public static void saveQuestsListingSettings(Context context, boolean showActive, boolean showAvailable, boolean showCompleted){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -245,5 +260,21 @@ public class Settings {
 
     public static void setShowCompleted(boolean showCompleted) {
         Settings.showCompleted = showCompleted;
+    }
+
+    public static long getPositionUpdateMinTimeInSeconds() {
+        return positionUpdateMinTimeInSeconds;
+    }
+
+    public static void setPositionUpdateMinTimeInSeconds(int positionUpdateMinTimeInSeconds) {
+        Settings.positionUpdateMinTimeInSeconds = positionUpdateMinTimeInSeconds;
+    }
+
+    public static long getPositionUpdateMinDistanceInMetres() {
+        return positionUpdateMinDistanceInMetres;
+    }
+
+    public static void setPositionUpdateMinDistanceInMetres(int positionUpdateMinDistanceInMetres) {
+        Settings.positionUpdateMinDistanceInMetres = positionUpdateMinDistanceInMetres;
     }
 }

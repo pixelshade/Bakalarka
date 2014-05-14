@@ -73,14 +73,15 @@ class Api extends Admin_Controller
 	public function set_my_name(){
 		$user_id = $this->user_m->get_user_id();	
 		$data = $this->user_m->array_from_post(array('name'));					
-		$name = $data['name'];		
-		$result = $this->user_m->set_users_name($name, $user_id);
-		if($result){
+		$name = $data['name'];			
+
+		if(!empty($name)){
+			$this->user_m->save($data,$user_id);
 			$response['success'] = 1;
-			$response['msg'] = "Name successfuly changed to ". $name;
+			$response['msg'] = "Name successfuly changed to ".$name;			
 		} else {
 			$response['success'] = 0;
-			$response['msg'] = "Name wasnt changed";
+			$response['msg'] = "Name: $name wasnt changed";
 		}
 		echo json_encode($response);
 	}

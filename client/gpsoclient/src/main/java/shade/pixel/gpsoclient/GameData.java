@@ -10,6 +10,7 @@ public class GameData {
     private ArrayList<Region> regions;
     private ArrayList<Item> items;
     private ArrayList<Attribute> attributes;
+    private ArrayList<Response> successfullResponses;
 // TODO create game models
 
     public GameData() {
@@ -67,5 +68,13 @@ public class GameData {
 
     public void setAttributes(ArrayList<Attribute> attributes) {
         this.attributes = attributes;
+    }
+
+    public ArrayList<Response> getSuccessfullResponses() {
+        return successfullResponses;
+    }
+
+    public void setSuccessfullResponses(ArrayList<Response> successfullResponses) {
+        this.successfullResponses = successfullResponses;
     }
 }

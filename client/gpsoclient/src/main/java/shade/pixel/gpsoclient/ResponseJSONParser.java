@@ -1,5 +1,6 @@
 package shade.pixel.gpsoclient;
 
+import android.content.Intent;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -16,6 +17,7 @@ import java.util.HashMap;
  * Created by pixelshade on 23.2.2014.
  */
 public class ResponseJSONParser {
+    private static final String TAG = "ResponseJSONParser";
     // response key names
     // login
     public static final String KEY_TYPE = "type";
@@ -28,8 +30,8 @@ public class ResponseJSONParser {
     public static final String KEY_ACTIVE_QUESTS = "active_quests";
     public static final String KEY_REGIONS = "regions";
     public static final String KEY_INVENTORY = "items";
-    public static final String KEY_ENEMIES = "enemies";
     public static final String KEY_ATTRIBUTES = "attributes";
+    public static final String KEY_RESPONSES = "responses";
 
 
     // quest keys
@@ -99,6 +101,8 @@ public class ResponseJSONParser {
                 JSONArray jsonActiveQuests = jsonObj.optJSONArray(KEY_ACTIVE_QUESTS);
                 JSONArray jsonItems = jsonObj.optJSONArray(KEY_INVENTORY);
                 JSONArray jsonAttributes = jsonObj.optJSONArray(KEY_ATTRIBUTES);
+                JSONArray jsonResponses = jsonObj.optJSONArray(KEY_RESPONSES);
+
 
 
                 ArrayList<Quest> quests = new ArrayList<Quest>();
@@ -168,12 +172,30 @@ public class ResponseJSONParser {
                     attributes.add(attribute);
                 }
 
+                ArrayList<Response> successfullResponses = new ArrayList<Response>();
+                if(jsonResponses!=null)
+                for(int i = 0; i < jsonResponses.length(); ++i){
+                    String responseJSON = jsonResponses.getString(i);
+                    Log.e(TAG, responseJSON);
+                    Response response = new Response(responseJSON);
+                    if(response.isSuccessful()) {
+                        successfullResponses.add(response);
+                        if(response.getType().equals(Response.TYPE_ACCEPT_QUEST)) {
+                            Quest quest = (Quest) response.getData();
+                            quests.add(quest);
+                        }
+                    }
+                }
+
+
+
 
                 GameData gameData = new GameData();
                 gameData.setQuests(quests);
                 gameData.setRegions(regions);
                 gameData.setItems(items);
                 gameData.setAttributes(attributes);
+                gameData.setSuccessfullResponses(successfullResponses);
 
                 return gameData;
             } catch (JSONException e) {
