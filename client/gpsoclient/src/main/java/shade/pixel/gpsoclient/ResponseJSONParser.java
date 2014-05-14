@@ -105,20 +105,8 @@ public class ResponseJSONParser {
                 for(int i = 0; i < jsonQuests.length(); i++){
                     JSONObject quest = jsonQuests.getJSONObject(i);
 
-                    int id = quest.getInt(Quest.KEY_QUEST_ID);
-                    String name = quest.getString(Quest.KEY_QUEST_NAME);
-                    boolean autostart = quest.getInt(Quest.KEY_QUEST_AUTOSTART) == 1;
-                    String code = quest.getString(Quest.KEY_QUEST_CODE);
-                    int duration = quest.optInt(Quest.KEY_QUEST_DURATION, 0);
-                    String image = quest.getString(Quest.KEY_QUEST_IMAGE);
-                    String info = quest.getString(Quest.KEY_QUEST_INFO);
-                    int regionId = quest.optInt(Quest.KEY_QUEST_REGION_ID, Quest.UNDEFINED_INT_VALUE);
-                    int requiredQuestId = quest.optInt(Quest.KEY_QUEST_REQUIRED_QUEST_ID, Quest.UNDEFINED_INT_VALUE);
-                    int requirementType = quest.getInt(Quest.KEY_QUEST_REQUIREMENT_TYPE);
-                    String requirement = quest.getString(Quest.KEY_QUEST_REQUIREMENT);
-                    int reward_id = quest.optInt(Quest.KEY_QUEST_REWARD_ID, Quest.UNDEFINED_INT_VALUE);
+                    Quest q = getQuestFromJSONObj(quest);
 
-                    Quest q = new Quest(id,code, name, info, image, reward_id, autostart, regionId, requiredQuestId, duration, requirementType, requirement);
                     quests.add(q);
                 }
 
@@ -126,24 +114,16 @@ public class ResponseJSONParser {
                 for(int i = 0; i < jsonActiveQuests.length(); i++){
                     JSONObject quest = jsonActiveQuests.getJSONObject(i);
 
-                    int id = quest.getInt(Quest.KEY_QUEST_ID);
-                    String name = quest.getString(Quest.KEY_QUEST_NAME);
-                    boolean autostart = quest.getInt(Quest.KEY_QUEST_AUTOSTART) == 1;
-                    String code = quest.getString(Quest.KEY_QUEST_CODE);
-                    long duration = quest.optInt(Quest.KEY_QUEST_DURATION, 0);
-                    String image = quest.getString(Quest.KEY_QUEST_IMAGE);
-                    String info = quest.getString(Quest.KEY_QUEST_INFO);
-                    int regionId = quest.optInt(Quest.KEY_QUEST_REGION_ID, Quest.UNDEFINED_INT_VALUE);
-                    int requiredQuestId = quest.optInt(Quest.KEY_QUEST_REQUIRED_QUEST_ID, Quest.UNDEFINED_INT_VALUE);
-                    int requirementType = quest.getInt(Quest.KEY_QUEST_REQUIREMENT_TYPE);
-                    String requirement = quest.getString(Quest.KEY_QUEST_REQUIREMENT);
-                    int reward_id = quest.optInt(Quest.KEY_QUEST_REWARD_ID, Quest.UNDEFINED_INT_VALUE);
+                    Quest q = getQuestFromJSONObj(quest);
                     String timeAcceptedString = quest.getString(Quest.KEY_QUEST_TIME_ACCEPTED);
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date timeAccepted = sdf.parse(timeAcceptedString);
                     boolean completed = quest.getInt(Quest.KEY_QUEST_COMPLETED) == 1;
 
-                    Quest q = new Quest(id,code, name, info, image, reward_id, autostart, regionId, requiredQuestId, duration, requirementType, requirement,true,completed,timeAccepted);
+                    q.setTimeAccepted(timeAccepted);
+                    q.setCompleted(completed);
+                    q.setActive(true);
+
                     quests.add(q);
                 }
 
@@ -206,6 +186,23 @@ public class ResponseJSONParser {
 
         }
         return null;
+    }
+
+    public static Quest getQuestFromJSONObj(JSONObject jsonQuestObj) throws JSONException {
+        int id = jsonQuestObj.getInt(Quest.KEY_QUEST_ID);
+        String name = jsonQuestObj.getString(Quest.KEY_QUEST_NAME);
+        boolean autostart = jsonQuestObj.getInt(Quest.KEY_QUEST_AUTOSTART) == 1;
+        String code = jsonQuestObj.getString(Quest.KEY_QUEST_CODE);
+        long duration = jsonQuestObj.optInt(Quest.KEY_QUEST_DURATION, 0);
+        String image = jsonQuestObj.getString(Quest.KEY_QUEST_IMAGE);
+        String info = jsonQuestObj.getString(Quest.KEY_QUEST_INFO);
+        int regionId = jsonQuestObj.optInt(Quest.KEY_QUEST_REGION_ID, Quest.UNDEFINED_INT_VALUE);
+        int requiredQuestId = jsonQuestObj.optInt(Quest.KEY_QUEST_REQUIRED_QUEST_ID, Quest.UNDEFINED_INT_VALUE);
+        int requirementType = jsonQuestObj.getInt(Quest.KEY_QUEST_REQUIREMENT_TYPE);
+        String requirement = jsonQuestObj.getString(Quest.KEY_QUEST_REQUIREMENT);
+        int reward_id = jsonQuestObj.optInt(Quest.KEY_QUEST_REWARD_ID, Quest.UNDEFINED_INT_VALUE);
+
+        return new Quest(id,code, name, info, image, reward_id, autostart, regionId, requiredQuestId, duration, requirementType, requirement);
     }
 
 

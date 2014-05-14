@@ -174,7 +174,7 @@ public class MyAlertDialog extends DialogFragment {
         if (reward != null) {
             String title = reward.getName();
             builder.setMessage(title);
-            builder.setView(inflater.inflate(R.layout.fragment_my_alert_dialog, null));
+            builder.setView(inflater.inflate(R.layout.fragment_reward_info, null));
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     // FIRE ZE MISSILES!

@@ -72,13 +72,12 @@ class Api extends Admin_Controller
 
 	public function set_my_name(){
 		$user_id = $this->user_m->get_user_id();	
-
 		$data = $this->user_m->array_from_post(array('name'));					
-		$name = $data['name'];
+		$name = $data['name'];		
 		$result = $this->user_m->set_users_name($name, $user_id);
 		if($result){
 			$response['success'] = 1;
-			$response['msg'] = "Name successfuly changed to "+ $name;
+			$response['msg'] = "Name successfuly changed to ". $name;
 		} else {
 			$response['success'] = 0;
 			$response['msg'] = "Name wasnt changed";
@@ -210,9 +209,9 @@ class Api extends Admin_Controller
 					case QR_QUEST:
 					$quest = $this->quest_m->get_by('`code` = "'.$code.'"', TRUE);
 					if(!empty($quest)){
-						$this->user_qrscanned_m->insert($user_id,$code);
+						// $this->user_qrscanned_m->insert($user_id,$code);
 						$quest_id = $quest->id;						
-						$response = $this->accept_quest($quest_id);	
+						$response = $this->accept_quest($quest_id);							
 					} else {
 						$response['success'] = 0;
 						$response['msg'] = "Quest doesnt exist";						
@@ -285,8 +284,15 @@ class Api extends Admin_Controller
 						$data['time_accepted'] = date('Y-m-d H:i:s');
 						$data['completed'] = 0;
 						$this->user_quest_m->save($data);
+
+						$quest->char_id = $user_id;
+						$quest->quest_id = $quest_id;
+						$quest->time_accepted = date('Y-m-d H:i:s');
+						$quest->completed = 0;
+						
 						$response['success'] = 1;
 						$response['msg'] = "Quest accepted";
+						$response['data'] = $quest;
 					}
 				}
 			}
@@ -509,7 +515,8 @@ class Api extends Admin_Controller
 			$attribute_amount = $reward->attribute_amount;
 			$attribute_given = $this->_giveAttribute($attribute_id, $attribute_amount, $char_id);
 
-			$response['type'] = 'GIVE_REWARD';						
+			$response['type'] = 'GIVE_REWARD';
+			$response['data']['name'] = $reward->name;
 			if(!empty($attribute_given)){				
 				$attribute_given->amount = $attribute_amount;
 				$response['data']['attribute'] = $attribute_given;								

@@ -46,12 +46,14 @@ public class ItemsFragment extends Fragment {
     public void updateFragment() {
         GameHandler gameHandler = GameHandler.getInstance(getActivity());
         GameData gameData = gameHandler.getGameData();
-        ArrayList<Item> items = gameData.getItems();
+        if(gameData!=null) {
+            ArrayList<Item> items = gameData.getItems();
             if (items != null) {
                 ItemAdapter itemAdapter = new ItemAdapter(getActivity(), R.layout.list_item, items);
                 GridView gridViewItems = (GridView) rootView.findViewById(R.id.gridViewItems);
                 if (gridViewItems != null) gridViewItems.setAdapter(itemAdapter);
             }
+        }
 
     }
 

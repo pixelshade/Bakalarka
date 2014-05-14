@@ -22,49 +22,57 @@
                 android:id="@+id/rewardNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="32sp"
-                android:text="Epic reward"
+                android:textSize="28sp"
+                android:text="You have received reward!"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp" />
 
 
 
 
-            <TextView
+
+
+            <ImageView
                 android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:id="@+id/itemImageView"
+                android:layout_gravity="center"
+                android:src="@drawable/no_image_512x512"
+                android:paddingBottom="20dp" />
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="1 x mec"
+                android:gravity="center_horizontal"
                 android:id="@+id/itemAmountTextView"
                 android:paddingBottom="10dp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/itemImageView"
-                android:src="@drawable/no_image_512x512"
-                android:paddingBottom="20dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/attributeAmountTextView"
-                android:text="4x sila"
-                android:paddingBottom="20dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
                 android:id="@+id/attributeImageView"
                 android:src="@drawable/no_image_512x512"
                 android:paddingBottom="20dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/attributeAmountTextView"
+                android:text="4x sila"
+                android:paddingBottom="20dp" />
 
             <Button
                 android:id="@+id/acceptRewardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="#60cc60"
             android:text="Take reward"
             />
 

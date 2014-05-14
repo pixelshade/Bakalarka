@@ -133,7 +133,7 @@ class User_M extends MY_Model
 		if($name != NULL && $user_id !=NULL && !empty($name)){
 			if($this->id_exists($user_id)){
 				$user['name'] = $name;
-				$this->save($user,$id);
+				$this->save($user,$user_id);
 				return TRUE;
 			}
 		}

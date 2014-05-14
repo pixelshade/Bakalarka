@@ -12,6 +12,7 @@ public class Settings {
     /**
      * User changable variables
      */
+    private static int playerId;
     private static String playerName;
     private static String username, pass;
     private static String serverURL = "http://bak.skeletopedia.sk";
@@ -34,7 +35,7 @@ public class Settings {
     private static String loginURL = serverURL + "/api/loggin";
     private static String isLoggedInURL = serverURL + "/api/isLoggedIn";
     private static String logoutURL = serverURL + "/api/logout";
-    public static String setMyNameURL =  serverURL + "/api/set_my_name";
+    public static String UrlSetPlayerName =  serverURL + "/api/set_my_name";
 
 
 
@@ -44,7 +45,8 @@ public class Settings {
 
     public static final String QR_REWARD = "R";
     public static final String QR_QUEST = "Q";
-    public static final String INTENT_KEY_QR_REWARD = "REWARD_SERIALIZABLE";
+
+
 
 
     public static final String INTENT_KEY_QRSCANNED = "QRSCANNED";
@@ -109,6 +111,14 @@ public class Settings {
     }
 
 
+    public static int getPlayerId() {
+        return playerId;
+    }
+
+    public static void setPlayerId(int playerId) {
+        Settings.playerId = playerId;
+    }
+
     public static String getPlayerName() {
         return playerName;
     }
@@ -141,8 +151,8 @@ public class Settings {
         Settings.serverURL = serverURL;
     }
 
-    public static String getQuestCompletionURL() {
-        return questCompletionURL;
+    public static String getQuestCompletionURL(int questId, double latitude, double longitude, String answer) {
+        return questCompletionURL + "/" + questId + "/" + latitude + "/" + longitude + "/" + answer;
     }
 
     public static void setQuestCompletionURL(String questCompletionURL) {

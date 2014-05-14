@@ -78,7 +78,7 @@ public class LoginActivity extends FragmentActivity {
         mServerUrlView.setText(mServerURL);
 
         htmlBrowser = MyHtmlBrowser.getInstance(this);
-        if (htmlBrowser.isOnline()) {
+
 
             mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
@@ -108,6 +108,7 @@ public class LoginActivity extends FragmentActivity {
                     Toast.makeText(mContext, "Trying to register new user", Toast.LENGTH_SHORT).show();
                 }
             });
+        if (htmlBrowser.isOnline()) {
         } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
         }
@@ -302,6 +303,7 @@ public class LoginActivity extends FragmentActivity {
                 Settings.saveLoginSettings(mContext, mEmail, mPassword, mServerURL);
                 GameSettings gameSettings = (GameSettings) response.getData();
                 Settings.setPlayerName(gameSettings.getPlayerName());
+                Settings.setPlayerId(gameSettings.getPlayerId());
                 startActivity(mIntent);
                 finish();
 

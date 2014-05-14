@@ -226,7 +226,6 @@ public class GPSTracker extends Service implements LocationListener {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         String url = shade.pixel.gpsoclient.Settings.getServerURL() + "/api/json/" + latitude + "/" + longitude;
-        Toast.makeText(mContext, url, Toast.LENGTH_SHORT).show();
         htmlBrowser = MyHtmlBrowser.getInstance(mContext);
         htmlBrowser.HttpGetAsyncString(mContext, url, new AsyncResponse() {
             @Override
@@ -270,7 +269,7 @@ public class GPSTracker extends Service implements LocationListener {
                 }
             }
         });
-        Toast.makeText(mContext,"Sme tu: " + location.getLatitude() + " " + location.getLongitude() + "presnost("+location.getAccuracy()+")", Toast.LENGTH_LONG).show();
+//        Toast.makeText(mContext,"Sme tu: " + location.getLatitude() + " " + location.getLongitude() + "presnost("+location.getAccuracy()+")", Toast.LENGTH_LONG).show();
     }
 
     public void StartLoginActivity() {

@@ -6,6 +6,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by pixelshade on 15.3.2014.
@@ -26,7 +29,7 @@ public class Response implements Serializable{
     final static public String TYPE_LOGIN = "LOGIN";
     final static public String TYPE_ACCEPT_QUEST = "ACCEPT_QUEST";
     final static public String TYPE_COMPLETE_QUEST = "COMPLETE_QUEST";
-    final static public String TYPE_CHECK_QRCODE = "CHECK_QRCODE";
+    final static public String TYPE_QUEST_INFO = "QUEST_INFO";
     final static public String TYPE_GIVE_REWARD = "GIVE_REWARD";
 
     // struct
@@ -78,6 +81,8 @@ public class Response implements Serializable{
             JSONObject data = null;
             try {
                 data = new JSONObject(giveRewardJson);
+                reward.setName(data.optString("name",""));
+
                 if (!data.isNull("attribute")) {
                     JSONObject attributeJSON = data.getJSONObject("attribute");
 
@@ -103,10 +108,39 @@ public class Response implements Serializable{
                     reward.setItem(item);
                     reward.setItemAmount(itemJSON.optInt("amount", 0));
                 }
+                return reward;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            return reward;
+        }
+        return null;
+    }
+
+    private Quest getAcceptedQuest(String json){
+        if (type.equals(TYPE_ACCEPT_QUEST)) {
+
+            try {
+
+                JSONObject quest = new JSONObject(json);
+
+                Quest q = ResponseJSONParser.getQuestFromJSONObj(quest);
+                String timeAcceptedString = quest.getString(Quest.KEY_QUEST_TIME_ACCEPTED);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date timeAccepted = sdf.parse(timeAcceptedString);
+                boolean completed = quest.getInt(Quest.KEY_QUEST_COMPLETED) == 1;
+
+                q.setTimeAccepted(timeAccepted);
+                q.setCompleted(completed);
+                q.setActive(true);
+
+                return q;
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         }
         return null;
     }
@@ -119,6 +153,7 @@ public class Response implements Serializable{
                 data = new JSONObject(json);
                 gameSettings.setGameFilenameLogo(data.optString("gameFilenameLogo", ""));
                 gameSettings.setPlayerName(data.optString("name", ""));
+                gameSettings.setPlayerId(data.optInt("id", -1));
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -137,7 +172,7 @@ public class Response implements Serializable{
             return new Response(dataJSON);
         }
         if (type.equals(TYPE_ACCEPT_QUEST)) {
-            return new Response(dataJSON);
+            return getAcceptedQuest(dataJSON);
         }
         if (type.equals(TYPE_LOGIN)) {
             return getGameSettings(dataJSON);

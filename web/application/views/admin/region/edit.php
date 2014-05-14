@@ -152,9 +152,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 <script>
 
-function log(x){ console.log(x) }
-for(var i = 0; i < 10; i++){ setTimeout(log(i), 500*i) }
-
 
 	function animate(){
 		var prev = null;

@@ -41,6 +41,9 @@ public class Quest implements Serializable {
     private boolean completed;
     private Date timeAccepted;
 
+    public Quest(){
+    }
+
     public Quest(int id, String code, String name, String info, String image, int rewardId, boolean autostart, int regionId, int requiredQuestId, long duration, int requirementType, String requirement, boolean active, boolean completed, Date timeAccepted) {
         this(id, code, name, info, image, rewardId, autostart, regionId, requiredQuestId, duration, requirementType, requirement);
         this.active = active;
@@ -81,6 +84,10 @@ public class Quest implements Serializable {
         this.completed = false;
     }
 
+   public void acceptNow(){
+       this.setActive(true);
+       this.setTimeAccepted(new Date());
+   }
 
     public int getId() {
         return id;

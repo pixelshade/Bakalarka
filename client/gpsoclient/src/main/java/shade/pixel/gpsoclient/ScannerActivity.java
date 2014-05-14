@@ -64,7 +64,7 @@ public class ScannerActivity extends Activity implements ZBarScannerView.ResultH
         GameHandler.getInstance(this).getHtmlBrowser().HttpGetAsyncString(this, url, new AsyncResponse() {
             @Override
             public void processFinish(Context context, String output) {
-
+                Log.d(TAG, output);
                 Response response = new Response(output);
                 if (response.isLoggedOut()) {
                     StartLoginActivity();
@@ -74,18 +74,27 @@ public class ScannerActivity extends Activity implements ZBarScannerView.ResultH
                     String responseType = response.getType();
                     if (responseType.equals(Response.TYPE_GIVE_REWARD)) {
                         if (response.isSuccessful()) {
-                            String data = response.getDataString();
                             Intent intent = new Intent(context, RewardInfoActivity.class);
                             Reward reward = (Reward) response.getData();
-                            Log.d(TAG, "item image este je nastaveny? "+reward.getItem().getImage());
-                            intent.putExtra(Settings.INTENT_KEY_QR_REWARD, reward);
+                            intent.putExtra(RewardInfoActivity.INTENT_KEY_QR_REWARD, reward);
                             startActivity(intent);
                         } else {
                             Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                     if (responseType.equals(Response.TYPE_ACCEPT_QUEST)) {
-                        Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
+                        if (response.isSuccessful()) {
+                            String data = response.getDataString();
+                            Log.d(TAG, data);
+                            Intent intent = new Intent(context, QuestInfoActivity.class);
+                            Quest quest = (Quest) response.getData();
+                            if(quest!=null){
+                                intent.putExtra(QuestInfoActivity.INTENT_KEY_QUEST, quest);
+                                startActivity(intent);
+                            }
+                        } else {
+                            Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
 

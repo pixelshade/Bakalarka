@@ -1,0 +1,86 @@
+\select@language {english}
+\select@language {slovak}
+\select@language {slovak}
+\contentsline {chapter}{Po\IeC {\v d}akovanie}{v}{chapter*.1}
+\select@language {english}
+\contentsline {chapter}{Abstract}{vi}{chapter*.2}
+\select@language {slovak}
+\contentsline {chapter}{Abstrakt}{vii}{chapter*.3}
+\contentsline {chapter}{Predhovor beetaa}{viii}{chapter*.4}
+\contentsline {paragraph}{Na za\IeC {\v c}iatku bola my\IeC {\v s}lienka}{viii}{section*.5}
+\contentsline {paragraph}{}{1}{section*.10}
+\contentsline {chapter}{\numberline {1}Anal\IeC {\'y}za problematiky}{2}{chapter.1}
+\contentsline {section}{\numberline {1.1}Motiv\IeC {\'a}cia}{2}{section.1.1}
+\contentsline {paragraph}{}{2}{section*.11}
+\contentsline {section}{\numberline {1.2}\IeC {\v C}lenenie hry}{2}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Administr\IeC {\'a}tor}{2}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Klient - hr\IeC {\'a}\IeC {\v c}}{3}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}Herny svet}{3}{subsection.1.2.3}
+\contentsline {paragraph}{}{3}{section*.12}
+\contentsline {paragraph}{}{3}{section*.13}
+\contentsline {section}{\numberline {1.3}Hern\IeC {\'y} pr\IeC {\'\i }klad}{3}{section.1.3}
+\contentsline {paragraph}{}{4}{section*.14}
+\contentsline {paragraph}{}{4}{section*.15}
+\contentsline {section}{\numberline {1.4}Ciele}{4}{section.1.4}
+\contentsline {section}{\numberline {1.5}Svet hier}{4}{section.1.5}
+\contentsline {paragraph}{MMORPG}{4}{section*.16}
+\contentsline {section}{\numberline {1.6}Vyu\IeC {\v z}itie}{5}{section.1.6}
+\contentsline {paragraph}{MMO hry}{5}{section*.17}
+\contentsline {paragraph}{Turisticko-historicke prehliadky}{5}{section*.18}
+\contentsline {section}{\numberline {1.7}Technol\IeC {\'o}gie}{5}{section.1.7}
+\contentsline {paragraph}{MVC}{5}{section*.19}
+\contentsline {paragraph}{Android}{6}{section*.20}
+\contentsline {paragraph}{Bluetooth}{6}{section*.21}
+\contentsline {paragraph}{QR Kody}{7}{section*.22}
+\contentsline {paragraph}{NFC}{7}{section*.23}
+\contentsline {section}{\numberline {1.8}Frameworky, kni\IeC {\v z}nice a API}{7}{section.1.8}
+\contentsline {paragraph}{Codeigniter}{7}{section*.24}
+\contentsline {paragraph}{jQuery}{7}{section*.25}
+\contentsline {paragraph}{Bootstrap}{8}{section*.26}
+\contentsline {paragraph}{Google maps}{8}{section*.27}
+\contentsline {paragraph}{Google directions}{8}{section*.28}
+\contentsline {paragraph}{QR code generator}{8}{section*.29}
+\contentsline {paragraph}{ZBar}{8}{section*.30}
+\contentsline {section}{\numberline {1.9}Podobn\IeC {\'e} projekty}{8}{section.1.9}
+\contentsline {subsection}{\numberline {1.9.1}N\IeC {\'a}stroje na tvorbu hier}{8}{subsection.1.9.1}
+\contentsline {paragraph}{Realm Crafter}{8}{section*.31}
+\contentsline {paragraph}{Rpg Maker}{9}{section*.32}
+\contentsline {subsection}{\numberline {1.9.2}Hry}{9}{subsection.1.9.2}
+\contentsline {paragraph}{Ingress}{9}{section*.33}
+\contentsline {paragraph}{Shakes\&Fidget}{9}{section*.34}
+\contentsline {paragraph}{World of Warcraft}{9}{section*.35}
+\contentsline {paragraph}{Geocaching}{9}{section*.36}
+\contentsline {chapter}{\numberline {2}Rie\IeC {\v s}enie probl\IeC {\'e}mu}{11}{chapter.2}
+\contentsline {section}{\numberline {2.1}Lorem}{11}{section.2.1}
+\contentsline {paragraph}{}{11}{section*.37}
+\contentsline {paragraph}{}{11}{section*.38}
+\contentsline {paragraph}{}{11}{section*.39}
+\contentsline {paragraph}{}{12}{section*.40}
+\contentsline {paragraph}{}{12}{section*.41}
+\contentsline {chapter}{\numberline {3}Implement\IeC {\'a}cia aplik\IeC {\'a}cie}{13}{chapter.3}
+\contentsline {section}{\numberline {3.1}Lorem}{13}{section.3.1}
+\contentsline {paragraph}{}{13}{section*.42}
+\contentsline {paragraph}{}{13}{section*.43}
+\contentsline {paragraph}{}{13}{section*.44}
+\contentsline {paragraph}{}{14}{section*.45}
+\contentsline {paragraph}{}{14}{section*.46}
+\contentsline {section}{\numberline {3.2}Ipsum}{14}{section.3.2}
+\contentsline {paragraph}{}{14}{section*.47}
+\contentsline {paragraph}{}{14}{section*.48}
+\contentsline {paragraph}{}{14}{section*.49}
+\contentsline {paragraph}{}{14}{section*.50}
+\contentsline {paragraph}{}{14}{section*.51}
+\contentsline {chapter}{\numberline {4}Z\IeC {\'a}ver}{15}{chapter.4}
+\contentsline {section}{\numberline {4.1}Lorem}{15}{section.4.1}
+\contentsline {paragraph}{}{15}{section*.52}
+\contentsline {section}{\numberline {4.2}Ipsum}{15}{section.4.2}
+\contentsline {paragraph}{}{15}{section*.53}
+\contentsline {chapter}{\numberline {5}Example}{16}{chapter.5}
+\contentsline {section}{\numberline {5.1}Tables}{16}{section.5.1}
+\contentsline {paragraph}{}{16}{section*.54}
+\contentsline {section}{\numberline {5.2}Figures}{16}{section.5.2}
+\contentsline {paragraph}{}{16}{section*.55}
+\contentsline {section}{\numberline {5.3}Cross reference}{17}{section.5.3}
+\contentsline {paragraph}{}{17}{section*.56}
+\contentsline {section}{\numberline {5.4}Citation}{17}{section.5.4}
+\contentsline {chapter}{\numberline {A}\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }}{18}{appendix.A}

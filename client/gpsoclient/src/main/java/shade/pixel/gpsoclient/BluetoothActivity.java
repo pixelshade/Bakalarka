@@ -36,47 +36,19 @@ public class BluetoothActivity extends ActionBarActivity {
     public static final int READ = 1;
     public static final int WRITE = 2;
 
+    private int myId = -1;
+    private int GiverId = -1;
+    private int ReceiverId = -1;
+    private int ItemAmountId = -1;
+    private int ItemId = -1;
+    private Item item;
+
     private EditText edTxt;
-    private ArrayAdapter<String> arrayAdapter;
+
     private StringBuffer messages;
     private BluetoothAdapter btAdapter = null;
     private BTCommunicator chat = null;
 
-
-
-
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_bluetooth);
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.container, new PlaceholderFragment())
-//                    .commit();
-//        }
-//    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.bluetooth, menu);
-//        return true;
-//    }
-
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,13 +80,6 @@ public class BluetoothActivity extends ActionBarActivity {
     }
 
     private void init() {
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.message);
-        Log.d(TAG, "ARRAY "+ arrayAdapter);
-        ListView lv = (ListView) findViewById(R.id.in);
-        if(lv==null){
-            Log.d(TAG, "LV JE NUL");
-        } else
-        lv.setAdapter(arrayAdapter);
 
         edTxt = (EditText) findViewById(R.id.edTxt);
         edTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -123,7 +88,8 @@ public class BluetoothActivity extends ActionBarActivity {
                                           KeyEvent event) {
                 if (actionId == EditorInfo.IME_NULL
                         && event.getAction() == KeyEvent.ACTION_UP) {
-                    Item item = new Item(1,"seeker","je najlepsia","",1);
+                    String name = edTxt.getText().toString();
+                    Item item = new Item(1,name,"je najlepsia","",1);
                     sendItem(item);
                 }
                 return true;
@@ -155,12 +121,24 @@ public class BluetoothActivity extends ActionBarActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case WRITE:
-//                    ByteConverter.toObject((byte[]) msg.obj);
-                    arrayAdapter.add("->" + new String((byte[]) msg.obj));
+                         MyAlertDialog mad = MyAlertDialog.newInstance("Item successfully sent","hopefully");
+                        mad.show(getSupportFragmentManager(),"yes");
                     break;
                 case READ:
-                    arrayAdapter.add("<-"
-                            + new String((byte[]) msg.obj, 0, msg.arg1));
+                    item = null;
+                    try {
+                        item = (Item) ByteConverter.toObject((byte[]) msg.obj);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    if(item!=null){
+                        GameHandler.gameData.getItems().add(item);
+                        MyAlertDialog myAlertDialog = MyAlertDialog.newInstance(item);
+                        myAlertDialog.show(getSupportFragmentManager(),"votevr");
+                    }
+
                     break;
             }
         }

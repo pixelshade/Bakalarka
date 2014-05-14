@@ -33,11 +33,7 @@ public class MainFragment extends Fragment {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startSettingsActivity();
-                Item item = new Item(1,"Sekera", "Najlepsia", "", 2);
-
-                MyAlertDialog myAlertDialog = MyAlertDialog.newInstance(item);
-                myAlertDialog.show(getFragmentManager(), "fragment_alert");
+                startSettingsActivity();
             }
         });
 
@@ -59,8 +55,7 @@ public class MainFragment extends Fragment {
 
 
     private void startSettingsActivity(){
-        Intent intent = new Intent(getActivity(),SettingsActivity.class);
-        startActivity(intent);
+
     }
 
 }

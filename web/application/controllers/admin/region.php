@@ -6,6 +6,7 @@ class Region extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('region_m');
+		$this->load->model('region_movement_m');
 	}
 
 	public function index ()
@@ -47,10 +48,17 @@ class Region extends Admin_Controller
 				'lat_start',
 				'lon_start',
 				'lat_end',
-				'lon_end',
-				'movement'
+				'lon_end',				
 				));
 			$this->region_m->save($data, $id);
+
+			$data = $this->region_m->array_from_post(array(
+					'movement'	
+				));
+			$this->region_movement_m->save($data, $id);
+			
+
+
 			redirect('admin/region');
 		}
 		

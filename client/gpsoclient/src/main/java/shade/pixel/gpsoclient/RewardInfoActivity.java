@@ -22,19 +22,20 @@ import java.io.File;
 
 public class RewardInfoActivity extends ActionBarActivity {
     private final String TAG = "RewardInfoActivity";
+    public static final String INTENT_KEY_QR_REWARD = "REWARD_SERIALIZABLE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward_info);
         Intent intent = getIntent();
-        Reward reward = (Reward) intent.getSerializableExtra(Settings.INTENT_KEY_QR_REWARD);
+        Reward reward = (Reward) intent.getSerializableExtra(INTENT_KEY_QR_REWARD);
         if(reward==null) {
             finish();
         } else {
             Log.d(TAG, "" + reward.getName());
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, PlaceholderFragment.newInstance(reward))
+                        .add(R.id.container, RewardInfoFragment.newInstance(reward))
                         .commit();
             }
         }
@@ -65,17 +66,17 @@ public class RewardInfoActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class RewardInfoFragment extends Fragment {
 
-        public static PlaceholderFragment newInstance(Reward reward) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static RewardInfoFragment newInstance(Reward reward) {
+            RewardInfoFragment fragment = new RewardInfoFragment();
             Bundle args = new Bundle();
             args.putSerializable("reward", reward);
             fragment.setArguments(args);
             return fragment;
         }
 
-        public PlaceholderFragment() {
+        public RewardInfoFragment() {
         }
 
         @Override
@@ -91,9 +92,9 @@ public class RewardInfoActivity extends ActionBarActivity {
             ImageView itemImageView = (ImageView) rootView.findViewById(R.id.itemImageView);
             Button acceptRewardButton = (Button) rootView.findViewById(R.id.acceptRewardButton);
             if (reward != null) {
-//                rewardNameTextView.setText(reward.getName());
-                attributeAmountTextView.setText((""+reward.getAttributeAmount()));
-                itemAmountTextView.setText(""+reward.getItemAmount()+" "+reward.getItem().getName()+" "+ reward.getItem().getImage()+"");
+                if(!reward.getName().equals("")) rewardNameTextView.setText(reward.getName());
+                attributeAmountTextView.setText((""+reward.getAttributeAmount()+"x "+ reward.getAttribute().getName()));
+                itemAmountTextView.setText(""+reward.getItemAmount()+"x "+reward.getItem().getName());
 
                 Item item = reward.getItem();
                 Attribute attribute = reward.getAttribute();

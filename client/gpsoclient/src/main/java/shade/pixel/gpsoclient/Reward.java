@@ -85,5 +85,10 @@ public class Reward implements Serializable {
     public void setAttributeAmount(int attributeAmount) {
         this.attributeAmount = attributeAmount;
     }
+
+    @Override
+    public String toString(){
+        return getName();
+    }
 }
 

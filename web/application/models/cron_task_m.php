@@ -41,15 +41,19 @@ class Cron_task_m extends MY_Model
 		$cron_task->json_params = '';		
 		$cron_task->task_type = '';	
 		$cron_task->active = 0;	
-
+		$cron_task->time_to_run = '';
 		return $cron_task;
 	}
 
-	public $task_types = array(
-		0 => 'Move region', 
-		1 => 'Create region', 
-		2 => 'Create quest', 
+	public $task_types = array(		
+		0 => 'Create region', 
+		1 => 'Create quest', 		
 		);
+
+	public function create($name, $json_params, $task_type, $active, $time_to_run)
+	{
+		
+	}	
 
 	public function run_tasks(){
 
@@ -59,17 +63,17 @@ class Cron_task_m extends MY_Model
 			foreach ($tasks as $task) {				
 				$task_type = $task->task_type;		
 				$params = json_decode($task->json_params);
-				if($this->task_type == 0){
+				if($this->task_type == 2){
 					
 					$region['lat_start'] = $params['lat_start'];
 					$region['lon_start'] = $params['lon_start'];
 					$region['lat_end'] = $params['lat_end'];
 					$region['lon_end'] = $params['lon_end'];
 					$region['region_id'] = $params['region_id'];
-					
-					$this->region_m->save($region, $params->region_id);
+					$this->region_m->change_location($params['lat_start'],$params['lon_start'],$params['lat_end'],$params['lon_end'],$params['region_id']);
+					// $this->region_m->save($region, $params->region_id);
 
-				} elseif($this->task_type == 1){
+				} elseif($this->task_type == 0){
 					$region->name = $params['name'];
 					$region->info = $params['info'];
 					$region->image = $params['image'];
@@ -80,7 +84,7 @@ class Cron_task_m extends MY_Model
 					
 					$this->region_m->save($region);
 
-				} elseif ($this->task_type == 2) {
+				} elseif ($this->task_type == 1) {
 					$quest->name = $params['name'];					
 					$quest->info = $params['info'];
 					$quest->image = $params['image'];

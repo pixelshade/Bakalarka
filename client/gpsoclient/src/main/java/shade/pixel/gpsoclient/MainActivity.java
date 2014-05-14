@@ -125,42 +125,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     }
 
-
-    private void GetAsyncQRCodeResponse(String QRScanned) {
-        String url = Settings.getCheckQRcodeURL() + QRScanned;
-        Log.i(TAG, url);
-        GameHandler.getInstance(this).getHtmlBrowser().HttpGetAsyncString(this, url, new AsyncResponse() {
-            @Override
-            public void processFinish(Context context, String output) {
-
-                Response response = new Response(output);
-                if (response.isLoggedOut()) {
-                    StartLoginActivity();
-                } else {
-                    Log.i(TAG, "Response QR message: " + response.getMessage());
-                    Log.i(TAG, "Response QR data string " + response.getDataString());
-                    String responseType = response.getType();
-                    if (responseType.equals(Response.TYPE_GIVE_REWARD)) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
-                        } else {
-                            String data = response.getDataString();
-                            Intent intent = new Intent(context, RewardInfoActivity.class);
-                            Reward reward = (Reward) response.getData();
-                            intent.putExtra("reward", reward);
-                            Log.d(TAG, data);
-                            startActivity(intent);
-                        }
-                    }
-                    if (responseType.equals(Response.TYPE_ACCEPT_QUEST)) {
-
-                    }
-                }
-
-            }
-        });
-    }
-
     public void StartBluetoothActivity(View view) {
         Intent mBluetoothIntent = new Intent(this, BluetoothActivity.class);
         startActivity(mBluetoothIntent);

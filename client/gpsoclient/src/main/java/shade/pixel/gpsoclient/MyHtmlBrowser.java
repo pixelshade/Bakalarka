@@ -44,7 +44,7 @@ public class MyHtmlBrowser {
     private CookieStore cookieStore;
     private HttpContext localContext;
     private GetAsyncStringTask getAsyncStringTask;
-//    private PostAsyncStringTask postAsyncStringTask;
+    private PostAsyncStringTask postAsyncStringTask;
 
 
     public static MyHtmlBrowser getInstance(Context context) {
@@ -145,6 +145,12 @@ public class MyHtmlBrowser {
         return null;
     }
 
+    public void ChangePlayerName(String name, AsyncResponse asyncResponse){
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        nameValuePairs.add(new BasicNameValuePair("name", name));
+        HttpPostAsyncString(mContext,Settings.UrlSetPlayerName, nameValuePairs ,asyncResponse);
+    }
+
     public String HttpPostString(String url, List<NameValuePair> nameValuePairs) {
         Log.d(TAG, "sending post request to this url:"+ url);
         HttpPost httppost = new HttpPost(url);
@@ -174,72 +180,70 @@ public class MyHtmlBrowser {
 
 
 
-//
-//    public class PostAsyncStringTask extends AsyncTask<String, Integer, String> {
-//        public AsyncResponse delegate;
-//        public boolean locked;
-//        private Context context;
-//
-//        public PostAsyncStringTask(Context context, AsyncResponse delegate) {
-//            this.delegate = delegate;
-//            this.context = context;
-//        }
-//
-//        public boolean isLocked() {
-//            return locked;
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//            Integer count = 0;
-//            StringBuilder result = new StringBuilder();
-//            String url = params[0];
-//            return HttpPostString(url,);
-//
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//            super.onPostExecute(result);
-//            Log.d(TAG, "Async get result: " + result);
-//            if (!((Activity) context).isFinishing()) {
-//                if (progressDialog != null) {
-//                    progressDialog.dismiss();
-//                }
-//            }
-//            delegate.processFinish(context, result);
-//            locked = false;
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//            locked = true;
-//            super.onPreExecute();
-//            progressDialog = new ProgressDialog(context);
-//            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//            progressDialog.setMax(100);
-//            Log.d(TAG, context.toString());
-//            if (!((Activity) context).isFinishing()) {
-//                if (progressDialog != null) {
-//                    progressDialog.dismiss();
-////                        progressDialog.show();
-//                }
-//            }
-//        }
-//
-//        @Override
-//        protected void onProgressUpdate(Integer... values) {
-//            super.onProgressUpdate(values);
-//            progressDialog.incrementProgressBy(values[0]);
-//        }
-//
-//
-//    }
-//
-//    public void HttpPostAsyncString(Context context, String uristr, AsyncResponse delegate) {
-//        postAsyncStringTask = new PostAsyncStringTask(context, delegate);
-//        if (!postAsyncStringTask.isLocked()) postAsyncStringTask.execute(uristr);
-//    }
+
+    public class PostAsyncStringTask extends AsyncTask<Object, Integer, String> {
+        public AsyncResponse delegate;
+        public boolean locked;
+        private Context context;
+
+        public PostAsyncStringTask(Context context, AsyncResponse delegate) {
+            this.delegate = delegate;
+            this.context = context;
+        }
+
+        public boolean isLocked() {
+            return locked;
+        }
+
+        @Override
+        protected String doInBackground(Object... params) {
+            Integer count = 0;
+            StringBuilder result = new StringBuilder();
+            String url = (String)params[0];
+            List<NameValuePair> post = (List<NameValuePair>)params[1];
+
+            return HttpPostString(url,post);
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Log.d(TAG, "Async post result: " + result);
+            if(delegate!=null)
+            delegate.processFinish(context, result);
+            locked = false;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            locked = true;
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMax(100);
+            Log.d(TAG, context.toString());
+            if (!((Activity) context).isFinishing()) {
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+//                        progressDialog.show();
+                }
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            progressDialog.incrementProgressBy(values[0]);
+        }
+
+
+    }
+
+    public void HttpPostAsyncString(Context context, String uristr, List<NameValuePair> postPairs, AsyncResponse delegate) {
+        if(postAsyncStringTask==null) postAsyncStringTask = new PostAsyncStringTask(context, delegate);
+        if (!postAsyncStringTask.isLocked()) postAsyncStringTask.execute(uristr, postPairs);
+    }
 
 
 
