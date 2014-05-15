@@ -1,33 +1,74 @@
 \BOOKMARK [0][-]{chapter*.1}{Podakovanie}{}% 1
 \BOOKMARK [0][-]{chapter*.2}{Abstract}{}% 2
 \BOOKMARK [0][-]{chapter*.3}{Abstrakt}{}% 3
-\BOOKMARK [0][-]{chapter*.4}{Predhovor beetaa}{}% 4
-\BOOKMARK [0][-]{chapter.1}{Anal\375za problematiky}{}% 5
-\BOOKMARK [1][-]{section.1.1}{Motiv\341cia}{chapter.1}% 6
-\BOOKMARK [1][-]{section.1.2}{Clenenie hry}{chapter.1}% 7
-\BOOKMARK [2][-]{subsection.1.2.1}{Administr\341tor}{section.1.2}% 8
-\BOOKMARK [2][-]{subsection.1.2.2}{Klient - hr\341c}{section.1.2}% 9
-\BOOKMARK [2][-]{subsection.1.2.3}{Herny svet}{section.1.2}% 10
-\BOOKMARK [1][-]{section.1.3}{Hern\375 pr\355klad}{chapter.1}% 11
-\BOOKMARK [1][-]{section.1.4}{Ciele}{chapter.1}% 12
-\BOOKMARK [1][-]{section.1.5}{Svet hier}{chapter.1}% 13
-\BOOKMARK [1][-]{section.1.6}{Vyu\236itie}{chapter.1}% 14
-\BOOKMARK [1][-]{section.1.7}{Technol\363gie}{chapter.1}% 15
-\BOOKMARK [1][-]{section.1.8}{Frameworky, kni\236nice a API}{chapter.1}% 16
-\BOOKMARK [1][-]{section.1.9}{Podobn\351 projekty}{chapter.1}% 17
-\BOOKMARK [2][-]{subsection.1.9.1}{N\341stroje na tvorbu hier}{section.1.9}% 18
-\BOOKMARK [2][-]{subsection.1.9.2}{Hry}{section.1.9}% 19
-\BOOKMARK [0][-]{chapter.2}{Rie\235enie probl\351mu}{}% 20
-\BOOKMARK [1][-]{section.2.1}{Lorem}{chapter.2}% 21
-\BOOKMARK [0][-]{chapter.3}{Implement\341cia aplik\341cie}{}% 22
-\BOOKMARK [1][-]{section.3.1}{Lorem}{chapter.3}% 23
-\BOOKMARK [1][-]{section.3.2}{Ipsum}{chapter.3}% 24
-\BOOKMARK [0][-]{chapter.4}{Z\341ver}{}% 25
-\BOOKMARK [1][-]{section.4.1}{Lorem}{chapter.4}% 26
-\BOOKMARK [1][-]{section.4.2}{Ipsum}{chapter.4}% 27
-\BOOKMARK [0][-]{chapter.5}{Example}{}% 28
-\BOOKMARK [1][-]{section.5.1}{Tables}{chapter.5}% 29
-\BOOKMARK [1][-]{section.5.2}{Figures}{chapter.5}% 30
-\BOOKMARK [1][-]{section.5.3}{Cross reference}{chapter.5}% 31
-\BOOKMARK [1][-]{section.5.4}{Citation}{chapter.5}% 32
-\BOOKMARK [0][-]{appendix.A}{TeX}{}% 33
+\BOOKMARK [0][-]{chapter*.4}{Predhovor}{}% 4
+\BOOKMARK [0][-]{chapter.1}{\332vod}{}% 5
+\BOOKMARK [0][-]{chapter.2}{Anal\375za problematiky}{}% 6
+\BOOKMARK [1][-]{section.2.1}{Motiv\341cia}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.2}{Svet hier}{chapter.2}% 8
+\BOOKMARK [2][-]{subsection.2.2.1}{MMORPG}{section.2.2}% 9
+\BOOKMARK [2][-]{subsection.2.2.2}{\227ifrovacie hry}{section.2.2}% 10
+\BOOKMARK [2][-]{subsection.2.2.3}{Geocaching}{section.2.2}% 11
+\BOOKMARK [1][-]{section.2.3}{Technol\363gie}{chapter.2}% 12
+\BOOKMARK [2][-]{subsection.2.3.1}{MVC}{section.2.3}% 13
+\BOOKMARK [2][-]{subsection.2.3.2}{Android}{section.2.3}% 14
+\BOOKMARK [2][-]{subsection.2.3.3}{Bluetooth}{section.2.3}% 15
+\BOOKMARK [2][-]{subsection.2.3.4}{QR Kody}{section.2.3}% 16
+\BOOKMARK [2][-]{subsection.2.3.5}{NFC}{section.2.3}% 17
+\BOOKMARK [1][-]{section.2.4}{Frameworky, kni\236nice a API}{chapter.2}% 18
+\BOOKMARK [2][-]{subsection.2.4.1}{Codeigniter}{section.2.4}% 19
+\BOOKMARK [2][-]{subsection.2.4.2}{jQuery}{section.2.4}% 20
+\BOOKMARK [2][-]{subsection.2.4.3}{Bootstrap}{section.2.4}% 21
+\BOOKMARK [2][-]{subsection.2.4.4}{Google maps}{section.2.4}% 22
+\BOOKMARK [2][-]{subsection.2.4.5}{QR code generator}{section.2.4}% 23
+\BOOKMARK [2][-]{subsection.2.4.6}{ZBar}{section.2.4}% 24
+\BOOKMARK [1][-]{section.2.5}{Prehlad existuj\372cich aplik\341ci\355}{chapter.2}% 25
+\BOOKMARK [2][-]{subsection.2.5.1}{N\341stroje na tvorbu hier}{section.2.5}% 26
+\BOOKMARK [2][-]{subsection.2.5.2}{Hry}{section.2.5}% 27
+\BOOKMARK [0][-]{chapter.3}{N\341vrh rie\235enia}{}% 28
+\BOOKMARK [1][-]{section.3.1}{Pou\236it\351 technol\363gie}{chapter.3}% 29
+\BOOKMARK [1][-]{section.3.2}{\227trukt\372ra aplik\341cie}{chapter.3}% 30
+\BOOKMARK [1][-]{section.3.3}{Clenenie hry}{chapter.3}% 31
+\BOOKMARK [2][-]{subsection.3.3.1}{Administr\341tor}{section.3.3}% 32
+\BOOKMARK [2][-]{subsection.3.3.2}{Klient - hr\341c}{section.3.3}% 33
+\BOOKMARK [2][-]{subsection.3.3.3}{Herny svet}{section.3.3}% 34
+\BOOKMARK [1][-]{section.3.4}{Hern\375 pr\355klad}{chapter.3}% 35
+\BOOKMARK [1][-]{section.3.5}{Minim\341lne po\236iadavky}{chapter.3}% 36
+\BOOKMARK [2][-]{subsection.3.5.1}{Klient}{section.3.5}% 37
+\BOOKMARK [2][-]{subsection.3.5.2}{Server}{section.3.5}% 38
+\BOOKMARK [1][-]{section.3.6}{Sp\364soby rie\235enia probl\351mov}{chapter.3}% 39
+\BOOKMARK [2][-]{subsection.3.6.1}{Tvorba hern\351ho sveta}{section.3.6}% 40
+\BOOKMARK [2][-]{subsection.3.6.2}{Univerz\341lnost klienta}{section.3.6}% 41
+\BOOKMARK [2][-]{subsection.3.6.3}{Vytvorenie redakcn\351ho syst\351mu}{section.3.6}% 42
+\BOOKMARK [2][-]{subsection.3.6.4}{Komunikacia klient-server}{section.3.6}% 43
+\BOOKMARK [2][-]{subsection.3.6.5}{Spu\235tanie pomocou QR k\363dov}{section.3.6}% 44
+\BOOKMARK [2][-]{subsection.3.6.6}{Komunik\341cia medzi hr\341cmi}{section.3.6}% 45
+\BOOKMARK [1][-]{section.3.7}{Ciele}{chapter.3}% 46
+\BOOKMARK [0][-]{chapter.4}{Implement\341cia aplik\341cie}{}% 47
+\BOOKMARK [1][-]{section.4.1}{D\364le\236it\351 triedy a ich popis}{chapter.4}% 48
+\BOOKMARK [2][-]{subsection.4.1.1}{Klient}{section.4.1}% 49
+\BOOKMARK [2][-]{subsection.4.1.2}{Server}{section.4.1}% 50
+\BOOKMARK [1][-]{section.4.2}{QR k\363dy}{chapter.4}% 51
+\BOOKMARK [2][-]{subsection.4.2.1}{Generovanie}{section.4.2}% 52
+\BOOKMARK [2][-]{subsection.4.2.2}{C\355tanie}{section.4.2}% 53
+\BOOKMARK [1][-]{section.4.3}{Bluetooth}{chapter.4}% 54
+\BOOKMARK [1][-]{section.4.4}{Mapy}{chapter.4}% 55
+\BOOKMARK [1][-]{section.4.5}{Synchroniz\341cia s\372borov}{chapter.4}% 56
+\BOOKMARK [1][-]{section.4.6}{Zistovanie aktu\341lnej polohy}{chapter.4}% 57
+\BOOKMARK [1][-]{section.4.7}{Tvorba hern\351ho prostredia}{chapter.4}% 58
+\BOOKMARK [0][-]{chapter.5}{Z\341ver}{}% 59
+\BOOKMARK [1][-]{section.5.1}{Dal\235\355 mo\236n\375 v\375voj aplik\341cie}{chapter.5}% 60
+\BOOKMARK [2][-]{subsection.5.1.1}{Dynamick\375 hern\375 svet}{section.5.1}% 61
+\BOOKMARK [2][-]{subsection.5.1.2}{Nov\351 mo\236nosti interakcie hracov}{section.5.1}% 62
+\BOOKMARK [2][-]{subsection.5.1.3}{Pridanie nepriatelov}{section.5.1}% 63
+\BOOKMARK [2][-]{subsection.5.1.4}{Vstavan\375 v\375ber v\375zoru}{section.5.1}% 64
+\BOOKMARK [1][-]{section.5.2}{In\351 mo\236nosti vyu\236itia}{chapter.5}% 65
+\BOOKMARK [2][-]{subsection.5.2.1}{Tvorba \235ifrovac\355ch hier}{section.5.2}% 66
+\BOOKMARK [2][-]{subsection.5.2.2}{Tvorba turisticko-historicke prehliadky}{section.5.2}% 67
+\BOOKMARK [1][-]{section.5.3}{Zhrnutie}{chapter.5}% 68
+\BOOKMARK [0][-]{chapter.6}{Example}{}% 69
+\BOOKMARK [1][-]{section.6.1}{Tables}{chapter.6}% 70
+\BOOKMARK [1][-]{section.6.2}{Figures}{chapter.6}% 71
+\BOOKMARK [1][-]{section.6.3}{Cross reference}{chapter.6}% 72
+\BOOKMARK [1][-]{section.6.4}{Citation}{chapter.6}% 73
+\BOOKMARK [0][-]{appendix.A}{TeX}{}% 74

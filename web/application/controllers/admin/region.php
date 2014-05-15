@@ -30,9 +30,16 @@ class Region extends Admin_Controller
 		if ($id) {
 			$this->data['region'] = $this->region_m->get($id);
 			count($this->data['region']) || $this->data['errors'][] = 'region could not be found';
+			$id_movement = $this->region_movement_m->get_by('`region_id` ="'.$id.'"',TRUE);
+			if(empty($id_movement)){
+				$id_movement = null;
+			} else {
+				$id_movement = $id_movement->id;
+			}
 		}
 		else {
 			$this->data['region'] = $this->region_m->get_new();
+			$id_movement = null;
 		}
 		
 		// Set up the form
@@ -55,7 +62,9 @@ class Region extends Admin_Controller
 			$data = $this->region_m->array_from_post(array(
 					'movement'	
 				));
-			$this->region_movement_m->save($data, $id);
+			
+
+			$this->region_movement_m->save($data, $id_movement);
 			
 
 

@@ -1,5 +1,5 @@
 <?php
-class Region_m extends MY_Model
+class Region_movement_m extends MY_Model
 {
 	protected $_table_name = 'region_movements';
 	protected $_order_by = 'name, id desc';
