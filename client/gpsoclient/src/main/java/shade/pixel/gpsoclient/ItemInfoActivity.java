@@ -3,6 +3,7 @@ package shade.pixel.gpsoclient;
 import java.io.File;
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ public class ItemInfoActivity extends ActionBarActivity {
     ArrayList<Item> items;
     private static Item actualItem;
     public static final String ITEM_INDEX_LABEL = "ITEM_INDEX_IN_ARRAY";
+    private static Context mContext;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -62,6 +65,7 @@ public class ItemInfoActivity extends ActionBarActivity {
         int item_id = intent.getIntExtra(ITEM_INDEX_LABEL, 0);
         actualItem = items.get(item_id);
         mSectionsPagerAdapter.getItem(item_id);
+        mContext = this;
     }
 
 
@@ -148,6 +152,14 @@ public class ItemInfoActivity extends ActionBarActivity {
             TextView itemNameText = (TextView) rootView.findViewById(R.id.itemInfoNameText);
             TextView itemInfoText = (TextView) rootView.findViewById(R.id.itemInfoText);
             ImageView itemImageView = (ImageView) rootView.findViewById(R.id.itemImageView);
+            Button buttonSendItem = (Button) rootView.findViewById(R.id.itemBtnSend);
+            buttonSendItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendItemViaBluetooth(actualItem);
+                }
+            });
+
             itemNameText.setText(actualItem.getName());
             itemInfoText.setText(Html.fromHtml(actualItem.getInfo()));
             itemAmountText.setText(actualItem.getAmount()+"x");
@@ -160,6 +172,14 @@ public class ItemInfoActivity extends ActionBarActivity {
             }
 
             return rootView;
+        }
+
+        public void sendItemViaBluetooth(Item item){
+            if(item!=null) {
+                Intent intent = new Intent(mContext,BluetoothActivity.class);
+                intent.putExtra(BluetoothActivity.ARG_ITEM, item);
+                startActivity(intent);
+            }
         }
     }
 

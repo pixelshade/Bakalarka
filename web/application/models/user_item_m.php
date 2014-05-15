@@ -36,9 +36,9 @@ class User_item_m extends MY_Model
 	public function get_items_for_char($char_id = NULL){
 		if($char_id != NULL){
 			$this->db->select('*');
-			$this->db->from('item_definitions');			
+			$this->db->from($this->_table_name);			
 			$this->db->where('char_id', $char_id);	
-			$this->db->join($this->_table_name, 'item_definitions.id = '.$this->_table_name.".item_id", 'left');
+			$this->db->join('item_definitions', 'item_definitions.id = '.$this->_table_name.".item_id");
 			$result = $this->db->get()->result();
 			return $result;
 		}

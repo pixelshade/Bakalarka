@@ -176,7 +176,6 @@ public class ResponseJSONParser {
                 if(jsonResponses!=null)
                 for(int i = 0; i < jsonResponses.length(); ++i){
                     String responseJSON = jsonResponses.getString(i);
-                    Log.e(TAG, responseJSON);
                     Response response = new Response(responseJSON);
                     if(response.isSuccessful()) {
                         successfullResponses.add(response);

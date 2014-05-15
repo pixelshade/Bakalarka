@@ -81,7 +81,7 @@ class Api extends Admin_Controller
 			$response['msg'] = "Name successfuly changed to ".$name;			
 		} else {
 			$response['success'] = 0;
-			$response['msg'] = "Name: $name wasnt changed";
+			$response['msg'] = "Cant change to empty name.";
 		}
 		echo json_encode($response);
 	}
@@ -243,11 +243,6 @@ class Api extends Admin_Controller
 			$response['msg'] = "No qrcode set";
 		}
 		echo json_encode($response);		
-	}
-
-
-	private function _found_item_info($item_id){
-
 	}
 
 

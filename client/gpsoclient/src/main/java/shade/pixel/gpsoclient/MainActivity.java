@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +44,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     MyHtmlBrowser htmlBrowser;
 
     ContentFilesManager contentFilesManager;
-//    public static GameData gameData;
+    //    public static GameData gameData;
     public GPSTracker gpsTracker;
     public GameHandler gameHandler;
 
@@ -77,6 +79,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -117,8 +120,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 
         if (htmlBrowser.isOnline()) {
-//            htmlBrowser.HttpGetAsyncString(this, Settings.getIsLoggedInURL(), loginCheck);
-            contentFilesManager.UpdateFiles();
+            if (Settings.isAutomaticStartupFilesUpdate())
+                contentFilesManager.UpdateFiles();
         } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
         }
@@ -132,14 +135,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void StartLoginActivity() {
-        if(gpsTracker!=null)        gpsTracker.stopUsingGPS();
+        if (gpsTracker != null) gpsTracker.stopUsingGPS();
         Intent mLoginIntent = new Intent(this, LoginActivity.class);
         startActivity(mLoginIntent);
         finish();
     }
 
     public void LogoutAndStartLoginActivity(View view) {
-        if(gpsTracker!=null)        gpsTracker.stopUsingGPS();
+        if (gpsTracker != null) gpsTracker.stopUsingGPS();
         String url = Settings.getLogoutURL();
         Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
         final Intent mLoginIntent = new Intent(this, LoginActivity.class);
@@ -167,7 +170,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         } else {
 
             String url = Settings.getServerURL() + "/api/json/" + latitude + "/" + longitude;
-            Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
             htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
                 @Override
                 public void processFinish(Context context, String json) {
@@ -219,19 +222,19 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             tv.setText(text);
     }
 
-    public void showResponses(){
+    public void showResponses() {
         GameHandler gameHandler = GameHandler.getInstance(this);
         GameData gameData = gameHandler.getGameData();
-        for(Response response :gameData.getSuccessfullResponses()){
-            if(response.getType().equals(Response.TYPE_ACCEPT_QUEST)){
-                    String data = response.getDataString();
-                    Log.d(TAG, data);
-                    Intent intent = new Intent(this, QuestInfoActivity.class);
-                    Quest quest = (Quest) response.getData();
-                    if(quest!=null){
-                        intent.putExtra(QuestInfoActivity.INTENT_KEY_QUEST, quest);
-                        startActivity(intent);
-                    }
+        for (Response response : gameData.getSuccessfullResponses()) {
+            if (response.getType().equals(Response.TYPE_ACCEPT_QUEST)) {
+                String data = response.getDataString();
+                Log.d(TAG, data);
+                Intent intent = new Intent(this, QuestInfoActivity.class);
+                Quest quest = (Quest) response.getData();
+                if (quest != null) {
+                    intent.putExtra(QuestInfoActivity.INTENT_KEY_QUEST, quest);
+                    startActivity(intent);
+                }
             }
         }
 
@@ -249,7 +252,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void SetRegionsView() {
         RegionsFragment regionFragment = (RegionsFragment) mSectionsPagerAdapter.getRegisteredFragment(SectionsPagerAdapter.regionsFragmentId);
         if (regionFragment != null) {
-            regionFragment.updateFragment();
+            regionFragment.updateFragment(this);
         } else {
             Log.d(TAG, "Regions view is null.");
         }
@@ -258,7 +261,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void SetItemsView() {
         ItemsFragment itemsFragment = (ItemsFragment) mSectionsPagerAdapter.getRegisteredFragment(SectionsPagerAdapter.itemsFragmentId);
         if (itemsFragment != null) {
-            itemsFragment.updateFragment();
+            itemsFragment.updateFragment(this);
         } else {
             Log.d(TAG, "Regions view is null.");
         }
@@ -267,15 +270,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void SetAttributesView() {
         AttributesFragment attributesFragment = (AttributesFragment) mSectionsPagerAdapter.getRegisteredFragment(SectionsPagerAdapter.attributesFragmentId);
         if (attributesFragment != null) {
-            attributesFragment.updateFragment();
+            attributesFragment.updateFragment(this);
         } else {
             Log.d(TAG, "Attribute view is null.");
         }
-    }
-
-
-    public void UpdateLocalContentFiles(View view) {
-        contentFilesManager.UpdateFiles();
     }
 
     public void ScanQRCode(View view) {

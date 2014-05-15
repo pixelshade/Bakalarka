@@ -1,5 +1,6 @@
 package shade.pixel.gpsoclient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,17 +32,17 @@ public class AttributesFragment extends Fragment {
         ListView listViewQuests = (ListView) rootView.findViewById(R.id.listViewAttributes);
         Log.d(TAG, "VYTVARAM FRAGMENT");
 
-        this.updateFragment();
+        this.updateFragment(getActivity());
 
         return rootView;
     }
 
 
-    public void updateFragment(){
+    public void updateFragment(Context context){
         if(GameHandler.gameData==null) return;
         ArrayList<Attribute> attributes = GameHandler.gameData.getAttributes();
         if(attributes!=null){
-            AttributeAdapter attributeAdapter = new AttributeAdapter(getActivity(), R.layout.list_attribute, attributes);
+            AttributeAdapter attributeAdapter = new AttributeAdapter(context, R.layout.list_attribute, attributes);
             ListView lv = (ListView) rootView.findViewById(R.id.listViewAttributes);
             if (lv != null) lv.setAdapter(attributeAdapter);
         }

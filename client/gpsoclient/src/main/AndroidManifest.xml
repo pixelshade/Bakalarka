@@ -83,10 +83,6 @@
             android:label="@string/title_device_list" >
         </activity>
         <activity
-            android:name="shade.pixel.gpsoclient.SettingsActivity2"
-            android:label="@string/title_activity_settings" >
-        </activity>
-        <activity
             android:name="shade.pixel.gpsoclient.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>

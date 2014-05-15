@@ -3,7 +3,6 @@ package shade.pixel.gpsoclient;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -16,13 +15,12 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonParser;
-
-import java.util.HashMap;
+import com.joanzapata.android.iconify.Iconify;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -80,34 +78,44 @@ public class LoginActivity extends FragmentActivity {
         htmlBrowser = MyHtmlBrowser.getInstance(this);
 
 
-            mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                    if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                        attemptLogin();
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-            mLoginFormView = findViewById(R.id.login_form);
-            mLoginStatusView = findViewById(R.id.login_status);
-            mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
-
-            findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.login || id == EditorInfo.IME_NULL) {
                     attemptLogin();
+                    return true;
                 }
-            });
-            findViewById(R.id.register_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    attemptRegister();
-                    Toast.makeText(mContext, "Trying to register new user", Toast.LENGTH_SHORT).show();
-                }
-            });
+                return false;
+            }
+        });
+
+        mLoginFormView = findViewById(R.id.login_form);
+        mLoginStatusView = findViewById(R.id.login_status);
+        mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+
+        Button loginBtn = (Button) findViewById(R.id.sign_in_button);
+        Button registerBtn = (Button) findViewById(R.id.register_button);
+        EditText emailET = (EditText) findViewById(R.id.email);
+        EditText passwordET = (EditText) findViewById(R.id.password);
+
+        Iconify.addIcons(registerBtn);
+        Iconify.addIcons(emailET);
+        Iconify.addIcons(passwordET);
+
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptLogin();
+            }
+        });
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptRegister();
+                Toast.makeText(mContext, "Trying to register new user", Toast.LENGTH_SHORT).show();
+            }
+        });
         if (htmlBrowser.isOnline()) {
         } else {
             Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
@@ -293,7 +301,7 @@ public class LoginActivity extends FragmentActivity {
         protected void onPostExecute(final Response response) {
             mAuthTask = null;
             showProgress(false);
-            if(response == null) {
+            if (response == null) {
                 Toast.makeText(mContext, "There was a problem in communication with server", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -336,12 +344,12 @@ public class LoginActivity extends FragmentActivity {
             } else {
 
                 if (response.isSuccessful()) {
-                   Log.d(TAG,response.getDataString());
+                    Log.d(TAG, response.getDataString());
                 } else {
                     MyAlertDialog dialog = new MyAlertDialog();
                     Bundle args = new Bundle();
-                    args.putString("title","Registration");
-                    args.putString("message",response.getMessage());
+                    args.putString("title", "Registration");
+                    args.putString("message", response.getMessage());
 
                     dialog.setArguments(args);
                     dialog.show(getSupportFragmentManager(), "registerDialog");

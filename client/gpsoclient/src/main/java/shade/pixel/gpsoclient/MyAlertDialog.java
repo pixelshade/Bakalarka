@@ -123,7 +123,7 @@ public class MyAlertDialog extends DialogFragment {
                 builder.setTitle("You have received item.");
 
                 View rootView = inflater.inflate(R.layout.fragment_item_info, null);
-                ImageView dialogImageView = (ImageView) rootView.findViewById(R.id.dialogImageView);
+                ImageView dialogImageView = (ImageView) rootView.findViewById(R.id.itemImageView);
                 TextView itemAmountText = (TextView) rootView.findViewById(R.id.itemInfoAmountTextView);
                 TextView itemNameText = (TextView) rootView.findViewById(R.id.itemInfoNameText);
                 TextView itemInfoText = (TextView) rootView.findViewById(R.id.itemInfoText);

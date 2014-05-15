@@ -55,8 +55,19 @@
                 android:paddingTop="20dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Give item"
+                android:id="@+id/itemBtnSend"
+                android:layout_below="@+id/itemInfoText"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
         </RelativeLayout>
     </ScrollView>
+
 
 
 

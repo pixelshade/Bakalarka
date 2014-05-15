@@ -1,5 +1,6 @@
 package shade.pixel.gpsoclient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,20 +25,20 @@ public class RegionsFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_regions, container, false);
 
-        this.updateFragment();
+        this.updateFragment(getActivity());
 
         return rootView;
 
 
     }
 
-    public void updateFragment(){
+    public void updateFragment(Context context){
         ListView lv = (ListView) rootView.findViewById(R.id.listViewRegions);
-        GameHandler gameHandler = GameHandler.getInstance(getActivity());
+        GameHandler gameHandler = GameHandler.getInstance(context);
         GameData gameData = gameHandler.getGameData();
         if (gameData != null) {
             ArrayList<Region> regions = gameData.getRegions();
-            RegionAdapter arrayAdapter = new RegionAdapter(getActivity(), R.layout.list_region, regions);
+            RegionAdapter arrayAdapter = new RegionAdapter(context, R.layout.list_region, regions);
 
             if (lv != null) {
                 lv.setAdapter(arrayAdapter);

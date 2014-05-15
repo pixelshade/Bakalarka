@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 /**
  * Created by pixelshade on 15.3.2014.
@@ -21,6 +22,8 @@ public class Settings {
     private static boolean showActive = true;
     private static boolean showCompleted = true;
 
+    private static boolean automaticStartupFilesUpdate = true;
+
     private static long defeaultIpdateMinTime = 1;
     private static long defeaultIpdateMinDistance = 2;
     private static long positionUpdateMinTimeInSeconds = defeaultIpdateMinTime;
@@ -35,6 +38,7 @@ public class Settings {
     private static String contentFilesListURL = serverURL + "/api/getContentFilesList";
     private static String serverContentDirURL = serverURL + "/app_content/";
     public static String removeActiveQuestURL =  serverURL + "/api/remove_my_active_quest/";
+    private static String sendItemURL = serverURL + "/api/char_give_item_to_char/";
 
     private static String loginURL = serverURL + "/api/loggin";
     private static String isLoggedInURL = serverURL + "/api/isLoggedIn";
@@ -58,6 +62,8 @@ public class Settings {
     private static String ContentFileDir = Environment.getExternalStorageDirectory() + "/GPSOData/";
 
     // SHARED PREFERENCES KEYS
+    private static final String SHAREDPREF_STARTUP_FILES_UPDATE_KEY = "START_UP_FILES_UPDATE";
+
     private static final String SHAREDPREF_TRACKING_MINTIME_KEY = "MIN_TIME";
 
     private static final String SHAREDPREF_TRACKING_MINDISTANCE_KEY = "MIN_DISTANCE";
@@ -79,6 +85,12 @@ public class Settings {
     }
 
 
+    public static void loadAllSettings(Context context){
+        loadQuestsListingSettings(context);
+        loadSavedTrackingSettings(context);
+        loadAutomaticFilesUpdateSettings(context);
+    }
+
     public static void saveLoginSettings(Context context, String username0, String pass0, String serverURL0) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -99,9 +111,32 @@ public class Settings {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         positionUpdateMinDistanceInMetres = sharedPreferences.getLong(SHAREDPREF_TRACKING_MINDISTANCE_KEY, defeaultIpdateMinDistance);
         positionUpdateMinTimeInSeconds = sharedPreferences.getLong(SHAREDPREF_TRACKING_MINTIME_KEY, defeaultIpdateMinTime);
-        serverURL = sharedPreferences.getString(SHAREDPREF_SERVER_URL_KEY, "http://bak.skeletopedia.sk");
     }
 
+
+    public static void saveTrackingSettings(Context context, long minDistance, long minTime){
+        positionUpdateMinDistanceInMetres = minDistance;
+        positionUpdateMinTimeInSeconds = minTime;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(SHAREDPREF_TRACKING_MINDISTANCE_KEY, minDistance);
+        editor.putLong(SHAREDPREF_TRACKING_MINTIME_KEY, minTime);
+        editor.commit();
+    }
+
+    public static void loadAutomaticFilesUpdateSettings(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        automaticStartupFilesUpdate = sharedPreferences.getBoolean(SHAREDPREF_STARTUP_FILES_UPDATE_KEY, true);
+    }
+
+
+    public static void saveAutomaticFilesUpdateSettings(Context context, boolean startupUpdate){
+        automaticStartupFilesUpdate = startupUpdate;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(SHAREDPREF_STARTUP_FILES_UPDATE_KEY, startupUpdate);
+        editor.commit();
+    }
 
     public static void saveQuestsListingSettings(Context context, boolean showActive, boolean showAvailable, boolean showCompleted){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -112,17 +147,13 @@ public class Settings {
         editor.commit();
     }
 
+
     public static void loadQuestsListingSettings(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         showActive = sharedPreferences.getBoolean(SHAREDPREF_SHOW_ACTIVE, true);
         showAvailable = sharedPreferences.getBoolean(SHAREDPREF_SHOW_AVAILABLE, true);
         showCompleted = sharedPreferences.getBoolean(SHAREDPREF_SHOW_COMPLETED, true);
 
-    }
-
-
-    public static void loadAllSettings(Context context){
-        loadQuestsListingSettings(context);
     }
 
 
@@ -276,5 +307,21 @@ public class Settings {
 
     public static void setPositionUpdateMinDistanceInMetres(int positionUpdateMinDistanceInMetres) {
         Settings.positionUpdateMinDistanceInMetres = positionUpdateMinDistanceInMetres;
+    }
+
+    public static boolean isAutomaticStartupFilesUpdate() {
+        return automaticStartupFilesUpdate;
+    }
+
+    public static void setAutomaticStartupFilesUpdate(boolean automaticStartupFilesUpdate) {
+        Settings.automaticStartupFilesUpdate = automaticStartupFilesUpdate;
+    }
+
+    public static String getSendItemURL(int itemId, int amount, int receiverId) {
+        return sendItemURL + itemId +"/"+amount+"/"+receiverId;
+    }
+
+    public static void setSendItemURL(String sendItemURL) {
+        Settings.sendItemURL = sendItemURL;
     }
 }

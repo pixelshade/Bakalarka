@@ -3,32 +3,29 @@ package shade.pixel.gpsoclient;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
 
 public class BluetoothActivity extends ActionBarActivity {
     private static final String TAG = "BLUETOOTH ACTIVITY";
 
-    private static final String MSG_TYPE_SEND_ITEM = "TYPE_SEND_ITEM";
+    public static final String ARG_ITEM = "ARG_ITEM";
 
     private static final int REQUEST_CONNECT_BT = 1;
     private static final int REQUEST_ENABLE_BT = 2;
@@ -36,14 +33,19 @@ public class BluetoothActivity extends ActionBarActivity {
     public static final int READ = 1;
     public static final int WRITE = 2;
 
-    private int myId = -1;
-    private int GiverId = -1;
-    private int ReceiverId = -1;
-    private int ItemAmountId = -1;
-    private int ItemId = -1;
-    private Item item;
 
-    private EditText edTxt;
+    private int myId = Settings.getPlayerId();
+
+    private Item mSendingItem;
+    private int mSendingAmount = 1;
+
+    private int TYPE_ITEM = 10;
+    private int TYPE_ID = 20;
+    private int TYPE_ROLE = 30;
+
+
+    private Button btnSend;
+
 
     private StringBuffer messages;
     private BluetoothAdapter btAdapter = null;
@@ -81,22 +83,69 @@ public class BluetoothActivity extends ActionBarActivity {
 
     private void init() {
 
-        edTxt = (EditText) findViewById(R.id.edTxt);
-        edTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        btnSend = (Button) findViewById(R.id.btnSend);
+        btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView view, int actionId,
-                                          KeyEvent event) {
-                if (actionId == EditorInfo.IME_NULL
-                        && event.getAction() == KeyEvent.ACTION_UP) {
-                    String name = edTxt.getText().toString();
-                    Item item = new Item(1,name,"je najlepsia","",1);
-                    sendItem(item);
-                }
-                return true;
+            public void onClick(View v) {
+                sendRole();
             }
         });
+
+
         chat = new BTCommunicator(this, handler);
         messages = new StringBuffer("");
+
+        Intent intent = getIntent();
+        mSendingItem = (Item) intent.getSerializableExtra(ARG_ITEM);
+
+        if(mSendingItem==null) {
+            setViewReceiver();
+        } else {
+            setViewGiver();
+        }
+    }
+
+    public void setViewGiver(){
+        btnSend.setVisibility(View.VISIBLE);
+    }
+
+    public void setViewReceiver(){
+        btnSend.setVisibility(View.GONE);
+    }
+
+    private void sendRole() {
+        if (!chat.state.equals("CONNECTED")) {
+            Toast.makeText(this, "not connected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            Log.d(TAG,"WRITING_ID");
+            MSGContainer msgContainer = new MSGContainer(TYPE_ROLE);
+            byte[] data = ByteConverter.toByteArray(msgContainer);
+            chat.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    private void sendId(int id) {
+        if (!chat.state.equals("CONNECTED")) {
+            Toast.makeText(this, "not connected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+            try {
+                Log.d(TAG,"WRITING_ID");
+                MSGContainer msgContainer = new MSGContainer(TYPE_ID, id);
+                byte[] data = ByteConverter.toByteArray(msgContainer);
+                chat.write(data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
     }
 
     private void sendItem(Item item) {
@@ -104,41 +153,76 @@ public class BluetoothActivity extends ActionBarActivity {
             Toast.makeText(this, "not connected", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (item !=null && item.getAmount() > 0) {
+        if (item != null && item.getAmount() > 0) {
             try {
-                byte[] data = ByteConverter.toByteArray(item);
+                Log.d(TAG,"WRITING_ITEM");
+                MSGContainer msgContainer = new MSGContainer(TYPE_ITEM, item);
+                byte[] data = ByteConverter.toByteArray(msgContainer);
                 chat.write(data);
-            } catch (IOException e){ e.printStackTrace();};
-//            messages.setLength(0);
-//            edTxt.setText(messages);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ;
         } else
-            Toast.makeText(this, "empty message", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "item is null", Toast.LENGTH_SHORT).show();
+    }
 
+    private boolean sendItemRequestHTTPGETAsync(int itemId, int itemAmount, int receiverId){
+        MyHtmlBrowser.getInstance(this).HttpGetAsyncString(this,Settings.getSendItemURL(itemId,itemAmount,receiverId), new AsyncResponse() {
+            @Override
+            public void processFinish(Context context, String output) {
+                Response response = new Response(output);
+                if(response.isSuccessful()){
+                    mSendingItem.setAmount(mSendingAmount);
+                    sendItem(mSendingItem);
+                } else {
+                    MyAlertDialog mad = MyAlertDialog.newInstance("There was a problem :(", response.getMessage());
+                    mad.show(getSupportFragmentManager(), "problem_fragment");
+                }
+            }
+        });
+        return true;
     }
 
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            Log.i(TAG, "Message:"+msg.toString());
             switch (msg.what) {
                 case WRITE:
-                         MyAlertDialog mad = MyAlertDialog.newInstance("Item successfully sent","hopefully");
-                        mad.show(getSupportFragmentManager(),"yes");
+                    Log.i(TAG, "WRITE");
+                    MyAlertDialog mad = MyAlertDialog.newInstance("Item successfully sent", "hopefully");
+                    mad.show(getSupportFragmentManager(), "yes");
                     break;
                 case READ:
-                    item = null;
                     try {
-                        item = (Item) ByteConverter.toObject((byte[]) msg.obj);
+                        MSGContainer receivedMSG = (MSGContainer) ByteConverter.toObject((byte[]) msg.obj);
+                        if(receivedMSG!=null){
+                            if(receivedMSG.getType() == TYPE_ID){
+                                int receiverId = receivedMSG.getId();
+                                Log.i(TAG, "TYPE ID MAME:" +receiverId);
+                                sendItemRequestHTTPGETAsync(mSendingItem.getId(),mSendingAmount,receiverId);
+                            }
+                            if(receivedMSG.getType() == TYPE_ROLE){
+                                Log.i(TAG, "TYPE ROLE MAME");
+                                sendId(myId);
+                            }
+                            if(receivedMSG.getType() == TYPE_ITEM){
+                                Log.i(TAG, "TYPE ITEM:");
+                                Item receivedItem = receivedMSG.getItem();
+
+                                if (receivedItem != null) {
+                                    GameHandler.gameData.getItems().add(receivedItem);
+                                    MyAlertDialog myAlertDialog = MyAlertDialog.newInstance(receivedItem);
+                                    myAlertDialog.show(getSupportFragmentManager(), "votevr");
+                                }
+                            }
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
-                    if(item!=null){
-                        GameHandler.gameData.getItems().add(item);
-                        MyAlertDialog myAlertDialog = MyAlertDialog.newInstance(item);
-                        myAlertDialog.show(getSupportFragmentManager(),"votevr");
-                    }
-
                     break;
             }
         }

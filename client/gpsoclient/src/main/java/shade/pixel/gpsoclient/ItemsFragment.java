@@ -1,5 +1,6 @@
 package shade.pixel.gpsoclient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,7 +30,7 @@ public class ItemsFragment extends Fragment {
         Log.d(TAG, "VYTVARAM FRAGMENT");
 
         GridView gridViewItems = (GridView) rootView.findViewById(R.id.gridViewItems);
-        this.updateFragment();
+        this.updateFragment(getActivity());
         gridViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -43,13 +44,13 @@ public class ItemsFragment extends Fragment {
         return rootView;
     }
 
-    public void updateFragment() {
-        GameHandler gameHandler = GameHandler.getInstance(getActivity());
+    public void updateFragment(Context context) {
+        GameHandler gameHandler = GameHandler.getInstance(context);
         GameData gameData = gameHandler.getGameData();
         if(gameData!=null) {
             ArrayList<Item> items = gameData.getItems();
             if (items != null) {
-                ItemAdapter itemAdapter = new ItemAdapter(getActivity(), R.layout.list_item, items);
+                ItemAdapter itemAdapter = new ItemAdapter(context, R.layout.list_item, items);
                 GridView gridViewItems = (GridView) rootView.findViewById(R.id.gridViewItems);
                 if (gridViewItems != null) gridViewItems.setAdapter(itemAdapter);
             }

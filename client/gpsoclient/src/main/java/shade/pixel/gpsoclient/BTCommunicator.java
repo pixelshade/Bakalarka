@@ -114,6 +114,7 @@ public class BTCommunicator {
 
     }
 
+
     public void write(byte[] out) {
         Log.i("myChat", model + ":" + "write " + state);
         if (!state.equals("CONNECTED"))

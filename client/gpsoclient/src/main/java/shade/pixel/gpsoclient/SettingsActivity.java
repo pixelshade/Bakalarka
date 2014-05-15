@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -20,18 +22,17 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 public class SettingsActivity extends ActionBarActivity {
     private static final String TAG = "SettingsACtivity";
+    private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-//        TextView settingsIcon = (TextView) findViewById(R.id.settingsIcon);
-//        Typeface font = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
-//        settingsIcon.setTypeface(font);
+        mContext = this;
 
         setPlayerNameTextView(Settings.getPlayerName());
 
@@ -45,23 +46,30 @@ public class SettingsActivity extends ActionBarActivity {
         setInfoTextSBTime((int)Settings.getPositionUpdateMinTimeInSeconds());
         minTimeSB.setOnSeekBarChangeListener(timeSeekBarChangeListener);
 
+
+        View.OnClickListener changeNameOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEdit();
+            }
+        };
+
+
         TextView playerNameCaption = (TextView) findViewById(R.id.playerNameCaption);
-        playerNameCaption.setOnClickListener(new View.OnClickListener() {
+        TextView playerNameTV = (TextView) findViewById(R.id.settingsPlayerNameTextView);
+        playerNameTV.setOnClickListener(changeNameOnClickListener);
+        playerNameCaption.setOnClickListener(changeNameOnClickListener);
+
+
+        CheckBox  filesUpdateCB =(CheckBox) findViewById(R.id.automaticFilesUpdate);
+        filesUpdateCB.setChecked(Settings.isAutomaticStartupFilesUpdate());
+        filesUpdateCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                showEdit();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Settings.setAutomaticStartupFilesUpdate(isChecked);
+                Settings.saveAutomaticFilesUpdateSettings(mContext,isChecked);
             }
         });
-
-        Button changeNameBtn = (Button) findViewById(R.id.changeName);
-        changeNameBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEdit();
-            }
-        });
-
-
     }
 
 
@@ -127,6 +135,7 @@ public class SettingsActivity extends ActionBarActivity {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             Settings.setPositionUpdateMinDistanceInMetres(progress);
+            Settings.saveTrackingSettings(mContext, progress, Settings.getPositionUpdateMinTimeInSeconds());
             setInfoTextSBDistance(progress);
         }
 
@@ -146,6 +155,7 @@ public class SettingsActivity extends ActionBarActivity {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             Settings.setPositionUpdateMinTimeInSeconds(progress);
+            Settings.saveTrackingSettings(mContext, Settings.getPositionUpdateMinDistanceInMetres() ,progress);
             setInfoTextSBTime(progress);
         }
 
@@ -180,6 +190,16 @@ public class SettingsActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void UpdateLocalContentFiles(View view) {
+
+        if (MyHtmlBrowser.getInstance(this).isOnline()) {
+           ContentFilesManager contentFilesManager = new ContentFilesManager(this);
+            contentFilesManager.UpdateFiles();
+        } else {
+            Toast.makeText(this, "You have no connection to internet.", Toast.LENGTH_LONG).show();
+        }
     }
 
 }

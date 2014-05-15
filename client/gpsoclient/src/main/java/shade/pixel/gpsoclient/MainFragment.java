@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
+
 /**
  * Created by pixelshade on 11.3.2014.
  */
@@ -21,31 +24,30 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        TextView playerNameTextView = (TextView) rootView.findViewById(R.id.playerNameTextView);
+//        TextView playerNameTextView = (TextView) rootView.findViewById(R.id.playerNameTextView);
+
+//        if(Settings.getPlayerName().isEmpty()){
+//            playerNameTextView.setVisibility(View.GONE);
+//        } else {
+//            playerNameTextView.setText(Settings.getPlayerName());
+//        }
+
         Button settingsButton = (Button) rootView.findViewById(R.id.settingsButton);
-
-        if(Settings.getPlayerName().isEmpty()){
-            playerNameTextView.setVisibility(View.GONE);
-        } else {
-            playerNameTextView.setText(Settings.getPlayerName());
-        }
-
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startSettingsActivity();
             }
         });
+        Iconify.addIcons(settingsButton);
 
 
 
-
+        Button logoutBtn = (Button) rootView.findViewById(R.id.logoutBtn);
+        Iconify.addIcons(logoutBtn);
 
         Button updateBtn = (Button) rootView.findViewById(R.id.updatePositionBtn);
-        updateBtn.setText(getString(R.string.fa_globe));
-
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fontawesome-webfont.ttf");
-        updateBtn.setTypeface(font);
+        Iconify.addIcons(updateBtn);
 
 
         return rootView;
