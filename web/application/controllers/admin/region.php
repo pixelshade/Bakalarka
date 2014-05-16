@@ -6,7 +6,7 @@ class Region extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('region_m');
-		$this->load->model('region_movement_m');
+		// $this->load->model('region_movement_m');
 	}
 
 	public function index ()
@@ -30,16 +30,16 @@ class Region extends Admin_Controller
 		if ($id) {
 			$this->data['region'] = $this->region_m->get($id);
 			count($this->data['region']) || $this->data['errors'][] = 'region could not be found';
-			$id_movement = $this->region_movement_m->get_by('`region_id` ="'.$id.'"',TRUE);
-			if(empty($id_movement)){
-				$id_movement = null;
-			} else {
-				$id_movement = $id_movement->id;
-			}
+			// $id_movement = $this->region_movement_m->get_by('`region_id` ="'.$id.'"',TRUE);
+			// if(empty($id_movement)){
+			// 	$id_movement = null;
+			// } else {
+			// 	$id_movement = $id_movement->id;
+			// }
 		}
 		else {
 			$this->data['region'] = $this->region_m->get_new();
-			$id_movement = null;
+			// $id_movement = null;
 		}
 		
 		// Set up the form
@@ -55,16 +55,17 @@ class Region extends Admin_Controller
 				'lat_start',
 				'lon_start',
 				'lat_end',
-				'lon_end',				
+				'lon_end',	
+				'movement',			
 				));
 			$this->region_m->save($data, $id);
 
-			$data = $this->region_m->array_from_post(array(
-					'movement'	
-				));
+			// $data = $this->region_m->array_from_post(array(
+			// 		'movement'	
+			// 	));
 			
 
-			$this->region_movement_m->save($data, $id_movement);
+			// $this->region_movement_m->save($data, $id_movement);
 			
 
 
