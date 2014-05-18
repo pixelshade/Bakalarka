@@ -49,6 +49,7 @@ $route['page/(:any)'] = "page/index/$1";
 // $route['(:any)'] = 'pages/index/$1'; 
 $route['404_override'] = '';
 
+$route['admin'] = "admin/dashboard";
 // $route['news/create'] = 'news/create';
 // $route['news/(:any)'] = 'news/view/$1';
 // $route['news'] = 'news';

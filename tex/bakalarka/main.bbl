@@ -5,10 +5,20 @@ About bootstrap.
 \newblock \url{ http://getbootstrap.com/about/ }.
 \newblock [Online; navštívené 14-Január-2014].
 
+\bibitem{jsonVsXml}
+Comparison of json and xml data interchange formats: A case study.
+\newblock \url{ http://www.cs.montana.edu/izurieta/pubs/caine2009.pdf }.
+\newblock [Online; navštívené 18-Apríl-2014].
+
 \bibitem{geocaching}
 Geocaching na slovensku - Čo je to geocaching.
 \newblock \url{ http://www.geocaching.sk/co-je-to-geocaching.php }.
 \newblock [Online; navštívené 30-Január-2014].
+
+\bibitem{qrgenerator-info}
+Php qr code generator.
+\newblock \url{ http://phpqrcode.sourceforge.net/ }.
+\newblock [Online; navštívené 12-Január-2014].
 
 \bibitem{qrgenerator-functions}
 Php qr code generator examples.
@@ -43,6 +53,12 @@ ellislab.
 \newblock Codeigniter user guide.
 \newblock \url{ http://ellislab.com/codeigniter/user-guide/ }.
 \newblock [Online; navštívené 8-Január-2014].
+
+\bibitem{codeigniter-requirements}
+ellislab.
+\newblock Codeigniter user server requirements:
+  \url{http://ellislab.com/codeigniter/user-guide/general/requirements.html},
+  Január 2014.
 
 \bibitem{gmaps-usage}
 Google.

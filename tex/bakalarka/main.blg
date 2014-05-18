@@ -3,9 +3,13 @@ A level-1 auxiliary file: frontmatter/cover.aux
 A level-1 auxiliary file: frontmatter/title.aux
 The style file: plain.bst
 Database file #1: bibliography.bib
+Warning--entry type for "codeigniter-requirements" isn't style-file defined
+--line 12 of file bibliography.bib
+Warning--to sort, need author or key in geocaching
 Warning--to sort, need author or key in bootstrap-about
 Warning--to sort, need author or key in qrgenerator-functions
 Warning--to sort, need author or key in qrreader
 Warning--to sort, need author or key in sfgame
-Warning--to sort, need author or key in geocaching
-(There were 5 warnings)
+Warning--to sort, need author or key in qrgenerator-info
+Warning--to sort, need author or key in jsonVsXml
+(There were 8 warnings)

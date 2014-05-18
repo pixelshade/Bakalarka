@@ -1,28 +1,82 @@
 %!TEX root = ../main.tex
 \chapter{Návrh riešenia}
+Táto kapitola sa bude venovať popisu funkcionality projektu z pohľadu používateľa v týchto bodoch:
+
+\begin{itemize}
+  \item Štruktúra aplikácie na strane klienta a servera
+  \item Vysvetlenie princípov fungovania herného sveta
+  \item Minimálne požiadavky pre spustenie aplikácie
+  \item Priblíženie si navrhovaných riešení niektorých problémov
+\end{itemize}
 
 
-\section{Použité technológie}
 
 
 \section{Štruktúra aplikácie}
+\subsection{Klient}
+Androidová aplikácia po spustení používateľovi ponúkne prihlasovaciu obrazovku, vďaka ktorej sa môže používateľ prihlásiť, ak zadá potrebné prihlasovacie údaje a adresu herného serveru, na ktorý sa plánuje pripojiť. Pokiaľ používateľ nemá vytvorený herný účet na danom serveri, môže sa jednoducho zaregistrovať pomocou registračného tlačidla.
+
+
+\subsection{Server}
+Webová aplikácia na serveri, má na starosti tri hlavné úlohy. Prvou je poskytnúť nátroj na tvorbu a úpravu stránok hry. Druhou je poskytovať API, pomocou ktorého posiela informácie o hernom svete klientom. Treťou je tvorba herného prostredia.\ 
+
+\subsubsection{Spravovanie stránok}
+Obsah a úpravu stránok majú na starosti administrátori/tvorcovia hry. Hlavními zámermi týchto stránok by mali byť:
+ \begin{itemize}
+  \item Oboznámiť nových hráčov ako sa pripojiť na herný server, vytvoriť účet a poskytnúť základný návod k hre.
+  \item Vytvoriť príbehy a históriu herného sveta 
+  \item Informovať o nadchádzajúcich udalostiach v hernom svete
+  \item Priblíženie si navrhovaných riešení niektorých problémov
+\end{itemize}
+Systém obsahuje TINYMCE - jednoduchý editor na úpravu stránok, vďaka ktorému sa znižuje potreba znalostí HTML jazyka používateľov tohto systému a zjednodušuje používanie.
+
+\subsubsection{API}
+Server ponúka klientovi api, pre interakciu s herným svetom a získavanie informacií o ňom. Obsahuje množstvo funkcií, ktoré su volané pomocou GET a POST požiadaviek.
+
+\subsubsection{Tvorba herného prostredia}
+Vytváranie a úprava obsahu hry je možná pomocou jednotlivých sekcii na to určených, ktoré od používateľa nevyžadujú žiadne programátorské schopnosti. 
 
 
 \section{Členenie hry}
-\subsection{Administrátor}
-Je používateľ webovej aplikácie, ktorý ma prístup do administrátorskej sekcie na servery. Tam môže vytvárať, upravovať a mazať jednotlivé vlastnosti herného sveta. Tieto vlastnosti môžu byť regióny, úlohy, jednotky, objekty vo svete. 
+\subsection{Úrovne používateľov}
+Z pohľadu možnosti prístupu k serverovej časti aplikácie sa používatelia delia do troch hlavných skupín. 
 
-\subsection{Klient - hráč}
-Je používateľ, ktorý používa aplikáciu na mobilnom zariadení. Hráč hrá za virtuálnu postavu v hernom svete. Pri pohybe v realnom svete sa zistuje hráčova aktuálna poloha pomocou GPS a je zaslaný dopyt na server s aktuálnou polohou. Zo servera dostane vlastnosti herného sveta pre aktuálnu polohu.
+\subsubsection{Neprihlásený používateľ}
+Jedná sa o používateľa s najnižšou právomocou. Má prístup len k verejnym stránkam hry, ktoré by mali obsahovať informácie o hre.
 
-\subsection{Herny svet}
-\paragraph{}
-Herny svet je tvoreny regionmy. Sú to plochy v priestore, v ktorých sa može nachádzať hráč. Hráč pohybom v reálnom svete sa pohybuje zároveň aj v tom hernom a na mape môže vidieť v akom hernom regione sa nachádza. Regióny sú často spojené s úlohami, ktoré možno vykonať za odmenu. Úlohy môžu byť také, v ktorých hráč musí poraziť určitý počet nepriateľov, získať a nájsť určité predmety, odpovedať na určitú otázku a tieto úlohy môžu byť ohraničené na čas, za ktorý musia byť splnené ináč budú neúspešné. V hernom svete sa na roznych poziciách možu nachádzat a pohybovať jednotky z hry. Tie keď sa dostanú do kontaktu s hráčom môžu vyvolať súboj. V hernom svete tiež sú umiestnené QR kody a na niektorých miestach i NFC tagy, ktoré pridávajú do hry detailnejší pohľad na svet. Možu predstavovať herné objekty ako zbrane, pasce, vybavenie ale i informácie o prostredí, príbehu či úlohy. 
+\subsubsection{Hráč}
+Je registrovaný a úspešne prihlásený používateľ, ktorý používa mobilnú aplikáciu. Hráč hrá za virtuálnu postavu v hernom svete. Pri pohybe vo svete skutočnom, sa zistí hráčova aktuálna poloha pomocou GPS a je zaslaný dopyt na server s aktuálnou polohou. Zo servera získa vlastnosti herného sveta pre aktuálnu polohu. Hráč môže reagovať na jednotlivé vlastnosti herného sveta - objavovať regióny, hľadať skryté odmeny, plniť rôzne úlohy, či predať ostatným hráčom objekty z herného sveta, ktoré vlastní.
 
-\paragraph{}
-Postava má určité vlastnosti. Jednou z hlavných sú životy, pri ktorých počet klesnúci na nulu znamená porážku v súboji s nepriateĺom. Postava má peniaze, ktoré môže získať plnením úloh či porážaním nepriatelov. Môže si za ne kúpiť zbrane či iné vybavenie, ktoré mu môže vylepšovať atribúty. Pomocou tychto atribútov sa v súboji zisťuje ako prebieha súboj. Ďalej má skúsenosti a schopnosti. Schopnosti, ktoré sa odomykajú na používanie hráčovi s pribúdajúcimi skúsenosťami. Tieto schopnosti môže použiť v súboji, k zlepšeniu svojich šancí na porazenie nepriateľov. 
+\subsubsection{Administrátor}
+Je používateľ webovej aplikácie, ktorý má prístup do administrátorskej sekcie na servery. Tam môže vytvárať, upravovať a mazať jednotlivé vlastnosti herného sveta a hráčov v hernom svete. Tieto vlastnosti môžu byť regióny, úlohy, objekty, atribúty, odmeny ale aj jednotlivé pridelenie a kompletnosť úloh hráčov, či ich atribribúty alebo množstvo predmetov v ich inventároch   vo svete. 
+
+\subsection{Herný svet}
+Hry, ktoré sú pomocou tohto nástroja vytvorené sa nehrajú ako bežné počítačové hry, hoci vyu
+Herný svet je tvorený z regiónov, úloh, objektov, odmien, atribútov.
+
+\subsubsection{Regióny}
+Herny svet je tvorený regiónmi. Sú to plochy v priestore, v ktorých sa može nachádzať hráč. Každý región má názov, popis a obrázok pre lepšie uvedenie hráča do hry. Hráč pohybom v reálnom svete sa zároveň pohybuje aj v tom hernom. Pomocou mobilnej aplikácie môže vidieť v akých herných regiónoch sa nachádza.
+
+\subsubsection{Úlohy}
+Hráč v hernom svete môže plniť úlohy. Môže objaviť dvomi spôsobmi - vstupom do regiónov, na ktoré sú úlohy naviazané, alebo načítaním QR kódov, ktoré im prislúchajú. Po objavení ich môže prijať a následne splniť. Tieto úlohy majú svôj názov, popis a obrázok pre lepšie pochopenie zadania. Úloha môže mať nastavený časový limit, počas ktorého musí byť splnená. Ďalším nastavením úlohy je tzv. autoštart, ktorý automaticky spustí úlohu pre hráča, ktorý vošiel do daného regiónu, na ktorý je naviazaná. Administrátori taktiež majú možnosť naviazať jednotlivé úlohy na seba nastavením požiadavky pre hráčov, ktorí pre spustenie danej úlohy už budú musieť mať splnenú inú - tú, od ktorej je daná úloha zavislá. Úlohy sa podľa spôsobu ich splnenia delia na typy:
+\begin{itemize}
+	\item Zadanie správnej textovej odpovede
+	\item Mať určitú hodnotu atribútu
+	\item Nachádzať sa v konkretnom regióne
+	\item Vlastniť určité množstvo objektov v inventári
+\end{itemize}
+Ak má úloha nastavenú odmenu, tak po jej úspešnom splnení ju hráč dostane.
+
+
+\subsubsection{Objekty, atribúty a odmeny}
+\paragraph{Odmeny} sa dajú získať dvomi spôsobmi. Keď hráč úspešne splní úlohu, ktorá má nastavenú odmenu za úspešné splnenie alebo pri nájdení QR kódu, na ktorý je odmena naviazaná. QR kód je tak ako pri úlohach automaticky vygenerovaný serverovou aplikáciou pri vytváraní novej odmeny. Odmena môže obsahovať určitý počet objektu a atribútu, ktorý hráč dostane.
+
+\paragraph{Atribúty} sú naviazané na hráčov. Majú svoj názov a obrázok. Každý hráč môže mať určitú hodnotu daného atribútu. Tento herný prvok, by mal byť hlavne využívaný ako prostriedok na porovnávanie medzi hráčmi pri plnení úloh, či nachádzaní odmien. 
+
+\paragraph{Objekty} v hernom svete sa podobajú štruktúrou na atribúty. Tiež majú pomenovanie, obrázok a popisok, v ktorom sa hráči dozvedia k čomu objekt slúži, či jeho príbeh. Objekty, ktoré hráč vlastní uvidí v inventári. Objekty sú taktiež získavané z odmien. Narozdiel od atribútov si hráči medzi sebou môžu objekty odovzdávať. Keď sa teda dvaja hráči dostanú relatívne blízko (na dosah technológie bluetooth), tak môže darca zo svojho inventáru predať druhému spoluhráčovi objekt maximálne o množstve, ktoré darca vlastní.
 
 \section{Herný príklad}
+Hráč sa po uspešnej registrácii prihlási pomocou herného klienta na mobilnom android zariadení do hry. Po úvodnej automatickej synchronizácií herných obrázkov 
 Hráč si zapne herného klienta na mobilnom android zariadení. Prečíta si informáciu, o tom že sa nachádza v bažinách, o ktorých sa traduje, že sa tam nachádzajú trolovia. Môže si popozerať obrázky bažín ktoré lepšie navodia atmosféru. Dozvie sa aj o úlohe, ktorú môže splniť. Poraziť trola, ktorý nivočí okolie. Najprv ho musí nájsť. Nájde QR kód, ktorý keď načíta mu povie bližšie informácie ako ho poraziť a kde ho hľadať. Musí preto nájsť čarovný meč ktorý sa nachádza obďaleč. Po nájdení tohto chýbajúceho članku k jeho víťazstvu spĺňa úlohu a získava odmenu.
 \paragraph{}
 Administrátor cez webové rozhranie na servery vytvorí región bažín na určitej ploche. Pridá do nej úlohu o zničení trola a o následnej odmene ak splní hráč podmienku a priniesie čarovný meč . Pridá ešte pomocný QR kód pre lahšie nájdenie meča a samotný meč.\
@@ -32,18 +86,37 @@ Z hernej ukážky môžeme povedať, že vysledné hry budu môcť čerpať čas
 
 \section{Minimálne požiadavky}
 \subsection{Klient}
-\subsection{Server}
+Aby sa hráči mohli pripojiť na herný server a mohli hrať hry vytvorené pomocou tohto frameworku potrebujú mobilné zariadenie s operačným systémom Android o minimálnej verzii 2.3 s označením Gingerbread. Na zariadení je potrebné mať aspoň 8,5MB na beh aplikácie bez herného obsahu. Potrebné je tiež pripojenie k internetu, vďaka ktorému dochádza ku komunikácii s herným serverom a teda získavaní informácií o hernom svete a interagovaní s ním. Tiež velmi podstatnou súčasťou požiadaviek je aby dané mobilné zariadenie bolo vybavené fotoaparátom, aby bolo schopné rozoznať QR kódy. Pre plnohodnotné využitie hry, je tiež potrebný GPS sensor z dôvodu udávania presnej polohy hráča a tak releventných informácii o prostredí zavislých na polohe. Bluetooth technológia je potrebná pre zdielanie objektov medzi hráčmi. 
 
+
+\subsection{Server}
+Aplikácia pre svoj správny beh na strane servera potrebuje:
+\begin{itemize}
+\item PHP verzie 5.1.6 alebo novší \cite{codeigniter-requirements}
+\item MySQL databázu 4.1+ alebo novšiu \cite{codeigniter-requirements}
+\item GD2 knižnicu pre tvorbu QR kódov \cite{qrgenerator-info}
+\item minimálne 3,5MB na disku (bez herného obsahu)
+\end{itemize}
 
 \section{Spôsoby riešenia problémov}
 \subsection{Tvorba herného sveta}
+Jedným z hlavných problémov bolo navrhnúť prostredie pre tvorcov hry, ktoré nebude vyžadovať programátorské schopnosti. Zároveň by však malo ponúknuť tvorcom hry dostatočnú volnosť a možnosť jednoduchej spolupráci pri tvorbe herného sveta. Preto najlepším riešením bola webová aplikácia, ktorá je súčasťou frameworku. Administrátori cez jednotlivé nástroje na tvorbu a úpravu herného obsahu teda môžu jednoducho vytvoriť hru. 
+
 \subsection{Univerzálnosť klienta}
-\subsection{Vytvorenie redakčného systému}
+Pri obsahovo rôznych hrách vytvorených pomocou frameworku na strane servera vznikol, problém univerzálnosti klienta. Klient musí byť bez externých zásahov kompatibilný so všetkými hrami vytvorenými webovou aplikáciou frameworku. Preto si klient po úspešnom pripojení a prihlásení môže stiahnúť chýbajúce obrázky z herného serveru. Cieľom návrhu výzoru klienta bola, čo najmenšia konfliktnosť s možným obsahom hry.
+
 \subsection{Komunikacia klient-server}
+Na serveri v databázových moodeloch sa už ukrýva virtuálny svet hry, avšak klient nemá žiadne informácie o hre na danom serveri. Preto bolo nevyhnutné navrhnúť spôsob komunikácie medzi týmito dvomi stranami. Ako najlepšie možné riešenie bola zvolená komunikácia z klientovej strany pomocou požiadaviek POST a GET, pomocou ktorých sa volá herné API na strane servera. Server na tieto požiadavky posiela textové odpovede vo formáte JSON. Javascriptová objektová notácia má mnohé výhody, pre ktoré je použitá na komunikáciu. Napríklad oproti XML formátu má JSON velkosť často menšiu velkosť a rýchlosť spracovania je vyššia. \cite{jsonVsXml} Ďaľšou podstatnou vlastnosťou je nezávislosť formátu na počítačovej platforme a množstvo knižníc, ktoré ulahčujú prácu pri spracovaní dát v tomto formáte.
+
+\subsection{Vytvorenie redakčného systému}
+Jedným z ďaľších problémov, bola potreba informovať potenciálnych hráčov o hre. Ponúknuť im príbehy z prostredia, v ktorom sa hra odohráva a aj návod ako začať hru hrať, teiž kde a kedy sa hra odohráva. Ďaľším podstatným dôvodom bolo informovať hráčov o novinkách a upozorneniach v hre. Preto bolo potrebné riešenie, kde používateľ (administrátor) by bez potreby inštalácie redakčných systémov môže vytvárať a upravovať stránky o hre. Toto sa podarilo pomocou jednoduchého vstavaného WYSIWYG HTML editora  tj. editora, ktorý sa snaží ponúknuť tvorcovi verný obraz výzoru výslednej stránky počas jej tvorby.
+
 \subsection{Spušťanie pomocou QR kódov}
+
+Definícia regiónov pomocou GPS súradníc, ponúka veľkú výhodu - možnosť hrať hru vonku v teréne. Avšak pri potrebe zadania úloh v miestach so slabým GPS signálom napríklad v budovách, či schovávania herných odmien vzniká problém. Tento problém riešia kódy, ktoré sú unikátne pre každú odmenu a úlohu. Teda webová aplikácia v administračnej sekcii automaticky vygeneruje kód, ktorý administrátorovi ponúkne ako QR kód pre načítanie klientom. Výhodou tohto riešenia je prínos nových možností ako vystavať herné zážitky - možnosť schovania odmien, či ponúknutia úloh. Nevýhodou je aby mobilné zariadenie malo fotoaparát, pomocou ktorého sú QR kódy skenované.
+
 \subsection{Komunikácia medzi hráčmi}
+Pre splnenie úlohy môže hráč potrebovať objekt, ktorý získal druhý hráč. Takto môžu vznikať tímy, ktoré si pomáhajú v plnení úloh. Tu vzniká problém aký spôsob komunikácie medzi klientami zvoliť. Naskytá sa možnosť priameho dopytu na herné API na serveri od darcu pre darovanie objektu. Tu však vzniká problém, že hráči by mohli byť od seba veľmi ďaleko, čo nepripomína odovzdavanie objektu. Tento problém môžeme ošetriť kontrolou polohy oboch hráčov, toto riešenie by však nefungovalo v priestoroch kde je GPS signal slabší. Preto do úvahy pripadli technológie NFC a Bluetooth. Problém pri NFC je, že sa jedná o relatívne mladú technológiu a preto by sa minimálne nároky na klienta zdvihli, potrebou vlastniť mobilné zariadenie, ktoré by podporovalo túto technológiu, ktorú mnohé staršie zariadenia nemajú. Preto bol zvolený Bluetooth na komunikáciu medzi zariadeniami, pretože sa jedná o dlhšie zaužívanú technológiu pri mobilných zariadeniach.
 
 
 
-\section{Ciele}
-Cielom tejto práce je vytvoriť prístupný a jednoduchý nástroj na tvorbu multiplayerových online hier, ktoré. Taktiež prenechať priestor pre možnosť vytvoriť aplikáciu, ktorá bude môcť  ktoré všetkých tých hráčov, ktorí presedeli desiatky hodín za počítačom vyťiahnuť von a vydať
