@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,12 +23,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 public class ItemInfoActivity extends ActionBarActivity {
-    ArrayList<Item> items;
-    private static Item actualItem;
+    private ArrayList<Item> items;
+    private static final String TAG= "ItemInfoActivity";
     public static final String ITEM_INDEX_LABEL = "ITEM_INDEX_IN_ARRAY";
     private static Context mContext;
 
@@ -50,21 +52,21 @@ public class ItemInfoActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_info);
-
-        items = GameHandler.getInstance(this).getGameData().getItems();
+        setTitle(Settings.gameName);
+        items = GameHandler.gameData.getItems();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        Intent intent = getIntent();
+        int item_id = intent.getIntExtra(ITEM_INDEX_LABEL, 0);
+        
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(item_id);
 
-        Intent intent = getIntent();
-        int item_id = intent.getIntExtra(ITEM_INDEX_LABEL, 0);
-        actualItem = items.get(item_id);
-        mSectionsPagerAdapter.getItem(item_id);
         mContext = this;
     }
 
@@ -105,7 +107,8 @@ public class ItemInfoActivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(getItemObject(position));
+            Log.d(TAG, "GETITEM"+position);
+            return ItemInfoFragment.newInstance(getItemObject(position));
         }
 
         @Override
@@ -132,22 +135,28 @@ public class ItemInfoActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class ItemInfoFragment extends Fragment {
+        private static final String ARG_KEY_ITEM = "ACT_ITEM";
+        private Item actualItem;
 
-
-        public static PlaceholderFragment newInstance(Item item) {
-            actualItem = item;
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static ItemInfoFragment newInstance(Item item) {
+            Bundle args = new Bundle();
+            args.putSerializable(ARG_KEY_ITEM, item);
+            Log.d(TAG, item.getName());
+            ItemInfoFragment fragment = new ItemInfoFragment();
+            fragment.setArguments(args);
             return fragment;
         }
 
-        public PlaceholderFragment() {
+        public ItemInfoFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_item_info, container, false);
+            actualItem = (Item) getArguments().getSerializable(ARG_KEY_ITEM);
+
             TextView itemAmountText = (TextView) rootView.findViewById(R.id.itemInfoAmountTextView);
             TextView itemNameText = (TextView) rootView.findViewById(R.id.itemInfoNameText);
             TextView itemInfoText = (TextView) rootView.findViewById(R.id.itemInfoText);
