@@ -50,7 +50,6 @@ public class QuestsFragment extends Fragment {
         listViewQuests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "" + i, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getActivity(), QuestInfoActivity.class);
                 intent.putExtra(QuestInfoActivity.QUEST_INDEX_LABEL, i);
                 startActivity(intent);

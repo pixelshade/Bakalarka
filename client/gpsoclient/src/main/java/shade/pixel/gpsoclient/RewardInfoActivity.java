@@ -26,6 +26,7 @@ public class RewardInfoActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(Settings.gameName);
         setContentView(R.layout.activity_reward_info);
         Intent intent = getIntent();
         Reward reward = (Reward) intent.getSerializableExtra(INTENT_KEY_QR_REWARD);

@@ -45,72 +45,64 @@
 \contentsline {subsubsection}{Hlavn\IeC {\'a} obrazovka}{9}{section*.16}
 \contentsline {subsubsection}{Nastavenia}{10}{section*.17}
 \contentsline {subsubsection}{\IeC {\'U}lohy}{10}{section*.18}
-\contentsline {subsubsection}{Atrib\IeC {\'u}ty}{10}{section*.19}
-\contentsline {subsubsection}{Invent\IeC {\'a}r}{11}{section*.20}
-\contentsline {subsubsection}{Detail objektu}{11}{section*.21}
-\contentsline {subsubsection}{Zoznam aktu\IeC {\'a}lnych regi\IeC {\'o}nov a detail regi\IeC {\'o}nu}{11}{section*.22}
-\contentsline {subsubsection}{Mapa}{11}{section*.23}
-\contentsline {subsection}{\numberline {3.1.2}Server}{11}{subsection.3.1.2}
-\contentsline {subsubsection}{Spravovanie str\IeC {\'a}nok}{12}{section*.24}
-\contentsline {subsubsection}{API}{12}{section*.25}
-\contentsline {subsubsection}{Tvorba hern\IeC {\'e}ho prostredia}{12}{section*.26}
-\contentsline {section}{\numberline {3.2}\IeC {\v C}lenenie hry}{12}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}\IeC {\'U}rovne pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}ov}{12}{subsection.3.2.1}
-\contentsline {subsubsection}{Neprihl\IeC {\'a}sen\IeC {\'y} pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}}{12}{section*.27}
-\contentsline {subsubsection}{Hr\IeC {\'a}\IeC {\v c}}{13}{section*.28}
-\contentsline {subsubsection}{Administr\IeC {\'a}tor}{13}{section*.29}
-\contentsline {subsection}{\numberline {3.2.2}Hern\IeC {\'y} svet}{13}{subsection.3.2.2}
-\contentsline {subsubsection}{Regi\IeC {\'o}ny}{13}{section*.30}
-\contentsline {subsubsection}{\IeC {\'U}lohy}{13}{section*.31}
-\contentsline {subsubsection}{Objekty, atrib\IeC {\'u}ty a odmeny}{14}{section*.32}
-\contentsline {paragraph}{Odmeny}{14}{section*.33}
-\contentsline {paragraph}{Atrib\IeC {\'u}ty}{14}{section*.34}
-\contentsline {paragraph}{Objekty}{14}{section*.35}
+\contentsline {subsubsection}{Detail \IeC {\'u}lohy}{10}{section*.19}
+\contentsline {subsubsection}{Atrib\IeC {\'u}ty}{11}{section*.20}
+\contentsline {subsubsection}{Invent\IeC {\'a}r}{11}{section*.21}
+\contentsline {subsubsection}{Detail objektu}{11}{section*.22}
+\contentsline {subsubsection}{Zoznam aktu\IeC {\'a}lnych regi\IeC {\'o}nov a detail regi\IeC {\'o}nu}{11}{section*.23}
+\contentsline {subsubsection}{Mapa}{12}{section*.24}
+\contentsline {subsubsection}{Obrazovka posielania objektu}{12}{section*.25}
+\contentsline {subsection}{\numberline {3.1.2}Server}{12}{subsection.3.1.2}
+\contentsline {subsubsection}{Spravovanie str\IeC {\'a}nok}{12}{section*.26}
+\contentsline {subsubsection}{API}{13}{section*.27}
+\contentsline {subsubsection}{Tvorba hern\IeC {\'e}ho prostredia}{13}{section*.28}
+\contentsline {section}{\numberline {3.2}\IeC {\v C}lenenie hry}{13}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\IeC {\'U}rovne pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}ov}{13}{subsection.3.2.1}
+\contentsline {subsubsection}{Neprihl\IeC {\'a}sen\IeC {\'y} pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}}{13}{section*.29}
+\contentsline {subsubsection}{Hr\IeC {\'a}\IeC {\v c}}{13}{section*.30}
+\contentsline {subsubsection}{Administr\IeC {\'a}tor}{13}{section*.31}
+\contentsline {subsection}{\numberline {3.2.2}Hern\IeC {\'y} svet}{14}{subsection.3.2.2}
+\contentsline {subsubsection}{Regi\IeC {\'o}ny}{14}{section*.32}
+\contentsline {subsubsection}{\IeC {\'U}lohy}{14}{section*.33}
+\contentsline {subsubsection}{Objekty, atrib\IeC {\'u}ty a odmeny}{15}{section*.34}
+\contentsline {paragraph}{Odmeny}{15}{section*.35}
+\contentsline {paragraph}{Atrib\IeC {\'u}ty}{15}{section*.36}
+\contentsline {paragraph}{Objekty}{15}{section*.37}
 \contentsline {section}{\numberline {3.3}Hern\IeC {\'y} pr\IeC {\'\i }klad}{15}{section.3.3}
-\contentsline {paragraph}{}{15}{section*.36}
-\contentsline {paragraph}{}{15}{section*.37}
-\contentsline {section}{\numberline {3.4}Minim\IeC {\'a}lne po\IeC {\v z}iadavky}{15}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Klient}{15}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Server}{16}{subsection.3.4.2}
-\contentsline {section}{\numberline {3.5}Sp\IeC {\^o}soby rie\IeC {\v s}enia probl\IeC {\'e}mov}{16}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Tvorba hern\IeC {\'e}ho sveta}{16}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Univerz\IeC {\'a}lnos\IeC {\v t} klienta}{16}{subsection.3.5.2}
-\contentsline {subsection}{\numberline {3.5.3}Komunikacia klient-server}{17}{subsection.3.5.3}
-\contentsline {subsection}{\numberline {3.5.4}Vytvorenie redak\IeC {\v c}n\IeC {\'e}ho syst\IeC {\'e}mu}{17}{subsection.3.5.4}
-\contentsline {subsection}{\numberline {3.5.5}Spu\IeC {\v s}\IeC {\v t}anie pomocou QR k\IeC {\'o}dov}{17}{subsection.3.5.5}
-\contentsline {subsection}{\numberline {3.5.6}Komunik\IeC {\'a}cia medzi hr\IeC {\'a}\IeC {\v c}mi}{18}{subsection.3.5.6}
-\contentsline {chapter}{\numberline {4}Implement\IeC {\'a}cia aplik\IeC {\'a}cie}{19}{chapter.4}
-\contentsline {section}{\numberline {4.1}D\IeC {\^o}le\IeC {\v z}it\IeC {\'e} triedy a ich popis}{20}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Klient}{20}{subsection.4.1.1}
-\contentsline {subsubsection}{Komunik\IeC {\'a}cia s online API}{20}{section*.38}
-\contentsline {subsubsection}{Konverzia JSON}{20}{section*.39}
-\contentsline {subsection}{\numberline {4.1.2}Server}{20}{subsection.4.1.2}
-\contentsline {subsubsection}{Cron}{20}{section*.40}
-\contentsline {section}{\numberline {4.2}QR k\IeC {\'o}dy}{20}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Generovanie}{20}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}\IeC {\v C}\IeC {\'\i }tanie}{20}{subsection.4.2.2}
-\contentsline {section}{\numberline {4.3}Bluetooth}{20}{section.4.3}
-\contentsline {section}{\numberline {4.4}Mapy}{20}{section.4.4}
-\contentsline {section}{\numberline {4.5}Synchroniz\IeC {\'a}cia s\IeC {\'u}borov}{20}{section.4.5}
-\contentsline {section}{\numberline {4.6}Zis\IeC {\v t}ovanie aktu\IeC {\'a}lnej polohy}{20}{section.4.6}
-\contentsline {section}{\numberline {4.7}Tvorba hern\IeC {\'e}ho prostredia}{20}{section.4.7}
-\contentsline {paragraph}{}{20}{section*.41}
-\contentsline {chapter}{\numberline {5}Z\IeC {\'a}ver}{22}{chapter.5}
-\contentsline {section}{\numberline {5.1}\IeC {\v D}a\IeC {\v l}\IeC {\v s}\IeC {\'\i } mo\IeC {\v z}n\IeC {\'y} v\IeC {\'y}voj aplik\IeC {\'a}cie}{22}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Dynamick\IeC {\'y} hern\IeC {\'y} svet}{22}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}Nov\IeC {\'e} mo\IeC {\v z}nosti interakcie hra\IeC {\v c}ov}{22}{subsection.5.1.2}
-\contentsline {subsection}{\numberline {5.1.3}Pridanie nepriate\IeC {\v l}ov}{22}{subsection.5.1.3}
-\contentsline {subsection}{\numberline {5.1.4}Vstavan\IeC {\'y} v\IeC {\'y}ber v\IeC {\'y}zoru}{22}{subsection.5.1.4}
-\contentsline {section}{\numberline {5.2}In\IeC {\'e} mo\IeC {\v z}nosti vyu\IeC {\v z}itia}{22}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Tvorba \IeC {\v s}ifrovac\IeC {\'\i }ch hier}{22}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}Tvorba turisticko-historicke prehliadky}{22}{subsection.5.2.2}
-\contentsline {section}{\numberline {5.3}Zhrnutie}{23}{section.5.3}
-\contentsline {chapter}{\numberline {6}Example}{24}{chapter.6}
-\contentsline {section}{\numberline {6.1}Tables}{24}{section.6.1}
-\contentsline {paragraph}{}{24}{section*.42}
-\contentsline {section}{\numberline {6.2}Figures}{24}{section.6.2}
-\contentsline {paragraph}{}{24}{section*.43}
-\contentsline {section}{\numberline {6.3}Cross reference}{25}{section.6.3}
-\contentsline {paragraph}{}{25}{section*.44}
-\contentsline {section}{\numberline {6.4}Citation}{25}{section.6.4}
-\contentsline {chapter}{\numberline {A}\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }}{26}{appendix.A}
+\contentsline {paragraph}{}{16}{section*.38}
+\contentsline {section}{\numberline {3.4}Minim\IeC {\'a}lne po\IeC {\v z}iadavky}{16}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Klient}{16}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Server}{17}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5}Sp\IeC {\^o}soby rie\IeC {\v s}enia probl\IeC {\'e}mov}{17}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Tvorba hern\IeC {\'e}ho sveta}{17}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Univerz\IeC {\'a}lnos\IeC {\v t} klienta}{17}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}Komunikacia klient-server}{18}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.4}Vytvorenie redak\IeC {\v c}n\IeC {\'e}ho syst\IeC {\'e}mu}{18}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.5}Spu\IeC {\v s}\IeC {\v t}anie pomocou QR k\IeC {\'o}dov}{18}{subsection.3.5.5}
+\contentsline {subsection}{\numberline {3.5.6}Komunik\IeC {\'a}cia medzi hr\IeC {\'a}\IeC {\v c}mi}{19}{subsection.3.5.6}
+\contentsline {chapter}{\numberline {4}Implement\IeC {\'a}cia aplik\IeC {\'a}cie}{20}{chapter.4}
+\contentsline {section}{\numberline {4.1}D\IeC {\^o}le\IeC {\v z}it\IeC {\'e} triedy a ich popis}{21}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Klient}{21}{subsection.4.1.1}
+\contentsline {subsubsection}{Komunik\IeC {\'a}cia s online API}{21}{section*.39}
+\contentsline {subsubsection}{Konverzia JSON}{21}{section*.40}
+\contentsline {subsection}{\numberline {4.1.2}Server}{21}{subsection.4.1.2}
+\contentsline {subsubsection}{Cron}{21}{section*.41}
+\contentsline {section}{\numberline {4.2}QR k\IeC {\'o}dy}{21}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Generovanie}{21}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\IeC {\v C}\IeC {\'\i }tanie}{21}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.3}Bluetooth}{21}{section.4.3}
+\contentsline {section}{\numberline {4.4}Mapy}{21}{section.4.4}
+\contentsline {section}{\numberline {4.5}Synchroniz\IeC {\'a}cia s\IeC {\'u}borov}{21}{section.4.5}
+\contentsline {section}{\numberline {4.6}Zis\IeC {\v t}ovanie aktu\IeC {\'a}lnej polohy}{21}{section.4.6}
+\contentsline {section}{\numberline {4.7}Tvorba hern\IeC {\'e}ho prostredia}{21}{section.4.7}
+\contentsline {paragraph}{}{21}{section*.42}
+\contentsline {chapter}{\numberline {5}Z\IeC {\'a}ver}{23}{chapter.5}
+\contentsline {section}{\numberline {5.1}\IeC {\v D}a\IeC {\v l}\IeC {\v s}\IeC {\'\i } mo\IeC {\v z}n\IeC {\'y} v\IeC {\'y}voj aplik\IeC {\'a}cie}{23}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Dynamick\IeC {\'y} hern\IeC {\'y} svet}{23}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Nov\IeC {\'e} mo\IeC {\v z}nosti interakcie hra\IeC {\v c}ov}{23}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}Pridanie nepriate\IeC {\v l}ov}{23}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}Vstavan\IeC {\'y} v\IeC {\'y}ber v\IeC {\'y}zoru}{23}{subsection.5.1.4}
+\contentsline {section}{\numberline {5.2}In\IeC {\'e} mo\IeC {\v z}nosti vyu\IeC {\v z}itia}{23}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Tvorba \IeC {\v s}ifrovac\IeC {\'\i }ch hier}{23}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Tvorba turisticko-historicke prehliadky}{23}{subsection.5.2.2}
+\contentsline {section}{\numberline {5.3}Zhrnutie}{24}{section.5.3}

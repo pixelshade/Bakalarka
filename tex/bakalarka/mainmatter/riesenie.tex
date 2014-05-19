@@ -26,6 +26,12 @@ Táto časť aplikácie slúži na nastavenie správania herného klienta. Použ
 \subsubsection{Úlohy}
 K tomu aby mal hráč prehľad o úlohách bola vytvorená obrazovka s úlohami. Možno si na nej teda pozrieť aktuálne úlohy, ktoré hráč môže prijať. Ako ďaľšie sú zobrazené prijaté teda aktívne úlohy, ktoré už boli prijaté hráčom a teraz prebieha ich riešenie. Poslednou kategóriou sú kompletné, ciže úspešne dokončené úlohy, v ktorých sa podarilo hráčovi úspešne splniť zadania daných úloh. Tieto tri kategórie sí filtrovatelné pomocou troch tlačidiel. Každé jedno tlačidlo má dva stavy a je pridelené ku svojej kategorii. Ak je tlačidlo zapnuté zobrazí úlohy takého stavu, ktorému prislúcha a vice versa.
 
+\subsubsection{Detail úlohy}
+Obrazovka s detailom úlohy ponúka informácie pre hráča pre jej splnenie. Nájdeme tu názov úlohy, jej popis so zadaním, obrázok jej prislúchajúci a tlačidlá. Tlačidlá sa zobrazujú podla stavu úlohy. 
+
+Ak je úloha dostupná je viditeľné tlačidlo pre jej prijatie. 
+Aktívna úloha, zobrazuje tlačidlo na odobratie úlohy a jej splnenie. Hotová úloha zakáže používanie tlačídla pre splnenie úlohy. Podľa typu úlohy sa zobrazujú komponenty na obrazovke. Pri úlohe, ktorá vyžaduje textovú odpoveď je viditeľný textový vstup, do ktorého hráč može písať. Ak má úloha nastavený časový limit, zobrazuje sa sekundový odpočet, ktorý je znázornený pomocou komponentu postupu.
+
 \subsubsection{Atribúty}
 Každý hráč si môže pozrieť zoznam svojich aktuálnych atribútov, ktoré nadobudol. Atribúty sú zobrazené pod sebou. Každý atribút má svoj obrázok, názov a číselnú hodnotu, ktorou informuje hráča ako postupuje v hre.
 
@@ -40,6 +46,9 @@ Aby hráč mal lepšiu predstavu, kde sa v hernom prostredí pohybuje je mu pon�
 
 \subsubsection{Mapa}
 Mapa slúži ako oporný bod  pre lepšiu orientáciu pri hraní hier v teréne. Tiež informuje hráčov o tom, v ktorých regiónoch sa hráč nachádza. Ak sa hráč nachádza v regióne, tak sa na mape zobrazí značka s názvom regiónu a farebne vyznačená plocha, ktorá určuje hranice regiónu.
+
+\subsubsection{Obrazovka posielania objektu}
+Obrazovka ponúkne možnosť zapnúť Bluetooth na zariadení, pokiaľ je vypnuté. Ak je zapnuté hráči môžu spárovať zariadenia a pripojiť sa nazvájom. Po úspešnom predaní objektu je príjemca oboznámený dialógovým oknom, v ktorom sa može dozvedieť detaily o prijatom objekte.
 
 
 \subsection{Server}
@@ -101,13 +110,11 @@ Ak má úloha nastavenú odmenu, tak po jej úspešnom splnení ju hráč dostan
 \paragraph{Objekty} v hernom svete sa podobajú štruktúrou na atribúty. Tiež majú pomenovanie, obrázok a popisok, v ktorom sa hráči dozvedia k čomu objekt slúži, či jeho príbeh. Objekty, ktoré hráč vlastní uvidí v inventári. Objekty sú taktiež získavané z odmien. Narozdiel od atribútov si hráči medzi sebou môžu objekty odovzdávať. Keď sa teda dvaja hráči dostanú relatívne blízko (na dosah technológie bluetooth), tak môže darca zo svojho inventáru predať druhému spoluhráčovi objekt maximálne o množstve, ktoré darca vlastní.
 
 \section{Herný príklad}
-Hráč sa po uspešnej registrácii prihlási pomocou herného klienta na mobilnom android zariadení do hry. Po úvodnej automatickej synchronizácií herných obrázkov 
-Hráč si zapne herného klienta na mobilnom android zariadení. Prečíta si informáciu, o tom že sa nachádza v bažinách, o ktorých sa traduje, že sa tam nachádzajú trolovia. Môže si popozerať obrázky bažín ktoré lepšie navodia atmosféru. Dozvie sa aj o úlohe, ktorú môže splniť. Poraziť trola, ktorý nivočí okolie. Najprv ho musí nájsť. Nájde QR kód, ktorý keď načíta mu povie bližšie informácie ako ho poraziť a kde ho hľadať. Musí preto nájsť čarovný meč ktorý sa nachádza obďaleč. Po nájdení tohto chýbajúceho članku k jeho víťazstvu spĺňa úlohu a získava odmenu.
-\paragraph{}
-Administrátor cez webové rozhranie na servery vytvorí región bažín na určitej ploche. Pridá do nej úlohu o zničení trola a o následnej odmene ak splní hráč podmienku a priniesie čarovný meč . Pridá ešte pomocný QR kód pre lahšie nájdenie meča a samotný meč.\
+Hráč sa po uspešnej registrácii prihlási pomocou herného klienta na mobilnom android zariadení do hry. Po úvodnej automatickej synchronizácií herných obrázkov a získaní nastavení hry sa hráčovi zobrazí hlavná obrazovka. Aplikácia, ak nie je nastavené inak, po chvíľke automaticky pošle požiadavku na server a zistí informácie o okolitom hernom prostredí. Hráč zistí, že sa nachádza v bažinách a automaticky  sa mu spustí úloha. V úlohe bude krátky príbeh a zadanie, podľa ktorého má nájsť stratený kameň mudrcov pre vládcu bažín. Po chvíli hľadania hráč nájde QR kód nalepený na kameni. Hráč naskenuje QR kód a dostane informáciu o tom, že sa naozaj jednalo o kameň mudrcov a dostane ho automaticky do inventára. Nájde svoju aktívnu úlohu a stlačí tlačidlo na dokončenie úlohy, keďže splnil zadanie úloha sa označí ako splnená a dostane odmenu. Dostal tri body skúsenosti a jeden meč. Spoluhráč poprosí tohto hráča aby mu predal meč, pretože ho potrebuje na porazenie draka. Prebehne spárovanie zariadení a meč má nového majitela. Hráč pokračuje v plnení úloh, ktoré sú v tomto regióne dostupné. Ďaľšou úlohou je hádanka, ktorú musí uhádnuť a napísať správnu odpoveď. Odpoveď môže zistíť pomocou zozbierania indícií - QR kódov s objektami poschovávaných po okolí. Medzi nimi sa však schovávala nastražená úloha, v ktorej hráč musí újsť pred nahnevanou riečnou príšerou za určitý čas do bezpečia - regiónu, ktorý je obďaleč. Po uspešnom úteku, je hráč odmenený dvomi bodmi fyzickej kóndície. \
+Administrátor má tiež prehľad o pohybe hráčov a ich aktuálnych úlohách a inventároch pre lepšiu kontrolu hry. Teda ak vidí, že vznikol problém pri niektorej úlohe, či odmene, môže skrze administrátorskú sekciu webovej aplikácie prideliť objekt, atribút či nastaviť úlohu za hotovú pre konkrétnych hráčov. Môže zmeniť herné prostredie hry počas toho ako jú hráči hrajú. Teda v tomto hernom príklade by si napríklad všimol, že ostatní hráčí nestíhajú dobehnúť do daného regiónu na čas. Tak môže presunúť región bližšie, či nastaviť viac času pre úlohu a dať za ňu nižšiu odmenu.
 
 \paragraph{}
-Z hernej ukážky môžeme povedať, že vysledné hry budu môcť čerpať časť čŕt z larpov, kde sa hráči vžíjú do svojich postáv a prechádzajú určitým príbehom. Tiež geocachingu, kde hráči hľadajú kešky(správy či iné malé prekvapenia), ktoré pre nich zanechali ostatný na určitej GPS pozícii.
+Z hernej ukážky môžeme povedať, že vysledné hry budú môcť čerpať časť čŕt z larpov, kde sa hráči vžíjú do svojich postáv a prechádzajú určitým príbehom \cite{larp-cojeto}. Tiež geocachingu, kde hráči hľadajú kešky(správy či iné malé objekty), ktoré pre nich zanechali ostatní na určitej GPS pozícii \cite{geocaching}.
 
 \section{Minimálne požiadavky}
 \subsection{Klient}

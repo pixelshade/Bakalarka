@@ -48,7 +48,7 @@ public class QuestInfoActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest_info);
-
+        setTitle(Settings.gameName);
         mActivity = this;
         Intent intent = getIntent();
         int quest_index = intent.getIntExtra(QUEST_INDEX_LABEL, 0);
