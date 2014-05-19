@@ -69,7 +69,7 @@ Ak má úloha nastavenú odmenu, tak po jej úspešnom splnení ju hráč dostan
 
 
 \subsubsection{Objekty, atribúty a odmeny}
-\paragraph{Odmeny} sa dajú získať dvomi spôsobmi. Keď hráč úspešne splní úlohu, ktorá má nastavenú odmenu za úspešné splnenie alebo pri nájdení QR kódu, na ktorý je odmena naviazaná. QR kód je tak ako pri úlohach automaticky vygenerovaný serverovou aplikáciou pri vytváraní novej odmeny. Odmena môže obsahovať určitý počet objektu a atribútu, ktorý hráč dostane.
+\paragraph{Odmeny} sa dajú získať dvomi spôsobmi. Keď hráč úspešne splní úlohu, ktorá má nastavenú odmenu za úspešné splnenie alebo pri nájdení QR kódu, na ktorý je odmena naviazaná. Tak ako pri úlohach, je tiež automaticky vygenerovaný QR kód serverovou aplikáciou pri vytváraní novej odmeny. Odmena môže obsahovať určitý počet objektu a atribútu, ktorý hráč dostane.
 
 \paragraph{Atribúty} sú naviazané na hráčov. Majú svoj názov a obrázok. Každý hráč môže mať určitú hodnotu daného atribútu. Tento herný prvok, by mal byť hlavne využívaný ako prostriedok na porovnávanie medzi hráčmi pri plnení úloh, či nachádzaní odmien. 
 
@@ -86,8 +86,14 @@ Z hernej ukážky môžeme povedať, že vysledné hry budu môcť čerpať čas
 
 \section{Minimálne požiadavky}
 \subsection{Klient}
-Aby sa hráči mohli pripojiť na herný server a mohli hrať hry vytvorené pomocou tohto frameworku potrebujú mobilné zariadenie s operačným systémom Android o minimálnej verzii 2.3 s označením Gingerbread. Na zariadení je potrebné mať aspoň 8,5MB na beh aplikácie bez herného obsahu. Potrebné je tiež pripojenie k internetu, vďaka ktorému dochádza ku komunikácii s herným serverom a teda získavaní informácií o hernom svete a interagovaní s ním. Tiež velmi podstatnou súčasťou požiadaviek je aby dané mobilné zariadenie bolo vybavené fotoaparátom, aby bolo schopné rozoznať QR kódy. Pre plnohodnotné využitie hry, je tiež potrebný GPS sensor z dôvodu udávania presnej polohy hráča a tak releventných informácii o prostredí zavislých na polohe. Bluetooth technológia je potrebná pre zdielanie objektov medzi hráčmi. 
-
+\begin{itemize}
+\item Aby sa hráči mohli pripojiť na herný server a mohli hrať hry vytvorené pomocou tohto frameworku potrebujú mobilné zariadenie s operačným systémom Android o minimálnej verzii 2.3 s označením Gingerbread. 
+\item Na zariadení je potrebné mať aspoň 8,5MB volného miesta na inštaláciu samostatnej aplikácie bez herného obsahu. Čiže celkové požiadavky na pamäť sa líšia podla jednotlivého serveru, na ktorom je klient pripojený. 
+\item Potrebné je tiež pripojenie k internetu, vďaka ktorému dochádza ku komunikácii s herným serverom a teda získavaní informácií o hernom svete a interagovaní s ním. 
+\item Tiež velmi podstatnou súčasťou požiadaviek je aby dané mobilné zariadenie bolo vybavené fotoaparátom, aby bolo schopné rozoznať QR kódy. 
+\item Pre plnohodnotné využitie hry, je tiež potrebný GPS sensor z dôvodu udávania presnej polohy hráča a tak releventných informácii o prostredí zavislých na polohe. 
+\item Bluetooth technológia je potrebná pre zdielanie objektov medzi hráčmi. 
+\end{itemize}
 
 \subsection{Server}
 Aplikácia pre svoj správny beh na strane servera potrebuje:
@@ -116,7 +122,7 @@ Jedným z ďaľších problémov, bola potreba informovať potenciálnych hráč
 Definícia regiónov pomocou GPS súradníc, ponúka veľkú výhodu - možnosť hrať hru vonku v teréne. Avšak pri potrebe zadania úloh v miestach so slabým GPS signálom napríklad v budovách, či schovávania herných odmien vzniká problém. Tento problém riešia kódy, ktoré sú unikátne pre každú odmenu a úlohu. Teda webová aplikácia v administračnej sekcii automaticky vygeneruje kód, ktorý administrátorovi ponúkne ako QR kód pre načítanie klientom. Výhodou tohto riešenia je prínos nových možností ako vystavať herné zážitky - možnosť schovania odmien, či ponúknutia úloh. Nevýhodou je aby mobilné zariadenie malo fotoaparát, pomocou ktorého sú QR kódy skenované.
 
 \subsection{Komunikácia medzi hráčmi}
-Pre splnenie úlohy môže hráč potrebovať objekt, ktorý získal druhý hráč. Takto môžu vznikať tímy, ktoré si pomáhajú v plnení úloh. Tu vzniká problém aký spôsob komunikácie medzi klientami zvoliť. Naskytá sa možnosť priameho dopytu na herné API na serveri od darcu pre darovanie objektu. Tu však vzniká problém, že hráči by mohli byť od seba veľmi ďaleko, čo nepripomína odovzdavanie objektu. Tento problém môžeme ošetriť kontrolou polohy oboch hráčov, toto riešenie by však nefungovalo v priestoroch kde je GPS signal slabší. Preto do úvahy pripadli technológie NFC a Bluetooth. Problém pri NFC je, že sa jedná o relatívne mladú technológiu a preto by sa minimálne nároky na klienta zdvihli, potrebou vlastniť mobilné zariadenie, ktoré by podporovalo túto technológiu, ktorú mnohé staršie zariadenia nemajú. Preto bol zvolený Bluetooth na komunikáciu medzi zariadeniami, pretože sa jedná o dlhšie zaužívanú technológiu pri mobilných zariadeniach.
+Pre splnenie úlohy môže hráč potrebovať objekt, ktorý získal druhý hráč. Takto môžu vznikať tímy, ktoré si pomáhajú v plnení úloh. Tu vzniká problém aký spôsob komunikácie medzi klientami zvoliť. Naskytá sa možnosť priameho dopytu na herné API na serveri od darcu pre darovanie objektu. Tu však vzniká problém, že hráči by mohli byť od seba veľmi ďaleko, čo kazí herný zážitok. Tento problém môžeme ošetriť kontrolou polohy oboch hráčov, toto riešenie by však nefungovalo v priestoroch kde je GPS signal slabší. Preto do úvahy pripadli technológie NFC a Bluetooth. Problém pri NFC je, že sa jedná o relatívne mladú technológiu a preto by sa minimálne nároky na klienta zdvihli, potrebou vlastniť mobilné zariadenie, ktoré by podporovalo túto technológiu, ktorú mnohé staršie zariadenia nemajú. Preto bol zvolený Bluetooth na komunikáciu medzi zariadeniami, pretože sa jedná o dlhšie zaužívanú technológiu pri mobilných zariadeniach.
 
 
 

@@ -24,5 +24,8 @@
     <string name="title_device_list">DeviceListActivity</string>
     <string name="hello_world">Hello world</string>
     <string name="btn_settings">{fa-cog}Settings</string>
+    <string name="Remove">{fa-trash-o}Remove</string>
+    <string name="AcceptBtn">{fa-check}Accept</string>
+    <string name="CompleteBtn">{fa-check-square-o}Complete</string>
 
 </resources>

@@ -66,10 +66,10 @@
 \contentsline {section}{\numberline {3.5}Sp\IeC {\^o}soby rie\IeC {\v s}enia probl\IeC {\'e}mov}{14}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Tvorba hern\IeC {\'e}ho sveta}{14}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}Univerz\IeC {\'a}lnos\IeC {\v t} klienta}{14}{subsection.3.5.2}
-\contentsline {subsection}{\numberline {3.5.3}Komunikacia klient-server}{14}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.3}Komunikacia klient-server}{15}{subsection.3.5.3}
 \contentsline {subsection}{\numberline {3.5.4}Vytvorenie redak\IeC {\v c}n\IeC {\'e}ho syst\IeC {\'e}mu}{15}{subsection.3.5.4}
 \contentsline {subsection}{\numberline {3.5.5}Spu\IeC {\v s}\IeC {\v t}anie pomocou QR k\IeC {\'o}dov}{15}{subsection.3.5.5}
-\contentsline {subsection}{\numberline {3.5.6}Komunik\IeC {\'a}cia medzi hr\IeC {\'a}\IeC {\v c}mi}{15}{subsection.3.5.6}
+\contentsline {subsection}{\numberline {3.5.6}Komunik\IeC {\'a}cia medzi hr\IeC {\'a}\IeC {\v c}mi}{16}{subsection.3.5.6}
 \contentsline {chapter}{\numberline {4}Implement\IeC {\'a}cia aplik\IeC {\'a}cie}{17}{chapter.4}
 \contentsline {section}{\numberline {4.1}D\IeC {\^o}le\IeC {\v z}it\IeC {\'e} triedy a ich popis}{18}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Klient}{18}{subsection.4.1.1}

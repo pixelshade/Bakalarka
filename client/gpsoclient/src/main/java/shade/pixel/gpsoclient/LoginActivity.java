@@ -99,8 +99,6 @@ public class LoginActivity extends FragmentActivity {
         EditText passwordET = (EditText) findViewById(R.id.password);
 
         Iconify.addIcons(registerBtn);
-        Iconify.addIcons(emailET);
-        Iconify.addIcons(passwordET);
 
 
         loginBtn.setOnClickListener(new View.OnClickListener() {

@@ -22,8 +22,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.joanzapata.android.iconify.Iconify;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -165,6 +168,10 @@ public class QuestInfoActivity extends ActionBarActivity {
             Button questCompleteButton = (Button) rootView.findViewById(R.id.completeButton);
             Button questAcceptButton = (Button) rootView.findViewById(R.id.acceptButton);
 
+            Iconify.addIcons(questRemoveBtn);
+            Iconify.addIcons(questCompleteButton);
+            Iconify.addIcons(questAcceptButton);
+
             questAcceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -187,7 +194,7 @@ public class QuestInfoActivity extends ActionBarActivity {
             });
 
             questName.setText(actualQuest.getName());
-            questInfo.setText(Html.fromHtml(actualQuest.getInfo()) + "" + actualQuest.getTimeAccepted() + actualQuest.getDuration() + "Act:" + actualQuest.isActive() + "Compl:" + actualQuest.isCompleted());
+            questInfo.setText(Html.fromHtml(actualQuest.getInfo())); // + "" + actualQuest.getTimeAccepted() + actualQuest.getDuration() + "Act:" + actualQuest.isActive() + "Compl:" + actualQuest.isCompleted()
             questCompletion.setText(actualQuest.getRequirementType().toString());
 
 
@@ -219,7 +226,6 @@ public class QuestInfoActivity extends ActionBarActivity {
             public void onTick(long millisUntilFinished) {
                 long secondsLeft = getQuestTimeLeft(actualQuest);
                 setQuestTimeLeftTextView(secondsLeft);
-
             }
 
             @Override
@@ -241,11 +247,13 @@ public class QuestInfoActivity extends ActionBarActivity {
             Button questRemoveBtn = (Button) rootView.findViewById(R.id.removeButton);
             TextView timeLeftTextView = (TextView) rootView.findViewById(R.id.timeLeftTextView);
             TextView questStatusTextView = (TextView) rootView.findViewById(R.id.questStatusTextView);
+            ProgressBar timeLeftProgressBar = (ProgressBar) rootView.findViewById(R.id.timeLeftProgressBar);
             if (actualQuest.getRequirementType() == Quest.QuestRequirement.input_answer) {
                 questAnswer.setText(actualQuest.getRequirement());
                 questAnswer.setEnabled(false);
             }
             timeLeftTextView.setVisibility(View.GONE);
+            timeLeftProgressBar.setVisibility(View.GONE);
             questRemoveBtn.setVisibility(View.GONE);
             questCompletedImage.setVisibility(View.VISIBLE);
             questStatusTextView.setVisibility(View.VISIBLE);
@@ -265,6 +273,7 @@ public class QuestInfoActivity extends ActionBarActivity {
             Button questAcceptBtn = (Button) rootView.findViewById(R.id.acceptButton);
             EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
             TextView questStatusTextView = (TextView) rootView.findViewById(R.id.questStatusTextView);
+            ProgressBar timeLeftProgressBar = (ProgressBar) rootView.findViewById(R.id.timeLeftProgressBar);
 
             questAcceptBtn.setVisibility(View.GONE);
             questRemoveBtn.setVisibility(View.VISIBLE);
@@ -283,10 +292,13 @@ public class QuestInfoActivity extends ActionBarActivity {
 
             if (actualQuest.getDuration() > -1) {   // its timed quest
                 long timeLeftSeconds = getQuestTimeLeft(actualQuest);
+                timeLeftProgressBar.setMax((int)timeLeftSeconds);
                 questTimeLeftTimer = new QuestTimeLeftTimer(timeLeftSeconds * 1000, 1000);
                 questTimeLeftTimer.start();
             } else {
                 TextView timeLeftTextView = (TextView) rootView.findViewById(R.id.timeLeftTextView);
+
+                timeLeftProgressBar.setVisibility(View.GONE);
                 timeLeftTextView.setVisibility(View.GONE);
             }
         }
@@ -299,6 +311,7 @@ public class QuestInfoActivity extends ActionBarActivity {
             EditText questAnswer = (EditText) rootView.findViewById(R.id.answerEditText);
             TextView timeLeftTextView = (TextView) rootView.findViewById(R.id.timeLeftTextView);
             TextView questStatusTextView = (TextView) rootView.findViewById(R.id.questStatusTextView);
+            ProgressBar timeLeftProgressBar = (ProgressBar) rootView.findViewById(R.id.timeLeftProgressBar);
 
             questCompletedImage.setVisibility(View.GONE);
             questStatusTextView.setVisibility(View.GONE);
@@ -310,6 +323,7 @@ public class QuestInfoActivity extends ActionBarActivity {
                 setQuestTimeLeftTextView(actualQuest.getDuration());
             } else {
                 timeLeftTextView.setVisibility(View.GONE);
+                timeLeftProgressBar.setVisibility(View.GONE);
             }
         }
 
@@ -328,11 +342,14 @@ public class QuestInfoActivity extends ActionBarActivity {
         private void setQuestTimeLeftTextView(long secondsLeft) {
             if (rootView != null) {
                 TextView timeLeftTextView = (TextView) rootView.findViewById(R.id.timeLeftTextView);
+                ProgressBar timeLeftProgressBar = (ProgressBar) rootView.findViewById(R.id.timeLeftProgressBar);
                 if (actualQuest == null || timeLeftTextView == null) return;
-                if (actualQuest.getDuration() > -1) {
+                if (actualQuest.getDuration() > 0) {
                     timeLeftTextView.setText("Time Left: " + secondsLeft);
+                    timeLeftProgressBar.setProgress((int)secondsLeft);
                 } else {
                     timeLeftTextView.setVisibility(View.GONE);
+                    timeLeftProgressBar.setVisibility(View.GONE);
                 }
             }
         }

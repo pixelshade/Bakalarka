@@ -63,6 +63,16 @@
                 android:text="Time Left: 20s"
                 />
 
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/timeLeftProgressBar"
+                android:layout_gravity="center_horizontal"
+                android:max="10"
+                android:progress="0"
+                android:indeterminate="false" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,14 +97,14 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Accept"
+                    android:text="@string/AcceptBtn"
                     android:onClick="AcceptQuest"
                     android:id="@+id/acceptButton" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Complete"
+                    android:text="@string/CompleteBtn"
                     android:onClick="CompleteQuest"
                     android:id="@+id/completeButton" />
 
@@ -103,8 +113,9 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Remove"
+                    android:text="@string/Remove"
                     android:onClick="RemoveActiveQuest"
+                    android:layout_gravity="right"
                     android:id="@+id/removeButton" />
 
                 <!--android:drawableTop="@+drawable/ic_delete"-->
