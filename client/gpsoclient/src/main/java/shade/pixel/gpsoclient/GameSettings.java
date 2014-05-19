@@ -7,13 +7,15 @@ public class GameSettings {
     private int playerId;
     private String playerName;
     private String gameFilenameLogo;
+    private String gameName;
 
     public GameSettings() {
     }
 
-    public GameSettings(String playerName, String gameFilenameLogo, int playerId) {
+    public GameSettings(String playerName, String gameFilenameLogo, int playerId, String gameName) {
         this.playerName = playerName;
         this.gameFilenameLogo = gameFilenameLogo;
+        this.gameName = gameName;
         this.playerId = playerId;
     }
 
@@ -39,5 +41,13 @@ public class GameSettings {
 
     public void setGameFilenameLogo(String gameFilenameLogo) {
         this.gameFilenameLogo = gameFilenameLogo;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 }

@@ -22,6 +22,8 @@ public class Settings {
     private static boolean showActive = true;
     private static boolean showCompleted = true;
 
+    public static String gameName = "";
+
     private static boolean automaticStartupFilesUpdate = true;
 
     private static long defeaultIpdateMinTime = 1;

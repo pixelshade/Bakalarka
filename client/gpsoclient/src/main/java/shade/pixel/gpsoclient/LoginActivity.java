@@ -310,6 +310,7 @@ public class LoginActivity extends FragmentActivity {
                 GameSettings gameSettings = (GameSettings) response.getData();
                 Settings.setPlayerName(gameSettings.getPlayerName());
                 Settings.setPlayerId(gameSettings.getPlayerId());
+                Settings.gameName = gameSettings.getGameName();
                 startActivity(mIntent);
                 finish();
 

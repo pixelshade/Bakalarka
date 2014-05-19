@@ -115,6 +115,8 @@ class Api extends Admin_Controller
 				$response['success'] = 1;				
 				$response['msg'] = "Logged successfully";
 				$response['data'] = $this->session->all_userdata();
+				$response['data']['gameName'] = config_item('site_name');
+
 			} else {
 				// $this->session->set_flashdata('error', 'That email/password doest exist. too bad');
 				$response['success'] = 0;

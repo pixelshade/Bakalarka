@@ -154,6 +154,7 @@ public class Response implements Serializable{
                 gameSettings.setGameFilenameLogo(data.optString("gameFilenameLogo", ""));
                 gameSettings.setPlayerName(data.optString("name", ""));
                 gameSettings.setPlayerId(data.optInt("id", -1));
+                gameSettings.setGameName(data.optString("gameName", ""));
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -189,56 +190,6 @@ public class Response implements Serializable{
 treba<\/p>","image":""},"item":{"id":"1","name":"sword","info":"its sharp<\/p>","image":"sword_anduril.png"}},"msg":"You received reward.","success":1}}
              *
              */
-
-
-    /**
-     * private setters
-     */
-
-//    private String getDataStringFromResponse() {
-////        if (response != null)
-////            if (response.containsKey(ResponseJSONParser.KEY_DATA)) {
-////                return response.get(ResponseJSONParser.KEY_DATA);
-////            }
-////        return "";
-//    }
-//
-//    private String getMessageFromResponse() {
-////        if (response != null)
-////            if (response.containsKey(ResponseJSONParser.KEY_MESSAGE)) {
-////                return response.get(ResponseJSONParser.KEY_MESSAGE);
-////            }
-////        return "";
-//    }
-//
-//    private boolean isSuccessfulResponse() {
-////        if (response != null)
-////            if (response.containsKey(ResponseJSONParser.KEY_SUCCESS) && response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")) {
-////                return true;
-////            }
-////        return false;
-//    }
-
-//    private boolean isLoggetOutResponse() {
-//        if(isParsedSuccessfuly()) {
-//            if (response.containsKey(ResponseJSONParser.KEY_TYPE) && response.get(ResponseJSONParser.KEY_TYPE).equals(TYPE_IS_LOGGED)) {
-//                if (response.get(ResponseJSONParser.KEY_SUCCESS).equals("0")) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
-
-//    private String getTypeFromResponse() {
-//        if(isParsedSuccessfuly()) {
-//            if(response.containsKey(ResponseJSONParser.KEY_TYPE)){
-//                return response.get(ResponseJSONParser.KEY_TYPE);
-//            }
-//        }
-//        return "";
-//    }
-
 
     /**
      * Public getters

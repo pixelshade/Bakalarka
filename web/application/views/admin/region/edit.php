@@ -88,7 +88,7 @@ function showNewRect(event) {
   infoWindow.setContent(contentString);
   infoWindow.setPosition(ne);
 
-  infoWindow.open(map);
+  // infoWindow.open(map);
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 
