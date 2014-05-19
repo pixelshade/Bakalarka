@@ -137,5 +137,4 @@ class Quest_m extends MY_Model
 		}
 
 
-
 }

@@ -93,7 +93,11 @@ class Quest extends Admin_Controller
 
 	public function delete ($id)
 	{
-		$this->quest_m->delete($id);
+		$deleted = $this->quest_m->delete($id);
+		if($deleted){
+			$this->load->model('user_quest_m');
+			$this->user_quest_m->delete_all_with_quest_id($id);
+		}
 		redirect('admin/quest');
 	}
 

@@ -73,5 +73,16 @@ class User_quest_m extends MY_Model
 		return NULL;
 	}
 
+	public function delete_all_with_char_id($char_id){
+		$this->db->where('char_id', $char_id);		
+		$this->db->delete($this->_table_name);
+	}
+
+
+	public function delete_all_with_quest_id($quest_id){
+		$this->db->where('quest_id', $quest_id);		
+		$this->db->delete($this->_table_name);
+	}
+
 
 }

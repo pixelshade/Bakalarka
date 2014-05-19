@@ -47,7 +47,12 @@ class User extends Admin_Controller
 		$this->load->view('admin/_layout_main', $this->data);
 	}
 	public function delete($id){
-		$this->user_m->delete($id);
+		$deleted = $this->user_m->delete($id);
+		if($deleted){
+			$this->load->model('user_quest_m');
+			$this->user_quest_m->delete_all_with_char_id($id);
+		}
+
 		redirect('admin/user');
 	}
 
