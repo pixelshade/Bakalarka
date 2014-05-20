@@ -113,5 +113,16 @@ class User_item_m extends MY_Model
 		return TRUE;
 	}
 
+	public function delete_all_with_char_id($char_id){
+		$this->db->where('char_id', $char_id);		
+		$this->db->delete($this->_table_name);
+	}
+
+
+	public function delete_all_with_item_id($item_id){
+		$this->db->where('item_id', $item_id);		
+		$this->db->delete($this->_table_name);
+	}
+
 
 }

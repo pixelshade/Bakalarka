@@ -50,7 +50,11 @@ class User extends Admin_Controller
 		$deleted = $this->user_m->delete($id);
 		if($deleted){
 			$this->load->model('user_quest_m');
+			$this->load->model('user_item_m');
+			$this->load->model('user_attribute_m');
 			$this->user_quest_m->delete_all_with_char_id($id);
+			$this->user_item_m->delete_all_with_char_id($id);
+			$this->user_attribute_m->delete_all_with_char_id($id);
 		}
 
 		redirect('admin/user');

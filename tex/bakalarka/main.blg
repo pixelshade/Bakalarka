@@ -1,16 +1,14 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: main.aux
 A level-1 auxiliary file: frontmatter/cover.aux
 A level-1 auxiliary file: frontmatter/title.aux
-White space in argument---line 148 of file main.aux
- : \citation{geocaching
- :                      }
-I'm skipping whatever remains of this command
 The style file: plain.bst
 Database file #1: bibliography.bib
 Warning--entry type for "codeigniter-requirements" isn't style-file defined
 --line 12 of file bibliography.bib
 Warning--entry type for "larp-cojeto" isn't style-file defined
 --line 21 of file bibliography.bib
+Warning--entry type for "qr-error" isn't style-file defined
+--line 30 of file bibliography.bib
 Warning--to sort, need author or key in geocaching
 Warning--to sort, need author or key in bootstrap-about
 Warning--to sort, need author or key in qrgenerator-functions
@@ -19,4 +17,5 @@ Warning--to sort, need author or key in sfgame
 Warning--to sort, need author or key in larp-cojeto
 Warning--to sort, need author or key in qrgenerator-info
 Warning--to sort, need author or key in jsonVsXml
-(There was 1 error message)
+Warning--to sort, need author or key in qr-error
+(There were 12 warnings)

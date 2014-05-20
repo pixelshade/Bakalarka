@@ -36,6 +36,10 @@ Zbar qr code reader.
 \newblock \url{ http://zbar.sourceforge.net/ }.
 \newblock [Online; navštívené 8-Január-2014].
 
+\bibitem{qr-error}
+Error correction feature
+  \url{http://www.qrcode.com/en/about/error_correction.html}, December 2013.
+
 \bibitem{larp-cojeto}
 Čo je to larp? \url{http://www.larp.sk/?p=co-je-to-larp}, Apríl 2014.
 
@@ -81,18 +85,6 @@ The jQuery Foundation.
 \newblock The jquery plugin registry.
 \newblock \url{ http://plugins.jquery.com/ }.
 \newblock [Online; navštívené 8-Január-2014].
-
-\bibitem{knuth:tex}
-Donald~E. Knuth.
-\newblock {\em The {\TeX} Book}.
-\newblock Addison-Wesley, Reading, Massachusetts, 1984.
-\newblock Reprinted as Vol. A of {\it Computers \& Typesetting\/}, 1986.
-
-\bibitem{lamport:latex}
-Leslie Lamport.
-\newblock {\em {\LaTeX}: A Document Preparation System. User's Guide and
-  Reference Manual}.
-\newblock Addison-Wesley, Reading, Massachusetts, 1986.
 
 \bibitem{rpg-maker-game}
 Q-Success.

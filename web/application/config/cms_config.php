@@ -1,5 +1,5 @@
 <?php
-$config['site_name'] = 'Gotham City';
+$config['site_name'] = 'Príbehy Stredozeme';
 
 
 $config['client_download_url'] = 'https://play.google.com/store';

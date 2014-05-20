@@ -56,7 +56,11 @@ class Item_definition extends Admin_Controller
 
 	public function delete ($id)
 	{
-		$this->item_definition_m->delete($id);
+		$deleted = $this->item_definition_m->delete($id);		
+		if($deleted){
+			$this->load->model('user_item_m');
+			$this->user_item_m->delete_all_with_item_id($id);
+		}
 		redirect('admin/item_definition');
 	}
 

@@ -57,4 +57,15 @@ class User_attribute_m extends MY_Model
 		return FALSE;
 	}
 
+	public function delete_all_with_char_id($char_id){
+		$this->db->where('char_id', $char_id);		
+		$this->db->delete($this->_table_name);
+	}
+
+
+	public function delete_all_with_attribute_id($attribute_id){
+		$this->db->where('attribute_id', $attribute_id);		
+		$this->db->delete($this->_table_name);
+	}
+
 }

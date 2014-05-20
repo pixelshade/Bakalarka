@@ -56,7 +56,11 @@ class Attribute extends Admin_Controller
 
 	public function delete ($id)
 	{
-		$this->attribute_m->delete($id);
+		$deleted = $this->attribute_m->delete($id);
+		if($deleted){
+			$this->load->model('user_attribute_m');
+			$this->user_attribute_m->delete_all_with_attribute_id($id);
+		}
 		redirect('admin/attribute');
 	}
 }
