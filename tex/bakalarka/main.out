@@ -1,66 +1,66 @@
 \BOOKMARK [0][-]{chapter*.1}{Podakovanie}{}% 1
 \BOOKMARK [0][-]{chapter*.2}{Abstract}{}% 2
 \BOOKMARK [0][-]{chapter*.3}{Abstrakt}{}% 3
-\BOOKMARK [0][-]{chapter*.4}{Predhovor}{}% 4
-\BOOKMARK [0][-]{chapter.1}{\332vod}{}% 5
-\BOOKMARK [0][-]{chapter.2}{Anal\375za problematiky}{}% 6
-\BOOKMARK [1][-]{section.2.1}{Motiv\341cia}{chapter.2}% 7
-\BOOKMARK [1][-]{section.2.2}{Svet hier}{chapter.2}% 8
-\BOOKMARK [2][-]{subsection.2.2.1}{MMORPG}{section.2.2}% 9
-\BOOKMARK [2][-]{subsection.2.2.2}{\227ifrovacie hry}{section.2.2}% 10
-\BOOKMARK [2][-]{subsection.2.2.3}{Geocaching}{section.2.2}% 11
-\BOOKMARK [1][-]{section.2.3}{Technol\363gie}{chapter.2}% 12
-\BOOKMARK [2][-]{subsection.2.3.1}{MVC}{section.2.3}% 13
-\BOOKMARK [2][-]{subsection.2.3.2}{Bluetooth}{section.2.3}% 14
-\BOOKMARK [2][-]{subsection.2.3.3}{QR Kody}{section.2.3}% 15
-\BOOKMARK [2][-]{subsection.2.3.4}{NFC}{section.2.3}% 16
-\BOOKMARK [1][-]{section.2.4}{Frameworky, kni\236nice a API}{chapter.2}% 17
-\BOOKMARK [2][-]{subsection.2.4.1}{Codeigniter}{section.2.4}% 18
-\BOOKMARK [2][-]{subsection.2.4.2}{jQuery}{section.2.4}% 19
-\BOOKMARK [2][-]{subsection.2.4.3}{Bootstrap}{section.2.4}% 20
-\BOOKMARK [2][-]{subsection.2.4.4}{Google maps}{section.2.4}% 21
-\BOOKMARK [2][-]{subsection.2.4.5}{QR code generator}{section.2.4}% 22
-\BOOKMARK [2][-]{subsection.2.4.6}{ZBar}{section.2.4}% 23
-\BOOKMARK [2][-]{subsection.2.4.7}{Iconify}{section.2.4}% 24
-\BOOKMARK [1][-]{section.2.5}{Prehlad existuj\372cich aplik\341ci\355}{chapter.2}% 25
-\BOOKMARK [2][-]{subsection.2.5.1}{N\341stroje na tvorbu hier}{section.2.5}% 26
-\BOOKMARK [2][-]{subsection.2.5.2}{Hry}{section.2.5}% 27
-\BOOKMARK [0][-]{chapter.3}{N\341vrh rie\235enia}{}% 28
-\BOOKMARK [1][-]{section.3.1}{\227trukt\372ra aplik\341cie}{chapter.3}% 29
-\BOOKMARK [2][-]{subsection.3.1.1}{Klient}{section.3.1}% 30
-\BOOKMARK [2][-]{subsection.3.1.2}{Server}{section.3.1}% 31
-\BOOKMARK [1][-]{section.3.2}{Clenenie hry}{chapter.3}% 32
-\BOOKMARK [2][-]{subsection.3.2.1}{\332rovne pou\236\355vatelov}{section.3.2}% 33
-\BOOKMARK [2][-]{subsection.3.2.2}{Hern\375 svet}{section.3.2}% 34
-\BOOKMARK [1][-]{section.3.3}{Hern\375 pr\355klad}{chapter.3}% 35
-\BOOKMARK [1][-]{section.3.4}{Minim\341lne po\236iadavky}{chapter.3}% 36
-\BOOKMARK [2][-]{subsection.3.4.1}{Klient}{section.3.4}% 37
-\BOOKMARK [2][-]{subsection.3.4.2}{Server}{section.3.4}% 38
-\BOOKMARK [1][-]{section.3.5}{Sp\364soby rie\235enia probl\351mov}{chapter.3}% 39
-\BOOKMARK [2][-]{subsection.3.5.1}{Tvorba hern\351ho sveta}{section.3.5}% 40
-\BOOKMARK [2][-]{subsection.3.5.2}{Univerz\341lnost klienta}{section.3.5}% 41
-\BOOKMARK [2][-]{subsection.3.5.3}{Komunikacia klient-server}{section.3.5}% 42
-\BOOKMARK [2][-]{subsection.3.5.4}{Vytvorenie redakcn\351ho syst\351mu}{section.3.5}% 43
-\BOOKMARK [2][-]{subsection.3.5.5}{Spu\235tanie pomocou QR k\363dov}{section.3.5}% 44
-\BOOKMARK [2][-]{subsection.3.5.6}{Komunik\341cia medzi hr\341cmi}{section.3.5}% 45
-\BOOKMARK [0][-]{chapter.4}{Implement\341cia aplik\341cie}{}% 46
-\BOOKMARK [1][-]{section.4.1}{D\364le\236it\351 triedy a ich popis}{chapter.4}% 47
-\BOOKMARK [2][-]{subsection.4.1.1}{Klient}{section.4.1}% 48
-\BOOKMARK [2][-]{subsection.4.1.2}{Server}{section.4.1}% 49
-\BOOKMARK [1][-]{section.4.2}{QR k\363dy}{chapter.4}% 50
-\BOOKMARK [2][-]{subsection.4.2.1}{Generovanie}{section.4.2}% 51
-\BOOKMARK [2][-]{subsection.4.2.2}{C\355tanie}{section.4.2}% 52
-\BOOKMARK [1][-]{section.4.3}{Bluetooth}{chapter.4}% 53
-\BOOKMARK [1][-]{section.4.4}{Mapy}{chapter.4}% 54
-\BOOKMARK [1][-]{section.4.5}{Synchroniz\341cia s\372borov}{chapter.4}% 55
-\BOOKMARK [1][-]{section.4.6}{Zistovanie aktu\341lnej polohy}{chapter.4}% 56
-\BOOKMARK [1][-]{section.4.7}{Datab\341za}{chapter.4}% 57
-\BOOKMARK [1][-]{section.4.8}{Tvorba hern\351ho prostredia}{chapter.4}% 58
-\BOOKMARK [0][-]{chapter.5}{Z\341ver}{}% 59
-\BOOKMARK [1][-]{section.5.1}{Dal\235\355 mo\236n\375 v\375voj aplik\341cie}{chapter.5}% 60
-\BOOKMARK [2][-]{subsection.5.1.1}{Nov\351 mo\236nosti interakcie hracov}{section.5.1}% 61
-\BOOKMARK [2][-]{subsection.5.1.2}{Pridanie nepriatelov}{section.5.1}% 62
-\BOOKMARK [1][-]{section.5.2}{In\351 mo\236nosti vyu\236itia}{chapter.5}% 63
-\BOOKMARK [2][-]{subsection.5.2.1}{Tvorba \235ifrovac\355ch hier}{section.5.2}% 64
-\BOOKMARK [2][-]{subsection.5.2.2}{Tvorba turisticko-historick\351 prehliadky}{section.5.2}% 65
+\BOOKMARK [0][-]{chapter.1}{\332vod}{}% 4
+\BOOKMARK [0][-]{chapter.2}{Anal\375za problematiky}{}% 5
+\BOOKMARK [1][-]{section.2.1}{Motiv\341cia}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.2}{Svet hier}{chapter.2}% 7
+\BOOKMARK [2][-]{subsection.2.2.1}{MMORPG}{section.2.2}% 8
+\BOOKMARK [2][-]{subsection.2.2.2}{\227ifrovacie hry}{section.2.2}% 9
+\BOOKMARK [2][-]{subsection.2.2.3}{Geocaching}{section.2.2}% 10
+\BOOKMARK [1][-]{section.2.3}{Technol\363gie}{chapter.2}% 11
+\BOOKMARK [2][-]{subsection.2.3.1}{MVC}{section.2.3}% 12
+\BOOKMARK [2][-]{subsection.2.3.2}{Bluetooth}{section.2.3}% 13
+\BOOKMARK [2][-]{subsection.2.3.3}{QR Kody}{section.2.3}% 14
+\BOOKMARK [2][-]{subsection.2.3.4}{NFC}{section.2.3}% 15
+\BOOKMARK [1][-]{section.2.4}{Frameworky, kni\236nice a API}{chapter.2}% 16
+\BOOKMARK [2][-]{subsection.2.4.1}{Codeigniter}{section.2.4}% 17
+\BOOKMARK [2][-]{subsection.2.4.2}{jQuery}{section.2.4}% 18
+\BOOKMARK [2][-]{subsection.2.4.3}{Bootstrap}{section.2.4}% 19
+\BOOKMARK [2][-]{subsection.2.4.4}{Google maps}{section.2.4}% 20
+\BOOKMARK [2][-]{subsection.2.4.5}{QR code generator}{section.2.4}% 21
+\BOOKMARK [2][-]{subsection.2.4.6}{ZBar}{section.2.4}% 22
+\BOOKMARK [2][-]{subsection.2.4.7}{Iconify}{section.2.4}% 23
+\BOOKMARK [1][-]{section.2.5}{Prehlad existuj\372cich aplik\341ci\355}{chapter.2}% 24
+\BOOKMARK [2][-]{subsection.2.5.1}{N\341stroje na tvorbu hier}{section.2.5}% 25
+\BOOKMARK [2][-]{subsection.2.5.2}{Hry}{section.2.5}% 26
+\BOOKMARK [0][-]{chapter.3}{N\341vrh rie\235enia}{}% 27
+\BOOKMARK [1][-]{section.3.1}{\227trukt\372ra aplik\341cie}{chapter.3}% 28
+\BOOKMARK [2][-]{subsection.3.1.1}{Klient}{section.3.1}% 29
+\BOOKMARK [2][-]{subsection.3.1.2}{Server}{section.3.1}% 30
+\BOOKMARK [1][-]{section.3.2}{Clenenie hry}{chapter.3}% 31
+\BOOKMARK [2][-]{subsection.3.2.1}{\332rovne pou\236\355vatelov}{section.3.2}% 32
+\BOOKMARK [2][-]{subsection.3.2.2}{Hern\375 svet}{section.3.2}% 33
+\BOOKMARK [1][-]{section.3.3}{Hern\375 pr\355klad}{chapter.3}% 34
+\BOOKMARK [1][-]{section.3.4}{Minim\341lne po\236iadavky}{chapter.3}% 35
+\BOOKMARK [2][-]{subsection.3.4.1}{Klient}{section.3.4}% 36
+\BOOKMARK [2][-]{subsection.3.4.2}{Server}{section.3.4}% 37
+\BOOKMARK [1][-]{section.3.5}{Sp\364soby rie\235enia probl\351mov}{chapter.3}% 38
+\BOOKMARK [2][-]{subsection.3.5.1}{Tvorba hern\351ho sveta}{section.3.5}% 39
+\BOOKMARK [2][-]{subsection.3.5.2}{Univerz\341lnost klienta}{section.3.5}% 40
+\BOOKMARK [2][-]{subsection.3.5.3}{Komunik\341cia klient-server}{section.3.5}% 41
+\BOOKMARK [2][-]{subsection.3.5.4}{Vytvorenie redakcn\351ho syst\351mu}{section.3.5}% 42
+\BOOKMARK [2][-]{subsection.3.5.5}{Sp\372\235tanie pomocou QR k\363dov}{section.3.5}% 43
+\BOOKMARK [2][-]{subsection.3.5.6}{Komunik\341cia medzi hr\341cmi}{section.3.5}% 44
+\BOOKMARK [0][-]{chapter.4}{Implement\341cia aplik\341cie}{}% 45
+\BOOKMARK [1][-]{section.4.1}{D\364le\236it\351 triedy a ich popis}{chapter.4}% 46
+\BOOKMARK [2][-]{subsection.4.1.1}{Klient}{section.4.1}% 47
+\BOOKMARK [2][-]{subsection.4.1.2}{Server}{section.4.1}% 48
+\BOOKMARK [1][-]{section.4.2}{QR k\363dy}{chapter.4}% 49
+\BOOKMARK [2][-]{subsection.4.2.1}{Generovanie}{section.4.2}% 50
+\BOOKMARK [2][-]{subsection.4.2.2}{C\355tanie}{section.4.2}% 51
+\BOOKMARK [1][-]{section.4.3}{Bluetooth}{chapter.4}% 52
+\BOOKMARK [1][-]{section.4.4}{Mapy}{chapter.4}% 53
+\BOOKMARK [1][-]{section.4.5}{Synchroniz\341cia s\372borov}{chapter.4}% 54
+\BOOKMARK [1][-]{section.4.6}{Zistovanie aktu\341lnej polohy}{chapter.4}% 55
+\BOOKMARK [1][-]{section.4.7}{Datab\341za}{chapter.4}% 56
+\BOOKMARK [1][-]{section.4.8}{Tvorba hern\351ho prostredia}{chapter.4}% 57
+\BOOKMARK [0][-]{chapter.5}{Z\341ver}{}% 58
+\BOOKMARK [1][-]{section.5.1}{Dal\235\355 mo\236n\375 v\375voj aplik\341cie}{chapter.5}% 59
+\BOOKMARK [2][-]{subsection.5.1.1}{Pridanie bojov\351ho syst\351mu}{section.5.1}% 60
+\BOOKMARK [2][-]{subsection.5.1.2}{Hr\341cmi vytv\341ran\375 a hodnoten\375 obsah}{section.5.1}% 61
+\BOOKMARK [1][-]{section.5.2}{In\351 mo\236nosti vyu\236itia}{chapter.5}% 62
+\BOOKMARK [2][-]{subsection.5.2.1}{Tvorba \235ifrovac\355ch }{section.5.2}% 63
+\BOOKMARK [2][-]{subsection.5.2.2}{Pridelovanie \372loh vzhladom na polohu}{section.5.2}% 64
+\BOOKMARK [2][-]{subsection.5.2.3}{Tvorba turisticko-historickej prehliadky}{section.5.2}% 65
 \BOOKMARK [1][-]{section.5.3}{Zhrnutie}{chapter.5}% 66

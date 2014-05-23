@@ -18,7 +18,7 @@ import java.util.UUID;
  */
 public class BTCommunicator {
     private final UUID myUUID =
-             UUID.fromString("00001101-0000-1000-8000-00805F9B35FB");
+            UUID.fromString("00001101-0000-1000-8000-00805F9B35FB");
 //            UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
 
     private final BluetoothAdapter btAdapter;
@@ -34,11 +34,11 @@ public class BTCommunicator {
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         model = android.os.Build.MODEL.split(" ")[0];
         state = "NONE";
-        Log.i("myChat", model + ":" + state);
+        Log.i("BTCommunicator", model + ":" + state);
     }
 
     public void start() {
-        Log.i("myChat", model + ":" + "start " + state);
+        Log.i("BTCommunicator", model + ":" + "start " + state);
         if (connectThread != null) {
             connectThread.cancel();
             connectThread = null;
@@ -48,7 +48,7 @@ public class BTCommunicator {
             connectedThread = null;
         }
         state = "LISTEN";
-        Log.i("myChat", model + ":" + state);
+        Log.i("BTCommunicator", model + ":" + state);
 
         if (acceptThread == null) {
             acceptThread = new AcceptThread();
@@ -57,7 +57,7 @@ public class BTCommunicator {
     }
 
     public void connect(BluetoothDevice device) {
-        Log.i("myChat", model + ":" + "connect " + state);
+        Log.i("BTCommunicator", model + ":" + "connect " + state);
         if (state.equals("CONNECTING")) {
             if (connectThread != null) {
                 connectThread.cancel();
@@ -71,11 +71,11 @@ public class BTCommunicator {
         connectThread = new ConnectThread(device);
         connectThread.start();
         state = "CONNECTING";
-        Log.i("myChat", model + ":" + state);
+        Log.i("BTCommunicator", model + ":" + state);
     }
 
     public void connected(BluetoothSocket socket/*, BluetoothDevice device*/) {
-        Log.i("myChat", model + ":" + "connected " + state);
+        Log.i("BTCommunicator", model + ":" + "connected " + state);
         if (connectThread != null) {
             connectThread.cancel();
             connectThread = null;
@@ -89,14 +89,14 @@ public class BTCommunicator {
             acceptThread = null;
         }
         state = "CONNECTED";
-        Log.i("myChat", model + ":" + state);
+        Log.i("BTCommunicator", model + ":" + state);
 
         connectedThread = new ConnectedThread(socket);
         connectedThread.start();
     }
 
     public void stop() {
-        Log.i("myChat", model + ":" + "stop " + state);
+        Log.i("BTCommunicator", model + ":" + "stop " + state);
         if (connectThread != null) {
             connectThread.cancel();
             connectThread = null;
@@ -110,17 +110,17 @@ public class BTCommunicator {
             acceptThread = null;
         }
         state = "NONE";
-        Log.i("myChat", model + ":" + state);
+        Log.i("BTCommunicator", model + ":" + state);
 
     }
 
 
     public void write(byte[] out) {
-        Log.i("myChat", model + ":" + "write " + state);
+        Log.i("BTCommunicator", model + ":" + "write " + state);
         if (!state.equals("CONNECTED"))
             return;
         ConnectedThread r = connectedThread;
-        Log.i("myChat", model + ":" + "write.. " + state);
+        Log.i("BTCommunicator", model + ":" + "write.. " + state);
         r.write(out);
     }
 
@@ -129,38 +129,38 @@ public class BTCommunicator {
         private final BluetoothServerSocket serverSocket;
 
         public AcceptThread() {
-            Log.i("myChat", model + ":" + "acceptThread " + state);
+            Log.i("BTCommunicator", model + ":" + "acceptThread " + state);
             BluetoothServerSocket tmp = null;
             try {
                 tmp = btAdapter.listenUsingRfcommWithServiceRecord(
-                        "BluetoothChatSecure", myUUID);
+                        "BluetoothComSecure", myUUID);
             } catch (IOException e) {
-                Log.e("myChat", model + ":" + "::" + e.getMessage());
+                Log.e("BTCommunicator", model + ":" + "::" + e.getMessage());
             }
             serverSocket = tmp;
         }
 
         public void run() {
             setName("AcceptThread");
-            Log.i("myChat", model + ":" + "acceptThreadRun " + state);
+            Log.i("BTCommunicator", model + ":" + "acceptThreadRun " + state);
             BluetoothSocket socket = null;
-            Log.i("myChat", model + ":" + state);
+            Log.i("BTCommunicator", model + ":" + state);
             while (!state.equals("CONNECTED")) {
                 try {
                     socket = serverSocket.accept();
                 } catch (IOException e) {
-                    Log.e("myChat", model + ":" + ":" + e.getMessage());
+                    Log.e("BTCommunicator", model + ":" + ":" + e.getMessage());
                     break;
                 }
                 if (socket != null) {
-                    Log.i("myChat", model + ":" + state);
+                    Log.i("BTCommunicator", model + ":" + state);
                     if (state.equals("LISTEN") || state.equals("CONNECTING"))
                         connected(socket /*, socket.getRemoteDevice()*/);
                     else
                         try {
                             socket.close();
                         } catch (IOException e) {
-                            Log.e("myChat", model + ":" + ":" + e.getMessage());
+                            Log.e("BTCommunicator", model + ":" + ":" + e.getMessage());
                         }
                     break;
                 }
@@ -168,11 +168,11 @@ public class BTCommunicator {
         }
 
         public void cancel() {
-            Log.i("myChat", model + ":" + "cancel " + state);
+            Log.i("BTCommunicator", model + ":" + "cancel " + state);
             try {
                 serverSocket.close();
             } catch (IOException e) {
-                Log.e("myChat", model + ":" + ":" + e.getMessage());
+                Log.e("BTCommunicator", model + ":" + ":" + e.getMessage());
             }
         }
     }
@@ -183,20 +183,20 @@ public class BTCommunicator {
         //private final BluetoothDevice device;
 
         public ConnectThread(BluetoothDevice device) {
-            Log.i("myChat", model + ":" + "connectThread " + state);
+            Log.i("BTCommunicator", model + ":" + "connectThread " + state);
             //this.device = device;
             BluetoothSocket tmp = null;
             try {
                 tmp = device.createRfcommSocketToServiceRecord(myUUID);
             } catch (IOException e) {
-                Log.e("myChat", model + ":" + ":" + e.getMessage());
+                Log.e("BTCommunicator", model + ":" + ":" + e.getMessage());
             }
             clientSocket = tmp;
         }
 
         public void run() {
             setName("ConnectThread");
-            Log.i("myChat", model + ":" + "connectThreadRun " + state);
+            Log.i("BTCommunicator", model + ":" + "connectThreadRun " + state);
             btAdapter.cancelDiscovery();
             try {
                 clientSocket.connect();
@@ -204,7 +204,7 @@ public class BTCommunicator {
                 try {
                     clientSocket.close();
                 } catch (IOException e2) {
-                    Log.e("myChat", model + ":" + ":" + e.getMessage());
+                    Log.e("BTCommunicator", model + ":" + ":" + e.getMessage());
                 }
                 start();
             }
@@ -216,7 +216,7 @@ public class BTCommunicator {
             try {
                 clientSocket.close();
             } catch (IOException e) {
-                Log.e("myChat", model + ":" + ":" + e.getMessage());
+                Log.e("BTCommunicator", model + ":" + ":" + e.getMessage());
             }
         }
     }
@@ -228,7 +228,7 @@ public class BTCommunicator {
         private final OutputStream outputStream;
 
         public ConnectedThread(BluetoothSocket socket) {
-            Log.i("myChat", model + ":" + "connectedThread " + state);
+            Log.i("BTCommunicator", model + ":" + "connectedThread " + state);
             this.socket = socket;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
@@ -236,29 +236,29 @@ public class BTCommunicator {
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();
             } catch (IOException e) {
-                Log.e("myChat", model + ":" + ":" + e.getMessage());
+                Log.e("BTCommunicator", model + ":" + ":" + e.getMessage());
             }
             inputStream = tmpIn;
             outputStream = tmpOut;
         }
 
         public void run() {
-            Log.i("myChat", model + ":" + "connectedThreadRun " + state);
+            Log.i("BTCommunicator", model + ":" + "connectedThreadRun " + state);
             byte[] buffer = new byte[1024];
             int bytes;
             while (true) {
                 try {
-                    Log.i("myChat", model + ":" + "connectedThreadReading "
+                    Log.i("BTCommunicator", model + ":" + "connectedThreadReading "
                             + state);
                     bytes = inputStream.read(buffer);
-                    Log.i("myChat", model + ":" + "connectedThreadRead "
+                    Log.i("BTCommunicator", model + ":" + "connectedThreadRead "
                             + state);
                     handler.obtainMessage(BluetoothActivity.READ, bytes, -1, buffer)
                             .sendToTarget();
-                    Log.i("myChat", model + ":" + "connectedThreadSendtoUI "
+                    Log.i("BTCommunicator", model + ":" + "connectedThreadSendtoUI "
                             + state);
                 } catch (IOException e) {
-                    Log.i("myChat",
+                    Log.i("BTCommunicator",
                             model + ":" + "connectedThreadIO " + e.getMessage());
                     BTCommunicator.this.start();
                     break;
@@ -272,7 +272,7 @@ public class BTCommunicator {
                 handler.obtainMessage(BluetoothActivity.WRITE, -1, -1, buffer)
                         .sendToTarget();
             } catch (IOException e) {
-                Log.e("myChat", model + ":" + ":" + e.getMessage());
+                Log.e("BTCommunicator", model + ":" + ":" + e.getMessage());
             }
         }
 
@@ -280,7 +280,7 @@ public class BTCommunicator {
             try {
                 socket.close();
             } catch (IOException e) {
-                Log.e("myChat", model + ":" + ":" + e.getMessage());
+                Log.e("BTCommunicator", model + ":" + ":" + e.getMessage());
             }
         }
     }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,10 @@ public class MainFragment extends Fragment {
 //        }
 
         Button settingsButton = (Button) rootView.findViewById(R.id.settingsButton);
+        Button updatePositionBtn = (Button) rootView.findViewById(R.id.updatePositionBtn);
+        Button scanQRBtn = (Button) rootView.findViewById(R.id.scanQrBtn);
+        Button receiveBTbtn = (Button) rootView.findViewById(R.id.receiveBTbtn);
+
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,8 +46,9 @@ public class MainFragment extends Fragment {
             }
         });
         Iconify.addIcons(settingsButton);
-
-
+        Iconify.addIcons(updatePositionBtn);
+        Iconify.addIcons(scanQRBtn);
+        Iconify.addIcons(receiveBTbtn);
 
         Button logoutBtn = (Button) rootView.findViewById(R.id.logoutBtn);
         Iconify.addIcons(logoutBtn);

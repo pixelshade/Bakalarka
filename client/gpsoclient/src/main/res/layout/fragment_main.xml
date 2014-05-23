@@ -9,37 +9,10 @@
     tools:context="shade.pixel.gpsoclient.MainActivity$PlaceholderFragment">
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/UpdatePosition"
-        android:id="@+id/updatePositionBtn"
-        android:onClick="UpdatePosition"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/settingsButton"
-        android:layout_alignEnd="@+id/settingsButton"
-        android:layout_above="@+id/settingsButton" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Logout"
-        android:id="@+id/logoutBtn"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="LogoutAndStartLoginActivity"/>
-
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="300dp"
         android:id="@+id/scrollView"
-        android:layout_above="@+id/logoutBtn"
-        android:layout_alignRight="@+id/updatePositionBtn"
-        android:layout_alignEnd="@+id/updatePositionBtn"
-        android:layout_below="@+id/button3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
@@ -49,42 +22,79 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/section_content"
+            android:visibility="gone"
             android:autoText="false"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
     </ScrollView>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_settings"
-        android:id="@+id/settingsButton"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/logoutBtn"
-        android:layout_alignEnd="@+id/logoutBtn" />
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bluetooth"
-        android:id="@+id/button4"
-        android:onClick="StartBluetoothActivity"
-        android:layout_weight="0.5"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_span="2"
+            android:layout_weight="0.3">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scan QR code"
-        android:id="@+id/button3"
-        android:onClick="ScanQRCode"
-        android:layout_weight="10"
-        android:layout_alignTop="@+id/settingsButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/UpdatePosition"
+                android:id="@+id/updatePositionBtn"
+                android:onClick="UpdatePosition"
+                android:layout_span="2"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/btn_scan_qrcode"
+                android:id="@+id/scanQrBtn"
+                android:onClick="ScanQRCode"
+                android:layout_weight="0.50" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/btn_receive_via_bt"
+                android:id="@+id/receiveBTbtn"
+                android:layout_weight="0.50"
+                android:onClick="StartBluetoothActivity"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.3"            >
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/btn_settings"
+                android:id="@+id/settingsButton"
+                android:layout_weight="0.50" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/Logout"
+                android:id="@+id/logoutBtn"
+                android:onClick="LogoutAndStartLoginActivity"
+                android:singleLine="false"
+                android:layout_weight="0.50"/>
+
+
+        </TableRow>
+
+    </TableLayout>
 
 
 </RelativeLayout>

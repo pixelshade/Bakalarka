@@ -10,7 +10,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="./"><?php echo $site_name . " - " . $this->uri->segment(2); ?></a>
+			<a class="navbar-brand" href="./admin/dashboard"><?php  echo $site_name; // . " - " . $this->uri->segment(2); ?></a>
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
@@ -43,7 +43,7 @@
 							<li><a href="/admin/region">Regions</a></li>
 							<li><a href="/admin/quest">Quests</a></li>
 							<li><a href="/admin/item_definition">Item definitions</a></li>
-							<li><a href="/admin/item_instance">Item instance</a></li>
+							<!-- <li><a href="/admin/item_instance">Item instance</a></li> -->
 							<li><a href="/admin/attribute">Attributes</a></li>
 							<li><a href="/admin/reward">Rewards</a></li>
 							<li><a href="/admin/cron_task">Timed regions movement, </a></li>

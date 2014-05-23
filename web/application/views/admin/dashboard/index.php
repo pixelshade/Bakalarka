@@ -1,78 +1,118 @@
-<h1>Nazdar</h1>
+<h1>Welcome!</h1>
 
-<!-- 
+
 <div class="row">
-<style type="text/css" media="screen">
-	.panel-body .glyphicon{
-		font-size: 72px;
-		text-align: center;
-	}	
-	.menu .glyphicon{
-		font-size: 72px;
-		text-align: center;
-		display: block;
-		text-decoration: none;
-	}	
-	.menu{
+</div>
+	<style type="text/css" media="screen">
+
+		.menu:hover{
+			text-decoration: none;
+			background-color: #000: 
+		}
+
+		.menu .glyphicon{
+			font-size: 72px;
+			/*margin: 0 auto;*/
+			text-align: center;			
+		}	
+		.menu{
+			float: left;			
+			height: 115px;
+			padding: 10px;
+			font-size: 18px;
+			line-height: 1.4;
+			text-align: center;
+			border: 1px solid #fff;
+			background-color: #f9f9f9;
+			text-decoration: none;
+		}
+	
+		.menu .caption{
+			display: block;
+			text-align: center;
+			word-wrap: break-word;
+			text-decoration: none;
+		}
+
+
+	</style>
 		
-	}
-</style>
+	<div class="row">
+	<a href="./page" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-book"></span>
+		<div class="caption">Pages</div>
+	</a>
 
-<a class="menu" href="#">
-	
-<span  class="glyphicon glyphicon-user"></span>Usres</a>
+	<a href="./article" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-pencil"></span>
+		<div class="caption">Articles</div>
+	</a>
 
-<a class="menu" href="#">
-	
-<span  class="glyphicon glyphicon-user"></span>Usres</a>
+	<a href="./" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-cog"></span>
+		<div class="caption">Game settings</div>
+	</a>
+	</div>
+<div class="row">
+<div class="page-header">
+  		<h2>Game creation <small>upload game images, create and manage regions, quests,..</small></h2>
+	</div>
+	<a href="./region" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-globe"></span>
+		<div class="caption">Regions</div>
+	</a>
 
+	<a href="./quest" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-list-alt"></span>
+		<div class="caption">Quests</div>
+	</a>
 
+	<a href="./reward" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-gift"></span>
+		<div class="caption">Rewards</div>
+	</a>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-   <span class="glyphicon glyphicon-user"></span>
-  </div>
-  <div class="panel-footer">Panel footer</div>
-</div>
+	<a href="./item_definition" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-wrench"></span>
+		<div class="caption">Items</div>
+	</a>
 
+	<a href="./attribute" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-certificate"></span>
+		<div class="caption">Attributes</div>
+	</a>
+	<a href="./content_file" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-picture"></span>
+		<div class="caption">Game pictures</div>
+	</a>
+	</div>
+	<div class="row">
 
-<div class="panel panel-default">
-  <div class="panel-body">
-   <span class="glyphicon glyphicon-user"></span>
-  </div>
-  <div class="panel-footer">Panel footer</div>
-</div>
+	<div class="page-header">
+  		<h2>User managment <small>inventories, users quests and attributes </small></h2>
+	</div>
+	<a href="./user" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-user"></span>
+		<div class="caption">Users</div>
+	</a>
 
+	<a href="./user_quest" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-tasks"></span>
+		<div class="caption">User quests</div>
+	</a>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-   <span class="glyphicon glyphicon-user"></span>
-  </div>
-  <div class="panel-footer">Panel footer</div>
-</div>
+	<a href="./user_item" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-briefcase"></span>
+		<div class="caption">Inventories</div>
+	</a>
 
+	<a href="./user_attribute" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-stats"></span>
+		<div class="caption">User attributes</div>
+	</a>	
+	<a href="./user_qrscanned" class="menu col-md-2">
+		<span  class="glyphicon glyphicon-qrcode"></span>
+		<div class="caption">Scanned QR codes</div>
+	</a>
+	</div>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-   <span class="glyphicon glyphicon-user"></span>
-  </div>
-  <div class="panel-footer">Panel footer</div>
-</div> -->
-
-
-<!-- <a href="#"><div class="well">
-	
-<span  class="glyphicon glyphicon-user"></span>Usres</div></a>
-
-<a href="#"><div class="well">
-	
-<span  class="glyphicon glyphicon-user"></span>Usres</div></a>
-
-<a href="#"><div class="well">
-	
-<span  class="glyphicon glyphicon-user"></span>Usres</div></a>
-
-<a href="#"><div class="well">
-	
-<span  class="glyphicon glyphicon-user"></span>Usres</div></a> 
-</div>-->

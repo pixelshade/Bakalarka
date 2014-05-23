@@ -10,8 +10,8 @@
     <string name="title_map">Map</string>
     <string name="action_settings">Settings</string>
     <string name="UpdateFiles">Update Files Now</string>
-    <string name="UpdatePosition">{fa-globe}UpdatePosition</string>
-    <string name="Logout">{fa-sign-out}Logout</string>
+    <string name="UpdatePosition">{fa-globe}\n Update Position</string>
+    <string name="Logout">{fa-sign-out}\n Logout</string>
     <string name="title_activity_quest_info_actitivity">QuestInfoActitivity</string>
     <string name="title_activity_region_info_actitivity">RegionInfoActitivity</string>
     <string name="title_activity_item_info">ItemInfoActivity</string>
@@ -23,9 +23,11 @@
     <string name="title_activity_bluetooth">BluetoothActivity</string>
     <string name="title_device_list">DeviceListActivity</string>
     <string name="hello_world">Hello world</string>
-    <string name="btn_settings">{fa-cog}Settings</string>
+    <string name="btn_settings">{fa-cog}\n Settings</string>
     <string name="Remove">{fa-trash-o}Remove</string>
     <string name="AcceptBtn">{fa-check}Accept</string>
     <string name="CompleteBtn">{fa-check-square-o}Complete</string>
+    <string name="btn_scan_qrcode">{fa-qrcode}\n Scan QR code</string>
+    <string name="btn_receive_via_bt">{fa-gift}\n Receive item via BT</string>
 
 </resources>

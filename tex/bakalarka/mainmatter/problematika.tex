@@ -6,18 +6,22 @@ Mobilne zariadenia sa stavaju coraz vacsou sucastou nasich zivotou. Často sú v
 Mnozstvo skvelych napadov vsak zostava neuskutocnenych kvoli nedostatku času, financnych prostriedkov či znalosti programovania. Preto som sa rozhodol vytvorit framework pre tvorbu GPS online hier. Vdaka, ktoremu by si kazdy clovek mohol spravit vlastny svet neuveritelne jednoduchšie a rýchlejšie ako pri vývoji novej hry. Kde praca na vytvorenie hry sa prenecha nastroju, ktory potrebuje iba nápad.
 
 \section{Svet hier}
+V tejto sekcii si rozoberieme rozne typy hier, ktormi sa práca
+
 \subsection{MMORPG}
-Massive multiplayer online role playing game - je typ hry, ktora je zalozena na veľkom pocte hracov hrajucich spolu v hernom svete s prvkami role playing game. Hrac teda hrá za postavu. Prechádza herným svetom. Má určité atribúty, zbrane, schopnosti či rozne iné objekty. Postava pomocou nich získava v tomto svete skúsenosti, peniaze či objekty plnením rôznych úloh či porážaním nepriatelov v boji. 
-Medzi najznámejšie, ktoré si môžeme spomenúť patria World of Warcraft, EVE online, Guild Wars. Dennodenne ich hrajú milióny hráčov, ktorý spolupracujú a súperia navzájom.
+Massive multiplayer online role playing game - je typ hry, ktora je založená na veľkom počte hráčov hrajúcich spolu v hernom svete. Každý hráč hrá za postavu a prechádza herným svetom. Má určité atribúty, zbrane, schopnosti či rôzne iné objekty. Postava pomocou nich získava v tomto svete skúsenosti, peniaze či objekty plnením rôznych úloh, či porážaním nepriateľov v boji. 
+Medzi najznámejšie, ktoré si môžeme spomenúť patria World of Warcraft, EVE online, Guild Wars. Dennodenne ich hrajú milióny hráčov, ktorí spolupracujú a súperia navzájom.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=10cm]{mainmatter/imgs/wow.jpg}
+  \includegraphics[height=6cm]{mainmatter/imgs/wow.jpg}
   \caption{Počítačová hra World of Warcraft}
   \label{fig:comenius}
 \end{figure}
 
+
 \subsection{Šifrovacie hry}
+Sú súťaže, pri ktorých hráči majú za úlohu lúštiť šifry. Na stanoviskách dostanú hráči zadanie šifry, z ktorej po úspešnom vylúštení sa dozvedia väčšinou informáciu o ďaľšom stanovišti poprípade o indícii k vyriešeniu ďaľšej šifry. 
 
 \subsection{Geocaching}\cite{geocaching} je hra s prvkami turistiky, ktorej cieľom je nájdenie skrytého objektu (kešky). Jedinú informáciu, ktorú hráč má je len poloha tohto schovaného predmetu. Často je potrebné riešiť úlohy, ktorých vyriešením hráč získa súradnice cieľa, ktorý potom môže nájsť presne pomocou GPS navigačeho zariadenia.
 
@@ -27,7 +31,7 @@ Medzi najznámejšie, ktoré si môžeme spomenúť patria World of Warcraft, EV
 \subsection{MVC} alebo model, view, controller architektura založená na rozdelení aplikácie do týchto troch zložiek. Model je tvorený dátami, ktoré reprezentuje v aplikácii a obsahuje tiež hlavnú logiku pre prácu s nimi. View sa stará o vizuálnu stránku, ktorá je ako výsledok prezentovaná používatelovi. Controller spracováva jednotlivé dopyty od používatela a stará sa o interakciu s modelom a view.
 \begin{figure}[h]
   \centering
-  \includegraphics[height=10cm]{mainmatter/imgs/mvc.png}
+  \includegraphics[height=6cm]{mainmatter/imgs/mvc.png}
   \caption{MVC architektúra}
   \label{fig:comenius}
 \end{figure}
@@ -44,6 +48,7 @@ Medzi najznámejšie, ktoré si môžeme spomenúť patria World of Warcraft, EV
 \subsection{NFC} Možno ani netušite, že ste sa už s NFC stretli. Napríklad ak ste platili pri nákupoch pomocou karty bezdotykovo. NFC (Near field communcation) je pomerne mladá technológia, pomocou ktorej môžu zariadenia medzi sebou komunikovať na krátku vzdialenosť (maximálne 20 centimetrov) bezdotykovo. Je potomkom RFID - Rádiofrekvenčných identifikačných kariet a ich čítačiek, ktoré sa spojili v NFC. Takže dokáže komunikovať s obomi i ostatnými zariadeniami, ktoré NFC majú.
 
 \section{Frameworky, knižnice a API}
+V tejto práci bolo podstatné využiť knižnice, ktoré urýchlia jej vývoj a nepožadujú od používateľa poplatky.
 
 \subsection{Codeigniter} open sourceovy(OSL) PHP framework. Zakladá si na MVC architektúre avšak necháva volnosť programátorovi. Taktiež ako ďaľšiu z klúčových vlastností pre jeho výber bola jeho rýchlosť\cite{codeigniter-guide}. Bol založený v roku 2006 a je vyvíjaný americkou firmou EllisLab. Jej ďaľším dôležitým prvkom sú tiež knižnice a nástroje, ktoré ulahčujú vývoj aplikacie. Jeho funkcionalitu je možné rozširovať pomocou helperov a rožširovaní tried.
 
@@ -57,42 +62,111 @@ Medzi najznámejšie, ktoré si môžeme spomenúť patria World of Warcraft, EV
 
 % \subsection{Google directions} Ďalšia zo služieb, ktorú Google ponúka. Táto sa stará o navigáciu z bodu A do bodu B a poskytuje potrebné informácie pre potrebné pokyny.
 
-\subsection{QR code generator} je na strane serveru jasnou volbou pre jeho množstvo funkcii a parametrov\cite{qrgenerator-functions}, ktoré poskytuje pri tvorbe QR kodov. QR kody budú môcť byť generované užívateľmi a pridané do hry a tak prispievať a vyvíjat obsah do hry.
+\subsection{QR code generator} je na strane serveru jasnou volbou pre jeho množstvo funkcii a parametrov \cite{qrgenerator-functions}, ktoré poskytuje pri tvorbe QR kodov. QR kody budú môcť byť generované užívateľmi a pridané do hry a tak prispievať a vyvíjat obsah do hry.
 
 
 
-\subsection{ZBar} je GPL knižnica pre Androidy pomocou, ktorej môžeme skenovať a rozoznávať QR kódy. Vybraná je táto napriek obľúbenej knižnici zxing, ktorá pre svoje použitie sa musí stiahnuť ich aplikácia ktorej sa posiela požiadavok, čo by nebolo veľmi príjemné. ZBar sa teda bude zakomponovaný do našej klientskej android aplikácie\cite{qrreader}.
+\subsection{ZBar} GPL knižnica pre Android, pomocou ktorej môžeme skenovať a rozoznávať QR kódy. Vybraná je táto napriek obľúbenej knižnici zxing, ktorá pre svoje použitie sa musí stiahnuť ich aplikácia ktorej sa posiela požiadavok, čo by nebolo veľmi príjemné. ZBar sa teda bude zakomponovaný do našej klientskej android aplikácie \cite{qrreader}.
 
 \subsection{Iconify}
+Je knižnica, ktorá slúži na jednoduché používanie fontu Font Awesome v android aplikácii. Pomocou tejto knižnice môžeme spraviť omnoho intuitívnejšie ovládanie aplikácie pre používateľa, vďaka obrázkom priradením k textu na akčných tlačidlách.
 
 
 \section{Prehľad existujúcich aplikácií}
+V tejto sekcií sa pozrieme na existujúce aplikácie, ktoré sa zaoberajú podobnou problematikou ako táto práca. Keďže aplikácia/framework, ktorý by riešil tvorbu GPS online hier pre android neexistuje, rozoberieme ich silné a slabé stránky vzhľadom na ciele tejto práce. 
 
 \subsection{Nástroje na tvorbu hier}
 
-\subsubsection{Realm Crafter} Je komerčný nástroj na tvorbu MMORPG avšak na počítač. Dá sa pomocou neho relativne jednoducho vytvorit herný svet. Okrem ceny a trošku zložitejšej tvorby sveta sa dajú vytvoriť presvedčivé výsledky. Hlavným problémom je nemožnosť tvorby hier na smartphony využívajucích GPS.
-
-\subsubsection{Rpg Maker} je ďaľší komerčný program, ktorý užívateľom umožňuje vytvárať ich vlastné dvojrozmerné RPG na počítač. Napriek tomu, že herný engine je určený hlavne na tvorbu hier tohto žánru sa v ňom dajú vytvárať aj hry z iných - napríklad adventury\cite{rpg-maker-game}. Obsahuje editor s predrobeným balíkom textúr a obrázkov postavičiek. Používatel však môže pridať i vlastné. 
-\cite{rpg-maker}
-
-\subsection{Hry}
-\subsubsection{Ingress} Je hra založená tiež na pohybe hráčov v reálnom svete a pomocou mobilných android zariadeni s GPS a internetovým pripojením pohybovaním v hernom svete. Hra je zadarmo a viac strategiou pre tímy. Avšak naším cielom je tvorba podobných hier a s prvkami RPG.
-
-
-\subsubsection{Shakes\&Fidget} je online hra, ktorú je možné hrať vo webovom prehliadači\cite{sfgame}. Hráč si vytvorí svoju postavu, ktorému môže vybrať rasu a o aký typ bojovníka sa jedná. Postava má rôzne vlastnosti, ktoré si môže vylepšovať. Herné peniaze, veci a skúsenosti získava cez súboje s nepriatelmi a plnením úloh. Herný systém je veľmi podobný tomu, ktorý bude využítý v tejto práci.
+\subsubsection{Rpg Creator} je komerčný program, ktorý používateľom umožňuje vytvárať ich vlastné dvojrozmerné RPG a MMORPG. Webová aplikácia ponúka nástroje na tvorbu hry, takže nie je potrebná žiadna inštalácia na strane tvorcu hry. Používateľ môže pridať vlastné obrázky do hry a nastaviť ovládanie postavičiek, či správanie sveta. Výsledná hra môže byť vyexportovaná na rôzne platformy(Windows, Linux, Mac OS) \cite{rpgcreator}.
 
 \begin{figure}
   \centering
-  \includegraphics[height=10cm]{mainmatter/imgs/shakes.png}
-  \caption{Shakes\&Fidget - súboj postavy s nepriatelom}
+  \includegraphics[width=14cm]{mainmatter/imgs/rpgcreator.png}
+  \caption{Webová aplikácia po vytvorení hry ponúka možnosť spustiť hru v prehliadači}
   \label{fig:comenius}
 \end{figure}
 
 
-\subsubsection{World of Warcraft} je hlavne MMORPG PC hra, ktorá získala miliony hráčov hlavne pre svoju atmosféru a hrateľnosť. Bola vytvorená firmou Blizzard\cite{wow-blizard}. Hra má klasické črty MMORPG, na rozdiel od Shakes\&Fidget sa však hráč pohybuje so svojou postavou po hernom svete a má omnoho väčšie možnosti interakcie s prostredím\cite{wow-blizard-guide}. 
-Výhody
+\paragraph*{Silné stránky}
 \begin{itemize}
-  \item Atmosféra
+  \item Webová aplikácia pre tvorbu hry
+  \item Jednoduchosť používania
+\end{itemize}
+\paragraph*{Slabé stránky}
+\begin{itemize}
+  \item Platená aplikácia
+  \item Chýbajúci export natívnej aplikácie pre mobilné zariadenia
+\end{itemize}
+
+
+
+
+
+\subsubsection{Rpg Maker} je ďaľší komerčný program, ktorý užívateľom umožňuje vytvárať ich vlastné dvojrozmerné RPG na počítač. Napriek tomu, že herný engine je určený hlavne na tvorbu hier tohto žánru sa v ňom dajú vytvárať aj hry z iných - napríklad adventúry \cite{rpg-maker-game}. Obsahuje editor s predrobeným balíkom textúr a obrázkov postavičiek. Používatel však môže pridať i vlastné. 
+\cite{rpg-maker}
+
+\subsection{Hry}
+
+
+\subsubsection{Ingress} Je hra pre android zariadenia z dielne Google, ktorú hrá množstvo ľudí naraz. Hra využíva princíp geocachingu, kde hráči pátrajú po ukrytých predmetoch. Hráčov pohyb je premietaný do herného sveta pomocou GPS a internetového pripojenia. Dej hry je postavený na pátraní po tajomnej energii, ktorá dokáže ovládať ľudskú myseľ. V hre existujú dve hlavné frakcie - Osvietení, vítajúci príchod energie a Odpor, ktorý sa ich snaží zastaviť. Hráči sa ako jednotlivci alebo v skupinkách snažia body s touto energiou obsadzovať. Následne získanú energiu môžu použiť na technologický pokrok, ktorý možno využiť v boji proti nepriateľskej frakcii. 
+
+\paragraph*{Silné stránky}
+\begin{itemize}
+  \item Využívanie GPS
+  \item Hra inšpiruje hráčov k pohybu
+\end{itemize}
+\paragraph*{Slabé stránky}
+\begin{itemize}
+  \item Slabší dej a atmosféra
+\end{itemize}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=6cm]{mainmatter/imgs/ingress.jpg}
+  \caption{V hre Ingress hráči bojujú o územia}
+  \label{fig:comenius}
+\end{figure}
+
+
+
+\subsubsection{Shakes\&Fidget} je online hra, ktorú je možné hrať vo webovom prehliadači \cite{sfgame}. Hráč si vytvorí svoju postavu, ktorému môže vybrať rasu a o aký typ bojovníka sa jedná. Postava má rôzne vlastnosti, ktoré si môže vylepšovať. Herné peniaze, veci a skúsenosti získava cez súboje s nepriatelmi a plnením úloh. 
+\begin{figure}
+  \centering
+  \includegraphics[height=6cm]{mainmatter/imgs/shakes.png}
+  \caption{Shakes\&Fidget - súboj postavy s nepriateľom}
+  \label{fig:comenius}
+\end{figure}
+
+\paragraph*{Silné stránky}
+\begin{itemize}
+  \item Možnosť hrať vo webovom prehliadači
+  \item Zadarmo   
+\end{itemize}
+\paragraph*{Slabé stránky}
+\begin{itemize}
+  \item Jednoduchá hrateľnosť, ktorá nevžaduje zložitejšiu interakciu od hráča
+\end{itemize}
+
+
+
+
+\subsubsection{World of Warcraft} je hlavne MMORPG PC hra, ktorá získala miliony hráčov hlavne pre svoju atmosféru a hrateľnosť. Bola vytvorená firmou Blizzard \cite{wow-blizard}. Hra má klasické črty MMORPG a na rozdiel od Shakes\&Fidget sa hráč pohybuje so svojou postavou po hernom svete a má omnoho väčšie možnosti interakcie s prostredím \cite{wow-blizard-guide}.
+\begin{figure}[]
+  \centering
+  \includegraphics[height=6cm]{mainmatter/imgs/wow.jpg}
+  \caption{Počítačová hra World of Warcraft}
+  \label{fig:comenius}
+\end{figure}
+
+\paragraph*{Silné stránky}
+\begin{itemize}
+  \item Atmosféra a dej
   \item Grafika 
-  \item Hratelnosť \ldots
+  \item Hratelnosť 
+\end{itemize}
+\paragraph*{Slabé stránky}
+\begin{itemize}
+  \item Cena
+  \item Grafika 
+  \item Hratelnosť 
 \end{itemize}
