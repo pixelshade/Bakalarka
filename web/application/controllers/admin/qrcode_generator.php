@@ -18,7 +18,7 @@ class Qrcode_Generator extends Admin_Controller
 
 
 	public function get($string){
-		// header("Content-Type: image/png");		
+		header("Content-Type: image/png");		
 		// TODO nalinkovat na web/clienta a spojit s kodom 
 		//config_item('client_download_url').
 		$params['data'] = $string;
@@ -38,12 +38,20 @@ class Qrcode_Generator extends Admin_Controller
 			$logo_size = $width * 0.25;
 			$half_size = $logo_size/2;
 
-			imagefilledrectangle($im, $center_w - $half_size, $center_h - $half_size, $center_w + $half_size, $center_h + $half_size, $white);
-		
-
-			header('Content-Type: image/png');
+			if(config_item('add_logo_to_qrcode')){
+				$file_path = config_item('qrlogo_filename');			
+				// Load
+				$image_path = 	"./app_content/".$file_path;		
+				$im_logo = imagecreatefrompng($image_path);
+				$logo_w = imagesx($im_logo);
+				$logo_h = imagesy($im_logo);
+				// Resize			
+				imagecopyresized($im, $im_logo, $center_w - $half_size, $center_h - $half_size, 0,0 ,$logo_size ,$logo_size, $logo_w, $logo_h);
+				imagedestroy($im_logo);
+			}			
 			imagepng($im);
 			imagedestroy($im);
+			
 
 		}
 		else {

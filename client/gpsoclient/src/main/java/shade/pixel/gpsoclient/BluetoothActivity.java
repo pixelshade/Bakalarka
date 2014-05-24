@@ -16,7 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.joanzapata.android.iconify.Iconify;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -56,6 +59,9 @@ public class BluetoothActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
+
+        TextView giftIconTV = (TextView) findViewById(R.id.giftIcon);
+        Iconify.addIcons(giftIconTV);
 
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         if (btAdapter == null) {
@@ -98,11 +104,16 @@ public class BluetoothActivity extends ActionBarActivity {
         Intent intent = getIntent();
         mSendingItem = (Item) intent.getSerializableExtra(ARG_ITEM);
 
+
         if(mSendingItem==null) {
             setViewReceiver();
+            setDiscoverable();
         } else {
             setViewGiver();
+            startActivityForResult(new Intent(this, DeviceListActivity.class),
+                    REQUEST_CONNECT_BT);
         }
+
     }
 
     public void setViewGiver(){
@@ -111,6 +122,7 @@ public class BluetoothActivity extends ActionBarActivity {
 
     public void setViewReceiver(){
         btnSend.setVisibility(View.GONE);
+
     }
 
     private void sendRole() {
@@ -264,16 +276,20 @@ public class BluetoothActivity extends ActionBarActivity {
                         REQUEST_CONNECT_BT);
                 return true;
             case R.id.disco:
-                if (btAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-                    Intent discoverableIntent = new Intent(
-                            BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-                    discoverableIntent.putExtra(
-                            BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-                    startActivity(discoverableIntent);
-                }
+                setDiscoverable();
                 return true;
         }
         return false;
+    }
+
+    private void setDiscoverable(){
+        if (btAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+            Intent discoverableIntent = new Intent(
+                    BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoverableIntent.putExtra(
+                    BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+            startActivity(discoverableIntent);
+        }
     }
 
 }

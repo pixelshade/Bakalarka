@@ -79,6 +79,7 @@
         </activity>
         <activity
             android:name="shade.pixel.gpsoclient.DeviceListActivity"
+            android:noHistory="true"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_device_list" >
         </activity>

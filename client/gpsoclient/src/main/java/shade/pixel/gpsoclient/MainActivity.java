@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -157,11 +158,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void UpdatePosition(View view) {
-//        gpsTracker = new GPSTracker(this,this);
+        Button updateBtn = (Button) findViewById(R.id.updatePositionBtn);
+        updateBtn.setEnabled(false);
         if (gpsTracker == null) {
             Log.d(TAG, "GPS tracker is null");
             return;
         }
+
+
         LatLng location = gpsTracker.getLocation();
         double latitude = location.latitude;
         double longitude = location.longitude;
@@ -199,12 +203,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             String infoString = json + "\n\n" + latitude + " " + longitude;
                             SetTextView(infoString);
 
+                            Button updateBtn = (Button) findViewById(R.id.updatePositionBtn);
+                            updateBtn.setEnabled(true);
                             SetQuestsView();
                             SetRegionsView();
                             SetItemsView();
                             SetAttributesView();
                             showResponses();
-
+                            Toast.makeText(context, "Successfuly updated position.", Toast.LENGTH_LONG).show();
                         } else {
                             Log.d(TAG, "Problem with parsing gamedata");
                         }
