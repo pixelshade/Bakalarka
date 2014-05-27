@@ -2,26 +2,29 @@
 \select@language {slovak}
 \select@language {slovak}
 \addvspace {10\p@ }
+\select@language {slovak}
+\addvspace {10\p@ }
 \select@language {english}
 \addvspace {10\p@ }
 \select@language {slovak}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Po\IeC {\v c}\IeC {\'\i }ta\IeC {\v c}ov\IeC {\'a} hra World of Warcraft}}{4}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces MVC architekt\IeC {\'u}ra}}{5}{figure.2.2}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Webov\IeC {\'a} aplik\IeC {\'a}cia po vytvoren\IeC {\'\i } hry pon\IeC {\'u}ka mo\IeC {\v z}nos\IeC {\v t} spusti\IeC {\v t} hru v prehliada\IeC {\v c}i}}{9}{figure.2.3}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Platen\IeC {\'y} n\IeC {\'a}stroj RPG Maker ponuk\IeC {\'a} jednoduch\IeC {\'e} prostredie na tvorbu 2D RPG hier}}{10}{figure.2.4}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces V hre Ingress hr\IeC {\'a}\IeC {\v c}i bojuj\IeC {\'u} o \IeC {\'u}zemia}}{11}{figure.2.5}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Dva t\IeC {\'\i }my, obsadzuj\IeC {\'u}ce \IeC {\'u}zemia v hre Map attack! }}{12}{figure.2.6}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Po\IeC {\v c}\IeC {\'\i }ta\IeC {\v c}ov\IeC {\'a} hra World of Warcraft}}{12}{figure.2.7}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Po\IeC {\v c}\IeC {\'\i }ta\IeC {\v c}ov\IeC {\'a} hra World of Warcraft}}{3}{figure.2.1}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces MVC architekt\IeC {\'u}ra}}{4}{figure.2.2}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Webov\IeC {\'a} aplik\IeC {\'a}cia po vytvoren\IeC {\'\i } hry pon\IeC {\'u}ka mo\IeC {\v z}nos\IeC {\v t} spusti\IeC {\v t} hru v prehliada\IeC {\v c}i}}{8}{figure.2.3}
-\contentsline {figure}{\numberline {2.4}{\ignorespaces V hre Ingress hr\IeC {\'a}\IeC {\v c}i bojuj\IeC {\'u} o \IeC {\'u}zemia}}{9}{figure.2.4}
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Shakes\&Fidget - s\IeC {\'u}boj postavy s nepriate\IeC {\v l}om}}{10}{figure.2.5}
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Po\IeC {\v c}\IeC {\'\i }ta\IeC {\v c}ov\IeC {\'a} hra World of Warcraft}}{10}{figure.2.6}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Prihlasovacia obrazovka pre hru}}{15}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Hlavn\IeC {\'a} obrazovka s obrazovkou zobrazuj\IeC {\'u}cou regi\IeC {\'o}ny a atrib\IeC {\'u}ty}}{16}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l} m\IeC {\^o}\IeC {\v z}e nastavi\IeC {\v t} spr\IeC {\'a}vanie aplik\IeC {\'a}cie}}{17}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Detail \IeC {\'u}lohy na \IeC {\v c}as vy\IeC {\v z}aduj\IeC {\'u}cej textov\IeC {\'u} odpove\IeC {\v d}}}{18}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Administr\IeC {\'a}torsk\IeC {\'a} sekcia pon\IeC {\'u}ka n\IeC {\'a}stroje na tvorbu hern\IeC {\'e}ho prostredia}}{20}{figure.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Invent\IeC {\'a}r hr\IeC {\'a}\IeC {\v c}a}}{23}{figure.3.6}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Sekcia na tvorbu a \IeC {\'u}pravu regi\IeC {\'o}nov}}{26}{figure.3.7}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces \IeC {\v C}itateln\IeC {\'y} QR k\IeC {\'o}d s logom hry}}{27}{figure.3.8}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Prihlasovacia obrazovka pre hru}}{13}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Pou\IeC {\v z}\IeC {\'\i }vate\IeC {\v l} m\IeC {\^o}\IeC {\v z}e nastavi\IeC {\v t} spr\IeC {\'a}vanie aplik\IeC {\'a}cie}}{14}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Detail \IeC {\'u}lohy na \IeC {\v c}as vy\IeC {\v z}aduj\IeC {\'u}cej textov\IeC {\'u} odpove\IeC {\v d}}}{15}{figure.3.3}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Administr\IeC {\'a}torsk\IeC {\'a} sekcia pon\IeC {\'u}ka n\IeC {\'a}stroje na tvorbu hern\IeC {\'e}ho prostredia}}{18}{figure.3.4}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Invent\IeC {\'a}r hr\IeC {\'a}\IeC {\v c}a}}{20}{figure.3.5}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Sekcia na tvorbu a \IeC {\'u}pravu regi\IeC {\'o}nov}}{23}{figure.3.6}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces \IeC {\v C}itateln\IeC {\'y} QR k\IeC {\'o}d s logom hry}}{25}{figure.3.7}
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Temp n\IeC {\'a}vrh db}}{29}{figure.4.1}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Tabu\IeC {\v l}ky a ich \IeC {\v s}trukt\IeC {\'u}ra}}{37}{figure.4.1}
 \addvspace {10\p@ }

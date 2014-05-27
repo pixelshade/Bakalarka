@@ -26,11 +26,6 @@ Php qr code generator examples.
   }.
 \newblock [Online; navštívené 12-Január-2014].
 
-\bibitem{sfgame}
-Shakes\&fidget.
-\newblock \url{ http://www.sfgame.sk/ }.
-\newblock [Online; navštívené 30-Január-2014].
-
 \bibitem{qrreader}
 Zbar qr code reader.
 \newblock \url{ http://zbar.sourceforge.net/ }.
@@ -54,6 +49,10 @@ Blizzard.
 \newblock World of warcraft.
 \newblock \url{ http://us.battle.net/wow/en/game/ }.
 \newblock [Online; navštívené 30-Január-2014].
+
+\bibitem{mapattack}
+Esri~R\&D Center.
+\newblock Map attack! \url{http://mapattack.org/}, Apríl 2014.
 
 \bibitem{rpgcreator}
 Web Creative5.

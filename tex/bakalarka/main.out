@@ -1,6 +1,6 @@
 \BOOKMARK [0][-]{chapter*.1}{Podakovanie}{}% 1
-\BOOKMARK [0][-]{chapter*.2}{Abstract}{}% 2
-\BOOKMARK [0][-]{chapter*.3}{Abstrakt}{}% 3
+\BOOKMARK [0][-]{chapter*.2}{Abstrakt}{}% 2
+\BOOKMARK [0][-]{chapter*.3}{Abstract}{}% 3
 \BOOKMARK [0][-]{chapter.1}{\332vod}{}% 4
 \BOOKMARK [0][-]{chapter.2}{Anal\375za problematiky}{}% 5
 \BOOKMARK [1][-]{section.2.1}{Motiv\341cia}{chapter.2}% 6
@@ -11,7 +11,7 @@
 \BOOKMARK [1][-]{section.2.3}{Technol\363gie}{chapter.2}% 11
 \BOOKMARK [2][-]{subsection.2.3.1}{MVC}{section.2.3}% 12
 \BOOKMARK [2][-]{subsection.2.3.2}{Bluetooth}{section.2.3}% 13
-\BOOKMARK [2][-]{subsection.2.3.3}{QR Kody}{section.2.3}% 14
+\BOOKMARK [2][-]{subsection.2.3.3}{QR K\363dy}{section.2.3}% 14
 \BOOKMARK [2][-]{subsection.2.3.4}{NFC}{section.2.3}% 15
 \BOOKMARK [1][-]{section.2.4}{Frameworky, kni\236nice a API}{chapter.2}% 16
 \BOOKMARK [2][-]{subsection.2.4.1}{Codeigniter}{section.2.4}% 17
@@ -43,24 +43,29 @@
 \BOOKMARK [2][-]{subsection.3.5.5}{Sp\372\235tanie pomocou QR k\363dov}{section.3.5}% 43
 \BOOKMARK [2][-]{subsection.3.5.6}{Komunik\341cia medzi hr\341cmi}{section.3.5}% 44
 \BOOKMARK [0][-]{chapter.4}{Implement\341cia aplik\341cie}{}% 45
-\BOOKMARK [1][-]{section.4.1}{D\364le\236it\351 triedy a ich popis}{chapter.4}% 46
+\BOOKMARK [1][-]{section.4.1}{V\375ber platformy}{chapter.4}% 46
 \BOOKMARK [2][-]{subsection.4.1.1}{Klient}{section.4.1}% 47
 \BOOKMARK [2][-]{subsection.4.1.2}{Server}{section.4.1}% 48
-\BOOKMARK [1][-]{section.4.2}{QR k\363dy}{chapter.4}% 49
-\BOOKMARK [2][-]{subsection.4.2.1}{Generovanie}{section.4.2}% 50
-\BOOKMARK [2][-]{subsection.4.2.2}{C\355tanie}{section.4.2}% 51
-\BOOKMARK [1][-]{section.4.3}{Bluetooth}{chapter.4}% 52
-\BOOKMARK [1][-]{section.4.4}{Mapy}{chapter.4}% 53
-\BOOKMARK [1][-]{section.4.5}{Synchroniz\341cia s\372borov}{chapter.4}% 54
-\BOOKMARK [1][-]{section.4.6}{Zistovanie aktu\341lnej polohy}{chapter.4}% 55
-\BOOKMARK [1][-]{section.4.7}{Datab\341za}{chapter.4}% 56
-\BOOKMARK [1][-]{section.4.8}{Tvorba hern\351ho prostredia}{chapter.4}% 57
-\BOOKMARK [0][-]{chapter.5}{Z\341ver}{}% 58
-\BOOKMARK [1][-]{section.5.1}{Dal\235\355 mo\236n\375 v\375voj aplik\341cie}{chapter.5}% 59
-\BOOKMARK [2][-]{subsection.5.1.1}{Pridanie bojov\351ho syst\351mu}{section.5.1}% 60
-\BOOKMARK [2][-]{subsection.5.1.2}{Hr\341cmi vytv\341ran\375 a hodnoten\375 obsah}{section.5.1}% 61
-\BOOKMARK [1][-]{section.5.2}{In\351 mo\236nosti vyu\236itia}{chapter.5}% 62
-\BOOKMARK [2][-]{subsection.5.2.1}{Tvorba \235ifrovac\355ch }{section.5.2}% 63
-\BOOKMARK [2][-]{subsection.5.2.2}{Pridelovanie \372loh vzhladom na polohu}{section.5.2}% 64
-\BOOKMARK [2][-]{subsection.5.2.3}{Tvorba turisticko-historickej prehliadky}{section.5.2}% 65
-\BOOKMARK [1][-]{section.5.3}{Zhrnutie}{chapter.5}% 66
+\BOOKMARK [1][-]{section.4.2}{V\375vojov\351 prostredie}{chapter.4}% 49
+\BOOKMARK [1][-]{section.4.3}{D\364le\236it\351 triedy a ich popis}{chapter.4}% 50
+\BOOKMARK [2][-]{subsection.4.3.1}{Klient}{section.4.3}% 51
+\BOOKMARK [2][-]{subsection.4.3.2}{Server}{section.4.3}% 52
+\BOOKMARK [1][-]{section.4.4}{QR k\363dy}{chapter.4}% 53
+\BOOKMARK [2][-]{subsection.4.4.1}{Generovanie}{section.4.4}% 54
+\BOOKMARK [2][-]{subsection.4.4.2}{C\355tanie}{section.4.4}% 55
+\BOOKMARK [1][-]{section.4.5}{Bluetooth}{chapter.4}% 56
+\BOOKMARK [1][-]{section.4.6}{Synchroniz\341cia s\372borov}{chapter.4}% 57
+\BOOKMARK [1][-]{section.4.7}{Zistovanie aktu\341lnej polohy}{chapter.4}% 58
+\BOOKMARK [1][-]{section.4.8}{Datab\341za}{chapter.4}% 59
+\BOOKMARK [2][-]{subsection.4.8.1}{Trieda modelu}{section.4.8}% 60
+\BOOKMARK [2][-]{subsection.4.8.2}{\227trukt\372ra tabuliek}{section.4.8}% 61
+\BOOKMARK [0][-]{chapter.5}{Z\341ver}{}% 62
+\BOOKMARK [1][-]{section.5.1}{Dal\235\355 mo\236n\375 v\375voj aplik\341cie}{chapter.5}% 63
+\BOOKMARK [2][-]{subsection.5.1.1}{Pridanie bojov\351ho syst\351mu}{section.5.1}% 64
+\BOOKMARK [2][-]{subsection.5.1.2}{Hr\341cmi vytv\341ran\375 a hodnoten\375 obsah}{section.5.1}% 65
+\BOOKMARK [2][-]{subsection.5.1.3}{Komunik\341cia pomocou NFC}{section.5.1}% 66
+\BOOKMARK [1][-]{section.5.2}{In\351 mo\236nosti vyu\236itia}{chapter.5}% 67
+\BOOKMARK [2][-]{subsection.5.2.1}{Tvorba \235ifrovac\355ch hier}{section.5.2}% 68
+\BOOKMARK [2][-]{subsection.5.2.2}{Pridelovanie \372loh vzhladom na polohu}{section.5.2}% 69
+\BOOKMARK [2][-]{subsection.5.2.3}{Tvorba turisticko-historickej prehliadky}{section.5.2}% 70
+\BOOKMARK [1][-]{section.5.3}{Zhrnutie}{chapter.5}% 71

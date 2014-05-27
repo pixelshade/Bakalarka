@@ -63,33 +63,6 @@ public class ResponseJSONParser {
     public static final String KEY_REGION_LON_END = "lon_end";
 
 
-
-    public static HashMap<String, String> parseResponse(String json) {
-        if (json != null && !json.isEmpty()) {
-            try {
-                JSONObject jsonObj = new JSONObject(json);
-                HashMap<String, String> response = new HashMap<String, String>();
-
-                String type = jsonObj.optString(KEY_TYPE);
-                String success = jsonObj.optString(KEY_SUCCESS);
-                String msg = jsonObj.optString(KEY_MESSAGE);
-                String data = jsonObj.optString(KEY_DATA);
-
-                response.put(KEY_TYPE, type);
-                response.put(KEY_SUCCESS, success);
-                response.put(KEY_MESSAGE, msg);
-                response.put(KEY_DATA, data);
-                return response;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Log.e("JSON PARSER", "No json string to parse");
-
-        }
-        return null;
-    }
-
     public static GameData parseGameData(String json){
         if (json != null) {
             try {
@@ -103,17 +76,12 @@ public class ResponseJSONParser {
                 JSONArray jsonAttributes = jsonObj.optJSONArray(KEY_ATTRIBUTES);
                 JSONArray jsonResponses = jsonObj.optJSONArray(KEY_RESPONSES);
 
-
-
                 ArrayList<Quest> quests = new ArrayList<Quest>();
                 for(int i = 0; i < jsonQuests.length(); i++){
                     JSONObject quest = jsonQuests.getJSONObject(i);
-
                     Quest q = getQuestFromJSONObj(quest);
-
                     quests.add(q);
                 }
-
 
                 for(int i = 0; i < jsonActiveQuests.length(); i++){
                     JSONObject quest = jsonActiveQuests.getJSONObject(i);
@@ -134,41 +102,22 @@ public class ResponseJSONParser {
                 ArrayList<Region> regions = new ArrayList<Region>();
                 for(int i = 0; i < jsonRegions.length(); i++){
                     JSONObject region = jsonRegions.getJSONObject(i);
-                    int id =  region.getInt(Region.KEY_REGION_ID);
-                    String name = region.getString(Region.KEY_REGION_NAME);
-                    String info = region.getString(Region.KEY_REGION_INFO);
-                    String image = region.getString(Region.KEY_REGION_IMAGE);
-                    double lat_start = region.getDouble(Region.KEY_REGION_LAT_START);
-                    double lat_end = region.getDouble(Region.KEY_REGION_LAT_END);
-                    double lon_start = region.getDouble(Region.KEY_REGION_LON_START);
-                    double lon_end = region.getDouble(Region.KEY_REGION_LON_END);
-
-
-                    Region r = new Region(id,name,info,image,lat_start,lon_start,lat_end,lon_end);
+                    Region r = getRegionFromJSONObj(region);
                     regions.add(r);
                 }
 
                 ArrayList<Item> items = new ArrayList<Item>();
                 for(int i = 0; i < jsonItems.length(); i++){
                     JSONObject itemJson = jsonItems.getJSONObject(i);
-                    int id =  itemJson.getInt(Item.KEY_ITEM_ID);
-                    String name = itemJson.getString(Item.KEY_ITEM_NAME);
-                    String info = itemJson.getString(Item.KEY_ITEM_INFO);
-                    String image = itemJson.getString(Item.KEY_ITEM_IMAGE);
-                    int amount  = itemJson.optInt(Item.KEY_ITEM_AMOUNT,1);
-                    Item item = new Item(id,name,info,image,amount);
+                    Item item = getItemFromJSONObj(itemJson);
                     items.add(item);
                 }
 
                 ArrayList<Attribute> attributes = new ArrayList<Attribute>();
                 for(int i = 0; i < jsonAttributes.length(); i++){
                     JSONObject attributeJson = jsonAttributes.getJSONObject(i);
-                    int id =  attributeJson.getInt(Attribute.KEY_ATTRIBUTE_ID);
-                    String name = attributeJson.getString(Attribute.KEY_ATTRIBUTE_NAME);
-                    String info = attributeJson.getString(Attribute.KEY_ATTRIBUTE_INFO);
-                    String image = attributeJson.getString(Attribute.KEY_ATTRIBUTE_IMAGE);
-                    int amount  = attributeJson.optInt(Attribute.KEY_ATTRIBUTE_AMOUNT,1);
-                    Attribute attribute = new Attribute(id,name,info,image,amount);
+
+                    Attribute attribute = getAttributeJSONObj(attributeJson);
                     attributes.add(attribute);
                 }
 
@@ -185,9 +134,6 @@ public class ResponseJSONParser {
                         }
                     }
                 }
-
-
-
 
                 GameData gameData = new GameData();
                 gameData.setQuests(quests);
@@ -224,6 +170,38 @@ public class ResponseJSONParser {
         int reward_id = jsonQuestObj.optInt(Quest.KEY_QUEST_REWARD_ID, Quest.UNDEFINED_INT_VALUE);
 
         return new Quest(id,code, name, info, image, reward_id, autostart, regionId, requiredQuestId, duration, requirementType, requirement);
+    }
+
+    public static Region getRegionFromJSONObj(JSONObject jsonRegionObj) throws JSONException {
+        int id =  jsonRegionObj.getInt(Region.KEY_REGION_ID);
+        String name = jsonRegionObj.getString(Region.KEY_REGION_NAME);
+        String info = jsonRegionObj.getString(Region.KEY_REGION_INFO);
+        String image = jsonRegionObj.getString(Region.KEY_REGION_IMAGE);
+        double lat_start = jsonRegionObj.getDouble(Region.KEY_REGION_LAT_START);
+        double lat_end = jsonRegionObj.getDouble(Region.KEY_REGION_LAT_END);
+        double lon_start = jsonRegionObj.getDouble(Region.KEY_REGION_LON_START);
+        double lon_end = jsonRegionObj.getDouble(Region.KEY_REGION_LON_END);
+
+        return new Region(id,name,info,image,lat_start,lon_start,lat_end,lon_end);
+    }
+
+    public static Item getItemFromJSONObj(JSONObject itemJson) throws JSONException {
+        int id =  itemJson.getInt(Item.KEY_ITEM_ID);
+        String name = itemJson.getString(Item.KEY_ITEM_NAME);
+        String info = itemJson.getString(Item.KEY_ITEM_INFO);
+        String image = itemJson.getString(Item.KEY_ITEM_IMAGE);
+        int amount  = itemJson.optInt(Item.KEY_ITEM_AMOUNT,1);
+
+        return new Item(id,name,info,image,amount);
+    }
+
+    public static Attribute getAttributeJSONObj(JSONObject attributeJson) throws JSONException {
+        int id =  attributeJson.getInt(Attribute.KEY_ATTRIBUTE_ID);
+        String name = attributeJson.getString(Attribute.KEY_ATTRIBUTE_NAME);
+        String info = attributeJson.getString(Attribute.KEY_ATTRIBUTE_INFO);
+        String image = attributeJson.getString(Attribute.KEY_ATTRIBUTE_IMAGE);
+        int amount  = attributeJson.optInt(Attribute.KEY_ATTRIBUTE_AMOUNT,1);
+        return new Attribute(id,name,info,image,amount);
     }
 
 

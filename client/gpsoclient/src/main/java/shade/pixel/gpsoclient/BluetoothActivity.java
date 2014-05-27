@@ -52,7 +52,7 @@ public class BluetoothActivity extends ActionBarActivity {
 
     private StringBuffer messages;
     private BluetoothAdapter btAdapter = null;
-    private BTCommunicator chat = null;
+    private BTCommunicator btCommunicator = null;
 
 
     @Override
@@ -73,7 +73,7 @@ public class BluetoothActivity extends ActionBarActivity {
         if (!btAdapter.isEnabled())
             startActivityForResult(new Intent(
                     BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT);
-        else if (chat == null)
+        else if (btCommunicator == null)
             init();
 
 
@@ -82,9 +82,9 @@ public class BluetoothActivity extends ActionBarActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (chat != null)
-            if (chat.state.equals("NONE"))
-                chat.start();
+        if (btCommunicator != null)
+            if (btCommunicator.state.equals("NONE"))
+                btCommunicator.start();
     }
 
     private void init() {
@@ -98,7 +98,7 @@ public class BluetoothActivity extends ActionBarActivity {
         });
 
 
-        chat = new BTCommunicator(this, handler);
+        btCommunicator = new BTCommunicator(this, handler);
         messages = new StringBuffer("");
 
         Intent intent = getIntent();
@@ -126,7 +126,7 @@ public class BluetoothActivity extends ActionBarActivity {
     }
 
     private void sendRole() {
-        if (!chat.state.equals("CONNECTED")) {
+        if (!btCommunicator.state.equals("CONNECTED")) {
             Toast.makeText(this, "not connected", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -135,7 +135,7 @@ public class BluetoothActivity extends ActionBarActivity {
             Log.d(TAG,"WRITING_ID");
             MSGContainer msgContainer = new MSGContainer(TYPE_ROLE);
             byte[] data = ByteConverter.toByteArray(msgContainer);
-            chat.write(data);
+            btCommunicator.write(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -144,24 +144,24 @@ public class BluetoothActivity extends ActionBarActivity {
 
 
     private void sendId(int id) {
-        if (!chat.state.equals("CONNECTED")) {
+        if (!btCommunicator.state.equals("CONNECTED")) {
             Toast.makeText(this, "not connected", Toast.LENGTH_SHORT).show();
             return;
         }
 
-            try {
-                Log.d(TAG,"WRITING_ID");
-                MSGContainer msgContainer = new MSGContainer(TYPE_ID, id);
-                byte[] data = ByteConverter.toByteArray(msgContainer);
-                chat.write(data);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            Log.d(TAG,"WRITING_ID");
+            MSGContainer msgContainer = new MSGContainer(TYPE_ID, id);
+            byte[] data = ByteConverter.toByteArray(msgContainer);
+            btCommunicator.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     private void sendItem(Item item) {
-        if (!chat.state.equals("CONNECTED")) {
+        if (!btCommunicator.state.equals("CONNECTED")) {
             Toast.makeText(this, "not connected", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -170,7 +170,7 @@ public class BluetoothActivity extends ActionBarActivity {
                 Log.d(TAG,"WRITING_ITEM");
                 MSGContainer msgContainer = new MSGContainer(TYPE_ITEM, item);
                 byte[] data = ByteConverter.toByteArray(msgContainer);
-                chat.write(data);
+                btCommunicator.write(data);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -247,7 +247,7 @@ public class BluetoothActivity extends ActionBarActivity {
                     String address = data.getExtras().getString(
                             DeviceListActivity.DEVICE_ADDRESS);
                     BluetoothDevice device = btAdapter.getRemoteDevice(address);
-                    chat.connect(device);
+                    btCommunicator.connect(device);
                 }
                 break;
             case REQUEST_ENABLE_BT:

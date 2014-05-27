@@ -51,24 +51,24 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     int mActualViewId = 0;
 
-    AsyncResponse loginCheck = new AsyncResponse() {
-        @Override
-        public void processFinish(Context context, String output) {
-            HashMap<String, String> response = ResponseJSONParser.parseResponse(output);
-            if (response != null) {
-                Log.d(TAG, response.toString());
-                if (response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")) {
-                    contentFilesManager.UpdateFiles();
-                } else {
-                    StartLoginActivity();
-                }
-            } else {
-                Log.d(TAG, "Unable to authenticate. Reposnse from server, is damaged");
-                StartLoginActivity();
-            }
-
-        }
-    };
+//    AsyncResponse loginCheck = new AsyncResponse() {
+//        @Override
+//        public void processFinish(Context context, String output) {
+//            HashMap<String, String> response = ResponseJSONParser.parseResponse(output);
+//            if (response != null) {
+//                Log.d(TAG, response.toString());
+//                if (response.get(ResponseJSONParser.KEY_SUCCESS).equals("1")) {
+//                    contentFilesManager.UpdateFiles();
+//                } else {
+//                    StartLoginActivity();
+//                }
+//            } else {
+//                Log.d(TAG, "Unable to authenticate. Reposnse from server, is damaged");
+//                StartLoginActivity();
+//            }
+//
+//        }
+//    };
 
 
     @Override
@@ -173,7 +173,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             gpsTracker.showSettingsAlert();
         } else {
 
-            String url = Settings.getServerURL() + "/api/json/" + latitude + "/" + longitude;
+            String url = Settings.getUrlUpdatePosition(latitude,longitude);
 //            Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
             htmlBrowser.HttpGetAsyncString(this, url, new AsyncResponse() {
                 @Override

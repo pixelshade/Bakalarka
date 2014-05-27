@@ -34,6 +34,7 @@ public class Settings {
     /**
      * Server URL constants
      */
+    private static String UrlUpdatePosition = serverURL + "/api/json/";
     private static String questCompletionURL = serverURL + "/api/complete_quest";
     private static String questAcceptURL = serverURL + "/api/accept_quest";
     private static String checkQRcodeURL = serverURL + "/api/check_qrcode/";
@@ -326,4 +327,12 @@ public class Settings {
     public static void setSendItemURL(String sendItemURL) {
         Settings.sendItemURL = sendItemURL;
     }
+
+    public static String getUrlUpdatePosition() {
+        return UrlUpdatePosition;
+    }
+    public static String getUrlUpdatePosition(double latitude, double longtitude) {
+        return UrlUpdatePosition + latitude + "/" + longtitude;
+    }
+
 }

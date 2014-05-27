@@ -37,8 +37,9 @@ public class ContentFilesManager {
     }
 
     public void UpdateFiles() {
-        UpdateLocalFilesList();
-        GetServerContentFilenames();
+        if(UpdateLocalFilesList()) {
+            GetServerContentFilenames();
+        }
 
     }
 
@@ -83,20 +84,24 @@ public class ContentFilesManager {
     }
 
     private ArrayList<String> GetListOfMissingLocalFiles(ArrayList<String> remoteFiles) {
+        if(remoteFiles==null) return new ArrayList<String>(0);
+        if(localFiles==null) return remoteFiles;
         remoteFiles.removeAll(localFiles);
         return remoteFiles;
     }
 
-    private void UpdateLocalFilesList() {
+    private boolean UpdateLocalFilesList() {
         final String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             CreateDirIfDoesntExist();
             File contentFileDir = new File(Settings.getContentFileDir());
             localFiles = new ArrayList<String>(Arrays.asList(contentFileDir.list()));
-
             Log.d("AHA", "local files are:"+localFiles.toString());
+            return true;
         } else {
+            Log.d("AHA", "unable to locate SDcard");
             Toast.makeText(mContext, "No sdcard", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 

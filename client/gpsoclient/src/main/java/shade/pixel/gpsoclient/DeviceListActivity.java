@@ -38,7 +38,7 @@ public class DeviceListActivity extends Activity {
 			finish();
 		}
 		// zoznam sparovanych zariadeni
-		pairedAdapter = new ArrayAdapter<String>(this, R.layout.  list_item_device);
+		pairedAdapter = new ArrayAdapter<String>(this, R.layout.list_item_device);
 		pairedListView = (ListView) findViewById(R.id.boundedDevices);
 		pairedListView.setAdapter(pairedAdapter);
 		findBTDevices();
@@ -93,6 +93,12 @@ public class DeviceListActivity extends Activity {
 	private void findBTDevices() {
 		pairedAdapter.clear();
 
+        if(btAdapter.isDiscovering()){
+            btAdapter.cancelDiscovery();
+        }
+
+        btAdapter.startDiscovery();
+
 		pairedDevices = btAdapter.getBondedDevices();
 		if (pairedDevices.size() > 0) {
 			for (BluetoothDevice device : pairedDevices)
@@ -118,6 +124,7 @@ public class DeviceListActivity extends Activity {
 					}
 				});
 	}
+
 
 	public void setDiscoverableBT() {
 		Intent din = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);

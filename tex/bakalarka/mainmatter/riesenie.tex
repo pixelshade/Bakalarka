@@ -17,15 +17,23 @@ Táto kapitola sa bude venovať popisu funkcionality projektu z pohľadu použí
 Androidová aplikácia po spustení používateľovi ponúkne prihlasovaciu obrazovku obr.~\ref{fig:klient_login}, vďaka ktorej sa môže používateľ prihlásiť, ak zadá potrebné prihlasovacie údaje a adresu herného serveru, na ktorý sa plánuje pripojiť. Pokiaľ používateľ nemá vytvorený herný účet na danom serveri, môže sa jednoducho zaregistrovať pomocou registračného tlačidla. Po úspešnom prihlásení sa stiahnu nastavenia hry ako je napríklad názov hry. 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=10cm]{mainmatter/imgs/klient_login.png}
+  \includegraphics[height=6cm]{mainmatter/imgs/klient_login.png}
   \caption{Prihlasovacia obrazovka pre hru}
   \label{fig:klient_login}
 \end{figure}
 \subsubsection{Hlavná obrazovka}
-Obrazovka, ktorá sa objaví používateľovi po úspešnom prihlásení slúži ako odrazový mostík pre interakciu s herným svetom. Ak nie je nastavené inak, automaticky zistí názvy herných obrázkov zo serveru a začne ich sťahovať do aplikácie podľa toho, ktoré chýbajú. O postupe informuje používateľa dialógovým oknom. Na hlavnej obrazovke sa nachádza tlačidlo na manuálne zistenie informácii o hernom svete, ak by používateľ chcel získať aktuálnejšie informácie. Ďalej tu nájdeme tlačidlo na skenovanie QR kódu do aplikácie, pre zistenie či naskenovaný QR kód reprezentuje úlohu alebo odmenu. Tlačidlo nastavenia spustí obrazovku s nastaveniami mobilnej aplikácie. Tlačidlo prijať objekt, slúži na spustenie obrazovky, ktorá sa stará o nadviazanie Bluetooth spojenia a prijatie objektu od darcu. Posledné tlačidlo, ktoré sa nachádza na tejto obrazovke je tlačidlo slúžiace na odhlásenie prihláseného hráča a následného otvorenia prihlasovacej obrazovky. Text tlačidiel je vizuálne doprevádzaný obrázkami pre intuitívnejšie pochopenie ich funkcionality. Horná horizontálne posúvna lišta ponúka menu pre hráča
+Obrazovka, ktorá sa objaví používateľovi po úspešnom prihlásení slúži ako odrazový mostík pre interakciu s herným svetom. Ak nie je nastavené inak, automaticky zistí názvy herných obrázkov zo serveru a začne ich sťahovať do aplikácie podľa toho, ktoré chýbajú. O postupe informuje používateľa dialógovým oknom. Na hlavnej obrazovke sa nachádza tlačidlo na manuálne zistenie informácii o hernom svete, ak by používateľ chcel získať aktuálnejšie informácie. Ďalej tu nájdeme tlačidlo na skenovanie QR kódu do aplikácie, pre zistenie, či skenovaný QR kód reprezentuje úlohu alebo odmenu. Tlačidlo nastavenia spustí obrazovku s nastaveniami mobilnej aplikácie. Tlačidlo prijať objekt, slúži na spustenie obrazovky, ktorá sa stará o nadviazanie Bluetooth spojenia a prijatie objektu od darcu. Posledné tlačidlo, ktoré sa nachádza na tejto obrazovke, je tlačidlo, slúžiace na odhlásenie prihláseného hráča a následného otvorenia prihlasovacej obrazovky. Text tlačidiel je vizuálne doprevádzaný obrázkami pre intuitívnejšie pochopenie ich funkcionality. Horná horizontálne posúvna lišta ponúka menu pre hráča
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=14cm]{mainmatter/imgs/klient_menuregattr.png}
+  \caption{Hlavná obrazovka s obrazovkou zobrazujúcou regióny a atribúty}
+  \label{fig:klient_menuregattr.png}
+\end{figure}
+
 
 \subsubsection{Nastavenia}
-Táto časť aplikácie slúži na nastavenie správania herného klienta. Používateľ si tu môže nastaviť hernú prezývku. Tiež sa môže rozhodnúť ako často aktualizovať dáta pre aktuálnu polohu, poprípade vypnúť túto aktualizáciu a ponechať len manuálnu. Ďalším nastavením je možnosť automatickej aktualizácie herných obrázkov pri spustení, ktoré konkrétna hra využíva. Nachádza sa tu aj tlačidlo pre prípad, že používateľ chce vynútiť aktualizáciu týchto obrázkov.
+Táto časť aplikácie slúži na nastavenie správania herného klienta. Používateľ si tu môže nastaviť hernú prezývku. Tiež sa môže rozhodnúť, ako často aktualizovať dáta pre aktuálnu polohu, poprípade vypnúť túto aktualizáciu a ponechať len manuálnu. Ďalším nastavením je možnosť automatickej aktualizácie herných obrázkov pri spustení, ktoré konkrétna hra využíva. Nachádza sa tu aj tlačidlo pre prípad, že používateľ chce vynútiť aktualizáciu týchto obrázkov.
 
 \begin{figure}[h]
   \centering
@@ -37,13 +45,13 @@ Táto časť aplikácie slúži na nastavenie správania herného klienta. Použ
 
 
 \subsubsection{Úlohy}
-K tomu aby mal hráč prehľad o úlohách bola vytvorená obrazovka s úlohami. Možno si na nej teda pozrieť aktuálne úlohy, ktoré hráč môže prijať. Ako ďalšie sú zobrazené prijaté teda aktívne úlohy, ktoré už boli prijaté hráčom a teraz prebieha ich riešenie. Poslednou kategóriou sú kompletné, čiže úspešne dokončené úlohy, v ktorých sa podarilo hráčovi úspešne splniť zadania daných úloh. Tieto tri kategórie sú filtrovatelné pomocou troch tlačidiel. Každé jedno tlačidlo má dva stavy a je pridelené ku svojej kategórii. Ak je tlačidlo zapnuté zobrazí úlohy takého stavu, ktorému prislúcha a vice versa.
+K tomu, aby mal hráč prehľad o úlohách, bola vytvorená obrazovka s úlohami. Možno si na nej teda pozrieť aktuálne úlohy, ktoré hráč môže prijať. Ako ďalšie sú zobrazené aktívne úlohy, ktoré už boli prijaté hráčom a teraz prebieha ich riešenie. Poslednou kategóriou sú kompletné, čiže úspešne dokončené úlohy, v ktorých sa podarilo hráčovi úspešne splniť zadania daných úloh. Tieto tri kategórie sú filtrovatelné pomocou troch tlačidiel. Každé jedno tlačidlo má dva stavy a je pridelené ku svojej kategórii. Ak je tlačidlo zapnuté zobrazí úlohy takého stavu, ktorému prislúcha a vice versa.
 
 \subsubsection{Detail úlohy}
-Obrazovka s detailom úlohy ponúka informácie pre hráča pre jej splnenie. Nájdeme tu názov úlohy, jej popis so zadaním, obrázok jej prislúchajúci a tlačidlá. Tlačidlá sa zobrazujú podla stavu úlohy. 
+Obrazovka s detailom úlohy ponúka, informácie pre hráča pre jej splnenie. Nájdeme tu názov úlohy, jej popis so zadaním, obrázok jej prislúchajúci a tlačidlá. Tlačidlá sa zobrazujú podla stavu úlohy. 
 
-Ak je úloha dostupná je viditeľné tlačidlo pre jej prijatie. 
-Aktívna úloha, zobrazuje tlačidlo na odobratie úlohy a jej splnenie. Hotová úloha zakáže používanie tlačidla pre splnenie úlohy. Podľa typu úlohy sa zobrazujú komponenty na obrazovke. Pri úlohe, ktorá vyžaduje textovú odpoveď je viditeľný textový vstup, do ktorého hráč môže písať. Ak má úloha nastavený časový limit, zobrazuje sa sekundový odpočet, ktorý je znázornený pomocou komponentu postupu ~\ref{fig:klient_deatilUlohy}.
+Ak je úloha dostupná. je viditeľné tlačidlo pre jej prijatie. 
+Aktívna úloha, zobrazuje tlačidlo na odobratie úlohy a jej splnenie. Hotová úloha zakáže používanie tlačidla pre splnenie úlohy. Podľa typu úlohy sa zobrazujú komponenty na obrazovke. Pri úlohe, ktorá vyžaduje textovú odpoveď, je viditeľný textový vstup, do ktorého hráč môže písať. Ak má úloha nastavený časový limit, zobrazuje sa sekundový odpočet, ktorý je znázornený pomocou komponentu postupu ~\ref{fig:klient_deatilUlohy}.
 \begin{figure}[h]
   \centering
   \includegraphics[height=10cm]{mainmatter/imgs/klient_questrunning.png}
@@ -58,10 +66,10 @@ Každý hráč si môže pozrieť zoznam svojich aktuálnych atribútov, ktoré 
 Hráči so sebou nosia v inventári objekty. Objekty sú na tejto obrazovke inventára zobrazené ako býva zvykom v počítačových hrách - v mriežke uložené vedľa seba, kde pri jednotlivých položkách tohto zoznamu je zobrazené ako objekty vyzerajú a pod obrázkami sú názvy a počty jednotlivých objektov. Kliknutím na konkrétny objekt sa otvorí obrazovka s detailnejším popisom objektu.
 
 \subsubsection{Detail objektu}
-Detail objektu  ak má hráč záujem zistiť viac informácii o objekte, napríklad prečítať si detailný popisok, či pozrieť si obrázok na . Ak má hráč záujem odoslať práve vybraný objekt, niektorému druhému hráčovi v blízkosti, môže tak urobiť pomocou tlačidla na darovanie objektu. To otvorí obrazovku na pripojenie zariadení pomocou technológie Bluetooth.
+Obrazovka detail objektu slúži na to, ak má hráč záujem zistiť viac informácii o objekte. Hráč si môže napríklad prečítať detailný popis alebo si pozrieť obrázok ako objekt vyzerá detailnejšie. Ak má hráč záujem odoslať práve vybraný objekt, niektorému druhému hráčovi v blízkosti, môže tak urobiť pomocou tlačidla na darovanie objektu. To otvorí obrazovku na pripojenie zariadení pomocou technológie Bluetooth.
 
 \subsubsection{Zoznam aktuálnych regiónov a detail regiónu}
-Aby hráč mal lepšiu predstavu, kde sa v hernom prostredí pohybuje je mu ponúknutý zoznam regiónov, v ktorých sa práve nachádza. Jednotlivé regióny sú zobrazené veľkým obrázkom a názvom regiónu. Pri prekliknutí na konkrétny región sa zobrazí obrazovka s detailnejším popisom regiónu, tak ako je to aj pri objektoch.
+Aby hráč mal lepšiu predstavu, kde sa v hernom prostredí pohybuje, je mu ponúknutý zoznam regiónov, v ktorých sa práve nachádza. Jednotlivé regióny sú zobrazené veľkým obrázkom a názvom regiónu. Pri prekliknutí na konkrétny región sa zobrazí obrazovka s detailnejším popisom regiónu, tak ako je to aj pri objektoch.
 
 \subsubsection{Mapa}
 Mapa slúži ako oporný bod  pre lepšiu orientáciu pri hraní hier v teréne. Tiež informuje hráčov o tom, v ktorých regiónoch sa hráč nachádza. Ak sa hráč nachádza v regióne, tak sa na mape zobrazí značka s názvom regiónu a farebne vyznačená plocha, ktorá určuje hranice regiónu.
@@ -76,7 +84,7 @@ Webová aplikácia na serveri, má na starosti tri hlavné úlohy. Prvou je posk
 \subsubsection{Spravovanie stránok}
 Obsah a úpravu stránok majú na starosti administrátori/tvorcovia hry. Hlavnými zámermi týchto stránok by mali byť:
  \begin{itemize}
-  \item Oboznámiť nových hráčov ako sa pripojiť na herný server, vytvoriť účet a poskytnúť základný návod k hre.
+  \item Oboznámiť nových hráčov, ako sa pripojiť na herný server, vytvoriť účet a poskytnúť základný návod k hre.
   \item Vytvoriť príbehy a históriu herného sveta 
   \item Informovať o nadchádzajúcich udalostiach v hernom svete
   \item Priblíženie si navrhovaných riešení niektorých problémov
@@ -84,7 +92,7 @@ Obsah a úpravu stránok majú na starosti administrátori/tvorcovia hry. Hlavn�
 Systém obsahuje TINYMCE - jednoduchý editor na úpravu stránok, vďaka ktorému sa znižuje potreba znalostí HTML jazyka používateľov tohto systému a zjednodušuje používanie.
 
 \subsubsection{API}
-Server ponúka klientovi API, pre interakciu s herným svetom a získavanie informacií o ňom. Obsahuje množstvo funkcií, ktoré sú volané pomocou GET a POST požiadaviek.
+Server ponúka klientovi API, pre interakciu s herným svetom a získavanie informácii o ňom. Obsahuje množstvo funkcií, ktoré sú volané pomocou GET a POST požiadaviek.
 
 \subsubsection{Tvorba herného prostredia}
 Vytváranie a úprava obsahu hry je možná pomocou jednotlivých sekcii na to určených, ktoré od používateľa nevyžadujú žiadne programátorské schopnosti. Pomocou webového rozhrania aplikácie možno vytvárať, upravovať a mazať regióny, úlohy, odmeny, objekty a atribúty. Možná je tiež administrácia hráčov, ktorým možno upravovať obsah inventárov, hodnoty atribútov či kompletnosť úloh.
@@ -130,10 +138,10 @@ Ak má úloha nastavenú odmenu, tak po jej úspešnom splnení ju hráč dostan
 
 \paragraph{Atribúty} sú naviazané na hráčov. Majú svoj názov a obrázok. Každý hráč môže mať určitú hodnotu daného atribútu. Tento herný prvok, by mal byť hlavne využívaný ako prostriedok na porovnávanie medzi hráčmi pri plnení úloh, či nachádzaní odmien. 
 
-\paragraph{Objekty} v hernom svete sa podobajú štruktúrou na atribúty. Tiež majú pomenovanie, obrázok a popisok, v ktorom sa hráči dozvedia k čomu objekt slúži, či jeho príbeh. Objekty, ktoré hráč vlastní uvidí v inventári. Objekty sú taktiež získavané z odmien. Narozdiel od atribútov si hráči medzi sebou môžu objekty odovzdávať. Keď sa teda dvaja hráči dostanú relatívne blízko (na dosah technológie Bluetooth), tak môže darca zo svojho inventáru predať druhému spoluhráčovi objekt maximálne o množstve, ktoré darca vlastní.
+\paragraph{Objekty} v hernom svete sa podobajú štruktúrou na atribúty. Tiež majú pomenovanie, obrázok a popis, v ktorom sa hráči dozvedia k čomu objekt slúži, či jeho príbeh. Objekty, ktoré hráč vlastní uvidí v inventári. Objekty sú taktiež získavané z odmien. Narozdiel od atribútov si hráči medzi sebou môžu objekty odovzdávať. Keď sa teda dvaja hráči dostanú relatívne blízko (na dosah technológie Bluetooth), tak môže darca zo svojho inventáru predať druhému spoluhráčovi objekt maximálne o množstve, ktoré darca vlastní.
 \begin{figure}[ht!]
   \centering
-  \includegraphics[width=10cm]{mainmatter/imgs/klient_inventory2.png}
+  \includegraphics[height=6cm]{mainmatter/imgs/klient_inventory.png}
   \caption{Inventár hráča}
   \label{fig:klient_inventory}
 \end{figure}
@@ -141,8 +149,8 @@ Ak má úloha nastavenú odmenu, tak po jej úspešnom splnení ju hráč dostan
 
 
 \section{Herný príklad}
-Hráč sa po úspešnej registrácii prihlási pomocou herného klienta na mobilnom android zariadení do hry. Po úvodnej automatickej synchronizácií herných obrázkov a získaní nastavení hry sa hráčovi zobrazí hlavná obrazovka. Aplikácia, ak nie je nastavené inak, po chvíľke automaticky pošle požiadavku na server a zistí informácie o okolitom hernom prostredí. Hráč zistí, že sa nachádza v bažinách a automaticky  sa mu spustí úloha. V úlohe bude krátky príbeh a zadanie, podľa ktorého má nájsť stratený kameň mudrcov pre vládcu bažín. Po chvíli hľadania hráč nájde QR kód nalepený na kameni. Hráč naskenuje QR kód a dostane informáciu o tom, že sa naozaj jednalo o kameň mudrcov a dostane ho automaticky do inventára. Nájde svoju aktívnu úlohu a stlačí tlačidlo na dokončenie úlohy, keďže splnil zadanie úloha sa označí ako splnená a dostane odmenu. Dostal tri body skúsenosti a jeden meč. Spoluhráč poprosí tohto hráča aby mu predal meč, pretože ho potrebuje na porazenie draka. Prebehne spárovanie zariadení a meč má nového majiteľa. Hráč pokračuje v plnení úloh, ktoré sú v tomto regióne dostupné. Ďalšou úlohou je hádanka, ktorú musí uhádnuť a napísať správnu odpoveď. Odpoveď môže zistiť pomocou zozbierania indícií - QR kódov s objektami poschovávaných po okolí. Medzi nimi sa však schovávala nastražená úloha, v ktorej hráč musí újsť pred nahnevanou riečnou príšerou za určitý čas do bezpečia - regiónu, ktorý je obďaleč. Po úspešnom úteku, je hráč odmenený dvomi bodmi fyzickej kondície. \
-Administrátor má tiež prehľad o pohybe hráčov a ich aktuálnych úlohách a inventároch pre lepšiu kontrolu hry. Teda ak vidí, že vznikol problém pri niektorej úlohe, či odmene, môže skrze administrátorskú sekciu webovej aplikácie prideliť objekt, atribút či nastaviť úlohu za hotovú pre konkrétnych hráčov. Môže zmeniť herné prostredie hry počas toho ako jú hráči hrajú. Teda v tomto hernom príklade by si napríklad všimol, že ostatní hráči nestíhajú dobehnúť do daného regiónu na čas. Tak môže presunúť región bližšie, či nastaviť viac času pre úlohu a dať za ňu nižšiu odmenu.
+Hráč sa po úspešnej registrácii prihlási pomocou herného klienta na mobilnom android zariadení do hry. Po úvodnej automatickej synchronizácií herných obrázkov a získaní nastavení hry sa hráčovi zobrazí hlavná obrazovka. Aplikácia, ak nie je nastavené inak, po chvíľke automaticky pošle požiadavku na server a zistí informácie o okolitom hernom prostredí. Hráč zistí, že sa nachádza v bažinách a automaticky  sa mu spustí úloha. V úlohe bude krátky príbeh a zadanie, podľa ktorého má nájsť stratený kameň mudrcov pre vládcu bažín. Po chvíli hľadania hráč nájde QR kód nalepený na kameni. Hráč naskenuje QR kód a dostane informáciu o tom, že sa naozaj jednalo o kameň mudrcov a dostane ho automaticky do inventára. Nájde svoju aktívnu úlohu a stlačí tlačidlo na dokončenie úlohy, keďže splnil zadanie úloha sa označí ako splnená a dostane odmenu. Dostal tri body skúsenosti a jeden meč. Spoluhráč poprosí tohto hráča aby mu predal meč, pretože ho potrebuje na porazenie draka. Prebehne spárovanie zariadení a meč má nového majiteľa. Hráč pokračuje v plnení úloh, ktoré sú v tomto regióne dostupné. Ďalšou úlohou je hádanka, ktorú musí uhádnuť a napísať správnu odpoveď. Odpoveď môže zistiť pomocou zozbierania indícií - QR kódov s objektami poschovávaných po okolí. Medzi nimi sa však schovávala nastražená úloha, v ktorej hráč musí utiecť pred nahnevanou riečnou príšerou za určitý čas do bezpečia - regiónu, ktorý je obďaleč. Po úspešnom úteku, je hráč odmenený dvomi bodmi fyzickej kondície. \
+Administrátor má tiež prehľad o pohybe hráčov a ich aktuálnych úlohách a inventároch pre lepšiu kontrolu hry. Teda ak vidí, že vznikol problém pri niektorej úlohe, či odmene, môže skrze administrátorskú sekciu webovej aplikácie prideliť objekt, atribút či nastaviť úlohu za hotovú pre konkrétnych hráčov. Môže zmeniť herné prostredie hry počas toho ako ju hráči hrajú. Teda v tomto hernom príklade by si napríklad všimol, že ostatní hráči nestíhajú dobehnúť do daného regiónu na čas. Tak môže presunúť región bližšie, či nastaviť viac času pre úlohu a dať za ňu nižšiu odmenu.
 
 \paragraph{}
 Z hernej ukážky môžeme povedať, že výsledné hry budú môcť čerpať časť čŕt z larpov, kde sa hráči vžijú do svojich postáv a prechádzajú určitým príbehom \cite{larp-cojeto}. Tiež geocachingu, kde hráči hľadajú kešky(správy či iné malé objekty), ktoré pre nich zanechali ostatní na určitej GPS pozícii \cite{geocaching}. Veľkú podobnosť môžme nájsť aj so šifrovacími hrami. 
@@ -169,7 +177,7 @@ Aplikácia pre svoj správny beh na strane servera potrebuje:
 
 \section{Spôsoby riešenia problémov}
 \subsection{Tvorba herného sveta}
-Jedným z hlavných problémov bolo navrhnúť prostredie pre tvorcov hry, ktoré nebude vyžadovať programátorské schopnosti. Zároveň by však malo ponúknuť dostatočnú voľnosť a možnosť jednoduchej spolupráce pri tvorbe herného sveta. Preto najlepším riešením bola webová aplikácia, ktorá je súčasťou frameworku. Administrátori cez jednotlivé nástroje môžu jednoducho vytvoriť hru iba vypĺňaním predrobených políčok, či vyberať z preddefinovaných typov. Pri vytváraní a úprave regiónu je pre uľahčenie vyznačovania jeho hraníc použitá mapa, v ktorej môže používateľ manipulovať obdĺžnikom, ktorý určuje región. 
+Jedným z hlavných problémov bolo navrhnúť prostredie pre tvorcov hry, ktoré nebude vyžadovať programátorské schopnosti. Zároveň by však malo ponúknuť dostatočnú voľnosť a možnosť jednoduchej spolupráce pri tvorbe herného sveta. Preto najlepším riešením bola webová aplikácia, ktorá je súčasťou frameworku. Administrátori cez jednotlivé nástroje môžu jednoducho vytvoriť hru iba vypĺňaním textových políčok, či vyberať z preddefinovaných typov. Pri vytváraní a úprave regiónu je pre uľahčenie vyznačovania jeho hraníc použitá mapa, v ktorej môže používateľ manipulovať obdĺžnikom, ktorý určuje región. 
 
 \begin{figure}[h]
   \centering
@@ -189,7 +197,7 @@ Jedným z ďalších problémov, bola potreba informovať potenciálnych hráčo
 
 \subsection{Spúšťanie pomocou QR kódov}
 
-Definícia regiónov pomocou GPS súradníc, ponúka veľkú výhodu - možnosť hrať hru vonku v teréne. Avšak pri potrebe zadania úloh v miestach so slabým GPS signálom napríklad v budovách, či schovávania herných odmien vzniká problém. Tento problém riešia kódy, ktoré sú unikátne pre každú odmenu a úlohu. Teda webová aplikácia v administračnej sekcii automaticky vygeneruje kód, ktorý administrátorovi ponúkne ako QR kód pre načítanie klientom. Výhodou tohto riešenia je prínos nových možností ako vystavať herné zážitky - možnosť schovania odmien, či ponúknutia úloh. Nevýhodou je aby mobilné zariadenie malo fotoaparát, pomocou ktorého sú QR kódy skenované. QR kódy ponúkajú možnosť zakódovania informácie tak, aby ich prečítanie bolo možné aj pri poškodení časti QR kódu až do približne 30\% obrázku \cite{qr-error}. Túto vlastnosť možno využiť na prisposobenie výsledných QR kódov prekrytím ich časti logom s názvom hry.
+Definícia regiónov pomocou GPS súradníc, ponúka veľkú výhodu - možnosť hrať hru vonku v teréne. Avšak pri potrebe zadania úloh v miestach so slabým GPS signálom napríklad v budovách, či schovávania herných odmien vzniká problém. Tento problém riešia kódy, ktoré sú unikátne pre každú odmenu a úlohu. Teda webová aplikácia v administračnej sekcii automaticky vygeneruje kód, ktorý administrátorovi ponúkne ako QR kód pre načítanie klientom. Výhodou tohto riešenia je prínos nových možností ako vystavať herné zážitky - možnosť schovania odmien, či ponúknutia úloh. Nevýhodou je aby mobilné zariadenie malo fotoaparát, pomocou ktorého sú QR kódy skenované. QR kódy ponúkajú možnosť zakódovania informácie tak, aby ich prečítanie bolo možné aj pri poškodení časti QR kódu až do približne 30\% obrázku \cite{qr-error}. Túto vlastnosť možno využiť na prispôsobenie výsledných QR kódov prekrytím ich časti logom s názvom hry.
 
 \begin{figure}[h]
   \centering

@@ -1,29 +1,31 @@
 %!TEX root = ../main.tex
 \chapter{Záver}
-\section{Ďaľší možný vývoj aplikácie}
+\section{Ďalší možný vývoj aplikácie}
 % \subsection{Dynamický herný svet}
 \subsection{Pridanie bojového systému}
-Jedno z možných vylepšení tohto frameworku, by mohla byť implementácia bojového systému a pridanie nepriateľov. Nepriateľ by bol pohyblivý menší región, ktorý by automaticky pri strete s hráčom spustil súboj. Súboj by mohol byť teda aj ďaľšou interakciou medzi hráčmi. Súboj by prebiehal formou malej hry na strane klienta podľa nastavení serveru, ktorý by určoval ako hráčove atribúty ovplyvňujú boj. 
+Jedno z možných vylepšení tohto frameworku, by mohla byť implementácia bojového systému a pridanie nepriateľov. Nepriateľ by bol pohyblivý, menší región, ktorý by automaticky pri strete s hráčom spustil súboj. Súboj by mohol byť teda aj ďalšou interakciou medzi hráčmi. Súboj by prebiehal formou malej hry na strane klienta, podľa nastavení serveru, ktorý by určoval ako hráčove atribúty ovplyvňujú boj. 
 
 \subsection{Hráčmi vytváraný a hodnotený obsah}
-Pridať možnosť hráčom pridávať obsah do hry, ak nie je inak nastavené na hernom serveri. Zároveň pridať možnosť užívateľom hodnotiť tento obsah podľa kvality a tak možnosť pre administrátorov ponechávať iba kvalitné časti hry.
+Zaujímavým rozšírením tejto práce by mohla byť možnosť hráčov pomocou herného klienta pridávať obsah do hry, ak nie je inak nastavené na hernom serveri. Zároveň by mali používatelia možnosť hodnotiť tento obsah podľa kvality, a tým administrátorov informovať o kvalitných častiach hry, ktoré je vhodné ponechať.
+
+\subsection{Komunikácia pomocou NFC}
+Hráči môžu medzi sebou komunikovať, a teda si odovzdávať objekty pomocou technológie Bluetooth. Ďalším vhodným spôsobom komunikácie by mohlo byť pomocou NFC technológie, ktorá zatiaľ ešte nie je až tak rozšírená, no urýchlila by tento proces. Pri stretnutí dvoch hráčov by si obaja zapli NFC na svojich zariadeniach a priložili ich k sebe. Oproti existujúcej implementácii pomocou Bluetoothu nie je potreba párovať zariadenia, či ich vyberať zo zoznamu. 
 
 \section{Iné možnosti využitia}
-\subsection{Tvorba šifrovacích }
-Framework môže byť využitý na tvorbu šifrovacích hier. Stačí vytvoriť žiadané úlohy a vytlačiť jednotlivé QR kódy na stanoviská, ktoré bývajú v týchto hrách. Iným možným postupom je jednotlivé stanoviská označiť regiónmi a napojiť k nim úlohy, ktoré sa autmaticky spustia po vstupe na územie regiónu.
-% Dany framework moze byt taktiez vyuzity ako pomocka pre tvorbu edukativnych hier, či teambuildingových akcii. 
+\subsection{Tvorba šifrovacích hier}
+Framework môže byť využitý na tvorbu šifrovacích hier. Stačí vytvoriť žiadané úlohy a vytlačiť jednotlivé QR kódy na stanoviská, ktoré bývajú v týchto hrách. Iným možným postupom je jednotlivé stanoviská označiť regiónmi a napojiť k nim úlohy, ktoré sa automaticky spustia po vstupe na územie regiónu.
 
-\subsection{Priďeľovanie úloh vzhľadom na polohu}
-Pri tímoch, ktorého členovia sa pohybujú v teréne a pridelovanie . Možno použiť tento framework ako jednoduchý 
-Ďaľším možným využitím je vytvorenie regiónov, ktoré spúšťajú automaticky úlohy pre používateľov ako spôsob pridelenia úlohy najvhodnejšieho člena tímu, vzhľadom na jeho polohu. Administrátor tiež môže zadať úlohu pre konkrétneho používaľa manuálne. Klient cieleného člena tímu, ktorému je úloha zadaná sa automaticky aktualizuje a informovaný používateľ môže úlohu vykonať.
+
+\subsection{Prideľovanie úloh vzhľadom na polohu}
+Ďalším možným využitím je prideľovanie úloh používateľom, ktoré budú prideľovať administrátori. Tiež je možné zadanie úloh pomocou regiónov, ktoré spúšťajú automaticky úlohy pre používateľov, čím je zaistené pridelenie úlohy najvhodnejšiemu členovi tímu vzhľadom na jeho polohu. Administrátor tiež môže zadať úlohu pre konkrétneho používateľa manuálne. Používateľov klient, ktorému je úloha zadaná sa automaticky aktualizuje a informovaný používateľ môže úlohu vykonať.
 
 
 \subsection{Tvorba turisticko-historickej prehliadky}
-Ako príklad si môžeme uviesť: Turista si stiahne mobilnú aplikáciu pre android telefón, zapne GPS a pripojí sa na server. Hneď sa dozvie, že tam kde stojí práve teraz bol pred mnohymi rokmi chrám. Prečíta si o jeho historii a može si pozrieť ako vyzeral. Taktiež sa mu autmaticky spustí úloha - navštívenie ďaľšieho bodu prehliadky. Tvorcovia prehliadky mohli zanechat QR kódy s odmenami popri neďalekej soche. Kód načíta a dostané do inventáru sošku, o ktorej sa môže dozvedieť bližšie informácie aj hocikedy neskôr keď už okolie sochy opustí. 
+Ako príklad si môžeme uviesť: Turista si stiahne mobilnú aplikáciu pre Android telefón, zapne GPS a pripojí sa na server. Po získaní informácii zo servera sa dozvie, že tam kde práve teraz stojí bol pred mnohými rokmi chrám. Prečíta si o jeho histórii a môže si pozrieť ako vyzeral. Taktiež sa mu automaticky spustí úloha - navštívenie ďalšieho bodu prehliadky. Tvorcovia prehliadky mohli zanechať QR kódy s odmenami popri neďalekej soche. Keď turista načíta  QR kód, dostane do inventáru sošku. Potom sa o nej môže dozvedieť bližšie informácie, aj keď už okolie sochy opustí. 
 
 \section{Zhrnutie}
-Cieľom tejto bakalárskej práce bolo vytvoriť nástroj na tvorbu GPS online hier. Tento cieľ sa podarilo splniť, keďže vznikol nástroj, ktorý umožňuje používateľovi jednoduché a komplexné riešenie bez potreby znalosti programovacích jazykov. Toto riešenie ponúka herného klienta, aplikáciu herného servera spolu s nástrojmi na tvorbu obsahu hry. \
+Cieľom tejto bakalárskej práce bolo vytvoriť nástroj na tvorbu GPS online hier. Tento cieľ sa podarilo splniť, keďže vznikol nástroj, ktorý umožňuje používateľovi jednoduché a komplexné riešenie bez potreby znalostí programovacích jazykov. Toto riešenie ponúka herného klienta, aplikáciu herného servera spolu s nástrojmi na tvorbu herného sveta. \
 
 Aplikácia herného klienta bola vyvíjaná na Android telefóne Samsung S4 Mini I9195 s verziou Android 4.2. Webová aplikácia bola vyvinutá na serveri s verziou PHP 5.3 a MySQL 5.1. \
 
-Pre ďaľší vývoj aplikácie by bolo vhodne implementovať bojový systém a hráčom dať možnosť pridávať obsah do hry a možnosť hodnotiť takto pridaný obsah priamo z klienta.
+Pre ďalší vývoj aplikácie by bolo vhodné implementovať bojový systém a hráčom dať možnosť pridávať obsah do hry a možnosť hodnotiť takto pridaný obsah priamo z klienta.

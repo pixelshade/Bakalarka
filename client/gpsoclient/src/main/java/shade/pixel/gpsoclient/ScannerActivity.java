@@ -61,7 +61,7 @@ public class ScannerActivity extends Activity implements ZBarScannerView.ResultH
     private void GetAsyncQRCodeResponse(String QRScanned){
         String url = Settings.getCheckQRcodeURL() + QRScanned;
         Log.i(TAG, url);
-        GameHandler.getInstance(this).getHtmlBrowser().HttpGetAsyncString(this, url, new AsyncResponse() {
+        GameHandler.getInstance(this).getHtmlBrowser().HttpGetAsyncString  (this, url, new AsyncResponse() {
             @Override
             public void processFinish(Context context, String output) {
                 Log.d(TAG, output);

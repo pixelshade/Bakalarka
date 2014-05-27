@@ -225,7 +225,7 @@ public class GPSTracker extends Service implements LocationListener {
         this.location = location;
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        String url = shade.pixel.gpsoclient.Settings.getServerURL() + "/api/json/" + latitude + "/" + longitude;
+        String url = shade.pixel.gpsoclient.Settings.getUrlUpdatePosition(latitude,longitude);
         htmlBrowser = MyHtmlBrowser.getInstance(mContext);
         htmlBrowser.HttpGetAsyncString(mContext, url, new AsyncResponse() {
             @Override
@@ -237,21 +237,6 @@ public class GPSTracker extends Service implements LocationListener {
                     GameData gameData = ResponseJSONParser.parseGameData(json);
                     GameHandler.gameHandler.setGameData(gameData);
                     if (gameData != null) {
-                        StringBuilder sb = new StringBuilder();
-                        ArrayList<Region> regions = gameData.getRegions();
-                        ArrayList<Quest> quests = gameData.getQuests();
-                        ArrayList<Item> items = gameData.getItems();
-                        ArrayList<Attribute> attributes = gameData.getAttributes();
-                        sb.append("Regions:");
-                        for (Region region : regions) {
-                            sb.append(region.getName() + ",");
-                        }
-                        sb.append("\nQuests:");
-                        for (Quest quest : quests) {
-                            quest.getName();
-                            sb.append(quest.getName() + ",");
-                        }
-
                         if(mActivity!=null) {
                             double latitude = location.getLatitude();
                             double longitude = location.getLongitude();
@@ -263,7 +248,6 @@ public class GPSTracker extends Service implements LocationListener {
                             mActivity.SetAttributesView();
                             mActivity.showResponses();
                         }
-
                     } else {
                         Log.d(TAG, "Problem with parsing gamedata");
                     }
