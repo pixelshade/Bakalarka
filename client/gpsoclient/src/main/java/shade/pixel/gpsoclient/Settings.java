@@ -62,7 +62,7 @@ public class Settings {
 
     public static final String INTENT_KEY_QRSCANNED = "QRSCANNED";
 
-    private static String ContentFileDir = Environment.getExternalStorageDirectory() + "/GPSOData/";
+    private static String ContentFileDir = Environment.getExternalStorageDirectory() + "/GPSOData/"; //TODO Ability to change directory
 
     // SHARED PREFERENCES KEYS
     private static final String SHAREDPREF_STARTUP_FILES_UPDATE_KEY = "START_UP_FILES_UPDATE";

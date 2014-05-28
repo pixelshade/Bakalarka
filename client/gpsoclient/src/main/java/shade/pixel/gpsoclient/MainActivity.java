@@ -1,6 +1,8 @@
 package shade.pixel.gpsoclient;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +27,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -119,6 +126,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         gameHandler = GameHandler.getInstance(this);
         gpsTracker = GPSTracker.getInstance(this, this);
 
+        if(Settings.getPlayerName().isEmpty()){
+            showEditNameDialog();
+        }
 
         if (htmlBrowser.isOnline()) {
             if (Settings.isAutomaticStartupFilesUpdate())
@@ -128,6 +138,49 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
     }
+
+    public void showEditNameDialog(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText changeNameEditText = new EditText(this);
+        changeNameEditText.setText(Settings.getPlayerName());
+        alert.setView(changeNameEditText);
+        alert.setTitle("Choose your name");
+//        alert.setMessage("");
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String name = changeNameEditText.getText().toString().trim();
+                saveName(name);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.cancel();
+            }
+        });
+        alert.show();
+    }
+
+    public void saveName(final String name){
+        if(name!=null && name.length()>0) {
+            Log.d(TAG, name);
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            nameValuePairs.add(new BasicNameValuePair("name", name));
+            MyHtmlBrowser.getInstance(this).HttpPostAsyncString(this, Settings.UrlSetPlayerName, nameValuePairs, new AsyncResponse() {
+                @Override
+                public void processFinish(Context context, String output) {
+                    if (output != null && !output.isEmpty()) {
+                        Response response = new Response(output);
+                        Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
+                        if (response.isSuccessful()) {
+                            Settings.setPlayerName(name);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
 
     public void StartBluetoothActivity(View view) {
         Intent mBluetoothIntent = new Intent(this, BluetoothActivity.class);
