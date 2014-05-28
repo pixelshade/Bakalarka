@@ -98,8 +98,8 @@
 \contentsline {section}{\numberline {4.5}Bluetooth}{34}{section.4.5}
 \contentsline {section}{\numberline {4.6}Synchroniz\IeC {\'a}cia s\IeC {\'u}borov}{34}{section.4.6}
 \contentsline {section}{\numberline {4.7}Zis\IeC {\v t}ovanie aktu\IeC {\'a}lnej polohy}{35}{section.4.7}
-\contentsline {section}{\numberline {4.8}Datab\IeC {\'a}za}{35}{section.4.8}
-\contentsline {subsection}{\numberline {4.8.1}Trieda modelu}{35}{subsection.4.8.1}
+\contentsline {section}{\numberline {4.8}Datab\IeC {\'a}za}{36}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Trieda modelu}{36}{subsection.4.8.1}
 \contentsline {subsection}{\numberline {4.8.2}\IeC {\v S}trukt\IeC {\'u}ra tabuliek}{37}{subsection.4.8.2}
 \contentsline {chapter}{\numberline {5}Z\IeC {\'a}ver}{38}{chapter.5}
 \contentsline {section}{\numberline {5.1}\IeC {\v D}al\IeC {\v s}\IeC {\'\i } mo\IeC {\v z}n\IeC {\'y} v\IeC {\'y}voj aplik\IeC {\'a}cie}{38}{section.5.1}

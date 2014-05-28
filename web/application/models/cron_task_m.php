@@ -55,6 +55,35 @@ class Cron_task_m extends MY_Model
 		
 	}	
 
+	public function setup($controler){
+		// $output = shell_exec('crontab -l');
+		// echo $output;
+		// file_put_contents('/tmp/crontab.txt', '* * * * * php '.$controler.' run '.PHP_EOL);
+		// file_put_contents('/tmp/crontab.txt', '* * * * * php '.$controler.' /run '.PHP_EOL);
+		// echo exec('crontab /tmp/crontab.txt');
+		$cmd= 'php '.$controler;		
+		echo exec($cmd);		
+		echo "<hr>";
+		echo $cmd;
+
+	}
+
+
+	public function delete_all(){
+		echo exec('crontab -r');	
+	}
+
+	public function run(){	
+		// echo exec('whereis php');		
+		
+		$cont = file_get_contents('/tmp/count.txt');
+		$cont .= date("H:i:s")."<br/>\n".PHP_EOL;
+		echo $cont;		
+		file_put_contents('/tmp/count.txt', $cont);		
+	}
+
+
+
 	public function run_tasks(){
 
 		$actual_time = date('i');

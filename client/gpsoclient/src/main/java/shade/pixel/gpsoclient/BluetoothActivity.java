@@ -203,8 +203,6 @@ public class BluetoothActivity extends ActionBarActivity {
             switch (msg.what) {
                 case WRITE:
                     Log.i(TAG, "WRITE");
-                    MyAlertDialog mad = MyAlertDialog.newInstance("Item successfully sent", "hopefully");
-                    mad.show(getSupportFragmentManager(), "yes");
                     break;
                 case READ:
                     try {
@@ -214,6 +212,8 @@ public class BluetoothActivity extends ActionBarActivity {
                                 int receiverId = receivedMSG.getId();
                                 Log.i(TAG, "TYPE ID MAME:" +receiverId);
                                 sendItemRequestHTTPGETAsync(mSendingItem.getId(),mSendingAmount,receiverId);
+                                MyAlertDialog mad = MyAlertDialog.newInstance("Item successfully sent", "hopefully");
+                                mad.show(getSupportFragmentManager(), "sent_dialog");
                             }
                             if(receivedMSG.getType() == TYPE_ROLE){
                                 Log.i(TAG, "TYPE ROLE MAME");
@@ -226,7 +226,7 @@ public class BluetoothActivity extends ActionBarActivity {
                                 if (receivedItem != null) {
                                     GameHandler.gameData.getItems().add(receivedItem);
                                     MyAlertDialog myAlertDialog = MyAlertDialog.newInstance(receivedItem);
-                                    myAlertDialog.show(getSupportFragmentManager(), "votevr");
+                                    myAlertDialog.show(getSupportFragmentManager(), "received_dialog"+System.currentTimeMillis());
                                 }
                             }
                         }

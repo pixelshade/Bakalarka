@@ -8,12 +8,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:text="Paired Devices"/>
         <ListView
             android:id="@+id/boundedDevices"
             android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            ></ListView>
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textSize="24dp"
+    android:text="Found Devices"/>
+        <ListView
+            android:id="@+id/foundDevices"
+            android:layout_width="fill_parent"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"></ListView>
-
     </LinearLayout>
 
 

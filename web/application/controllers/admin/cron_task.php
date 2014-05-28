@@ -58,20 +58,26 @@ class Cron_task extends Admin_Controller
 		$this->load->view('admin/_layout_main', $this->data);
 	}
 
+	public function setup(){
+		$path = APPPATH."index.php cron_task run";//__FILE__;
+		$this->cron_task_m->setup($path);
+	}
+
+	public function delete_all()
+	{
+		$this->cron_task_m->delete_all();
+		echo "jou3";
+	}
+
+
+	public function run(){					
+		$this->cron_task_m->run();
+	}
+
 	public function delete ($id)
 	{
 		$this->cron_task_m->delete($id);
 		redirect('admin/cron_task');
-	}
-
-
-	public function _is_coordinate ($str)
-	{
-		if((bool)preg_match('/^[\-+]?[0-9]+\.[0-9]+$/', $str)){
-			$this->form_validation->set_message('_is_coordinate', '%s should be coordinate');
-			return FALSE;
-		}
-		return TRUE;		
 	}
 
 	private function move_region($lat_start,$lat_start,$lat_start,$lat_start, $region_id){

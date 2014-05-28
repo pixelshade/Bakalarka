@@ -11,7 +11,6 @@ public class GameData {
     private ArrayList<Item> items;
     private ArrayList<Attribute> attributes;
     private ArrayList<Response> successfullResponses;
-// TODO create game models
 
     public GameData() {
         quests = new ArrayList<Quest>();

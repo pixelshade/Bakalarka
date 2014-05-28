@@ -5,7 +5,10 @@ import java.util.Set;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,16 +22,20 @@ public class DeviceListActivity extends Activity {
 	private BluetoothAdapter btAdapter;
 	private Set<BluetoothDevice> pairedDevices;
 	private ListView pairedListView;
+    private ListView foundListView;
 	private ArrayAdapter<String> pairedAdapter;
+    private ArrayAdapter<String> foundAdapter;
 	final int BT_ENABLE_REQUEST = 777;
 	final int BT_DISCOVERABLE_REQUEST = 888;
 	String model;
     public static String DEVICE_ADDRESS = "devaddr";
+    private Context mContext;
 	
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.activity_devices);
+        mContext = this;
 		model = android.os.Build.MODEL.split(" ")[0];
 
 		Log.d("myBT",model);
@@ -41,6 +48,11 @@ public class DeviceListActivity extends Activity {
 		pairedAdapter = new ArrayAdapter<String>(this, R.layout.list_item_device);
 		pairedListView = (ListView) findViewById(R.id.boundedDevices);
 		pairedListView.setAdapter(pairedAdapter);
+
+        foundAdapter = new ArrayAdapter<String>(this, R.layout.list_item_device);
+        foundListView = (ListView) findViewById(R.id.foundDevices);
+        foundListView.setAdapter(foundAdapter);
+
 		findBTDevices();
 	}
 
@@ -93,11 +105,7 @@ public class DeviceListActivity extends Activity {
 	private void findBTDevices() {
 		pairedAdapter.clear();
 
-        if(btAdapter.isDiscovering()){
-            btAdapter.cancelDiscovery();
-        }
-
-        btAdapter.startDiscovery();
+        findDevices();
 
 		pairedDevices = btAdapter.getBondedDevices();
 		if (pairedDevices.size() > 0) {
@@ -143,4 +151,67 @@ public class DeviceListActivity extends Activity {
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		DeviceListActivity.this.startActivity(intent);
 	}
+
+    final BroadcastReceiver bReceiver = new BroadcastReceiver() {
+
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            // When discovery finds a device
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // Get the BluetoothDevice object from the Intent
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                // add the name and the MAC address of the object to the arrayAdapter
+                foundAdapter.add(device.getName() + "\n" + device.getAddress());
+                foundAdapter.notifyDataSetChanged();
+                setListenerToFound();
+            }
+        }
+    };
+
+
+    public void findDevices() {
+
+        if (btAdapter.isDiscovering()) {
+            // the button is pressed when it discovers, so cancel the discovery
+            btAdapter.cancelDiscovery();
+        }
+        else {
+            foundAdapter.clear();
+            btAdapter.startDiscovery();
+
+
+
+            registerReceiver(bReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
+        }
+    }
+
+    private void setListenerToFound(){
+        foundListView.setOnItemClickListener(new ListView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int position, long arg3) {
+                String item = foundListView
+                        .getItemAtPosition(position).toString();
+                String[] items = item.split("\n");
+                Toast.makeText(mContext, "position>"+position, Toast.LENGTH_LONG ).show();
+                if (items.length > 1) {
+                    btAdapter.cancelDiscovery();
+                    Intent intent1 = new Intent();
+                    intent1.putExtra(DEVICE_ADDRESS, items[1]);
+                    setResult(Activity.RESULT_OK, intent1);
+                    finish();
+                } else {
+                    setResult(RESULT_CANCELED);
+                }
+            }
+        });
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(bReceiver);
+    }
+
 }
