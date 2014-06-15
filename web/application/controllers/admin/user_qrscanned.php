@@ -6,12 +6,14 @@ class User_qrscanned extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('user_qrscanned_m');
+		$this->load->model('user_m');	
 	}
 
 	public function index ()
 	{
 		// Fetch all user_qrscanneds
 		$this->data['user_qrscanneds'] = $this->user_qrscanned_m->get();
+		$this->data['chars'] = $this->user_m->get_for_dropdown();
 		
 		// Load view
 		$this->data['subview'] = 'admin/user_qrscanned/index';

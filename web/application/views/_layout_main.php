@@ -15,11 +15,11 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">							
 				<?php echo get_menu($menu); ?>
-				<li <?php echo $page=="api"? 'class="active"' : ''; ?>><a href="/api">Client Api</a></li>			
-				<li <?php echo $page=="admin"? 'class="active"' : ''; ?>><a href="/admin/">Admin</a></li>			
+				<!-- <li <?php echo $page=="api"? 'class="active"' : ''; ?>><a href="/api">Client Api</a></li>							 -->
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-				<li><a href="/user/logout">Logout</a></li>
+				<li <?php echo $page=="admin"? 'class="active"' : ''; ?>><a href="/admin/">Admin</a></li>			
+				<!-- <li><a href="/user/logout">Logout</a></li> -->
 					<!-- <li class="active"><a href="./">Default</a></li>
 					<li><a href="../navbar-static-top/">Static top</a></li>
 					<li><a href="../navbar-fixed-top/">Fixed top</a></li> -->

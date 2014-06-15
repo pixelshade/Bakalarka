@@ -6,12 +6,15 @@ class User_position extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('user_position_m');
+		$this->load->model('user_m');
+		$this->data['chars'] = $this->user_m->get_for_dropdown();
 	}
 
 	public function index ()
 	{
 		// Fetch all user_positions
 		$this->data['user_positions'] = $this->user_position_m->get();
+
 		
 		// Load view
 		$this->data['subview'] = 'admin/user_position/index';
@@ -25,6 +28,7 @@ class User_position extends Admin_Controller
 		
 		}	
 		// Load view
+		$this->data['char_id'] = $char_id;
 			$this->data['subview'] = 'admin/user_position/show';
 			$this->load->view('admin/_layout_main', $this->data);	
 

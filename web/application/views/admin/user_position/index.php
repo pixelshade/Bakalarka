@@ -17,7 +17,7 @@
 <?php if(count($user_positions)): foreach($user_positions as $user_position): ?>	
 		<tr>
 
-			<td><?php echo anchor('admin/user_position/show/'.$user_position->char_id, '<i class="icon-zoom"></i>'.$user_position->char_id); ?></td>
+			<td><?php echo anchor('admin/user_position/show/'.$user_position->char_id, '<i class="icon-zoom"></i>'.$chars[$user_position->char_id]); ?></td>
 			<td><?php echo $user_position->latitude; ?></td>
 			<td><?php echo $user_position->longtitude; ?></td>
 			<td><?php echo $user_position->time; ?></td>

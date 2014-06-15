@@ -4,7 +4,7 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>char_id</th>
+				<th>character</th>
 				<th>qrscanned</th>
 				
 				<th>edit</th>
@@ -14,7 +14,7 @@
 		<tbody>
 <?php if(count($user_qrscanneds)): foreach($user_qrscanneds as $user_qrscanned): ?>	
 		<tr>
-			<td><?php echo $user_qrscanned->char_id; ?></td>
+			<td><?php echo $chars[$user_qrscanned->char_id]; ?></td>
 			<td><?php echo $user_qrscanned->qrscanned; ?></td>			
 			
 			<td><?php echo btn_edit('admin/user_qrscanned/edit/' . $user_qrscanned->id); ?></td>

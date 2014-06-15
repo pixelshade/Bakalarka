@@ -69,7 +69,12 @@
 
 	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-
+<h1>
+Movement of 
+<?php
+ echo $chars[$char_id];
+?>
+</h1>
 <div id="googleMap" style="height:380px;"></div>
 
 

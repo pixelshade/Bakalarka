@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
 	<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,4 +14,5 @@
 	<link href="<?php echo site_url('assets/css/custom.css'); ?>" rel="stylesheet">	
 </head>
 <body>
+
 
