@@ -81,7 +81,7 @@ class Region_m extends MY_Model
 		$region['lon_start'] = $lon_start;
 		$region['lat_end'] = $lat_end;
 		$region['lon_end'] = $lon_end;
-		save($region,$region_id);
+		$this->save($region,$region_id);
 	}
 
 	public function get_for_dropdown(){
@@ -99,6 +99,26 @@ class Region_m extends MY_Model
 			return $this->get_array(NULL, false);
 		} 
 		return NULL;		
+	}
+
+	public function move_all(){		
+		$regions = $this->get_by('LENGTH(movement) > "10"');
+		foreach ($regions as $region) {	
+			$movement_arr = json_decode($region->movement);
+			$min = idate('i');
+			$steps = count($movement_arr);
+			if($steps>0){
+				$actual_step = $min % $steps;				
+				$this->move_region($movement_arr[$actual_step],$region->id);
+			}
+		}
+
+	}
+
+	private function move_region($movement,$region_id){				
+		if(isset($region_id) && isset($movement) && isset($movement->lat_start) && isset($movement->lon_start) && isset($movement->lat_end)	&& isset($movement->lon_end)){
+			$this->change_location($movement->lat_start,$movement->lon_start,$movement->lat_end,$movement->lon_end,$region_id);
+		}
 	}
 
 }

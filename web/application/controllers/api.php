@@ -33,8 +33,14 @@ class Api extends Admin_Controller
 		$this->load->view('_layout_main', $this->data);
 	}
 
+	public function move_regions(){
+		$this->region_m->move_all();
+	}
+
 	public function json ($player_lat = NULL, $player_lon = NULL)
-	{		
+	{	
+		// move regions	
+		$this->region_m->move_all();
 
 		$user_id = $this->user_m->get_user_id();	
 		if($player_lat != NULL && $player_lon != NULL){
