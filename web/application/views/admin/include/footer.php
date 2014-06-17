@@ -1,5 +1,3 @@
-
-
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/1.3.1/lodash.min.js"></script>
 <script src="<?php echo site_url('assets/js/bootstrap.min.js') ?>"></script>
@@ -10,7 +8,20 @@
 <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 
 <script>
-	tinymce.init({selector:'.tinymce'});
+	tinymce.init({
+		selector:'.tinymce'
+    	<?php
+
+    	if(isset($content_dir) && isset($imgs)){
+			echo ',plugins: "image",';
+	    	echo 'image_list: [ ';
+	    	foreach ($imgs as $img) {
+	    		echo "{title: '".$img."', value: '".site_url($content_dir.$img)."'}, ";
+	    	}        	
+    		echo ']';
+        }
+        ?>
+});
 </script>
 
 

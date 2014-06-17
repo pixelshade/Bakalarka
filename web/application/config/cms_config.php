@@ -33,3 +33,5 @@ $config['qrcode_length'] = 6;
 
 
 $config['client_download_url'] = 'https://play.google.com/store';
+
+$config['gmaps_API_key'] = 'AIzaSyAm7a4WerB5sAzBPDPV2bDybFZYFKFJDi4';

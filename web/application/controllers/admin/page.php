@@ -6,6 +6,9 @@ class Page extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('page_m');
+		$this->load->model('content_files_model');
+        $this->data['content_dir'] = "". $this->content_files_model->content_dir;
+        $this->data['imgs'] = $this->content_files_model->get_all_names();
 	}
 
 	public function index ()

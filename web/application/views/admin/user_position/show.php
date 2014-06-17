@@ -1,5 +1,9 @@
-<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAm7a4WerB5sAzBPDPV2bDybFZYFKFJDi4&sensor=false">
-</script>
+<?php
+$api_key = config_item('gmaps_API_key');
+if(isset($api_key)){
+	echo '<script src="http://maps.googleapis.com/maps/api/js?key='.$api_key.'&sensor=false"></script>';
+}
+?>
 <script type="text/javascript">
 	var latlngs = [
 	<?php
@@ -70,10 +74,10 @@
 	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 <h1>
-Movement of 
-<?php
- echo $chars[$char_id];
-?>
+	Movement of 
+	<?php
+	echo $chars[$char_id];
+	?>
 </h1>
 <div id="googleMap" style="height:380px;"></div>
 

@@ -1,8 +1,13 @@
 <h3><?php echo empty($region->id) ? 'Add a new region' : 'Edit region ' . $region->name; ?></h3>
 <?php echo validation_errors(); ?>
 <?php echo form_open(); ?>
-<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAm7a4WerB5sAzBPDPV2bDybFZYFKFJDi4&sensor=true">
-</script>
+
+<?php
+$api_key = config_item('gmaps_API_key');
+if(isset($api_key)){
+	echo '<script src="http://maps.googleapis.com/maps/api/js?key='.$api_key.'&sensor=false"></script>';
+}
+?>
 
 <script>
 
