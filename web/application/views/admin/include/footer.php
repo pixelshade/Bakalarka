@@ -10,10 +10,10 @@
 <script>
 	tinymce.init({
 		selector:'.tinymce'
-    	<?php
-
+    	<?php    
     	if(isset($content_dir) && isset($imgs)){
-			echo ',plugins: "image",';
+			echo ',plugins: "image textcolor",';
+			echo 'toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor",';
 	    	echo 'image_list: [ ';
 	    	foreach ($imgs as $img) {
 	    		echo "{title: '".$img."', value: '".site_url($content_dir.$img)."'}, ";
